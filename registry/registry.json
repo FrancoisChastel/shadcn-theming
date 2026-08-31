@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "shadcn-theming",
+  "homepage": "https://github.com/FrancoisChastel/shadcn-theming",
+  "items": [
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "sparkline",
+      "type": "registry:component",
+      "title": "Sparkline",
+      "description": "A tiny, dependency-free trend line that inherits the shadcn theme color (text-primary by default).",
+      "files": [
+        {
+          "path": "components/ui/sparkline.tsx",
+          "type": "registry:component",
+          "target": "components/ui/sparkline.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "stat-card",
+      "type": "registry:component",
+      "title": "Stat Card",
+      "description": "A KPI tile with a headline value, trend delta, and an optional inline sparkline — colored entirely through shadcn theme tokens.",
+      "registryDependencies": [
+        "card",
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/sparkline.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/stat-card.tsx",
+          "type": "registry:component",
+          "target": "components/ui/stat-card.tsx"
+        }
+      ]
+    }
+  ]
+}

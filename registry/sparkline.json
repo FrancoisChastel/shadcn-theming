@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sparkline",
+  "type": "registry:component",
+  "title": "Sparkline",
+  "description": "A tiny, dependency-free trend line that inherits the shadcn theme color (text-primary by default).",
+  "files": [
+    {
+      "path": "components/ui/sparkline.tsx",
+      "type": "registry:component",
+      "target": "components/ui/sparkline.tsx",
+      "content": "import * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\nexport interface SparklineProps extends React.SVGProps<SVGSVGElement> {\n  /** The series to plot. Needs at least two points. */\n  data: number[]\n  width?: number\n  height?: number\n  strokeWidth?: number\n  /** Fill the area under the line with a faded version of the stroke color. */\n  fill?: boolean\n  /** Draw a dot on the last point. */\n  showLastDot?: boolean\n}\n\n/**\n * A tiny, dependency-free trend line. Color is driven by the current text\n * color (`text-primary` by default), so it inherits any shadcn brand theme —\n * set `className=\"text-chart-2\"` / `text-destructive` to recolor.\n */\nexport function Sparkline({\n  data,\n  width = 100,\n  height = 28,\n  strokeWidth = 1.5,\n  fill = false,\n  showLastDot = true,\n  className,\n  ...props\n}: SparklineProps) {\n  if (!data || data.length < 2) return null\n\n  const min = Math.min(...data)\n  const max = Math.max(...data)\n  const range = max - min || 1\n  const stepX = width / (data.length - 1)\n  const pad = strokeWidth / 2\n\n  const points = data.map((value, index) => {\n    const x = index * stepX\n    const y = height - pad - ((value - min) / range) * (height - strokeWidth)\n    return [x, y] as const\n  })\n\n  const line = points.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(\" \")\n  const area = `${line} ${width.toFixed(2)},${height} 0,${height}`\n  const last = points[points.length - 1]\n\n  return (\n    <svg\n      width={width}\n      height={height}\n      viewBox={`0 0 ${width} ${height}`}\n      fill=\"none\"\n      role=\"img\"\n      aria-label=\"trend\"\n      className={cn(\"overflow-visible text-primary\", className)}\n      {...props}\n    >\n      {fill ? (\n        <polygon points={area} className=\"fill-current opacity-10\" stroke=\"none\" />\n      ) : null}\n      <polyline\n        points={line}\n        className=\"stroke-current\"\n        strokeWidth={strokeWidth}\n        strokeLinecap=\"round\"\n        strokeLinejoin=\"round\"\n      />\n      {showLastDot && last ? (\n        <circle cx={last[0]} cy={last[1]} r={strokeWidth * 1.4} className=\"fill-current\" />\n      ) : null}\n    </svg>\n  )\n}\n"
+    }
+  ]
+}

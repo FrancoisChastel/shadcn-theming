@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/schema/brand.schema.json",
+  "title": "shadcn-theming brand",
+  "description": "Canonical brand definition consumed by shadcn-theming.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["colors"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": {
+      "type": "string",
+      "description": "Human-readable brand/company name.",
+      "default": "Brand"
+    },
+    "logo": {
+      "type": "string",
+      "description": "Optional path or URL to the brand logo."
+    },
+    "colors": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primary"],
+      "properties": {
+        "primary": { "type": "string", "description": "Primary brand color (any CSS color)." },
+        "secondary": { "type": "string" },
+        "accent": { "type": "string" },
+        "destructive": { "type": "string" },
+        "background": { "type": "string" },
+        "foreground": { "type": "string" },
+        "ring": { "type": "string" }
+      }
+    },
+    "charts": {
+      "type": "array",
+      "description": "Optional explicit chart palette seeds (up to 5).",
+      "items": { "type": "string" },
+      "maxItems": 5
+    },
+    "neutrals": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tint": {
+          "type": "boolean",
+          "description": "Tint grays toward the brand hue for a more cohesive feel.",
+          "default": false
+        },
+        "hue": { "type": "number", "minimum": 0, "maximum": 360 },
+        "strength": { "type": "number", "minimum": 0, "maximum": 0.05, "default": 0.004 }
+      }
+    },
+    "fonts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "sans": { "type": "string" },
+        "serif": { "type": "string" },
+        "mono": { "type": "string" }
+      }
+    },
+    "radius": {
+      "description": "Corner radius as a CSS length or number of rem.",
+      "anyOf": [{ "type": "string" }, { "type": "number", "minimum": 0 }],
+      "default": "0.625rem"
+    },
+    "appearance": {
+      "type": "string",
+      "enum": ["light", "dark", "both"],
+      "default": "both"
+    }
+  }
+}

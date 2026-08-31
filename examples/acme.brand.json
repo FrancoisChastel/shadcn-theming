@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/schema/brand.schema.json",
+  "name": "Acme",
+  "logo": "./acme-logo.svg",
+  "colors": {
+    "primary": "#4f46e5",
+    "accent": "#f97316",
+    "destructive": "#e11d48"
+  },
+  "neutrals": {
+    "tint": true
+  },
+  "fonts": {
+    "sans": "Inter, ui-sans-serif, system-ui, sans-serif"
+  },
+  "radius": "0.5rem",
+  "appearance": "both"
+}

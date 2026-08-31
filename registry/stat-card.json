@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stat-card",
+  "type": "registry:component",
+  "title": "Stat Card",
+  "description": "A KPI tile with a headline value, trend delta, and an optional inline sparkline — colored entirely through shadcn theme tokens.",
+  "registryDependencies": [
+    "card",
+    "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/sparkline.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/stat-card.tsx",
+      "type": "registry:component",
+      "target": "components/ui/stat-card.tsx",
+      "content": "import * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { Card, CardContent } from \"@/components/ui/card\"\nimport { Sparkline } from \"@/components/ui/sparkline\"\n\nexport interface StatCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Metric label, e.g. \"Monthly revenue\". */\n  label: string\n  /** The headline value (already formatted). */\n  value: React.ReactNode\n  /** Signed change; its sign drives the trend color and arrow. */\n  delta?: number\n  /** Unit/suffix for the delta, default \"%\". */\n  deltaUnit?: string\n  /** Caption next to the delta, e.g. \"vs last month\". */\n  deltaLabel?: string\n  /** Optional series to render as an inline sparkline. */\n  data?: number[]\n  /** Optional leading icon. */\n  icon?: React.ReactNode\n}\n\ntype Trend = \"up\" | \"down\" | \"flat\"\n\nfunction trendOf(delta: number | undefined): Trend {\n  if (delta === undefined || delta === 0) return \"flat\"\n  return delta > 0 ? \"up\" : \"down\"\n}\n\n/**\n * A KPI tile — label, headline value, trend delta, and an optional sparkline.\n * Everything is colored through shadcn theme tokens (`primary`, `destructive`,\n * `muted-foreground`), so a StatCard automatically matches any brand theme\n * produced by shadcn-theming.\n */\nexport function StatCard({\n  label,\n  value,\n  delta,\n  deltaUnit = \"%\",\n  deltaLabel,\n  data,\n  icon,\n  className,\n  ...props\n}: StatCardProps) {\n  const trend = trendOf(delta)\n  const arrow = trend === \"up\" ? \"▲\" : trend === \"down\" ? \"▼\" : \"→\"\n\n  return (\n    <Card className={cn(\"overflow-hidden\", className)} {...props}>\n      <CardContent className=\"p-5\">\n        <div className=\"flex items-center justify-between gap-2\">\n          <span className=\"text-sm text-muted-foreground\">{label}</span>\n          {icon ? <span className=\"text-muted-foreground\">{icon}</span> : null}\n        </div>\n\n        <div className=\"mt-2 flex items-end justify-between gap-3\">\n          <div className=\"text-2xl font-semibold tracking-tight tabular-nums\">{value}</div>\n          {data && data.length > 1 ? (\n            <Sparkline\n              data={data}\n              fill\n              className={cn(trend === \"down\" ? \"text-destructive\" : \"text-primary\")}\n            />\n          ) : null}\n        </div>\n\n        {delta !== undefined ? (\n          <div className=\"mt-3 flex items-center gap-2 text-xs\">\n            <span\n              className={cn(\n                \"inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 font-medium\",\n                trend === \"up\" && \"bg-primary/10 text-primary\",\n                trend === \"down\" && \"bg-destructive/10 text-destructive\",\n                trend === \"flat\" && \"bg-muted text-muted-foreground\",\n              )}\n            >\n              <span aria-hidden>{arrow}</span>\n              {Math.abs(delta)}\n              {deltaUnit}\n            </span>\n            {deltaLabel ? <span className=\"text-muted-foreground\">{deltaLabel}</span> : null}\n          </div>\n        ) : null}\n      </CardContent>\n    </Card>\n  )\n}\n"
+    }
+  ]
+}

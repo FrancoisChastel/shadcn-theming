@@ -153,8 +153,13 @@ export function deriveAppearance(brand: Brand, appearance: Appearance): TokenMap
     4.5,
   );
 
-  const background = explicitBg ?? (isDark ? n(0.145) : n(1));
-  const foreground = explicitFg ?? (isDark ? n(0.985) : n(0.145));
+  // Explicit background/foreground are tonal: only honor them for the
+  // appearance they actually suit (a light #fff bg / dark #1a1a1a fg belong to
+  // the light theme). Otherwise the opposite appearance derives its own.
+  const bgFits = explicitBg && (isDark ? explicitBg.l < 0.5 : explicitBg.l > 0.5);
+  const fgFits = explicitFg && (isDark ? explicitFg.l > 0.5 : explicitFg.l < 0.5);
+  const background = (bgFits ? explicitBg : undefined) ?? (isDark ? n(0.145) : n(1));
+  const foreground = (fgFits ? explicitFg : undefined) ?? (isDark ? n(0.985) : n(0.145));
 
   // Surfaces sit just above the page background.
   const card = isDark ? n(0.205) : background;

@@ -24,5 +24,18 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Agent Skill**: `skills/shadcn-theming` with reference docs, installable via
   `npx skills add`.
 - **Extension components**: sparkline and stat-card shadcn registry items.
+- **Scientific charts**: seaborn-like registry components (`histogram` w/ KDE,
+  `box-plot`, `scatter-plot` w/ regression + CI band, `area-band` WEO fan chart,
+  `correlation-heatmap`) over a shared, tested `stats` lib and `plot-frame`.
+- **`showcase` command** + renderer: a full self-contained HTML page with every
+  component and chart in a brand's theme.
+- **IMF example**: `examples/imf.brand.json` (verified `#004C97`, real WEO chart
+  palette, 3px radius) + prebuilt registry theme and showcase pages.
+
+### Fixed
+
+- Explicit `background`/`foreground` are now applied only to the appearance they
+  tonally suit, so a light-mode background/foreground no longer breaks dark-mode
+  contrast.
 
 [Unreleased]: https://github.com/FrancoisChastel/shadcn-theming/commits/main

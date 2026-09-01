@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "histogram",
+  "type": "registry:component",
+  "title": "Histogram",
+  "description": "A distribution plot: histogram with an optional Gaussian KDE overlay (seaborn histplot). Theme-token colored.",
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json",
+    "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/plot-frame.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/histogram.tsx",
+      "type": "registry:component",
+      "target": "components/ui/histogram.tsx",
+      "content": "import * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { histogramBins, gaussianKDE, extent } from \"@/lib/stats\"\nimport { PlotFrame } from \"@/components/ui/plot-frame\"\n\nexport interface HistogramProps {\n  /** The sample to bin. */\n  data: number[]\n  /** Number of bins; defaults to the √n rule. */\n  bins?: number\n  /** Overlay a Gaussian kernel-density estimate. Default true. */\n  kde?: boolean\n  title?: string\n  xLabel?: string\n  yLabel?: string\n  width?: number\n  height?: number\n  className?: string\n}\n\n/**\n * A distribution plot — histogram with an optional KDE overlay, seaborn's\n * `histplot(..., kde=True)`. Bars use density when the KDE is shown so the two\n * align. Colored through the `chart-1` theme token.\n */\nexport function Histogram({\n  data,\n  bins,\n  kde = true,\n  title,\n  xLabel,\n  yLabel,\n  width,\n  height,\n  className,\n}: HistogramProps) {\n  if (!data || data.length === 0) return null\n\n  const binData = histogramBins(data, bins)\n  const [xMin, xMax] = extent(data)\n  const useDensity = kde\n  let yMax = Math.max(...binData.map((b) => (useDensity ? b.density : b.count)))\n\n  const kdeFn = kde ? gaussianKDE(data) : null\n  const kdePoints: Array<[number, number]> = []\n  if (kdeFn) {\n    const samples = 96\n    for (let i = 0; i <= samples; i++) {\n      const x = xMin + ((xMax - xMin) * i) / samples\n      const y = kdeFn(x)\n      kdePoints.push([x, y])\n      if (y > yMax) yMax = y\n    }\n  }\n  yMax *= 1.1\n\n  return (\n    <PlotFrame\n      xDomain={[xMin, xMax]}\n      yDomain={[0, yMax]}\n      title={title}\n      xLabel={xLabel}\n      yLabel={yLabel ?? (useDensity ? \"Density\" : \"Count\")}\n      width={width}\n      height={height}\n      className={className}\n      grid=\"y\"\n    >\n      {({ xScale, yScale, innerHeight }) => (\n        <>\n          {binData.map((b, i) => {\n            const x = xScale(b.x0)\n            const w = Math.max(0, xScale(b.x1) - xScale(b.x0) - 1)\n            const value = useDensity ? b.density : b.count\n            const y = yScale(value)\n            return (\n              <rect\n                key={i}\n                x={x}\n                y={y}\n                width={w}\n                height={Math.max(0, innerHeight - y)}\n                className=\"fill-chart-1\"\n                fillOpacity={0.7}\n                rx={1}\n              />\n            )\n          })}\n          {kdeFn ? (\n            <path\n              d={kdePoints\n                .map(([x, y], i) => `${i ? \"L\" : \"M\"}${xScale(x).toFixed(2)},${yScale(y).toFixed(2)}`)\n                .join(\" \")}\n              className={cn(\"fill-none stroke-chart-1\")}\n              strokeWidth={2}\n              strokeLinejoin=\"round\"\n            />\n          ) : null}\n        </>\n      )}\n    </PlotFrame>\n  )\n}\n"
+    }
+  ]
+}

@@ -2,10 +2,9 @@
 /**
  * Build the shadcn registry items for this repo's extension components.
  *
- * Reads the component sources under registry/components/ and emits, per item,
- * a self-contained `registry/<name>.json` (installable directly with
- * `npx shadcn add <raw-url>`), plus a `registry.json` index for discovery /
- * `shadcn build`.
+ * Reads the sources under registry/components/ and emits, per item, a
+ * self-contained `registry/<name>.json` (installable directly with
+ * `npx shadcn add <raw-url>`), plus a `registry.json` index for discovery.
  */
 import { readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
@@ -18,61 +17,142 @@ const REGISTRY_SCHEMA = "https://ui.shadcn.com/schema/registry.json";
 const RAW_BASE =
   "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry";
 
-/** @typedef {{ name: string, title: string, description: string, source: string, dependencies?: string[], registryDependencies?: string[] }} ComponentDef */
+/** URL of a sibling registry item in this repo. */
+const ref = (name) => `${RAW_BASE}/${name}.json`;
 
-/** @type {ComponentDef[]} */
-const COMPONENTS = [
+/**
+ * @typedef {Object} ItemDef
+ * @property {string} name
+ * @property {"registry:component"|"registry:lib"|"registry:ui"} type
+ * @property {string} title
+ * @property {string} description
+ * @property {string} source   path under registry/ to the source file
+ * @property {string} target   install path in the consumer project
+ * @property {string[]} [dependencies]
+ * @property {string[]} [registryDependencies]
+ */
+
+/** @type {ItemDef[]} */
+const ITEMS = [
+  {
+    name: "stats",
+    type: "registry:lib",
+    title: "Statistics helpers",
+    description:
+      "Dependency-free statistics + scale helpers (KDE, OLS regression, quantiles, correlation, ticks) powering the scientific charts.",
+    source: "components/lib/stats.ts",
+    target: "lib/stats.ts",
+  },
+  {
+    name: "plot-frame",
+    type: "registry:component",
+    title: "Plot Frame",
+    description:
+      "A seaborn-style plotting frame (despined axes, whitegrid, scales via render prop) that every scientific chart composes.",
+    source: "components/ui/plot-frame.tsx",
+    target: "components/ui/plot-frame.tsx",
+    registryDependencies: [ref("stats")],
+  },
   {
     name: "sparkline",
+    type: "registry:component",
     title: "Sparkline",
     description:
       "A tiny, dependency-free trend line that inherits the shadcn theme color (text-primary by default).",
     source: "components/ui/sparkline.tsx",
+    target: "components/ui/sparkline.tsx",
   },
   {
     name: "stat-card",
+    type: "registry:component",
     title: "Stat Card",
     description:
       "A KPI tile with a headline value, trend delta, and an optional inline sparkline — colored entirely through shadcn theme tokens.",
     source: "components/ui/stat-card.tsx",
-    registryDependencies: ["card", `${RAW_BASE}/sparkline.json`],
+    target: "components/ui/stat-card.tsx",
+    registryDependencies: ["card", ref("sparkline")],
+  },
+  {
+    name: "histogram",
+    type: "registry:component",
+    title: "Histogram",
+    description:
+      "A distribution plot: histogram with an optional Gaussian KDE overlay (seaborn histplot). Theme-token colored.",
+    source: "components/ui/histogram.tsx",
+    target: "components/ui/histogram.tsx",
+    registryDependencies: [ref("stats"), ref("plot-frame")],
+  },
+  {
+    name: "box-plot",
+    type: "registry:component",
+    title: "Box Plot",
+    description:
+      "Grouped Tukey box plots with 1.5·IQR whiskers and outliers (seaborn boxplot), cycling the chart palette.",
+    source: "components/ui/box-plot.tsx",
+    target: "components/ui/box-plot.tsx",
+    registryDependencies: [ref("stats"), ref("plot-frame")],
+  },
+  {
+    name: "scatter-plot",
+    type: "registry:component",
+    title: "Scatter Plot",
+    description:
+      "A scatter plot with an OLS regression line and 95% confidence band (seaborn regplot).",
+    source: "components/ui/scatter-plot.tsx",
+    target: "components/ui/scatter-plot.tsx",
+    registryDependencies: [ref("stats"), ref("plot-frame")],
+  },
+  {
+    name: "area-band",
+    type: "registry:component",
+    title: "Area Band",
+    description:
+      "A line with a shaded confidence/projection band and dashed forecast — the IMF WEO fan-chart idiom.",
+    source: "components/ui/area-band.tsx",
+    target: "components/ui/area-band.tsx",
+    registryDependencies: [ref("stats"), ref("plot-frame")],
+  },
+  {
+    name: "correlation-heatmap",
+    type: "registry:component",
+    title: "Correlation Heatmap",
+    description:
+      "A correlation matrix heatmap with a theme-derived diverging color scale (seaborn heatmap).",
+    source: "components/ui/correlation-heatmap.tsx",
+    target: "components/ui/correlation-heatmap.tsx",
+    registryDependencies: [ref("stats")],
   },
 ];
 
-/** Build a single registry item object from a component definition. */
+/** Build a single registry item object from a definition. */
 async function buildItem(def) {
   const content = await readFile(join(REGISTRY_DIR, def.source), "utf8");
-  const target = def.source; // components/ui/<name>.tsx
+  const fileType = def.type === "registry:lib" ? "registry:lib" : "registry:component";
   return {
     $schema: ITEM_SCHEMA,
     name: def.name,
-    type: "registry:component",
+    type: def.type,
     title: def.title,
     description: def.description,
     ...(def.dependencies ? { dependencies: def.dependencies } : {}),
     ...(def.registryDependencies ? { registryDependencies: def.registryDependencies } : {}),
-    files: [
-      {
-        path: target,
-        type: "registry:component",
-        target,
-        content,
-      },
-    ],
+    files: [{ path: def.target, type: fileType, target: def.target, content }],
   };
 }
 
 async function main() {
   const items = [];
-  for (const def of COMPONENTS) {
+  for (const def of ITEMS) {
     const item = await buildItem(def);
     items.push(item);
-    const outPath = join(REGISTRY_DIR, `${def.name}.json`);
-    await writeFile(outPath, `${JSON.stringify(item, null, 2)}\n`, "utf8");
+    await writeFile(
+      join(REGISTRY_DIR, `${def.name}.json`),
+      `${JSON.stringify(item, null, 2)}\n`,
+      "utf8",
+    );
     console.log(`✓ registry/${def.name}.json`);
   }
 
-  // Index (without embedded file contents, to keep it readable).
   const index = {
     $schema: REGISTRY_SCHEMA,
     name: "shadcn-theming",

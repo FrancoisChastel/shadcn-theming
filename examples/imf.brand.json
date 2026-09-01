@@ -1,0 +1,21 @@
+{
+  "$schema": "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/schema/brand.schema.json",
+  "name": "IMF",
+  "colors": {
+    "primary": "#004C97",
+    "secondary": "#033B61",
+    "accent": "#0CAFAE",
+    "destructive": "#B13434",
+    "background": "#ffffff",
+    "foreground": "#1a1a1a"
+  },
+  "charts": ["#004C97", "#3FADBF", "#CB8C40", "#B13434", "#1C9352"],
+  "neutrals": {
+    "tint": false
+  },
+  "fonts": {
+    "sans": "\"Avenir Next World\", \"Avenir Next\", Mulish, Helvetica, Arial, sans-serif"
+  },
+  "radius": "0.1875rem",
+  "appearance": "both"
+}

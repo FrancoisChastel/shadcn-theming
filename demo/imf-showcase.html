@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IMF — shadcn showcase</title>
+<style>
+:root {
+  --radius: 0.1875rem;
+  --font-sans: "Avenir Next World", "Avenir Next", Mulish, Helvetica, Arial, sans-serif;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2178 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2178 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2178 0 0);
+  --primary: oklch(0.4228 0.1389 254.944);
+  --primary-foreground: oklch(0.985 0.02 254.944);
+  --secondary: oklch(0.97 0.0425 245.779);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.5444 0 0);
+  --accent: oklch(0.95 0.0461 194.061);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.5134 0.1617 24.89);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.65 0.1389 254.944);
+  --chart-1: oklch(0.4228 0.1389 254.944);
+  --chart-2: oklch(0.6929 0.1008 210.356);
+  --chart-3: oklch(0.6889 0.1194 68.414);
+  --chart-4: oklch(0.5134 0.1617 24.89);
+  --chart-5: oklch(0.5853 0.1407 153.248);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.2178 0 0);
+  --sidebar-primary: oklch(0.4228 0.1389 254.944);
+  --sidebar-primary-foreground: oklch(0.985 0.02 254.944);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.65 0.1389 254.944);
+}
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.7028 0.1389 254.944);
+  --primary-foreground: oklch(0.145 0.02 254.944);
+  --secondary: oklch(0.3412 0.0764 245.779);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.3 0.0807 194.061);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.5134 0.1617 24.89);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0.1389 254.944);
+  --chart-1: oklch(0.4228 0.1389 254.944);
+  --chart-2: oklch(0.6929 0.1008 210.356);
+  --chart-3: oklch(0.6889 0.1194 68.414);
+  --chart-4: oklch(0.5134 0.1617 24.89);
+  --chart-5: oklch(0.5853 0.1407 153.248);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.7028 0.1389 254.944);
+  --sidebar-primary-foreground: oklch(0.145 0.02 254.944);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0.1389 254.944);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif); background: var(--background); color: var(--foreground); }
+.wrap { max-width: 1160px; margin: 0 auto; padding: 2.5rem 1.5rem 6rem; }
+a { color: inherit; }
+header.top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+.brand { display: flex; align-items: center; gap: 0.85rem; }
+.brand .mark { width: 2.4rem; height: 2.4rem; border-radius: var(--radius); background: var(--primary); display: grid; place-items: center; color: var(--primary-foreground); font-weight: 700; }
+.brand h1 { font-size: 1.15rem; margin: 0; letter-spacing: -0.01em; }
+.brand p { margin: 0; color: var(--muted-foreground); font-size: 0.8125rem; }
+.toggle { border: 1px solid var(--border); background: var(--card); color: var(--card-foreground); border-radius: var(--radius); padding: 0.5rem 0.9rem; cursor: pointer; font-size: 0.8125rem; }
+section { margin-bottom: 3rem; }
+.eyebrow { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted-foreground); margin: 0 0 1rem; font-weight: 600; }
+.palette { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; margin-bottom: 1rem; }
+.sw { display: flex; align-items: center; gap: 0.45rem; font-size: 0.72rem; }
+.sw .chip { width: 1.15rem; height: 1.15rem; border-radius: 4px; border: 1px solid var(--border); }
+.sw code { color: var(--muted-foreground); }
+.cols2 { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.5rem; align-items: start; }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.charts .wide { grid-column: 1 / -1; }
+@media (max-width: 860px) { .cols2, .kpis, .charts { grid-template-columns: 1fr; } }
+.stack { margin-bottom: 1.5rem; }
+.stack h3 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted-foreground); margin: 0 0 0.7rem; }
+.row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.btn { border-radius: var(--radius); padding: 0.5rem 1rem; font-size: 0.875rem; font-weight: 500; border: 1px solid transparent; cursor: pointer; }
+.btn:hover { opacity: 0.9; }
+.btn-primary { background: var(--primary); color: var(--primary-foreground); }
+.btn-secondary { background: var(--secondary); color: var(--secondary-foreground); }
+.btn-outline { background: transparent; color: var(--foreground); border-color: var(--border); }
+.btn-ghost { background: transparent; color: var(--foreground); }
+.btn-ghost:hover { background: var(--accent); color: var(--accent-foreground); opacity: 1; }
+.btn-destructive { background: var(--destructive); color: var(--destructive-foreground); }
+.input { padding: 0.5rem 0.75rem; border-radius: var(--radius); border: 1px solid var(--input); background: var(--background); color: var(--foreground); font-size: 0.875rem; min-width: 220px; }
+.input:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+.switch { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; cursor: pointer; }
+.switch input { display: none; }
+.switch .track { width: 2.25rem; height: 1.25rem; background: var(--muted); border-radius: 999px; position: relative; transition: background 150ms; }
+.switch .thumb { position: absolute; top: 2px; left: 2px; width: 1rem; height: 1rem; border-radius: 999px; background: var(--background); transition: transform 150ms; }
+.switch input:checked + .track { background: var(--primary); }
+.switch input:checked + .track .thumb { transform: translateX(1rem); }
+.badge { font-size: 0.6875rem; padding: 0.15rem 0.55rem; border-radius: 999px; font-weight: 500; }
+.badge-primary { background: var(--primary); color: var(--primary-foreground); }
+.badge-secondary { background: var(--secondary); color: var(--secondary-foreground); }
+.badge-outline { border: 1px solid var(--border); color: var(--foreground); }
+.progress { flex: 1; min-width: 120px; height: 0.5rem; background: var(--muted); border-radius: 999px; overflow: hidden; }
+.progress span { display: block; height: 100%; background: var(--primary); }
+.alert { border-radius: var(--radius); padding: 0.85rem 1rem; font-size: 0.875rem; border: 1px solid var(--destructive); color: var(--destructive); }
+.card { background: var(--card); color: var(--card-foreground); border: 1px solid var(--border); border-radius: var(--radius); }
+.card-pad { padding: 1.1rem 1.25rem; }
+.card-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.75rem; }
+.kpi { padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: 0.55rem; }
+.kpi-top { font-size: 0.8rem; }
+.kpi-mid { display: flex; align-items: flex-end; justify-content: space-between; gap: 0.75rem; }
+.kpi-value { font-size: 1.6rem; font-weight: 650; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.spark { width: 96px; height: 30px; }
+.kpi-delta { display: flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; }
+.kpi-delta .pill { padding: 0.1rem 0.45rem; border-radius: 999px; font-weight: 600; }
+.kpi-delta.up .pill { background: color-mix(in oklab, var(--chart-1) 15%, var(--card)); color: var(--chart-1); }
+.kpi-delta.down .pill { background: color-mix(in oklab, var(--destructive) 15%, var(--card)); color: var(--destructive); }
+.kpi-delta.flat .pill { background: var(--muted); color: var(--muted-foreground); }
+.muted { color: var(--muted-foreground); }
+.plot { width: 100%; height: auto; display: block; }
+.plot-card { padding: 1rem 1.1rem 0.75rem; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+.tbl th { text-align: left; color: var(--muted-foreground); font-weight: 500; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border); }
+.tbl td { padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); }
+.tbl td.num, .tbl th:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+.tbl tr:last-child td { border-bottom: none; font-weight: 600; }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <span class="mark">I</span>
+      <div>
+        <h1>IMF — design system</h1>
+        <p>shadcn/ui theme · scientific charts · 0.1875rem radius</p>
+      </div>
+    </div>
+    <button class="toggle" onclick="document.documentElement.classList.toggle('dark')">Toggle theme</button>
+  </header>
+
+  <section>
+    <p class="eyebrow">Palette</p>
+    <div class="palette"><div class="sw"><span class="chip" style="background:var(--background)"></span><code>background</code></div><div class="sw"><span class="chip" style="background:var(--foreground)"></span><code>foreground</code></div><div class="sw"><span class="chip" style="background:var(--card)"></span><code>card</code></div><div class="sw"><span class="chip" style="background:var(--popover)"></span><code>popover</code></div><div class="sw"><span class="chip" style="background:var(--primary)"></span><code>primary</code></div><div class="sw"><span class="chip" style="background:var(--secondary)"></span><code>secondary</code></div><div class="sw"><span class="chip" style="background:var(--muted)"></span><code>muted</code></div><div class="sw"><span class="chip" style="background:var(--accent)"></span><code>accent</code></div><div class="sw"><span class="chip" style="background:var(--destructive)"></span><code>destructive</code></div><div class="sw"><span class="chip" style="background:var(--border)"></span><code>border</code></div><div class="sw"><span class="chip" style="background:var(--input)"></span><code>input</code></div><div class="sw"><span class="chip" style="background:var(--ring)"></span><code>ring</code></div><div class="sw"><span class="chip" style="background:var(--chart-1)"></span><code>chart-1</code></div><div class="sw"><span class="chip" style="background:var(--chart-2)"></span><code>chart-2</code></div><div class="sw"><span class="chip" style="background:var(--chart-3)"></span><code>chart-3</code></div><div class="sw"><span class="chip" style="background:var(--chart-4)"></span><code>chart-4</code></div><div class="sw"><span class="chip" style="background:var(--chart-5)"></span><code>chart-5</code></div></div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Headline indicators</p>
+    <div class="kpis"><div class="card kpi">
+    <div class="kpi-top"><span class="muted">World GDP growth</span></div>
+    <div class="kpi-mid">
+      <div class="kpi-value">3.2%</div>
+      <svg viewBox="0 0 96 30" class="spark" preserveAspectRatio="none">
+    <path d="M0.0,10.0 L13.7,10.9 L27.4,12.4 L41.1,28.5 L54.9,1.5 L68.6,10.0 L82.3,10.9 L96.0,11.2 L96,30 L0,30 Z" fill="var(--chart-1)" fill-opacity="0.1"/>
+    <path d="M0.0,10.0 L13.7,10.9 L27.4,12.4 L41.1,28.5 L54.9,1.5 L68.6,10.0 L82.3,10.9 L96.0,11.2" fill="none" stroke="var(--chart-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="96.0" cy="11.2" r="2" fill="var(--chart-1)"/>
+  </svg>
+    </div>
+    <div class="kpi-delta up"><span class="pill">▲ 0.1%</span><span class="muted">vs WEO Apr</span></div>
+  </div><div class="card kpi">
+    <div class="kpi-top"><span class="muted">Global inflation</span></div>
+    <div class="kpi-mid">
+      <div class="kpi-value">5.8%</div>
+      <svg viewBox="0 0 96 30" class="spark" preserveAspectRatio="none">
+    <path d="M0.0,28.5 L19.2,27.0 L38.4,21.1 L57.6,1.5 L76.8,10.3 L96.0,15.7 L96,30 L0,30 Z" fill="var(--destructive)" fill-opacity="0.1"/>
+    <path d="M0.0,28.5 L19.2,27.0 L38.4,21.1 L57.6,1.5 L76.8,10.3 L96.0,15.7" fill="none" stroke="var(--destructive)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="96.0" cy="15.7" r="2" fill="var(--destructive)"/>
+  </svg>
+    </div>
+    <div class="kpi-delta down"><span class="pill">▼ 1.2%</span><span class="muted">yoy</span></div>
+  </div><div class="card kpi">
+    <div class="kpi-top"><span class="muted">Public debt / GDP</span></div>
+    <div class="kpi-mid">
+      <div class="kpi-value">93.2%</div>
+      <svg viewBox="0 0 96 30" class="spark" preserveAspectRatio="none">
+    <path d="M0.0,28.5 L19.2,21.3 L38.4,1.5 L57.6,6.9 L76.8,10.5 L96.0,12.3 L96,30 L0,30 Z" fill="var(--chart-1)" fill-opacity="0.1"/>
+    <path d="M0.0,28.5 L19.2,21.3 L38.4,1.5 L57.6,6.9 L76.8,10.5 L96.0,12.3" fill="none" stroke="var(--chart-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="96.0" cy="12.3" r="2" fill="var(--chart-1)"/>
+  </svg>
+    </div>
+    <div class="kpi-delta up"><span class="pill">▲ 1.6%</span><span class="muted">vs 2023</span></div>
+  </div><div class="card kpi">
+    <div class="kpi-top"><span class="muted">Trade volume</span></div>
+    <div class="kpi-mid">
+      <div class="kpi-value">+3.4%</div>
+      <svg viewBox="0 0 96 30" class="spark" preserveAspectRatio="none">
+    <path d="M0.0,27.4 L19.2,28.5 L38.4,1.5 L57.6,3.8 L76.8,27.9 L96.0,13.6 L96,30 L0,30 Z" fill="var(--chart-1)" fill-opacity="0.1"/>
+    <path d="M0.0,27.4 L19.2,28.5 L38.4,1.5 L57.6,3.8 L76.8,27.9 L96.0,13.6" fill="none" stroke="var(--chart-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="96.0" cy="13.6" r="2" fill="var(--chart-1)"/>
+  </svg>
+    </div>
+    <div class="kpi-delta up"><span class="pill">▲ 2.1%</span><span class="muted">yoy</span></div>
+  </div></div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Components</p>
+    <div class="cols2">
+      <div>
+<div class="stack">
+  <h3>Buttons</h3>
+  <div class="row">
+    <button class="btn btn-primary">Primary</button>
+    <button class="btn btn-secondary">Secondary</button>
+    <button class="btn btn-outline">Outline</button>
+    <button class="btn btn-ghost">Ghost</button>
+    <button class="btn btn-destructive">Delete</button>
+  </div>
+</div>
+<div class="stack">
+  <h3>Inputs & selection</h3>
+  <div class="row">
+    <input class="input" placeholder="Search indicators…" />
+    <label class="switch"><input type="checkbox" checked /><span class="track"><span class="thumb"></span></span> Projections</label>
+  </div>
+  <div class="row" style="margin-top:.75rem">
+    <span class="badge badge-primary">Advanced</span>
+    <span class="badge badge-secondary">Emerging</span>
+    <span class="badge badge-outline">Low-income</span>
+    <div class="progress"><span style="width:64%"></span></div>
+  </div>
+</div>
+<div class="stack">
+  <h3>Alert</h3>
+  <div class="alert alert-destructive"><strong>Downside risk.</strong> Financial conditions have tightened.</div>
+</div>
+</div>
+      <div class="card"><div class="card-pad">
+    <div class="card-title">Real GDP growth by group</div>
+    <table class="tbl"><thead><tr><th>Group</th><th>2024</th><th>2025F</th><th>Weight</th></tr></thead>
+    <tbody><tr><td>Advanced economies</td><td class="num">1.8</td><td class="num">2.0</td><td class="num">26.3</td></tr><tr><td>Emerging markets</td><td class="num">4.2</td><td class="num">3.9</td><td class="num">48.1</td></tr><tr><td>Low-income countries</td><td class="num">5.0</td><td class="num">4.7</td><td class="num">8.4</td></tr><tr><td>World</td><td class="num">3.2</td><td class="num">3.1</td><td class="num">100.0</td></tr></tbody></table>
+  </div></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Scientific charts</p>
+    <div class="charts">
+      <div class="card plot-card wide"><svg viewBox="0 0 520 320" class="plot" role="img" aria-label="World GDP growth — WEO projection">
+    <text x="50" y="18" fill="var(--foreground)" font-size="13" font-weight="500">World GDP growth — WEO projection</text>
+    <g transform="translate(50,30)">
+      <line x1="0" x2="454" y1="211.61" y2="211.61" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="166.68" y2="166.68" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="121.75" y2="121.75" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="76.83" y2="76.83" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="31.90" y2="31.90" stroke="var(--border)" stroke-opacity="0.6"/>
+      <line x1="0" x2="454" y1="166.68" y2="166.68" stroke="var(--muted-foreground)" stroke-opacity="0.4" stroke-dasharray="3 3"/><path d="M324.29,93.90 L356.71,85.14 L389.14,72.33 L421.57,63.80 L454.00,55.04 L454.00,133.66 L421.57,126.70 L389.14,119.51 L356.71,116.59 L324.29,109.62 Z" fill="var(--chart-1)" fill-opacity="0.15"/><path d="M0.00,90.30 L32.43,92.55 L64.86,81.32 L97.29,85.81 L129.71,103.78 L162.14,227.33 L194.57,20.67 L227.00,85.81 L259.43,92.55 L291.86,94.80 L324.29,101.76" fill="none" stroke="var(--chart-1)" stroke-width="2"/><path d="M291.86,94.80 L324.29,101.76 L356.71,100.86 L389.14,95.92 L421.57,95.25 L454.00,94.35" fill="none" stroke="var(--chart-1)" stroke-width="2" stroke-dasharray="5 4"/><circle cx="0.00" cy="90.30" r="2.5" fill="var(--chart-1)" fill-opacity="1"/><circle cx="32.43" cy="92.55" r="2.5" fill="var(--chart-1)" fill-opacity="1"/><circle cx="64.86" cy="81.32" r="2.5" fill="var(--chart-1)" fill-opacity="1"/><circle cx="97.29" cy="85.81" r="2.5" fill="var(--chart-1)" fill-opacity="1"/><circle cx="129.71" cy="103.78" r="2.5" fill="var(--chart-1)" fill-opacity="1"/><circle cx="162.14" cy="227.33" r="2.5" fill="var(--chart-1)" fill-opacity="1"/><circle cx="194.57" cy="20.67" r="2.5" fill="var(--chart-1)" fill-opacity="1"/><circle cx="227.00" cy="85.81" r="2.5" fill="var(--chart-1)" fill-opacity="1"/><circle cx="259.43" cy="92.55" r="2.5" fill="var(--chart-1)" fill-opacity="1"/><circle cx="291.86" cy="94.80" r="2.5" fill="var(--chart-1)" fill-opacity="1"/><circle cx="324.29" cy="101.76" r="2.5" fill="var(--chart-1)" fill-opacity="0.5"/><circle cx="356.71" cy="100.86" r="2.5" fill="var(--chart-1)" fill-opacity="0.5"/><circle cx="389.14" cy="95.92" r="2.5" fill="var(--chart-1)" fill-opacity="0.5"/><circle cx="421.57" cy="95.25" r="2.5" fill="var(--chart-1)" fill-opacity="0.5"/><circle cx="454.00" cy="94.35" r="2.5" fill="var(--chart-1)" fill-opacity="0.5"/>
+      <line x1="0" x2="454" y1="248" y2="248" stroke="var(--border)"/>
+      <text x="32.43" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">2016</text><text x="97.29" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">2018</text><text x="162.14" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">2020</text><text x="227.00" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">2022</text><text x="291.86" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">2024</text><text x="356.71" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">2026</text><text x="421.57" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">2028</text><text x="-8" y="211.61" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">-2</text><text x="-8" y="166.68" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">0</text><text x="-8" y="121.75" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">2</text><text x="-8" y="76.83" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">4</text><text x="-8" y="31.90" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">6</text>
+      
+      <text transform="translate(-40,124) rotate(-90)" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">% change</text>
+    </g>
+  </svg></div>
+      <div class="card plot-card"><svg viewBox="0 0 520 320" class="plot" role="img" aria-label="Distribution of country growth">
+    <text x="50" y="18" fill="var(--foreground)" font-size="13" font-weight="500">Distribution of country growth</text>
+    <g transform="translate(50,30)">
+      <line x1="0" x2="454" y1="248.00" y2="248.00" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="191.63" y2="191.63" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="135.27" y2="135.27" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="78.90" y2="78.90" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="22.54" y2="22.54" stroke="var(--border)" stroke-opacity="0.6"/>
+      <rect x="0.00" y="219.82" width="31.43" height="28.18" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><rect x="32.43" y="219.82" width="31.43" height="28.18" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><rect x="64.86" y="205.73" width="31.43" height="42.27" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><rect x="97.29" y="156.41" width="31.43" height="91.59" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><rect x="129.71" y="85.95" width="31.43" height="162.05" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><rect x="162.14" y="100.05" width="31.43" height="147.95" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><rect x="194.57" y="100.05" width="31.43" height="147.95" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><rect x="227.00" y="107.09" width="31.43" height="140.91" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><rect x="259.43" y="22.55" width="31.43" height="225.45" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><rect x="291.86" y="107.09" width="31.43" height="140.91" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><rect x="324.29" y="163.45" width="31.43" height="84.55" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><rect x="356.71" y="205.73" width="31.43" height="42.27" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><rect x="389.14" y="205.73" width="31.43" height="42.27" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><rect x="421.57" y="233.91" width="31.43" height="14.09" fill="var(--chart-1)" fill-opacity="0.7" rx="1"/><path d="M0.00,232.49 L4.73,230.62 L9.46,228.74 L14.19,226.88 L18.92,225.06 L23.65,223.28 L28.38,221.56 L33.10,219.87 L37.83,218.19 L42.56,216.49 L47.29,214.72 L52.02,212.82 L56.75,210.73 L61.48,208.40 L66.21,205.76 L70.94,202.74 L75.67,199.32 L80.40,195.45 L85.13,191.11 L89.85,186.31 L94.58,181.06 L99.31,175.39 L104.04,169.37 L108.77,163.06 L113.50,156.56 L118.23,149.96 L122.96,143.36 L127.69,136.88 L132.42,130.62 L137.15,124.69 L141.88,119.16 L146.60,114.13 L151.33,109.65 L156.06,105.75 L160.79,102.44 L165.52,99.73 L170.25,97.57 L174.98,95.92 L179.71,94.71 L184.44,93.85 L189.17,93.25 L193.90,92.81 L198.62,92.44 L203.35,92.03 L208.08,91.50 L212.81,90.79 L217.54,89.84 L222.27,88.63 L227.00,87.16 L231.73,85.47 L236.46,83.61 L241.19,81.67 L245.92,79.77 L250.65,78.04 L255.38,76.61 L260.10,75.64 L264.83,75.26 L269.56,75.58 L274.29,76.71 L279.02,78.70 L283.75,81.57 L288.48,85.33 L293.21,89.90 L297.94,95.23 L302.67,101.19 L307.40,107.67 L312.13,114.54 L316.85,121.65 L321.58,128.88 L326.31,136.10 L331.04,143.20 L335.77,150.10 L340.50,156.72 L345.23,163.01 L349.96,168.93 L354.69,174.46 L359.42,179.61 L364.15,184.38 L368.88,188.79 L373.60,192.88 L378.33,196.67 L383.06,200.20 L387.79,203.52 L392.52,206.64 L397.25,209.62 L401.98,212.47 L406.71,215.20 L411.44,217.84 L416.17,220.39 L420.90,222.84 L425.63,225.20 L430.35,227.45 L435.08,229.60 L439.81,231.63 L444.54,233.53 L449.27,235.31 L454.00,236.95" fill="none" stroke="var(--chart-1)" stroke-width="2"/>
+      <line x1="0" x2="454" y1="248" y2="248" stroke="var(--border)"/>
+      <text x="28.88" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">-2</text><text x="105.89" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">0</text><text x="182.91" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">2</text><text x="259.92" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">4</text><text x="336.94" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">6</text><text x="413.95" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">8</text><text x="-8" y="248.00" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">0</text><text x="-8" y="191.63" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">0.1</text><text x="-8" y="135.27" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">0.1</text><text x="-8" y="78.90" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">0.1</text><text x="-8" y="22.54" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">0.2</text>
+      <text x="227" y="284" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">% growth</text>
+      <text transform="translate(-40,124) rotate(-90)" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">Density</text>
+    </g>
+  </svg></div>
+      <div class="card plot-card"><svg viewBox="0 0 520 320" class="plot" role="img" aria-label="Phillips curve">
+    <text x="50" y="18" fill="var(--foreground)" font-size="13" font-weight="500">Phillips curve</text>
+    <g transform="translate(50,30)">
+      <line x1="0" x2="454" y1="227.66" y2="227.66" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="181.44" y2="181.44" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="135.21" y2="135.21" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="88.98" y2="88.98" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="42.76" y2="42.76" stroke="var(--border)" stroke-opacity="0.6"/><line x1="66.44" x2="66.44" y1="0" y2="248" stroke="var(--border)" stroke-opacity="0.6"/><line x1="158.98" x2="158.98" y1="0" y2="248" stroke="var(--border)" stroke-opacity="0.6"/><line x1="251.52" x2="251.52" y1="0" y2="248" stroke="var(--border)" stroke-opacity="0.6"/><line x1="344.06" x2="344.06" y1="0" y2="248" stroke="var(--border)" stroke-opacity="0.6"/><line x1="436.60" x2="436.60" y1="0" y2="248" stroke="var(--border)" stroke-opacity="0.6"/>
+      <path d="M0.00,29.21 L9.46,33.09 L18.92,36.97 L28.37,40.84 L37.83,44.71 L47.29,48.57 L56.75,52.43 L66.21,56.29 L75.67,60.13 L85.13,63.97 L94.58,67.80 L104.04,71.62 L113.50,75.43 L122.96,79.23 L132.42,83.01 L141.88,86.78 L151.33,90.53 L160.79,94.27 L170.25,97.98 L179.71,101.67 L189.17,105.34 L198.63,108.98 L208.08,112.59 L217.54,116.18 L227.00,119.73 L236.46,123.26 L245.92,126.76 L255.38,130.24 L264.83,133.68 L274.29,137.10 L283.75,140.50 L293.21,143.88 L302.67,147.24 L312.13,150.58 L321.58,153.90 L331.04,157.21 L340.50,160.51 L349.96,163.80 L359.42,167.08 L368.87,170.35 L378.33,173.61 L387.79,176.86 L397.25,180.11 L406.71,183.35 L416.17,186.59 L425.62,189.82 L435.08,193.05 L444.54,196.27 L454.00,199.49 L454.00,220.36 L444.54,216.48 L435.08,212.60 L425.62,208.72 L416.17,204.85 L406.71,200.98 L397.25,197.12 L387.79,193.26 L378.33,189.41 L368.87,185.57 L359.42,181.73 L349.96,177.91 L340.50,174.09 L331.04,170.29 L321.58,166.49 L312.13,162.71 L302.67,158.95 L293.21,155.21 L283.75,151.48 L274.29,147.77 L264.83,144.09 L255.38,140.43 L245.92,136.80 L236.46,133.20 L227.00,129.62 L217.54,126.07 L208.08,122.56 L198.63,119.06 L189.17,115.60 L179.71,112.16 L170.25,108.75 L160.79,105.36 L151.33,101.99 L141.88,98.64 L132.42,95.30 L122.96,91.98 L113.50,88.68 L104.04,85.38 L94.58,82.10 L85.13,78.82 L75.67,75.56 L66.21,72.30 L56.75,69.05 L47.29,65.80 L37.83,62.56 L28.37,59.33 L18.92,56.10 L9.46,52.87 L0.00,49.65 Z" fill="var(--chart-1)" fill-opacity="0.12"/><circle cx="219.13" cy="128.51" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="126.59" cy="76.97" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="381.08" cy="226.97" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="84.95" cy="40.22" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="23.88" cy="34.67" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="91.43" cy="79.28" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="350.08" cy="183.75" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="332.96" cy="187.91" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="142.33" cy="37.90" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="206.64" cy="96.15" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="139.55" cy="84.59" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="231.63" cy="96.84" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="191.37" cy="101.93" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="383.85" cy="178.89" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="313.06" cy="164.33" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="35.91" cy="60.56" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="333.42" cy="162.48" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="55.34" cy="65.87" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="211.27" cy="126.43" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="267.72" cy="125.73" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="119.65" cy="86.44" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="225.61" cy="147.69" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="201.55" cy="135.21" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="96.06" cy="44.38" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="391.26" cy="186.29" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="110.86" cy="122.27" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="86.34" cy="70.73" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="279.28" cy="185.60" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="67.37" cy="77.20" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="432.44" cy="230.90" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="300.57" cy="116.49" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="47.47" cy="47.84" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="390.33" cy="173.81" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="149.73" cy="114.18" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="396.35" cy="229.05" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="186.28" cy="125.27" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="72.92" cy="92.45" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="365.81" cy="192.53" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="253.37" cy="114.41" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="55.80" cy="81.82" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="96.98" cy="81.82" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="107.62" cy="97.07" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="170.55" cy="146.07" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="251.99" cy="117.88" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="167.31" cy="85.52" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="275.58" cy="138.68" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="425.50" cy="159.48" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="385.71" cy="187.21" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="369.05" cy="188.60" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="401.90" cy="178.89" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="147.42" cy="95.92" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="344.53" cy="195.07" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="276.05" cy="124.35" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="409.30" cy="154.86" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="246.90" cy="137.98" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="128.91" cy="78.35" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="406.06" cy="162.02" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="267.72" cy="136.60" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="120.58" cy="124.81" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="209.88" cy="91.06" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="239.49" cy="116.26" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="62.28" cy="67.72" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="90.50" cy="61.71" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="301.03" cy="135.67" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="433.36" cy="214.95" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="28.96" cy="17.10" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="277.43" cy="93.84" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="52.10" cy="90.60" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="279.28" cy="135.90" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="20.64" cy="63.56" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="396.35" cy="188.83" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="100.68" cy="64.25" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="313.52" cy="189.99" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="89.58" cy="78.81" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="294.09" cy="136.13" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="380.62" cy="199.69" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="301.49" cy="133.13" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="301.96" cy="170.57" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="322.78" cy="157.86" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><circle cx="67.83" cy="48.77" r="3" fill="var(--chart-1)" fill-opacity="0.65"/><path d="M0.00,39.43 L9.46,42.98 L18.92,46.53 L28.37,50.08 L37.83,53.64 L47.29,57.19 L56.75,60.74 L66.21,64.29 L75.67,67.84 L85.13,71.40 L94.58,74.95 L104.04,78.50 L113.50,82.05 L122.96,85.60 L132.42,89.16 L141.88,92.71 L151.33,96.26 L160.79,99.81 L170.25,103.37 L179.71,106.92 L189.17,110.47 L198.63,114.02 L208.08,117.57 L217.54,121.13 L227.00,124.68 L236.46,128.23 L245.92,131.78 L255.38,135.33 L264.83,138.89 L274.29,142.44 L283.75,145.99 L293.21,149.54 L302.67,153.09 L312.13,156.65 L321.58,160.20 L331.04,163.75 L340.50,167.30 L349.96,170.85 L359.42,174.41 L368.87,177.96 L378.33,181.51 L387.79,185.06 L397.25,188.61 L406.71,192.17 L416.17,195.72 L425.62,199.27 L435.08,202.82 L444.54,206.37 L454.00,209.93" fill="none" stroke="var(--chart-1)" stroke-width="2"/><text x="6" y="12" fill="var(--muted-foreground)" font-size="11">R² = 0.813</text>
+      <line x1="0" x2="454" y1="248" y2="248" stroke="var(--border)"/>
+      <text x="66.44" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">4</text><text x="158.98" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">6</text><text x="251.52" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">8</text><text x="344.06" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">10</text><text x="436.60" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">12</text><text x="-8" y="227.66" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">0</text><text x="-8" y="181.44" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">2</text><text x="-8" y="135.21" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">4</text><text x="-8" y="88.98" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">6</text><text x="-8" y="42.76" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">8</text>
+      <text x="227" y="284" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">Unemployment (%)</text>
+      <text transform="translate(-40,124) rotate(-90)" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">Inflation (%)</text>
+    </g>
+  </svg></div>
+      <div class="card plot-card"><svg viewBox="0 0 520 320" class="plot" role="img" aria-label="Growth dispersion by group">
+    <text x="50" y="18" fill="var(--foreground)" font-size="13" font-weight="500">Growth dispersion by group</text>
+    <g transform="translate(50,30)">
+      <line x1="0" x2="454" y1="227.02" y2="227.02" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="194.67" y2="194.67" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="162.33" y2="162.33" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="129.98" y2="129.98" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="97.64" y2="97.64" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="65.30" y2="65.30" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="32.95" y2="32.95" stroke="var(--border)" stroke-opacity="0.6"/><line x1="0" x2="454" y1="0.61" y2="0.61" stroke="var(--border)" stroke-opacity="0.6"/>
+      
+            <line x1="45.40" x2="45.40" y1="155.29" y2="136.13" stroke="var(--chart-1)" stroke-width="1.25"/>
+            <line x1="45.40" x2="45.40" y1="172.27" y2="190.79" stroke="var(--chart-1)" stroke-width="1.25"/>
+            <line x1="37.23" x2="53.57" y1="136.13" y2="136.13" stroke="var(--chart-1)" stroke-width="1.25"/><line x1="37.23" x2="53.57" y1="190.79" y2="190.79" stroke="var(--chart-1)" stroke-width="1.25"/>
+            <rect x="29.06" y="155.29" width="32.69" height="16.98" fill="var(--chart-1)" fill-opacity="0.25" stroke="var(--chart-1)" stroke-width="1.5" rx="2"/>
+            <line x1="29.06" x2="61.74" y1="169.20" y2="169.20" stroke="var(--chart-1)" stroke-width="2"/>
+            <circle cx="45.40" cy="220.38" r="2.2" fill="var(--chart-1)" fill-opacity="0.8"/><circle cx="45.40" cy="129.18" r="2.2" fill="var(--chart-1)" fill-opacity="0.8"/><circle cx="45.40" cy="125.46" r="2.2" fill="var(--chart-1)" fill-opacity="0.8"/>
+            <line x1="136.20" x2="136.20" y1="106.13" y2="78.07" stroke="var(--chart-2)" stroke-width="1.25"/>
+            <line x1="136.20" x2="136.20" y1="146.76" y2="171.71" stroke="var(--chart-2)" stroke-width="1.25"/>
+            <line x1="128.03" x2="144.37" y1="78.07" y2="78.07" stroke="var(--chart-2)" stroke-width="1.25"/><line x1="128.03" x2="144.37" y1="171.71" y2="171.71" stroke="var(--chart-2)" stroke-width="1.25"/>
+            <rect x="119.86" y="106.13" width="32.69" height="40.63" fill="var(--chart-2)" fill-opacity="0.25" stroke="var(--chart-2)" stroke-width="1.5" rx="2"/>
+            <line x1="119.86" x2="152.54" y1="120.36" y2="120.36" stroke="var(--chart-2)" stroke-width="2"/>
+            <circle cx="136.20" cy="230.90" r="2.2" fill="var(--chart-2)" fill-opacity="0.8"/>
+            <line x1="227.00" x2="227.00" y1="76.29" y2="17.10" stroke="var(--chart-3)" stroke-width="1.25"/>
+            <line x1="227.00" x2="227.00" y1="145.31" y2="163.30" stroke="var(--chart-3)" stroke-width="1.25"/>
+            <line x1="218.83" x2="235.17" y1="17.10" y2="17.10" stroke="var(--chart-3)" stroke-width="1.25"/><line x1="218.83" x2="235.17" y1="163.30" y2="163.30" stroke="var(--chart-3)" stroke-width="1.25"/>
+            <rect x="210.66" y="76.29" width="32.69" height="69.01" fill="var(--chart-3)" fill-opacity="0.25" stroke="var(--chart-3)" stroke-width="1.5" rx="2"/>
+            <line x1="210.66" x2="243.34" y1="109.20" y2="109.20" stroke="var(--chart-3)" stroke-width="2"/>
+            
+            <line x1="317.80" x2="317.80" y1="160.95" y2="123.68" stroke="var(--chart-4)" stroke-width="1.25"/>
+            <line x1="317.80" x2="317.80" y1="189.01" y2="212.62" stroke="var(--chart-4)" stroke-width="1.25"/>
+            <line x1="309.63" x2="325.97" y1="123.68" y2="123.68" stroke="var(--chart-4)" stroke-width="1.25"/><line x1="309.63" x2="325.97" y1="212.62" y2="212.62" stroke="var(--chart-4)" stroke-width="1.25"/>
+            <rect x="301.46" y="160.95" width="32.69" height="28.06" fill="var(--chart-4)" fill-opacity="0.25" stroke="var(--chart-4)" stroke-width="1.5" rx="2"/>
+            <line x1="301.46" x2="334.14" y1="174.70" y2="174.70" stroke="var(--chart-4)" stroke-width="2"/>
+            
+            <line x1="408.60" x2="408.60" y1="108.43" y2="91.17" stroke="var(--chart-5)" stroke-width="1.25"/>
+            <line x1="408.60" x2="408.60" y1="132.77" y2="157.31" stroke="var(--chart-5)" stroke-width="1.25"/>
+            <line x1="400.43" x2="416.77" y1="91.17" y2="91.17" stroke="var(--chart-5)" stroke-width="1.25"/><line x1="400.43" x2="416.77" y1="157.31" y2="157.31" stroke="var(--chart-5)" stroke-width="1.25"/>
+            <rect x="392.26" y="108.43" width="32.69" height="24.34" fill="var(--chart-5)" fill-opacity="0.25" stroke="var(--chart-5)" stroke-width="1.5" rx="2"/>
+            <line x1="392.26" x2="424.94" y1="117.61" y2="117.61" stroke="var(--chart-5)" stroke-width="2"/>
+            <circle cx="408.60" cy="58.67" r="2.2" fill="var(--chart-5)" fill-opacity="0.8"/>
+      <line x1="0" x2="454" y1="248" y2="248" stroke="var(--border)"/>
+      <text x="45.40" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">Adv. econ.</text><text x="136.20" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">Emerging</text><text x="227.00" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">Low-income</text><text x="317.80" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">Euro area</text><text x="408.60" y="266" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">ASEAN-5</text><text x="-8" y="227.02" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">-2</text><text x="-8" y="194.67" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">0</text><text x="-8" y="162.33" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">2</text><text x="-8" y="129.98" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">4</text><text x="-8" y="97.64" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">6</text><text x="-8" y="65.30" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">8</text><text x="-8" y="32.95" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">10</text><text x="-8" y="0.61" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">12</text>
+      
+      <text transform="translate(-40,124) rotate(-90)" text-anchor="middle" fill="var(--muted-foreground)" font-size="11">% growth</text>
+    </g>
+  </svg></div>
+      <div class="card plot-card"><svg viewBox="0 0 420 420" class="plot" role="img" aria-label="Macro indicator correlations">
+    <text x="90" y="20" fill="var(--foreground)" font-size="13" font-weight="500">Macro indicator correlations</text>
+    <g transform="translate(90,34)"><rect x="0.00" y="0.00" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 100%, var(--card))"/>
+            <text x="30.20" y="30.20" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--background)">1.00</text><rect x="60.40" y="0.00" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-4) 52%, var(--card))"/>
+            <text x="90.60" y="30.20" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">-0.52</text><rect x="120.80" y="0.00" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-4) 80%, var(--card))"/>
+            <text x="151.00" y="30.20" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--background)">-0.80</text><rect x="181.20" y="0.00" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-4) 10%, var(--card))"/>
+            <text x="211.40" y="30.20" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">-0.10</text><rect x="241.60" y="0.00" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 32%, var(--card))"/>
+            <text x="271.80" y="30.20" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">0.32</text><rect x="0.00" y="60.40" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-4) 52%, var(--card))"/>
+            <text x="30.20" y="90.60" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">-0.52</text><rect x="60.40" y="60.40" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 100%, var(--card))"/>
+            <text x="90.60" y="90.60" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--background)">1.00</text><rect x="120.80" y="60.40" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 50%, var(--card))"/>
+            <text x="151.00" y="90.60" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">0.50</text><rect x="181.20" y="60.40" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 2%, var(--card))"/>
+            <text x="211.40" y="90.60" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">0.02</text><rect x="241.60" y="60.40" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-4) 21%, var(--card))"/>
+            <text x="271.80" y="90.60" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">-0.21</text><rect x="0.00" y="120.80" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-4) 80%, var(--card))"/>
+            <text x="30.20" y="151.00" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--background)">-0.80</text><rect x="60.40" y="120.80" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 50%, var(--card))"/>
+            <text x="90.60" y="151.00" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">0.50</text><rect x="120.80" y="120.80" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 100%, var(--card))"/>
+            <text x="151.00" y="151.00" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--background)">1.00</text><rect x="181.20" y="120.80" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 11%, var(--card))"/>
+            <text x="211.40" y="151.00" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">0.11</text><rect x="241.60" y="120.80" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-4) 17%, var(--card))"/>
+            <text x="271.80" y="151.00" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">-0.17</text><rect x="0.00" y="181.20" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-4) 10%, var(--card))"/>
+            <text x="30.20" y="211.40" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">-0.10</text><rect x="60.40" y="181.20" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 2%, var(--card))"/>
+            <text x="90.60" y="211.40" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">0.02</text><rect x="120.80" y="181.20" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 11%, var(--card))"/>
+            <text x="151.00" y="211.40" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">0.11</text><rect x="181.20" y="181.20" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 100%, var(--card))"/>
+            <text x="211.40" y="211.40" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--background)">1.00</text><rect x="241.60" y="181.20" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 4%, var(--card))"/>
+            <text x="271.80" y="211.40" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">0.04</text><rect x="0.00" y="241.60" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 32%, var(--card))"/>
+            <text x="30.20" y="271.80" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">0.32</text><rect x="60.40" y="241.60" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-4) 21%, var(--card))"/>
+            <text x="90.60" y="271.80" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">-0.21</text><rect x="120.80" y="241.60" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-4) 17%, var(--card))"/>
+            <text x="151.00" y="271.80" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">-0.17</text><rect x="181.20" y="241.60" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 4%, var(--card))"/>
+            <text x="211.40" y="271.80" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--foreground)">0.04</text><rect x="241.60" y="241.60" width="58.90" height="58.90" rx="2" fill="color-mix(in oklab, var(--chart-1) 100%, var(--card))"/>
+            <text x="271.80" y="271.80" dy="0.32em" text-anchor="middle" font-size="10" fill="var(--background)">1.00</text><text x="-8" y="30.20" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">GDP growth</text><text x="-8" y="90.60" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">Inflation</text><text x="-8" y="151.00" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">Unemployment</text><text x="-8" y="211.40" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">Gov. debt</text><text x="-8" y="271.80" dy="0.32em" text-anchor="end" fill="var(--muted-foreground)" font-size="11">Curr. acct</text><text transform="translate(30.20,312.00) rotate(-45)" text-anchor="end" fill="var(--muted-foreground)" font-size="11">GDP growth</text><text transform="translate(90.60,312.00) rotate(-45)" text-anchor="end" fill="var(--muted-foreground)" font-size="11">Inflation</text><text transform="translate(151.00,312.00) rotate(-45)" text-anchor="end" fill="var(--muted-foreground)" font-size="11">Unemployment</text><text transform="translate(211.40,312.00) rotate(-45)" text-anchor="end" fill="var(--muted-foreground)" font-size="11">Gov. debt</text><text transform="translate(271.80,312.00) rotate(-45)" text-anchor="end" fill="var(--muted-foreground)" font-size="11">Curr. acct</text></g>
+  </svg></div>
+    </div>
+  </section>
+
+  <footer class="muted" style="font-size:0.75rem;border-top:1px solid var(--border);padding-top:1.25rem">
+    Generated by shadcn-theming · synthetic, illustrative data
+  </footer>
+</div>
+</body>
+</html>

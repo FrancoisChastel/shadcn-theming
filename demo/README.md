@@ -1,21 +1,26 @@
 # Demo sandbox
 
-`index.html` is a **self-contained preview** of the example [`../examples/acme.brand.json`](../examples/acme.brand.json)
-theme — no build step, no dependencies. Open it in any browser and click
-**Toggle theme** to check light and dark.
+Self-contained pages — no build step, no dependencies. Open in any browser and
+click **Toggle theme** for light/dark.
 
-It renders shadcn-flavored component mockups (buttons, card, input, badges,
-alert, chart palette) styled entirely with the generated OKLCH tokens, so it
-doubles as a visual regression surface.
+| Page | What it shows |
+| --- | --- |
+| [`imf-showcase.html`](imf-showcase.html) | **Flagship**: shadcn branded as the IMF — KPIs, components, and the full scientific-chart set (WEO fan chart, histogram+KDE, Phillips-curve regression, box plots, correlation heatmap) on synthetic macro data. |
+| [`acme-showcase.html`](acme-showcase.html) | The same full showcase for the Acme example brand. |
+| [`index.html`](index.html) | A lighter component-only preview (buttons, card, badges, chart palette). |
 
-## Regenerate it for any brand
+All are styled entirely with generated OKLCH theme tokens, so they double as
+visual-regression surfaces.
+
+## Regenerate for any brand
 
 ```bash
 # from the repo root
-npm run cli -- preview examples/acme.brand.json -o demo/index.html
+npm run cli -- showcase examples/imf.brand.json -o demo/imf-showcase.html
+npm run cli -- preview  examples/acme.brand.json -o demo/index.html
 
 # or for your own brand
-npx shadcn-theming preview my-brand.json -o preview.html
+npx shadcn-theming showcase my-brand.json -o showcase.html
 ```
 
 ## Using the theme in a real app

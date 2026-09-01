@@ -5,6 +5,37 @@
   "items": [
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "stats",
+      "type": "registry:lib",
+      "title": "Statistics helpers",
+      "description": "Dependency-free statistics + scale helpers (KDE, OLS regression, quantiles, correlation, ticks) powering the scientific charts.",
+      "files": [
+        {
+          "path": "lib/stats.ts",
+          "type": "registry:lib",
+          "target": "lib/stats.ts"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "plot-frame",
+      "type": "registry:component",
+      "title": "Plot Frame",
+      "description": "A seaborn-style plotting frame (despined axes, whitegrid, scales via render prop) that every scientific chart composes.",
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/plot-frame.tsx",
+          "type": "registry:component",
+          "target": "components/ui/plot-frame.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "sparkline",
       "type": "registry:component",
       "title": "Sparkline",
@@ -32,6 +63,95 @@
           "path": "components/ui/stat-card.tsx",
           "type": "registry:component",
           "target": "components/ui/stat-card.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "histogram",
+      "type": "registry:component",
+      "title": "Histogram",
+      "description": "A distribution plot: histogram with an optional Gaussian KDE overlay (seaborn histplot). Theme-token colored.",
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json",
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/plot-frame.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/histogram.tsx",
+          "type": "registry:component",
+          "target": "components/ui/histogram.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "box-plot",
+      "type": "registry:component",
+      "title": "Box Plot",
+      "description": "Grouped Tukey box plots with 1.5·IQR whiskers and outliers (seaborn boxplot), cycling the chart palette.",
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json",
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/plot-frame.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/box-plot.tsx",
+          "type": "registry:component",
+          "target": "components/ui/box-plot.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "scatter-plot",
+      "type": "registry:component",
+      "title": "Scatter Plot",
+      "description": "A scatter plot with an OLS regression line and 95% confidence band (seaborn regplot).",
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json",
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/plot-frame.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/scatter-plot.tsx",
+          "type": "registry:component",
+          "target": "components/ui/scatter-plot.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "area-band",
+      "type": "registry:component",
+      "title": "Area Band",
+      "description": "A line with a shaded confidence/projection band and dashed forecast — the IMF WEO fan-chart idiom.",
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json",
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/plot-frame.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/area-band.tsx",
+          "type": "registry:component",
+          "target": "components/ui/area-band.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "correlation-heatmap",
+      "type": "registry:component",
+      "title": "Correlation Heatmap",
+      "description": "A correlation matrix heatmap with a theme-derived diverging color scale (seaborn heatmap).",
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/correlation-heatmap.tsx",
+          "type": "registry:component",
+          "target": "components/ui/correlation-heatmap.tsx"
         }
       ]
     }

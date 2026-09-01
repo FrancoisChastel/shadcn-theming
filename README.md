@@ -74,6 +74,7 @@ See the [full schema + examples](skills/shadcn-theming/references/brand-json.md)
 | `apply <brand.json>` | Detect the shadcn project and patch its `globals.css` (`--dry-run`, `--yes`, `--css`). |
 | `registry <brand.json>` | Emit only the `registry:theme` item. |
 | `preview <brand.json>` | Write a self-contained HTML preview (light + dark). |
+| `showcase <brand.json>` | Write a full HTML showcase: all components + scientific charts. |
 | `audit <brand.json>` | Print the WCAG contrast audit (`--strict` exits non-zero on failure). |
 
 Run `npx shadcn-theming <command> --help` for all flags.
@@ -99,16 +100,30 @@ npx skills add FrancoisChastel/shadcn-theming
 
 Then ask: *"Theme my shadcn app with our brand — here's the logo."* See [`skills/shadcn-theming`](skills/shadcn-theming/SKILL.md).
 
-## Extension components
+## Extension components + scientific charts
 
-Beyond themes, this repo ships a small set of components that shadcn/ui doesn't include but that consume the theme's tokens (so they auto-adapt to any brand):
+Beyond themes, this repo ships components shadcn/ui doesn't include — all colored through theme tokens, so they auto-adapt to any brand:
+
+- **UI**: `sparkline`, `stat-card` (KPI tile).
+- **Seaborn-like scientific charts** with real statistics (KDE, OLS regression + confidence band, quantiles, Pearson correlation) in a shared dependency-free `stats` lib: `histogram` (histplot+KDE), `box-plot`, `scatter-plot` (regplot), `area-band` (WEO fan chart), `correlation-heatmap`.
 
 ```bash
-npx shadcn@latest add https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/sparkline.json
-npx shadcn@latest add https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stat-card.json
+npx shadcn@latest add https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/scatter-plot.json
+npx shadcn@latest add https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/correlation-heatmap.json
 ```
 
 See [`registry/`](registry/README.md).
+
+## Example: the IMF
+
+A worked example brands shadcn as the **IMF** — the verified `#004C97` IMF blue, the real WEO categorical chart palette, a tight 3px institutional radius, and Avenir-style typography — then renders a full analytics showcase (KPIs, WEO fan chart, Phillips-curve regression, correlation heatmap):
+
+```bash
+npx shadcn-theming showcase examples/imf.brand.json -o imf.html   # open imf.html
+npx shadcn@latest add https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/themes/imf-theme.json
+```
+
+Prebuilt pages: [`demo/imf-showcase.html`](demo/imf-showcase.html) · [`demo/acme-showcase.html`](demo/acme-showcase.html).
 
 ## How it works
 

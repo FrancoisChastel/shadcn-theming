@@ -53,6 +53,22 @@ describe("deriveTheme", () => {
     expect(darkL).toBeGreaterThan(lightL);
   });
 
+  it("does not force a light-mode background/foreground onto dark mode", () => {
+    // A light bg + near-black fg are light-theme values; dark must derive its own.
+    const tokens = deriveTheme(
+      brand({ colors: { primary: "#004C97", background: "#ffffff", foreground: "#1a1a1a" } }),
+    );
+    // light uses the explicit values
+    expect(tokens.light!.background).toMatch(/oklch\(1 /);
+    // dark derives a dark background and a light foreground (so text is legible)
+    const darkBgL = Number(tokens.dark!.background.match(/oklch\(([0-9.]+)/)![1]);
+    const darkFgL = Number(tokens.dark!.foreground.match(/oklch\(([0-9.]+)/)![1]);
+    expect(darkBgL).toBeLessThan(0.3);
+    expect(darkFgL).toBeGreaterThan(0.7);
+    const audit = auditTokens(tokens.dark!, "dark");
+    expect(audit.checks.filter((c) => !c.passes && c.required >= 4.5)).toHaveLength(0);
+  });
+
   it("carries fonts + radius into the theme", () => {
     const tokens = deriveTheme(brand({ radius: 1, fonts: { sans: "Inter" } }));
     expect(tokens.radius).toBe("1rem");

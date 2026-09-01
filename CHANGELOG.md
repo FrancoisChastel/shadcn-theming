@@ -32,6 +32,16 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **IMF example**: `examples/imf.brand.json` (verified `#004C97`, real WEO chart
   palette, 3px radius) + prebuilt registry theme and showcase pages.
 
+- **Component explorer**: `explore` command + a shadcn-website-style interactive
+  gallery of every component (forms, overlays, menus, navigation, data display)
+  in the brand theme, with a ⌘K command palette, dialogs, dropdowns, toasts, and
+  live charts. Self-contained (no dependencies at view time).
+- **Observable Plot charts**: the scientific charts are rendered with
+  [Observable Plot](https://observablehq.com/plot/) — `linearRegressionY`
+  (regression + confidence band), `boxY`, `binX` density, and `cell` heatmap —
+  both as React registry components (`@observablehq/plot` + a `use-plot` hook)
+  and, inlined with d3, in the self-contained showcase/explorer pages.
+
 ### Fixed
 
 - Explicit `background`/`foreground` are now applied only to the appearance they

@@ -20,6 +20,7 @@ import { applyCommand, type ApplyOptions } from "./commands/apply.js";
 import { registryCommand, type RegistryOptions } from "./commands/registry.js";
 import { previewCommand, type PreviewOptions } from "./commands/preview.js";
 import { showcaseCommand, type ShowcaseOptions } from "./commands/showcase.js";
+import { exploreCommand, type ExploreOptions } from "./commands/explore.js";
 import { auditCommand, type AuditOptions } from "./commands/audit.js";
 
 const require = createRequire(import.meta.url);
@@ -123,6 +124,15 @@ program
   .option("-o, --out <file>", "output HTML path")
   .action(run(async (brandPath: string, opts: ShowcaseOptions) => {
     await showcaseCommand(brandPath, opts);
+  }));
+
+program
+  .command("explore")
+  .argument("<brand.json>", "path to a brand.json")
+  .description("Render an interactive component explorer (every component + charts)")
+  .option("-o, --out <file>", "output HTML path")
+  .action(run(async (brandPath: string, opts: ExploreOptions) => {
+    await exploreCommand(brandPath, opts);
   }));
 
 program

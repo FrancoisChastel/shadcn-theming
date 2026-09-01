@@ -8,7 +8,7 @@
       "name": "stats",
       "type": "registry:lib",
       "title": "Statistics helpers",
-      "description": "Dependency-free statistics + scale helpers (KDE, OLS regression, quantiles, correlation, ticks) powering the scientific charts.",
+      "description": "Dependency-free statistics helpers (KDE bandwidth + Gaussian KDE, Pearson correlation matrix) used by the scientific charts.",
       "files": [
         {
           "path": "lib/stats.ts",
@@ -19,18 +19,15 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-      "name": "plot-frame",
-      "type": "registry:component",
-      "title": "Plot Frame",
-      "description": "A seaborn-style plotting frame (despined axes, whitegrid, scales via render prop) that every scientific chart composes.",
-      "registryDependencies": [
-        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json"
-      ],
+      "name": "use-plot",
+      "type": "registry:lib",
+      "title": "usePlot hook",
+      "description": "A React hook that renders an Observable Plot figure into a container and keeps it sized responsively.",
       "files": [
         {
-          "path": "components/ui/plot-frame.tsx",
-          "type": "registry:component",
-          "target": "components/ui/plot-frame.tsx"
+          "path": "lib/use-plot.ts",
+          "type": "registry:lib",
+          "target": "lib/use-plot.ts"
         }
       ]
     },
@@ -71,10 +68,13 @@
       "name": "histogram",
       "type": "registry:component",
       "title": "Histogram",
-      "description": "A distribution plot: histogram with an optional Gaussian KDE overlay (seaborn histplot). Theme-token colored.",
+      "description": "A distribution plot: histogram with an optional Gaussian KDE overlay (seaborn histplot), rendered with Observable Plot.",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
       "registryDependencies": [
-        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json",
-        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/plot-frame.json"
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json",
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json"
       ],
       "files": [
         {
@@ -89,10 +89,12 @@
       "name": "box-plot",
       "type": "registry:component",
       "title": "Box Plot",
-      "description": "Grouped Tukey box plots with 1.5·IQR whiskers and outliers (seaborn boxplot), cycling the chart palette.",
+      "description": "Grouped Tukey box plots (Observable Plot boxY) with whiskers and outliers, cycling the chart palette. seaborn boxplot.",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
       "registryDependencies": [
-        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json",
-        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/plot-frame.json"
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
       ],
       "files": [
         {
@@ -107,10 +109,12 @@
       "name": "scatter-plot",
       "type": "registry:component",
       "title": "Scatter Plot",
-      "description": "A scatter plot with an OLS regression line and 95% confidence band (seaborn regplot).",
+      "description": "A scatter plot with an OLS regression line and 95% confidence band (Observable Plot linearRegressionY). seaborn regplot.",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
       "registryDependencies": [
-        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json",
-        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/plot-frame.json"
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
       ],
       "files": [
         {
@@ -125,10 +129,12 @@
       "name": "area-band",
       "type": "registry:component",
       "title": "Area Band",
-      "description": "A line with a shaded confidence/projection band and dashed forecast — the IMF WEO fan-chart idiom.",
+      "description": "A line with a shaded confidence/projection band and dashed forecast — the IMF WEO fan-chart idiom (Observable Plot).",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
       "registryDependencies": [
-        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json",
-        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/plot-frame.json"
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
       ],
       "files": [
         {
@@ -143,8 +149,12 @@
       "name": "correlation-heatmap",
       "type": "registry:component",
       "title": "Correlation Heatmap",
-      "description": "A correlation matrix heatmap with a theme-derived diverging color scale (seaborn heatmap).",
+      "description": "A correlation matrix heatmap (Observable Plot cell) with a theme-derived diverging color scale. seaborn heatmap.",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
       "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json",
         "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/stats.json"
       ],
       "files": [

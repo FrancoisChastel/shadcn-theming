@@ -26,19 +26,23 @@ npx shadcn@latest add https://raw.githubusercontent.com/FrancoisChastel/shadcn-t
 
 ### Scientific charts (seaborn-like)
 
-Real statistics (KDE, OLS regression, quantiles, Pearson correlation) computed
-in a shared, dependency-free `stats` lib, rendered as clean SVG with a
-seaborn-style despined/whitegrid frame.
+Built on [**Observable Plot**](https://observablehq.com/plot/) (the D3 team's
+grammar-of-graphics library) for recognized, publication-quality marks —
+`linearRegressionY` (regression + confidence band), `boxY`, `binX` (density),
+and `cell` (heatmap), with built-in interactive tips. Colored through theme
+tokens, so they match any brand.
 
 | Item | Seaborn analogue | Description |
 | --- | --- | --- |
-| `histogram` | `histplot(kde=True)` | Distribution with an optional Gaussian KDE overlay. |
-| `box-plot` | `boxplot` | Grouped Tukey boxes, 1.5·IQR whiskers, outliers. |
+| `histogram` | `histplot(kde=True)` | Density histogram with an optional Gaussian KDE overlay. |
+| `box-plot` | `boxplot` | Grouped Tukey boxes, whiskers, outliers. |
 | `scatter-plot` | `regplot` | Scatter with OLS regression line + 95% confidence band. |
 | `area-band` | — | Line with confidence/projection band + dashed forecast (IMF WEO fan chart). |
 | `correlation-heatmap` | `heatmap(df.corr())` | Diverging correlation matrix (theme-derived scale). |
-| `plot-frame` | (internal) | Shared axes/gridlines/scales frame the charts compose. |
-| `stats` | (lib) | KDE, regression, quantiles, correlation, scales, ticks. |
+| `use-plot` | (lib) | React hook: render a Plot figure into a responsive container. |
+| `stats` | (lib) | Gaussian KDE + Pearson correlation matrix. |
+
+Each chart pulls in `@observablehq/plot` and the `use-plot` hook automatically.
 
 Install (dependencies resolve automatically — `plot-frame` and `stats` come with
 any chart):

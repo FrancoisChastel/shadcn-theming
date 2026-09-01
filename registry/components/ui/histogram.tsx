@@ -1,104 +1,84 @@
+"use client"
+
 import * as React from "react"
+import * as Plot from "@observablehq/plot"
 
 import { cn } from "@/lib/utils"
-import { histogramBins, gaussianKDE, extent } from "@/lib/stats"
-import { PlotFrame } from "@/components/ui/plot-frame"
+import { usePlot } from "@/lib/use-plot"
+import { gaussianKDE, extent } from "@/lib/stats"
+
+const PLOT_STYLE = {
+  background: "transparent",
+  color: "var(--muted-foreground)",
+  fontFamily: "inherit",
+  fontSize: "11px",
+}
 
 export interface HistogramProps {
   /** The sample to bin. */
   data: number[]
-  /** Number of bins; defaults to the √n rule. */
-  bins?: number
-  /** Overlay a Gaussian kernel-density estimate. Default true. */
+  /** Overlay a Gaussian KDE curve. Default true. */
   kde?: boolean
   title?: string
   xLabel?: string
-  yLabel?: string
-  width?: number
   height?: number
+  /** Any CSS color, including a theme token like var(--chart-1). */
+  color?: string
   className?: string
 }
 
 /**
- * A distribution plot — histogram with an optional KDE overlay, seaborn's
- * `histplot(..., kde=True)`. Bars use density when the KDE is shown so the two
- * align. Colored through the `chart-1` theme token.
+ * A distribution plot — histogram (density) with an optional KDE overlay,
+ * rendered with Observable Plot. seaborn's `histplot(..., kde=True)`.
  */
 export function Histogram({
   data,
-  bins,
   kde = true,
   title,
   xLabel,
-  yLabel,
-  width,
-  height,
+  height = 300,
+  color = "var(--chart-1)",
   className,
 }: HistogramProps) {
-  if (!data || data.length === 0) return null
-
-  const binData = histogramBins(data, bins)
-  const [xMin, xMax] = extent(data)
-  const useDensity = kde
-  let yMax = Math.max(...binData.map((b) => (useDensity ? b.density : b.count)))
-
-  const kdeFn = kde ? gaussianKDE(data) : null
-  const kdePoints: Array<[number, number]> = []
-  if (kdeFn) {
-    const samples = 96
-    for (let i = 0; i <= samples; i++) {
-      const x = xMin + ((xMax - xMin) * i) / samples
-      const y = kdeFn(x)
-      kdePoints.push([x, y])
-      if (y > yMax) yMax = y
-    }
-  }
-  yMax *= 1.1
+  const ref = usePlot(
+    (width) => {
+      if (!data?.length) return null
+      const bins = Math.max(1, Math.round(Math.sqrt(data.length)))
+      const [mn, mx] = extent(data)
+      const binWidth = (mx - mn) / bins || 1
+      const marks: Plot.Markish[] = [
+        Plot.rectY(
+          data.map((v) => ({ v })),
+          Plot.binX({ y: "count" }, { x: "v", thresholds: bins, fill: color, fillOpacity: 0.7, tip: true }),
+        ),
+      ]
+      if (kde) {
+        const f = gaussianKDE(data)
+        const scale = data.length * binWidth // density → count axis
+        const pts = Array.from({ length: 101 }, (_, i) => {
+          const x = mn + ((mx - mn) * i) / 100
+          return { x, y: f(x) * scale }
+        })
+        marks.push(Plot.lineY(pts, { x: "x", y: "y", stroke: color, strokeWidth: 2, curve: "basis" }))
+      }
+      return Plot.plot({
+        width,
+        height,
+        style: PLOT_STYLE,
+        x: { label: xLabel ?? null },
+        y: { label: "Count", grid: true },
+        marks,
+      })
+    },
+    [data, kde, xLabel, height, color],
+  )
 
   return (
-    <PlotFrame
-      xDomain={[xMin, xMax]}
-      yDomain={[0, yMax]}
-      title={title}
-      xLabel={xLabel}
-      yLabel={yLabel ?? (useDensity ? "Density" : "Count")}
-      width={width}
-      height={height}
-      className={className}
-      grid="y"
-    >
-      {({ xScale, yScale, innerHeight }) => (
-        <>
-          {binData.map((b, i) => {
-            const x = xScale(b.x0)
-            const w = Math.max(0, xScale(b.x1) - xScale(b.x0) - 1)
-            const value = useDensity ? b.density : b.count
-            const y = yScale(value)
-            return (
-              <rect
-                key={i}
-                x={x}
-                y={y}
-                width={w}
-                height={Math.max(0, innerHeight - y)}
-                className="fill-chart-1"
-                fillOpacity={0.7}
-                rx={1}
-              />
-            )
-          })}
-          {kdeFn ? (
-            <path
-              d={kdePoints
-                .map(([x, y], i) => `${i ? "L" : "M"}${xScale(x).toFixed(2)},${yScale(y).toFixed(2)}`)
-                .join(" ")}
-              className={cn("fill-none stroke-chart-1")}
-              strokeWidth={2}
-              strokeLinejoin="round"
-            />
-          ) : null}
-        </>
-      )}
-    </PlotFrame>
+    <figure className={cn("m-0", className)}>
+      {title ? (
+        <figcaption style={{ fontSize: 13, fontWeight: 500, marginBottom: 8, color: "var(--foreground)" }}>{title}</figcaption>
+      ) : null}
+      <div ref={ref} />
+    </figure>
   )
 }

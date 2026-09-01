@@ -3,7 +3,7 @@
   "name": "stats",
   "type": "registry:lib",
   "title": "Statistics helpers",
-  "description": "Dependency-free statistics + scale helpers (KDE, OLS regression, quantiles, correlation, ticks) powering the scientific charts.",
+  "description": "Dependency-free statistics helpers (KDE bandwidth + Gaussian KDE, Pearson correlation matrix) used by the scientific charts.",
   "files": [
     {
       "path": "lib/stats.ts",

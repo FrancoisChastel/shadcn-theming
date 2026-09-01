@@ -55,3 +55,4 @@ export type { OklchColor } from "./core/color.js";
 
 export { renderPreviewHtml } from "./core/preview.js";
 export { renderShowcaseHtml } from "./showcase/render.js";
+export { renderExploreHtml } from "./showcase/explore.js";

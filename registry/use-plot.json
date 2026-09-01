@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-plot",
+  "type": "registry:lib",
+  "title": "usePlot hook",
+  "description": "A React hook that renders an Observable Plot figure into a container and keeps it sized responsively.",
+  "files": [
+    {
+      "path": "lib/use-plot.ts",
+      "type": "registry:lib",
+      "target": "lib/use-plot.ts",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\n/**\n * Render an Observable Plot figure into a div and keep it sized to its\n * container. `render(width)` returns a Plot figure (an Element); it re-runs when\n * `deps` change or the container resizes. Cleans up on unmount.\n */\nexport function usePlot(\n  render: (width: number) => Element | null | undefined,\n  deps: React.DependencyList,\n): React.RefObject<HTMLDivElement | null> {\n  const ref = React.useRef<HTMLDivElement>(null)\n\n  React.useEffect(() => {\n    const host = ref.current\n    if (!host) return\n    const draw = () => {\n      const width = Math.max(240, host.clientWidth || 520)\n      const figure = render(width)\n      if (figure) host.replaceChildren(figure)\n    }\n    draw()\n    const ro = new ResizeObserver(() => draw())\n    ro.observe(host)\n    return () => {\n      ro.disconnect()\n      host.replaceChildren()\n    }\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n  }, deps)\n\n  return ref\n}\n"
+    }
+  ]
+}

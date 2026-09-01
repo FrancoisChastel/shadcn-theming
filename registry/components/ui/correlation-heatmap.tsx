@@ -1,7 +1,18 @@
+"use client"
+
 import * as React from "react"
+import * as Plot from "@observablehq/plot"
 
 import { cn } from "@/lib/utils"
+import { usePlot } from "@/lib/use-plot"
 import { correlationMatrix } from "@/lib/stats"
+
+const PLOT_STYLE = {
+  background: "transparent",
+  color: "var(--muted-foreground)",
+  fontFamily: "inherit",
+  fontSize: "11px",
+}
 
 export interface CorrelationHeatmapProps {
   labels: string[]
@@ -12,15 +23,19 @@ export interface CorrelationHeatmapProps {
   title?: string
   /** Print the coefficient in each cell. Default true. */
   annotate?: boolean
-  width?: number
   height?: number
   className?: string
 }
 
+/** Diverging cell color from theme tokens: +1 → chart-1, -1 → chart-4. */
+function cellColor(r: number): string {
+  const end = r >= 0 ? "var(--chart-1)" : "var(--chart-4)"
+  return `color-mix(in oklab, ${end} ${Math.round(Math.min(Math.abs(r), 1) * 100)}%, var(--card))`
+}
+
 /**
- * A correlation matrix heatmap — seaborn's `heatmap(df.corr())`. The diverging
- * color scale is built from theme tokens with `color-mix` (positive →
- * `--chart-1`, negative → `--chart-4`), so it recolors with any brand theme.
+ * A correlation matrix heatmap (Observable Plot `cell`) with a theme-derived
+ * diverging color scale. seaborn's `heatmap(df.corr())`.
  */
 export function CorrelationHeatmap({
   labels,
@@ -28,92 +43,50 @@ export function CorrelationHeatmap({
   columns,
   title,
   annotate = true,
-  width = 420,
-  height = 420,
+  height,
   className,
 }: CorrelationHeatmapProps) {
-  const m = matrix ?? (columns ? correlationMatrix(columns) : null)
-  if (!m || labels.length === 0) return null
-
-  const n = labels.length
-  const margin = { top: title ? 34 : 12, right: 12, bottom: 84, left: 84 }
-  const size = Math.min(width - margin.left - margin.right, height - margin.top - margin.bottom)
-  const cell = size / n
-
-  /** Diverging color: -1 → chart-4, 0 → card, +1 → chart-1. */
-  const cellColor = (v: number): string => {
-    const pct = Math.round(Math.min(Math.abs(v), 1) * 100)
-    const end = v >= 0 ? "var(--chart-1)" : "var(--chart-4)"
-    return `color-mix(in oklab, ${end} ${pct}%, var(--card))`
-  }
-  const textColor = (v: number): string =>
-    Math.abs(v) > 0.55 ? "var(--background)" : "var(--foreground)"
+  const ref = usePlot(
+    (width) => {
+      const m = matrix ?? (columns ? correlationMatrix(columns) : null)
+      if (!m || !labels.length) return null
+      const cells = m.flatMap((row, i) => row.map((r, j) => ({ a: labels[i]!, b: labels[j]!, r })))
+      const size = Math.min(width, height ?? 460)
+      const marks: Plot.Markish[] = [
+        Plot.cell(cells, { x: "b", y: "a", fill: (d: { r: number }) => cellColor(d.r), inset: 0.5, rx: 2, tip: true, channels: { r: "r" } }),
+      ]
+      if (annotate) {
+        marks.push(
+          Plot.text(cells, {
+            x: "b",
+            y: "a",
+            text: (d: { r: number }) => d.r.toFixed(2),
+            fill: (d: { r: number }) => (Math.abs(d.r) > 0.55 ? "var(--background)" : "var(--foreground)"),
+            fontSize: 10,
+          }),
+        )
+      }
+      return Plot.plot({
+        width: size,
+        height: size,
+        marginLeft: 96,
+        marginBottom: 96,
+        style: PLOT_STYLE,
+        x: { label: null, domain: labels, tickRotate: -45 },
+        y: { label: null, domain: labels },
+        color: { type: "identity" },
+        marks,
+      })
+    },
+    [labels, matrix, columns, annotate, height],
+  )
 
   return (
-    <svg
-      viewBox={`0 0 ${width} ${height}`}
-      role="img"
-      aria-label={title ?? "correlation heatmap"}
-      className={cn("h-auto w-full", className)}
-    >
+    <figure className={cn("m-0", className)}>
       {title ? (
-        <text x={margin.left} y={20} className="fill-foreground text-[13px] font-medium">
-          {title}
-        </text>
+        <figcaption style={{ fontSize: 13, fontWeight: 500, marginBottom: 8, color: "var(--foreground)" }}>{title}</figcaption>
       ) : null}
-      <g transform={`translate(${margin.left},${margin.top})`}>
-        {m.map((row, i) =>
-          row.map((v, j) => (
-            <g key={`${i}-${j}`}>
-              <rect
-                x={j * cell}
-                y={i * cell}
-                width={cell - 1.5}
-                height={cell - 1.5}
-                rx={2}
-                style={{ fill: cellColor(v) }}
-              />
-              {annotate ? (
-                <text
-                  x={j * cell + cell / 2}
-                  y={i * cell + cell / 2}
-                  dy="0.32em"
-                  textAnchor="middle"
-                  className="text-[10px] tabular-nums"
-                  style={{ fill: textColor(v) }}
-                >
-                  {v.toFixed(2)}
-                </text>
-              ) : null}
-            </g>
-          )),
-        )}
-
-        {/* row labels */}
-        {labels.map((label, i) => (
-          <text
-            key={`r-${label}`}
-            x={-8}
-            y={i * cell + cell / 2}
-            dy="0.32em"
-            textAnchor="end"
-            className="fill-muted-foreground text-[11px]"
-          >
-            {label}
-          </text>
-        ))}
-        {/* column labels (rotated) */}
-        {labels.map((label, j) => (
-          <text
-            key={`c-${label}`}
-            transform={`translate(${j * cell + cell / 2},${n * cell + 10}) rotate(-45)`}
-            textAnchor="end"
-            className="fill-muted-foreground text-[11px]"
-          >
-            {label}
-          </text>
-        ))}
-      </g>
-    </svg>
+      <div ref={ref} />
+    </figure>
   )
 }

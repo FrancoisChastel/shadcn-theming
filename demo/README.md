@@ -5,9 +5,13 @@ click **Toggle theme** for light/dark.
 
 | Page | What it shows |
 | --- | --- |
-| [`imf-showcase.html`](imf-showcase.html) | **Flagship**: shadcn branded as the IMF — KPIs, components, and the full scientific-chart set (WEO fan chart, histogram+KDE, Phillips-curve regression, box plots, correlation heatmap) on synthetic macro data. |
-| [`acme-showcase.html`](acme-showcase.html) | The same full showcase for the Acme example brand. |
-| [`index.html`](index.html) | A lighter component-only preview (buttons, card, badges, chart palette). |
+| [`imf-explore.html`](imf-explore.html) | **Flagship**: an interactive component explorer (shadcn-website-style) — every component, live, in the IMF theme. Try the ⌘K palette, dialogs, dropdowns, toasts, and the Observable-Plot charts. |
+| [`imf-showcase.html`](imf-showcase.html) | An IMF analytics dashboard — KPIs + the scientific charts (WEO fan chart, histogram+KDE, Phillips-curve regression, box plots, correlation heatmap). |
+| [`acme-explore.html`](acme-explore.html) | The same explorer for the Acme example brand. |
+| [`index.html`](index.html) | A lighter component-only preview. |
+
+The explorer/showcase pages inline Observable Plot + d3, so they're fully
+self-contained (open directly, no server or network needed).
 
 All are styled entirely with generated OKLCH theme tokens, so they double as
 visual-regression surfaces.

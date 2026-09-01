@@ -8,13 +8,8 @@ import type { Brand } from "../core/brand-schema.js";
 import { renderRootBlock, renderDarkBlock } from "../core/render.js";
 import type { ThemeTokens, TokenMap } from "../core/tokens.js";
 import { COLOR_TOKENS } from "../core/tokens.js";
-import {
-  svgHistogram,
-  svgBoxPlot,
-  svgScatter,
-  svgAreaBand,
-  svgHeatmap,
-} from "./charts.js";
+import { chartMain, type ShowcaseData } from "./runtime-charts.js";
+import { renderPlotScripts } from "./plot-asset.js";
 import {
   gdpProjection,
   growthDistribution,
@@ -30,34 +25,14 @@ function esc(s: string): string {
   return s.replace(/[&<>]/g, (c) => (c === "&" ? "&amp;" : c === "<" ? "&lt;" : "&gt;"));
 }
 
-/** A tiny sparkline SVG for the KPI cards. */
-function sparkline(data: number[], colorVar: string): string {
-  const w = 96;
-  const h = 30;
-  const min = Math.min(...data);
-  const max = Math.max(...data);
-  const range = max - min || 1;
-  const step = w / (data.length - 1);
-  const pts = data.map((v, i) => [i * step, h - 1.5 - ((v - min) / range) * (h - 3)] as const);
-  const line = pts.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
-  const area = `${line} L${w},${h} L0,${h} Z`;
-  const last = pts[pts.length - 1]!;
-  return `<svg viewBox="0 0 ${w} ${h}" class="spark" preserveAspectRatio="none">
-    <path d="${area}" fill="${colorVar}" fill-opacity="0.1"/>
-    <path d="${line}" fill="none" stroke="${colorVar}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="2" fill="${colorVar}"/>
-  </svg>`;
-}
-
 function statCard(k: Kpi): string {
   const trend = k.delta > 0 ? "up" : k.delta < 0 ? "down" : "flat";
   const arrow = trend === "up" ? "▲" : trend === "down" ? "▼" : "→";
-  const color = trend === "down" ? "var(--destructive)" : "var(--chart-1)";
   return `<div class="card kpi">
     <div class="kpi-top"><span class="muted">${esc(k.label)}</span></div>
     <div class="kpi-mid">
       <div class="kpi-value">${esc(k.value)}</div>
-      ${sparkline(k.data, color)}
+      <span class="spark" data-spark='${JSON.stringify(k.data)}' data-trend="${trend}"></span>
     </div>
     <div class="kpi-delta ${trend}"><span class="pill">${arrow} ${Math.abs(k.delta)}%</span><span class="muted">${esc(k.deltaLabel)}</span></div>
   </div>`;
@@ -182,7 +157,11 @@ section { margin-bottom: 3rem; }
 .kpi-delta.flat .pill { background: var(--muted); color: var(--muted-foreground); }
 .muted { color: var(--muted-foreground); }
 .plot { width: 100%; height: auto; display: block; }
-.plot-card { padding: 1rem 1.1rem 0.75rem; }
+.plot-card { padding: 1rem 1.1rem 0.9rem; overflow: hidden; }
+.plot-title { font-size: 13px; font-weight: 500; color: var(--foreground); margin: 0 0 0.5rem; }
+.plot-card figure { margin: 0; }
+.plot-card svg { max-width: 100%; height: auto; overflow: visible; }
+.spark svg { width: 96px; height: 30px; }
 .tbl { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
 .tbl th { text-align: left; color: var(--muted-foreground); font-weight: 500; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border); }
 .tbl td { padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); }
@@ -197,8 +176,15 @@ export function renderShowcaseHtml(brand: Brand, tokens: ThemeTokens): string {
   const darkBlock = tokens.dark && tokens.light ? renderDarkBlock(tokens.dark) : "";
   const initial = brand.name.trim().charAt(0).toUpperCase() || "•";
 
-  const chartCard = (svg: string, wide = false) =>
-    `<div class="card plot-card${wide ? " wide" : ""}">${svg}</div>`;
+  const data: ShowcaseData = {
+    gdpProjection,
+    growthDistribution,
+    phillips,
+    regionalGrowth,
+    macroLabels,
+    macroColumns,
+  };
+  const runtime = `(${chartMain.toString()})(${JSON.stringify(data)});`;
 
   return `<!doctype html>
 <html lang="en">
@@ -246,11 +232,11 @@ ${STATIC_CSS}
   <section>
     <p class="eyebrow">Scientific charts</p>
     <div class="charts">
-      ${chartCard(svgAreaBand(gdpProjection, "World GDP growth — WEO projection", "% change", (v) => String(Math.round(v))), true)}
-      ${chartCard(svgHistogram(growthDistribution, "Distribution of country growth", "% growth"))}
-      ${chartCard(svgScatter(phillips, "Phillips curve", "Unemployment (%)", "Inflation (%)"))}
-      ${chartCard(svgBoxPlot(regionalGrowth, "Growth dispersion by group", "% growth"))}
-      ${chartCard(svgHeatmap(macroLabels, macroColumns, "Macro indicator correlations"))}
+      <div class="card plot-card wide" data-chart="areaband" data-title="World GDP growth — WEO projection"></div>
+      <div class="card plot-card" data-chart="histogram" data-title="Distribution of country growth"></div>
+      <div class="card plot-card" data-chart="scatter" data-title="Phillips curve"></div>
+      <div class="card plot-card" data-chart="boxplot" data-title="Growth dispersion by group"></div>
+      <div class="card plot-card" data-chart="heatmap" data-title="Macro indicator correlations"></div>
     </div>
   </section>
 
@@ -258,6 +244,8 @@ ${STATIC_CSS}
     Generated by shadcn-theming · synthetic, illustrative data
   </footer>
 </div>
+${renderPlotScripts()}
+<script>${runtime}</script>
 </body>
 </html>
 `;

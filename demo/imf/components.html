@@ -605,6 +605,26 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 .ai-empty h3 { margin: 0 0 0.35rem; font-size: 1.3rem; }
 .ai-empty p { color: var(--muted-foreground); margin: 0 0 1.25rem; }
 
+/* ---- Data table ---- */
+.dtable { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+.dtable-toolbar { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); }
+.dtable-scroll { max-height: 320px; overflow: auto; }
+table.dt { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.84rem; }
+table.dt thead th { position: sticky; top: 0; z-index: 1; background: var(--card); text-align: left; color: var(--muted-foreground); font-weight: 500; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
+table.dt th[data-dt-sort] { cursor: pointer; user-select: none; }
+table.dt th[data-dt-sort]:hover { color: var(--foreground); }
+table.dt th .sort-ind { opacity: 0; margin-left: 0.3rem; }
+table.dt th.asc .sort-ind, table.dt th.desc .sort-ind { opacity: 1; }
+table.dt th.desc .sort-ind { display: inline-block; transform: rotate(180deg); }
+table.dt td { padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--border); }
+table.dt tbody tr:hover { background: var(--muted); }
+table.dt tbody tr.selected { background: color-mix(in oklab, var(--primary) 8%, var(--card)); }
+table.dt .num { text-align: right; font-variant-numeric: tabular-nums; }
+table.dt .dt-check { width: 2.2rem; text-align: center; }
+table.dt .dt-check input { accent-color: var(--primary); }
+.dtable-foot { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; padding: 0.6rem 0.75rem; border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--muted-foreground); }
+.dtable-foot [data-dt-pager] { display: inline-flex; gap: 0.25rem; }
+
 </style>
 </head>
 <body>
@@ -612,7 +632,7 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 <div class="app">
   <aside class="side" aria-label="Sections">
     <div class="brand"><span class="mark" aria-hidden="true">I</span><div><b>IMF</b><span>design system</span></div></div>
-    <div class="nav-group">Forms</div><div class="nav"><a href="#button" data-nav-link>Button</a><a href="#input" data-nav-link>Input &amp; Textarea</a><a href="#checkbox-radio" data-nav-link>Checkbox &amp; Radio</a><a href="#switch-slider" data-nav-link>Switch, Slider &amp; Toggle</a><a href="#select" data-nav-link>Select</a><a href="#form-field" data-nav-link>Form field &amp; validation</a><a href="#combobox" data-nav-link>Combobox &amp; multi-select</a><a href="#datepicker" data-nav-link>Date picker</a><a href="#otp-password" data-nav-link>Input OTP &amp; password</a><a href="#file-upload" data-nav-link>File upload</a><a href="#search-tags" data-nav-link>Search, tags &amp; segmented</a></div><div class="nav-group">Data display</div><div class="nav"><a href="#badge" data-nav-link>Badge</a><a href="#avatar" data-nav-link>Avatar</a><a href="#card" data-nav-link>Card</a><a href="#table" data-nav-link>Table</a><a href="#progress-skeleton" data-nav-link>Progress &amp; Skeleton</a><a href="#tabs" data-nav-link>Tabs</a><a href="#accordion" data-nav-link>Accordion</a><a href="#carousel" data-nav-link>Carousel</a><a href="#calendar" data-nav-link>Calendar</a><a href="#tooltip-hover" data-nav-link>Tooltip &amp; Hover Card</a></div><div class="nav-group">Communication</div><div class="nav"><a href="#chat" data-nav-link>Chat</a></div><div class="nav-group">Overlays &amp; menus</div><div class="nav"><a href="#dialog" data-nav-link>Dialog &amp; Alert Dialog</a><a href="#sheet-drawer" data-nav-link>Sheet &amp; Drawer</a><a href="#dropdown" data-nav-link>Dropdown &amp; Context Menu</a><a href="#popover" data-nav-link>Popover</a><a href="#menubar" data-nav-link>Menubar</a><a href="#command" data-nav-link>Command</a><a href="#alert" data-nav-link>Alert</a><a href="#toast" data-nav-link>Toast</a></div><div class="nav-group">Navigation</div><div class="nav"><a href="#breadcrumb-pagination" data-nav-link>Breadcrumb &amp; Pagination</a><a href="#navmenu" data-nav-link>Navigation Menu</a></div>
+    <div class="nav-group">Forms</div><div class="nav"><a href="#button" data-nav-link>Button</a><a href="#input" data-nav-link>Input &amp; Textarea</a><a href="#checkbox-radio" data-nav-link>Checkbox &amp; Radio</a><a href="#switch-slider" data-nav-link>Switch, Slider &amp; Toggle</a><a href="#select" data-nav-link>Select</a><a href="#form-field" data-nav-link>Form field &amp; validation</a><a href="#combobox" data-nav-link>Combobox &amp; multi-select</a><a href="#datepicker" data-nav-link>Date picker</a><a href="#otp-password" data-nav-link>Input OTP &amp; password</a><a href="#file-upload" data-nav-link>File upload</a><a href="#search-tags" data-nav-link>Search, tags &amp; segmented</a></div><div class="nav-group">Data display</div><div class="nav"><a href="#badge" data-nav-link>Badge</a><a href="#avatar" data-nav-link>Avatar</a><a href="#card" data-nav-link>Card</a><a href="#table" data-nav-link>Table</a><a href="#data-table" data-nav-link>Data table</a><a href="#progress-skeleton" data-nav-link>Progress &amp; Skeleton</a><a href="#tabs" data-nav-link>Tabs</a><a href="#accordion" data-nav-link>Accordion</a><a href="#carousel" data-nav-link>Carousel</a><a href="#calendar" data-nav-link>Calendar</a><a href="#tooltip-hover" data-nav-link>Tooltip &amp; Hover Card</a></div><div class="nav-group">Communication</div><div class="nav"><a href="#chat" data-nav-link>Chat</a></div><div class="nav-group">Overlays &amp; menus</div><div class="nav"><a href="#dialog" data-nav-link>Dialog &amp; Alert Dialog</a><a href="#sheet-drawer" data-nav-link>Sheet &amp; Drawer</a><a href="#dropdown" data-nav-link>Dropdown &amp; Context Menu</a><a href="#popover" data-nav-link>Popover</a><a href="#menubar" data-nav-link>Menubar</a><a href="#command" data-nav-link>Command</a><a href="#alert" data-nav-link>Alert</a><a href="#toast" data-nav-link>Toast</a></div><div class="nav-group">Navigation</div><div class="nav"><a href="#breadcrumb-pagination" data-nav-link>Breadcrumb &amp; Pagination</a><a href="#navmenu" data-nav-link>Navigation Menu</a></div>
   </aside>
   <main class="main" id="main">
     <div class="topbar">
@@ -706,7 +726,7 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
     <div class="demo "><div class="field" data-datepicker style="position:relative">
           <label class="label">Reference date</label>
           <button class="combobox-trigger" data-menu-trigger><span data-dp-value class="ph">Pick a date</span><span>📅</span></button>
-          <div data-menu><div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm">‹</button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm">›</button></div><div class="cal-grid"><span class="dow">Su</span><span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span><span class="day out">28</span><span class="day out">29</span><span class="day out">30</span><span class="day out">31</span><span class="day out">32</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day sel">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span></div></div></div>
+          <div data-menu><div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm" aria-label="Previous month">‹</button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm" aria-label="Next month">›</button></div><div class="cal-grid"><span class="dow">Su</span><span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span><span class="day out">28</span><span class="day out">29</span><span class="day out">30</span><span class="day out">31</span><span class="day out">32</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day sel">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span></div></div></div>
         </div></div>
   </section>
 <section class="block" id="otp-password">
@@ -768,6 +788,34 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
             <tr><td><strong>World</strong></td><td class="num"><strong>3.2</strong></td><td class="num"><strong>3.1</strong></td><td class="num"><strong>100.0</strong></td></tr>
           </tbody></table></div>
   </section>
+<section class="block" id="data-table">
+    <h2>Data table</h2>
+    <p class="desc">An interactive table — click a header to sort, filter by name, select rows, paginate, and export CSV.</p>
+    <div class="demo col"><div class="dtable" data-datatable data-page-size="6">
+    <div class="dtable-toolbar">
+      <input class="input" data-dt-search placeholder="Filter countries…" aria-label="Filter countries" style="max-width:220px" />
+      <span class="muted" data-dt-count></span>
+      <button class="btn btn-outline btn-sm" data-dt-export style="margin-left:auto">Export CSV</button>
+    </div>
+    <div class="dtable-scroll">
+      <table class="tbl dt">
+        <thead><tr>
+          <th class="dt-check"><input type="checkbox" data-dt-all aria-label="Select all rows" /></th>
+          <th data-dt-sort="1">Country <svg class="sort-ind" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg></th>
+          <th data-dt-sort="2" data-dt-type="num" class="num">GDP growth <svg class="sort-ind" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg></th>
+          <th data-dt-sort="3" data-dt-type="num" class="num">Inflation <svg class="sort-ind" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg></th>
+          <th data-dt-sort="4" data-dt-type="num" class="num">Debt/GDP <svg class="sort-ind" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg></th>
+          <th data-dt-sort="5">Region <svg class="sort-ind" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg></th>
+        </tr></thead>
+        <tbody data-dt-body><tr><td class="dt-check"><input type="checkbox" data-dt-row aria-label="Select United States" /></td><td>United States</td><td class="num">2.8</td><td class="num">3.1</td><td class="num">121</td><td>Advanced</td></tr><tr><td class="dt-check"><input type="checkbox" data-dt-row aria-label="Select China" /></td><td>China</td><td class="num">5.0</td><td class="num">0.7</td><td class="num">83</td><td>Emerging</td></tr><tr><td class="dt-check"><input type="checkbox" data-dt-row aria-label="Select Japan" /></td><td>Japan</td><td class="num">1.9</td><td class="num">2.8</td><td class="num">252</td><td>Advanced</td></tr><tr><td class="dt-check"><input type="checkbox" data-dt-row aria-label="Select Germany" /></td><td>Germany</td><td class="num">0.2</td><td class="num">2.9</td><td class="num">64</td><td>Euro area</td></tr><tr><td class="dt-check"><input type="checkbox" data-dt-row aria-label="Select India" /></td><td>India</td><td class="num">6.8</td><td class="num">4.6</td><td class="num">82</td><td>Emerging</td></tr><tr><td class="dt-check"><input type="checkbox" data-dt-row aria-label="Select Brazil" /></td><td>Brazil</td><td class="num">2.9</td><td class="num">4.1</td><td class="num">88</td><td>Emerging</td></tr><tr><td class="dt-check"><input type="checkbox" data-dt-row aria-label="Select United Kingdom" /></td><td>United Kingdom</td><td class="num">0.7</td><td class="num">2.5</td><td class="num">101</td><td>Advanced</td></tr><tr><td class="dt-check"><input type="checkbox" data-dt-row aria-label="Select France" /></td><td>France</td><td class="num">1.1</td><td class="num">2.4</td><td class="num">111</td><td>Euro area</td></tr><tr><td class="dt-check"><input type="checkbox" data-dt-row aria-label="Select Nigeria" /></td><td>Nigeria</td><td class="num">3.1</td><td class="num">24.7</td><td class="num">46</td><td>Low-income</td></tr><tr><td class="dt-check"><input type="checkbox" data-dt-row aria-label="Select Mexico" /></td><td>Mexico</td><td class="num">2.2</td><td class="num">4.7</td><td class="num">53</td><td>Emerging</td></tr><tr><td class="dt-check"><input type="checkbox" data-dt-row aria-label="Select Indonesia" /></td><td>Indonesia</td><td class="num">5.1</td><td class="num">2.8</td><td class="num">39</td><td>Emerging</td></tr><tr><td class="dt-check"><input type="checkbox" data-dt-row aria-label="Select South Africa" /></td><td>South Africa</td><td class="num">1.2</td><td class="num">5.2</td><td class="num">74</td><td>Emerging</td></tr></tbody>
+      </table>
+    </div>
+    <div class="dtable-foot">
+      <span data-dt-selected>0 selected</span>
+      <div class="pagination" data-dt-pager></div>
+    </div>
+  </div></div>
+  </section>
 <section class="block" id="progress-skeleton">
     <h2>Progress &amp; Skeleton</h2>
     <p class="desc">Loading and progress indicators.</p>
@@ -811,7 +859,7 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 <section class="block" id="calendar">
     <h2>Calendar</h2>
     <p class="desc">A month view for date selection.</p>
-    <div class="demo "><div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm">‹</button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm">›</button></div><div class="cal-grid"><span class="dow">Su</span><span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span><span class="day out">28</span><span class="day out">29</span><span class="day out">30</span><span class="day out">31</span><span class="day out">32</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day sel">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span></div></div></div>
+    <div class="demo "><div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm" aria-label="Previous month">‹</button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm" aria-label="Next month">›</button></div><div class="cal-grid"><span class="dow">Su</span><span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span><span class="day out">28</span><span class="day out">29</span><span class="day out">30</span><span class="day out">31</span><span class="day out">32</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day sel">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span></div></div></div>
   </section>
 <section class="block" id="tooltip-hover">
     <h2>Tooltip &amp; Hover Card</h2>
@@ -1514,6 +1562,107 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
       if (label) label.textContent = model.textContent;
       closeMenus();
     }
+  });
+  $$("[data-datatable]").forEach((dt) => {
+    const body = dt.querySelector("[data-dt-body]");
+    if (!body) return;
+    const allRows = $$("tr", body);
+    const pageSize = parseInt(dt.getAttribute("data-page-size") || "6", 10);
+    const search = dt.querySelector("[data-dt-search]");
+    const countEl = dt.querySelector("[data-dt-count]");
+    const pager = dt.querySelector("[data-dt-pager]");
+    const selCount = dt.querySelector("[data-dt-selected]");
+    const allCheck = dt.querySelector("[data-dt-all]");
+    let sortCol = -1;
+    let sortDir = 1;
+    let page = 1;
+    let q = "";
+    const filtered = () => allRows.filter((r) => !q || (r.textContent ?? "").toLowerCase().includes(q));
+    const cellVal = (r, col, num) => {
+      const t = r.children[col]?.textContent?.trim() ?? "";
+      return num ? parseFloat(t) : t.toLowerCase();
+    };
+    const updateSel = () => {
+      const rowsSel = $$("[data-dt-row]", body).filter((c) => c.checked);
+      if (selCount) selCount.textContent = `${rowsSel.length} selected`;
+      allRows.forEach((r) => r.classList.toggle("selected", !!r.querySelector("[data-dt-row]")?.checked));
+    };
+    const render = () => {
+      let rows = filtered();
+      if (sortCol >= 0) {
+        const num = dt.querySelector(`[data-dt-sort="${sortCol}"]`)?.getAttribute("data-dt-type") === "num";
+        rows = [...rows].sort((a, b) => {
+          const av = cellVal(a, sortCol, num);
+          const bv = cellVal(b, sortCol, num);
+          return (av < bv ? -1 : av > bv ? 1 : 0) * sortDir;
+        });
+      }
+      rows.forEach((r) => body.appendChild(r));
+      allRows.forEach((r) => r.style.display = "none");
+      const totalPages = Math.max(1, Math.ceil(rows.length / pageSize));
+      if (page > totalPages) page = totalPages;
+      rows.slice((page - 1) * pageSize, page * pageSize).forEach((r) => r.style.display = "");
+      if (countEl) countEl.textContent = `${rows.length} rows`;
+      if (pager) {
+        pager.textContent = "";
+        const mk = (label, p2, active, disabled) => {
+          const b = document.createElement("span");
+          b.setAttribute("data-page", "");
+          if (active) b.classList.add("active");
+          if (disabled) b.style.opacity = "0.4";
+          else b.addEventListener("click", () => {
+            page = p2;
+            render();
+          });
+          b.textContent = label;
+          return b;
+        };
+        pager.appendChild(mk("\u2039", page - 1, false, page <= 1));
+        for (let p2 = 1; p2 <= totalPages; p2++) pager.appendChild(mk(String(p2), p2, p2 === page, false));
+        pager.appendChild(mk("\u203A", page + 1, false, page >= totalPages));
+      }
+    };
+    search?.addEventListener("input", () => {
+      q = search.value.toLowerCase();
+      page = 1;
+      render();
+    });
+    $$("[data-dt-sort]", dt).forEach(
+      (th) => th.addEventListener("click", () => {
+        const col = parseInt(th.getAttribute("data-dt-sort"), 10);
+        if (sortCol === col) sortDir *= -1;
+        else {
+          sortCol = col;
+          sortDir = 1;
+        }
+        $$("[data-dt-sort]", dt).forEach((h) => h.classList.remove("asc", "desc"));
+        th.classList.add(sortDir > 0 ? "asc" : "desc");
+        render();
+      })
+    );
+    body.addEventListener("change", (e) => {
+      if (closest(e.target, "[data-dt-row]")) updateSel();
+    });
+    allCheck?.addEventListener("change", () => {
+      $$("[data-dt-row]", body).forEach((c) => {
+        if (c.closest("tr").style.display !== "none") c.checked = allCheck.checked;
+      });
+      updateSel();
+    });
+    dt.querySelector("[data-dt-export]")?.addEventListener("click", () => {
+      const header = $$("th", dt).map((h) => (h.textContent ?? "").replace(/\s+/g, " ").trim()).filter((t) => t);
+      const lines = [header.join(",")];
+      filtered().forEach((r) => {
+        lines.push(Array.from(r.children).slice(1).map((c) => `"${c.textContent?.trim() ?? ""}"`).join(","));
+      });
+      const blob = new Blob([lines.join("\n")], { type: "text/csv" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "data.csv";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+    render();
   });
   const links = $$("[data-nav-link]");
   const sections = links.map((l) => document.getElementById(l.getAttribute("href").slice(1))).filter(Boolean);

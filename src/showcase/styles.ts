@@ -532,4 +532,24 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 .ai-empty .mark { width: 3rem; height: 3rem; border-radius: var(--radius); background: var(--primary); color: var(--primary-foreground); display: grid; place-items: center; font-weight: 700; font-size: 1.2rem; margin: 0 auto 0.9rem; }
 .ai-empty h3 { margin: 0 0 0.35rem; font-size: 1.3rem; }
 .ai-empty p { color: var(--muted-foreground); margin: 0 0 1.25rem; }
+
+/* ---- Data table ---- */
+.dtable { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+.dtable-toolbar { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); }
+.dtable-scroll { max-height: 320px; overflow: auto; }
+table.dt { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.84rem; }
+table.dt thead th { position: sticky; top: 0; z-index: 1; background: var(--card); text-align: left; color: var(--muted-foreground); font-weight: 500; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
+table.dt th[data-dt-sort] { cursor: pointer; user-select: none; }
+table.dt th[data-dt-sort]:hover { color: var(--foreground); }
+table.dt th .sort-ind { opacity: 0; margin-left: 0.3rem; }
+table.dt th.asc .sort-ind, table.dt th.desc .sort-ind { opacity: 1; }
+table.dt th.desc .sort-ind { display: inline-block; transform: rotate(180deg); }
+table.dt td { padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--border); }
+table.dt tbody tr:hover { background: var(--muted); }
+table.dt tbody tr.selected { background: color-mix(in oklab, var(--primary) 8%, var(--card)); }
+table.dt .num { text-align: right; font-variant-numeric: tabular-nums; }
+table.dt .dt-check { width: 2.2rem; text-align: center; }
+table.dt .dt-check input { accent-color: var(--primary); }
+.dtable-foot { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; padding: 0.6rem 0.75rem; border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--muted-foreground); }
+.dtable-foot [data-dt-pager] { display: inline-flex; gap: 0.25rem; }
 `;

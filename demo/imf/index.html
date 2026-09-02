@@ -605,6 +605,26 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 .ai-empty h3 { margin: 0 0 0.35rem; font-size: 1.3rem; }
 .ai-empty p { color: var(--muted-foreground); margin: 0 0 1.25rem; }
 
+/* ---- Data table ---- */
+.dtable { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+.dtable-toolbar { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); }
+.dtable-scroll { max-height: 320px; overflow: auto; }
+table.dt { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.84rem; }
+table.dt thead th { position: sticky; top: 0; z-index: 1; background: var(--card); text-align: left; color: var(--muted-foreground); font-weight: 500; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
+table.dt th[data-dt-sort] { cursor: pointer; user-select: none; }
+table.dt th[data-dt-sort]:hover { color: var(--foreground); }
+table.dt th .sort-ind { opacity: 0; margin-left: 0.3rem; }
+table.dt th.asc .sort-ind, table.dt th.desc .sort-ind { opacity: 1; }
+table.dt th.desc .sort-ind { display: inline-block; transform: rotate(180deg); }
+table.dt td { padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--border); }
+table.dt tbody tr:hover { background: var(--muted); }
+table.dt tbody tr.selected { background: color-mix(in oklab, var(--primary) 8%, var(--card)); }
+table.dt .num { text-align: right; font-variant-numeric: tabular-nums; }
+table.dt .dt-check { width: 2.2rem; text-align: center; }
+table.dt .dt-check input { accent-color: var(--primary); }
+.dtable-foot { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; padding: 0.6rem 0.75rem; border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--muted-foreground); }
+.dtable-foot [data-dt-pager] { display: inline-flex; gap: 0.25rem; }
+
 </style>
 </head>
 <body>
@@ -1287,6 +1307,107 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
       if (label) label.textContent = model.textContent;
       closeMenus();
     }
+  });
+  $$("[data-datatable]").forEach((dt) => {
+    const body = dt.querySelector("[data-dt-body]");
+    if (!body) return;
+    const allRows = $$("tr", body);
+    const pageSize = parseInt(dt.getAttribute("data-page-size") || "6", 10);
+    const search = dt.querySelector("[data-dt-search]");
+    const countEl = dt.querySelector("[data-dt-count]");
+    const pager = dt.querySelector("[data-dt-pager]");
+    const selCount = dt.querySelector("[data-dt-selected]");
+    const allCheck = dt.querySelector("[data-dt-all]");
+    let sortCol = -1;
+    let sortDir = 1;
+    let page = 1;
+    let q = "";
+    const filtered = () => allRows.filter((r) => !q || (r.textContent ?? "").toLowerCase().includes(q));
+    const cellVal = (r, col, num) => {
+      const t = r.children[col]?.textContent?.trim() ?? "";
+      return num ? parseFloat(t) : t.toLowerCase();
+    };
+    const updateSel = () => {
+      const rowsSel = $$("[data-dt-row]", body).filter((c) => c.checked);
+      if (selCount) selCount.textContent = `${rowsSel.length} selected`;
+      allRows.forEach((r) => r.classList.toggle("selected", !!r.querySelector("[data-dt-row]")?.checked));
+    };
+    const render = () => {
+      let rows = filtered();
+      if (sortCol >= 0) {
+        const num = dt.querySelector(`[data-dt-sort="${sortCol}"]`)?.getAttribute("data-dt-type") === "num";
+        rows = [...rows].sort((a, b) => {
+          const av = cellVal(a, sortCol, num);
+          const bv = cellVal(b, sortCol, num);
+          return (av < bv ? -1 : av > bv ? 1 : 0) * sortDir;
+        });
+      }
+      rows.forEach((r) => body.appendChild(r));
+      allRows.forEach((r) => r.style.display = "none");
+      const totalPages = Math.max(1, Math.ceil(rows.length / pageSize));
+      if (page > totalPages) page = totalPages;
+      rows.slice((page - 1) * pageSize, page * pageSize).forEach((r) => r.style.display = "");
+      if (countEl) countEl.textContent = `${rows.length} rows`;
+      if (pager) {
+        pager.textContent = "";
+        const mk = (label, p2, active, disabled) => {
+          const b = document.createElement("span");
+          b.setAttribute("data-page", "");
+          if (active) b.classList.add("active");
+          if (disabled) b.style.opacity = "0.4";
+          else b.addEventListener("click", () => {
+            page = p2;
+            render();
+          });
+          b.textContent = label;
+          return b;
+        };
+        pager.appendChild(mk("\u2039", page - 1, false, page <= 1));
+        for (let p2 = 1; p2 <= totalPages; p2++) pager.appendChild(mk(String(p2), p2, p2 === page, false));
+        pager.appendChild(mk("\u203A", page + 1, false, page >= totalPages));
+      }
+    };
+    search?.addEventListener("input", () => {
+      q = search.value.toLowerCase();
+      page = 1;
+      render();
+    });
+    $$("[data-dt-sort]", dt).forEach(
+      (th) => th.addEventListener("click", () => {
+        const col = parseInt(th.getAttribute("data-dt-sort"), 10);
+        if (sortCol === col) sortDir *= -1;
+        else {
+          sortCol = col;
+          sortDir = 1;
+        }
+        $$("[data-dt-sort]", dt).forEach((h) => h.classList.remove("asc", "desc"));
+        th.classList.add(sortDir > 0 ? "asc" : "desc");
+        render();
+      })
+    );
+    body.addEventListener("change", (e) => {
+      if (closest(e.target, "[data-dt-row]")) updateSel();
+    });
+    allCheck?.addEventListener("change", () => {
+      $$("[data-dt-row]", body).forEach((c) => {
+        if (c.closest("tr").style.display !== "none") c.checked = allCheck.checked;
+      });
+      updateSel();
+    });
+    dt.querySelector("[data-dt-export]")?.addEventListener("click", () => {
+      const header = $$("th", dt).map((h) => (h.textContent ?? "").replace(/\s+/g, " ").trim()).filter((t) => t);
+      const lines = [header.join(",")];
+      filtered().forEach((r) => {
+        lines.push(Array.from(r.children).slice(1).map((c) => `"${c.textContent?.trim() ?? ""}"`).join(","));
+      });
+      const blob = new Blob([lines.join("\n")], { type: "text/csv" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "data.csv";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+    render();
   });
   const links = $$("[data-nav-link]");
   const sections = links.map((l) => document.getElementById(l.getAttribute("href").slice(1))).filter(Boolean);

@@ -618,6 +618,101 @@ export function uiMain(): void {
     }
   })
 
+  // ---- data table: sort / filter / select / paginate / export ----
+  $$("[data-datatable]").forEach((dt) => {
+    const body = dt.querySelector("[data-dt-body]") as HTMLElement | null
+    if (!body) return
+    const allRows = $$<HTMLTableRowElement>("tr", body)
+    const pageSize = parseInt(dt.getAttribute("data-page-size") || "6", 10)
+    const search = dt.querySelector("[data-dt-search]") as HTMLInputElement | null
+    const countEl = dt.querySelector("[data-dt-count]")
+    const pager = dt.querySelector("[data-dt-pager]") as HTMLElement | null
+    const selCount = dt.querySelector("[data-dt-selected]")
+    const allCheck = dt.querySelector("[data-dt-all]") as HTMLInputElement | null
+    let sortCol = -1
+    let sortDir = 1
+    let page = 1
+    let q = ""
+
+    const filtered = () => allRows.filter((r) => !q || (r.textContent ?? "").toLowerCase().includes(q))
+    const cellVal = (r: HTMLTableRowElement, col: number, num: boolean) => {
+      const t = (r.children[col] as HTMLElement)?.textContent?.trim() ?? ""
+      return num ? parseFloat(t) : t.toLowerCase()
+    }
+    const updateSel = () => {
+      const rowsSel = $$<HTMLInputElement>("[data-dt-row]", body).filter((c) => c.checked)
+      if (selCount) selCount.textContent = `${rowsSel.length} selected`
+      allRows.forEach((r) => r.classList.toggle("selected", !!(r.querySelector("[data-dt-row]") as HTMLInputElement | null)?.checked))
+    }
+
+    const render = () => {
+      let rows = filtered()
+      if (sortCol >= 0) {
+        const num = dt.querySelector(`[data-dt-sort="${sortCol}"]`)?.getAttribute("data-dt-type") === "num"
+        rows = [...rows].sort((a, b) => {
+          const av = cellVal(a, sortCol, num)
+          const bv = cellVal(b, sortCol, num)
+          return (av < bv ? -1 : av > bv ? 1 : 0) * sortDir
+        })
+      }
+      rows.forEach((r) => body.appendChild(r))
+      allRows.forEach((r) => (r.style.display = "none"))
+      const totalPages = Math.max(1, Math.ceil(rows.length / pageSize))
+      if (page > totalPages) page = totalPages
+      rows.slice((page - 1) * pageSize, page * pageSize).forEach((r) => (r.style.display = ""))
+      if (countEl) countEl.textContent = `${rows.length} rows`
+      if (pager) {
+        pager.textContent = ""
+        const mk = (label: string, p: number, active: boolean, disabled: boolean) => {
+          const b = document.createElement("span")
+          b.setAttribute("data-page", "")
+          if (active) b.classList.add("active")
+          if (disabled) b.style.opacity = "0.4"
+          else b.addEventListener("click", () => { page = p; render() })
+          b.textContent = label
+          return b
+        }
+        pager.appendChild(mk("‹", page - 1, false, page <= 1))
+        for (let p = 1; p <= totalPages; p++) pager.appendChild(mk(String(p), p, p === page, false))
+        pager.appendChild(mk("›", page + 1, false, page >= totalPages))
+      }
+    }
+
+    search?.addEventListener("input", () => { q = search.value.toLowerCase(); page = 1; render() })
+    $$("[data-dt-sort]", dt).forEach((th) =>
+      th.addEventListener("click", () => {
+        const col = parseInt(th.getAttribute("data-dt-sort")!, 10)
+        if (sortCol === col) sortDir *= -1
+        else { sortCol = col; sortDir = 1 }
+        $$("[data-dt-sort]", dt).forEach((h) => h.classList.remove("asc", "desc"))
+        th.classList.add(sortDir > 0 ? "asc" : "desc")
+        render()
+      }),
+    )
+    body.addEventListener("change", (e) => { if (closest(e.target, "[data-dt-row]")) updateSel() })
+    allCheck?.addEventListener("change", () => {
+      $$<HTMLInputElement>("[data-dt-row]", body).forEach((c) => {
+        if ((c.closest("tr") as HTMLElement).style.display !== "none") c.checked = allCheck.checked
+      })
+      updateSel()
+    })
+    dt.querySelector("[data-dt-export]")?.addEventListener("click", () => {
+      const header = $$("th", dt).map((h) => (h.textContent ?? "").replace(/\s+/g, " ").trim()).filter((t) => t)
+      const lines = [header.join(",")]
+      filtered().forEach((r) => {
+        lines.push(Array.from(r.children).slice(1).map((c) => `"${(c as HTMLElement).textContent?.trim() ?? ""}"`).join(","))
+      })
+      const blob = new Blob([lines.join("\n")], { type: "text/csv" })
+      const a = document.createElement("a")
+      a.href = URL.createObjectURL(blob)
+      a.download = "data.csv"
+      a.click()
+      URL.revokeObjectURL(a.href)
+    })
+
+    render()
+  })
+
   // ---- scrollspy sidebar ----
   const links = $$<HTMLAnchorElement>("[data-nav-link]");
   const sections = links.map((l) => document.getElementById(l.getAttribute("href")!.slice(1))).filter(Boolean) as HTMLElement[];

@@ -427,6 +427,13 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       ),
     },
     {
+      id: "data-table",
+      group: "Data display",
+      title: "Data table",
+      desc: "An interactive table — click a header to sort, filter by name, select rows, paginate, and export CSV.",
+      html: demo(dataTableHtml(), "col"),
+    },
+    {
       id: "progress-skeleton",
       group: "Data display",
       title: "Progress & Skeleton",
@@ -821,5 +828,54 @@ function calendarHtml(): string {
   const cells: string[] = dows.map((d) => `<span class="dow">${d}</span>`);
   for (let i = 0; i < offset; i++) cells.push(`<span class="day out">${28 + i}</span>`);
   for (let d = 1; d <= 30; d++) cells.push(`<span class="day${d === 12 ? " sel" : ""}">${d}</span>`);
-  return `<div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm">‹</button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm">›</button></div><div class="cal-grid">${cells.join("")}</div></div>`;
+  return `<div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm" aria-label="Previous month">‹</button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm" aria-label="Next month">›</button></div><div class="cal-grid">${cells.join("")}</div></div>`;
+}
+
+/** An interactive data-table demo (sort / filter / select / paginate / export). */
+function dataTableHtml(): string {
+  const rows: Array<[string, number, number, number, string]> = [
+    ["United States", 2.8, 3.1, 121, "Advanced"],
+    ["China", 5.0, 0.7, 83, "Emerging"],
+    ["Japan", 1.9, 2.8, 252, "Advanced"],
+    ["Germany", 0.2, 2.9, 64, "Euro area"],
+    ["India", 6.8, 4.6, 82, "Emerging"],
+    ["Brazil", 2.9, 4.1, 88, "Emerging"],
+    ["United Kingdom", 0.7, 2.5, 101, "Advanced"],
+    ["France", 1.1, 2.4, 111, "Euro area"],
+    ["Nigeria", 3.1, 24.7, 46, "Low-income"],
+    ["Mexico", 2.2, 4.7, 53, "Emerging"],
+    ["Indonesia", 5.1, 2.8, 39, "Emerging"],
+    ["South Africa", 1.2, 5.2, 74, "Emerging"],
+  ];
+  const body = rows
+    .map(
+      (r) =>
+        `<tr><td class="dt-check"><input type="checkbox" data-dt-row aria-label="Select ${r[0]}" /></td><td>${r[0]}</td><td class="num">${r[1].toFixed(1)}</td><td class="num">${r[2].toFixed(1)}</td><td class="num">${r[3]}</td><td>${r[4]}</td></tr>`,
+    )
+    .join("");
+  const sortInd = '<svg class="sort-ind" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>';
+  return `<div class="dtable" data-datatable data-page-size="6">
+    <div class="dtable-toolbar">
+      <input class="input" data-dt-search placeholder="Filter countries…" aria-label="Filter countries" style="max-width:220px" />
+      <span class="muted" data-dt-count></span>
+      <button class="btn btn-outline btn-sm" data-dt-export style="margin-left:auto">Export CSV</button>
+    </div>
+    <div class="dtable-scroll">
+      <table class="tbl dt">
+        <thead><tr>
+          <th class="dt-check"><input type="checkbox" data-dt-all aria-label="Select all rows" /></th>
+          <th data-dt-sort="1">Country ${sortInd}</th>
+          <th data-dt-sort="2" data-dt-type="num" class="num">GDP growth ${sortInd}</th>
+          <th data-dt-sort="3" data-dt-type="num" class="num">Inflation ${sortInd}</th>
+          <th data-dt-sort="4" data-dt-type="num" class="num">Debt/GDP ${sortInd}</th>
+          <th data-dt-sort="5">Region ${sortInd}</th>
+        </tr></thead>
+        <tbody data-dt-body>${body}</tbody>
+      </table>
+    </div>
+    <div class="dtable-foot">
+      <span data-dt-selected>0 selected</span>
+      <div class="pagination" data-dt-pager></div>
+    </div>
+  </div>`;
 }

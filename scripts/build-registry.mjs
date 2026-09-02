@@ -165,6 +165,15 @@ const ITEMS = [
     target: "components/ui/donut-chart.tsx",
     dependencies: ["d3-shape"],
   },
+  {
+    name: "data-table",
+    type: "registry:component",
+    title: "Data Table",
+    description:
+      "A lightweight, dependency-free data table: sortable columns, filter, pagination, and row selection. Theme-token styled.",
+    source: "components/ui/data-table.tsx",
+    target: "components/ui/data-table.tsx",
+  },
 ];
 
 /** Build a single registry item object from a definition. */

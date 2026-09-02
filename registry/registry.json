@@ -241,6 +241,20 @@
           "target": "components/ui/donut-chart.tsx"
         }
       ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "data-table",
+      "type": "registry:component",
+      "title": "Data Table",
+      "description": "A lightweight, dependency-free data table: sortable columns, filter, pagination, and row selection. Theme-token styled.",
+      "files": [
+        {
+          "path": "components/ui/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/ui/data-table.tsx"
+        }
+      ]
     }
   ]
 }

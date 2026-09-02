@@ -120,12 +120,12 @@ See [`registry/`](registry/README.md).
 A worked example brands shadcn as the **IMF** — the verified `#004C97` IMF blue, the real WEO categorical chart palette, a tight 3px institutional radius, and Avenir-style typography — then renders an interactive component explorer and an analytics dashboard (KPIs, WEO fan chart, Phillips-curve regression, correlation heatmap):
 
 ```bash
-npx shadcn-theming explore  examples/imf.brand.json -o imf-explore.html   # every component, interactive
+npx shadcn-theming explore  examples/imf.brand.json -o imf-site           # multi-page component explorer
 npx shadcn-theming showcase examples/imf.brand.json -o imf.html           # analytics dashboard
 npx shadcn@latest add https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/themes/imf-theme.json
 ```
 
-Prebuilt pages: [`demo/imf-explore.html`](demo/imf-explore.html) · [`demo/imf-showcase.html`](demo/imf-showcase.html). The pages are self-contained (Observable Plot + d3 are inlined).
+Prebuilt: the multi-page explorer [`demo/imf/index.html`](demo/imf/index.html) (Design system · Components · Layouts · Charts · AI harness) and the analytics dashboard [`demo/imf-showcase.html`](demo/imf-showcase.html). Pages are self-contained (Observable Plot + d3 inlined on the charts page).
 
 ## How it works
 

@@ -1,39 +1,37 @@
-# Demo sandbox
+# Demo
 
-Self-contained pages — no build step, no dependencies. Open in any browser and
-click **Toggle theme** for light/dark.
+Self-contained, generated pages — no build step, no dependencies. Open in a
+browser; use **Toggle theme** for light/dark and **⌘K** to search.
 
-| Page | What it shows |
+## Multi-page explorer sites
+
+`npx shadcn-theming explore <brand.json> -o <dir>` generates a small site with a
+shared top nav:
+
+| Page | Contents |
 | --- | --- |
-| [`imf-explore.html`](imf-explore.html) | **Flagship**: an interactive component explorer (shadcn-website-style) — every component, live, in the IMF theme. Try the ⌘K palette, dialogs, dropdowns, toasts, and the Observable-Plot charts. |
-| [`imf-showcase.html`](imf-showcase.html) | An IMF analytics dashboard — KPIs + the scientific charts (WEO fan chart, histogram+KDE, Phillips-curve regression, box plots, correlation heatmap). |
-| [`acme-explore.html`](acme-explore.html) | The same explorer for the Acme example brand. |
-| [`index.html`](index.html) | A lighter component-only preview. |
+| `index.html` | **Design system** — theme, color palette, typography, radius, headline KPIs. |
+| `components.html` | Every shadcn/ui component (forms, data display, overlays, navigation, chat). |
+| `layouts.html` | Layout primitives + page templates (auth, error, empty states). |
+| `charts.html` | Observable-Plot charts (scientific + gallery) and KPI extensions. |
+| `ai.html` | A Claude Code / Pi-style AI harness experience. |
 
-The explorer/showcase pages inline Observable Plot + d3, so they're fully
-self-contained (open directly, no server or network needed).
+Prebuilt:
 
-All are styled entirely with generated OKLCH theme tokens, so they double as
-visual-regression surfaces.
+- IMF: [`imf/index.html`](imf/index.html)
+- Acme: [`acme/index.html`](acme/index.html)
 
-## Regenerate for any brand
+Only `charts.html` inlines Observable Plot + d3 (~500KB); the other pages are
+~85KB and fully offline.
+
+## Analytics dashboard
+
+[`imf-showcase.html`](imf-showcase.html) — a single-page IMF analytics dashboard
+(KPIs + the scientific charts).
+
+## Regenerate
 
 ```bash
-# from the repo root
+npm run cli -- explore  examples/imf.brand.json -o demo/imf
 npm run cli -- showcase examples/imf.brand.json -o demo/imf-showcase.html
-npm run cli -- preview  examples/acme.brand.json -o demo/index.html
-
-# or for your own brand
-npx shadcn-theming showcase my-brand.json -o showcase.html
-```
-
-## Using the theme in a real app
-
-The preview shows the tokens; to use them in an actual shadcn/ui project:
-
-```bash
-npx shadcn-theming apply my-brand.json          # patch the app's globals.css
-# — or make it shareable —
-npx shadcn-theming registry my-brand.json -o my-theme.json
-npx shadcn@latest add https://.../my-theme.json # anyone installs it
 ```

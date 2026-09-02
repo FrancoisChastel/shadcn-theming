@@ -1,0 +1,1465 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Acme — components</title>
+<style>
+:root {
+  --radius: 0.5rem;
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+  --background: oklch(1 0.004 276.966);
+  --foreground: oklch(0.145 0.004 276.966);
+  --card: oklch(1 0.004 276.966);
+  --card-foreground: oklch(0.145 0.004 276.966);
+  --popover: oklch(1 0.004 276.966);
+  --popover-foreground: oklch(0.145 0.004 276.966);
+  --primary: oklch(0.5106 0.2301 276.966);
+  --primary-foreground: oklch(0.985 0.02 276.966);
+  --secondary: oklch(0.97 0.004 276.966);
+  --secondary-foreground: oklch(0.205 0.004 276.966);
+  --muted: oklch(0.97 0.004 276.966);
+  --muted-foreground: oklch(0.5444 0.004 276.966);
+  --accent: oklch(0.95 0.0747 47.604);
+  --accent-foreground: oklch(0.205 0.004 276.966);
+  --destructive: oklch(0.5858 0.222 17.585);
+  --destructive-foreground: oklch(0.9853 0 0);
+  --border: oklch(0.922 0.004 276.966);
+  --input: oklch(0.922 0.004 276.966);
+  --ring: oklch(0.65 0.16 276.966);
+  --chart-1: oklch(0.62 0.2072 276.966);
+  --chart-2: oklch(0.68 0.2301 324.966);
+  --chart-3: oklch(0.57 0.1434 244.966);
+  --chart-4: oklch(0.7 0.195 12.966);
+  --chart-5: oklch(0.59 0.1235 76.966);
+  --sidebar: oklch(0.985 0.004 276.966);
+  --sidebar-foreground: oklch(0.145 0.004 276.966);
+  --sidebar-primary: oklch(0.5106 0.2301 276.966);
+  --sidebar-primary-foreground: oklch(0.985 0.02 276.966);
+  --sidebar-accent: oklch(0.97 0.004 276.966);
+  --sidebar-accent-foreground: oklch(0.205 0.004 276.966);
+  --sidebar-border: oklch(0.922 0.004 276.966);
+  --sidebar-ring: oklch(0.65 0.16 276.966);
+}
+.dark {
+  --background: oklch(0.145 0.004 276.966);
+  --foreground: oklch(0.985 0.004 276.966);
+  --card: oklch(0.205 0.004 276.966);
+  --card-foreground: oklch(0.985 0.004 276.966);
+  --popover: oklch(0.205 0.004 276.966);
+  --popover-foreground: oklch(0.985 0.004 276.966);
+  --primary: oklch(0.74 0.1352 276.966);
+  --primary-foreground: oklch(0.145 0.02 276.966);
+  --secondary: oklch(0.269 0.004 276.966);
+  --secondary-foreground: oklch(0.985 0.004 276.966);
+  --muted: oklch(0.269 0.004 276.966);
+  --muted-foreground: oklch(0.708 0.004 276.966);
+  --accent: oklch(0.3 0.1307 47.604);
+  --accent-foreground: oklch(0.985 0.004 276.966);
+  --destructive: oklch(0.5858 0.222 17.585);
+  --destructive-foreground: oklch(0.9853 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0.16 276.966);
+  --chart-1: oklch(0.7 0.1585 276.966);
+  --chart-2: oklch(0.76 0.2282 324.966);
+  --chart-3: oklch(0.65 0.1635 244.966);
+  --chart-4: oklch(0.78 0.1307 12.966);
+  --chart-5: oklch(0.67 0.1402 76.966);
+  --sidebar: oklch(0.205 0.004 276.966);
+  --sidebar-foreground: oklch(0.985 0.004 276.966);
+  --sidebar-primary: oklch(0.74 0.1352 276.966);
+  --sidebar-primary-foreground: oklch(0.145 0.02 276.966);
+  --sidebar-accent: oklch(0.269 0.004 276.966);
+  --sidebar-accent-foreground: oklch(0.985 0.004 276.966);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0.16 276.966);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif); background: var(--background); color: var(--foreground); font-size: 14px; }
+.muted { color: var(--muted-foreground); }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+
+/* layout */
+.app { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
+.side { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; border-right: 1px solid var(--border); padding: 1.25rem 1rem; background: var(--sidebar); color: var(--sidebar-foreground); }
+.side .brand { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.25rem; }
+.side .brand .mark { width: 2rem; height: 2rem; border-radius: var(--radius); background: var(--sidebar-primary); color: var(--sidebar-primary-foreground); display: grid; place-items: center; font-weight: 700; }
+.side .brand b { font-size: 0.95rem; letter-spacing: -0.01em; }
+.side .brand span { font-size: 0.72rem; color: var(--muted-foreground); display: block; }
+.nav-group { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted-foreground); margin: 1rem 0 0.35rem; font-weight: 600; }
+.nav a { display: block; padding: 0.3rem 0.55rem; border-radius: calc(var(--radius) - 1px); color: var(--muted-foreground); font-size: 0.83rem; }
+.nav a:hover { background: var(--sidebar-accent); color: var(--sidebar-accent-foreground); }
+.nav a.active { background: var(--sidebar-accent); color: var(--foreground); font-weight: 500; }
+.main { min-width: 0; }
+.topbar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.75rem 2rem; border-bottom: 1px solid var(--border); background: color-mix(in oklab, var(--background) 82%, transparent); backdrop-filter: blur(8px); }
+.topbar .search { flex: 1; max-width: 360px; display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--input); border-radius: var(--radius); padding: 0.4rem 0.7rem; color: var(--muted-foreground); font-size: 0.8rem; cursor: pointer; background: var(--background); }
+.topbar .search kbd { margin-left: auto; font-size: 0.7rem; border: 1px solid var(--border); border-radius: 4px; padding: 0 0.35rem; background: var(--muted); }
+.pagenav { display: flex; gap: 0.2rem; flex-wrap: wrap; }
+.pagenav a { padding: 0.35rem 0.75rem; border-radius: var(--radius); font-size: 0.83rem; color: var(--muted-foreground); font-weight: 500; }
+.pagenav a:hover { background: var(--accent); color: var(--accent-foreground); }
+.pagenav a.active { background: var(--primary); color: var(--primary-foreground); }
+.content { padding: 2rem 2rem 6rem; max-width: 1080px; }
+.hero { margin-bottom: 2.5rem; }
+.hero h1 { font-size: 1.9rem; margin: 0 0 0.4rem; letter-spacing: -0.02em; }
+.hero p { margin: 0; color: var(--muted-foreground); max-width: 60ch; }
+section.block { margin: 2.75rem 0; scroll-margin-top: 72px; }
+section.block > h2 { font-size: 1.15rem; margin: 0 0 0.25rem; letter-spacing: -0.01em; }
+section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-size: 0.86rem; }
+.demo { border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.85rem; align-items: center; background: var(--card); }
+.demo.col { flex-direction: column; align-items: stretch; flex-wrap: nowrap; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+@media (max-width: 980px) { .app { grid-template-columns: 1fr; } .side { display: none; } .grid2,.grid3,.grid4 { grid-template-columns: 1fr; } }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; border-radius: var(--radius); padding: 0.5rem 1rem; font-size: 0.875rem; font-weight: 500; border: 1px solid transparent; cursor: pointer; transition: opacity .15s, background .15s; line-height: 1; }
+.btn:hover { opacity: 0.9; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-sm { padding: 0.35rem 0.7rem; font-size: 0.8rem; }
+.btn-lg { padding: 0.65rem 1.4rem; font-size: 0.95rem; }
+.btn-icon { padding: 0.5rem; width: 2.25rem; height: 2.25rem; }
+.btn-primary { background: var(--primary); color: var(--primary-foreground); }
+.btn-secondary { background: var(--secondary); color: var(--secondary-foreground); }
+.btn-outline { background: transparent; color: var(--foreground); border-color: var(--border); }
+.btn-outline:hover { background: var(--accent); color: var(--accent-foreground); opacity: 1; }
+.btn-ghost { background: transparent; color: var(--foreground); }
+.btn-ghost:hover { background: var(--accent); color: var(--accent-foreground); opacity: 1; }
+.btn-destructive { background: var(--destructive); color: var(--destructive-foreground); }
+.btn-link { background: transparent; color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+
+/* badges */
+.badge { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; padding: 0.15rem 0.55rem; border-radius: 999px; font-weight: 600; }
+.badge-primary { background: var(--primary); color: var(--primary-foreground); }
+.badge-secondary { background: var(--secondary); color: var(--secondary-foreground); }
+.badge-destructive { background: var(--destructive); color: var(--destructive-foreground); }
+.badge-outline { border: 1px solid var(--border); color: var(--foreground); }
+
+/* inputs */
+.input, .textarea, .select-trigger { width: 100%; padding: 0.5rem 0.75rem; border-radius: var(--radius); border: 1px solid var(--input); background: var(--background); color: var(--foreground); font-size: 0.875rem; font-family: inherit; }
+.input:focus, .textarea:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+.input::placeholder, .textarea::placeholder { color: var(--muted-foreground); }
+.textarea { min-height: 80px; resize: vertical; }
+.label { font-size: 0.83rem; font-weight: 500; display: block; margin-bottom: 0.4rem; }
+.field { display: flex; flex-direction: column; gap: 0; max-width: 320px; }
+.hint { font-size: 0.75rem; color: var(--muted-foreground); margin-top: 0.35rem; }
+
+/* checkbox / radio */
+.check, .radio { display: inline-flex; align-items: center; gap: 0.55rem; font-size: 0.85rem; cursor: pointer; }
+.check input, .radio input { appearance: none; width: 1.05rem; height: 1.05rem; border: 1px solid var(--border); background: var(--background); cursor: pointer; display: grid; place-items: center; }
+.check input { border-radius: 4px; }
+.radio input { border-radius: 999px; }
+.check input:checked, .radio input:checked { background: var(--primary); border-color: var(--primary); }
+.check input:checked::after { content: "✓"; color: var(--primary-foreground); font-size: 0.7rem; }
+.radio input:checked::after { content: ""; width: 0.45rem; height: 0.45rem; border-radius: 999px; background: var(--primary-foreground); }
+
+/* switch */
+.switch { display: inline-flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.85rem; }
+.switch input { display: none; }
+.switch .track { width: 2.35rem; height: 1.3rem; background: var(--secondary); border-radius: 999px; position: relative; transition: background .15s; }
+.switch .thumb { position: absolute; top: 2px; left: 2px; width: 1.05rem; height: 1.05rem; border-radius: 999px; background: var(--background); transition: transform .15s; box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+.switch input:checked + .track { background: var(--primary); }
+.switch input:checked + .track .thumb { transform: translateX(1.05rem); }
+
+/* slider */
+.slider { -webkit-appearance: none; appearance: none; width: 220px; height: 6px; border-radius: 999px; background: var(--secondary); outline: none; }
+.slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 999px; background: var(--background); border: 2px solid var(--primary); cursor: pointer; }
+.slider::-moz-range-thumb { width: 16px; height: 16px; border-radius: 999px; background: var(--background); border: 2px solid var(--primary); cursor: pointer; }
+
+/* toggle group */
+.toggle { border: 1px solid var(--border); background: transparent; color: var(--foreground); border-radius: var(--radius); padding: 0.4rem 0.65rem; cursor: pointer; font-size: 0.85rem; }
+.toggle.on { background: var(--accent); color: var(--accent-foreground); border-color: var(--primary); }
+.toggle-group { display: inline-flex; gap: 0.35rem; }
+
+/* tabs */
+.tabs-list { display: inline-flex; gap: 0.25rem; background: var(--muted); padding: 0.25rem; border-radius: var(--radius); }
+[data-tab] { border: none; background: transparent; color: var(--muted-foreground); padding: 0.35rem 0.85rem; border-radius: calc(var(--radius) - 1px); cursor: pointer; font-size: 0.83rem; font-weight: 500; }
+[data-tab][aria-selected="true"] { background: var(--background); color: var(--foreground); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+[data-tab-panel] { padding: 1rem 0.15rem; font-size: 0.88rem; color: var(--muted-foreground); }
+
+/* accordion */
+[data-accordion] { width: 100%; }
+[data-acc-item] { border-bottom: 1px solid var(--border); }
+[data-acc-trigger] { width: 100%; text-align: left; background: none; border: none; color: var(--foreground); padding: 0.85rem 0.25rem; font-size: 0.9rem; font-weight: 500; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+[data-acc-trigger] .chev { transition: transform .2s; color: var(--muted-foreground); }
+[data-acc-item].open [data-acc-trigger] .chev { transform: rotate(180deg); }
+.acc-content { max-height: 0; overflow: hidden; transition: max-height .25s ease; color: var(--muted-foreground); font-size: 0.86rem; }
+[data-acc-item].open .acc-content { max-height: 200px; }
+.acc-content-inner { padding: 0 0.25rem 0.9rem; }
+
+/* card */
+.card { background: var(--card); color: var(--card-foreground); border: 1px solid var(--border); border-radius: var(--radius); }
+.card-h { padding: 1.1rem 1.25rem 0.4rem; }
+.card-t { font-weight: 600; letter-spacing: -0.01em; }
+.card-d { color: var(--muted-foreground); font-size: 0.82rem; margin-top: 0.2rem; }
+.card-b { padding: 0.6rem 1.25rem 1rem; font-size: 0.86rem; }
+.card-f { padding: 0.9rem 1.25rem; border-top: 1px solid var(--border); display: flex; gap: 0.5rem; justify-content: flex-end; }
+
+/* alert */
+.alert { display: flex; gap: 0.7rem; border-radius: var(--radius); border: 1px solid var(--border); padding: 0.9rem 1rem; font-size: 0.86rem; background: var(--card); }
+.alert .ico { color: var(--muted-foreground); }
+.alert-destructive { border-color: var(--destructive); color: var(--destructive); }
+.alert-destructive .ico { color: var(--destructive); }
+
+/* separator */
+.sep { height: 1px; background: var(--border); border: none; width: 100%; margin: 0.25rem 0; }
+.sep-v { width: 1px; align-self: stretch; background: var(--border); }
+
+/* avatar */
+.avatar { width: 2.5rem; height: 2.5rem; border-radius: 999px; background: var(--secondary); color: var(--secondary-foreground); display: grid; place-items: center; font-weight: 600; font-size: 0.85rem; overflow: hidden; }
+.avatar-group { display: flex; }
+.avatar-group .avatar { border: 2px solid var(--background); margin-left: -0.6rem; }
+
+/* progress / skeleton */
+.progress { width: 100%; height: 0.55rem; background: var(--secondary); border-radius: 999px; overflow: hidden; }
+.progress > span { display: block; height: 100%; background: var(--primary); border-radius: 999px; transition: width .3s; }
+.skeleton { background: linear-gradient(90deg, var(--muted), color-mix(in oklab, var(--muted) 60%, var(--background)), var(--muted)); background-size: 200% 100%; animation: sk 1.4s infinite; border-radius: calc(var(--radius) - 1px); }
+@keyframes sk { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* table */
+.tbl { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+.tbl caption { text-align: left; color: var(--muted-foreground); padding-bottom: 0.6rem; font-size: 0.8rem; }
+.tbl th { text-align: left; color: var(--muted-foreground); font-weight: 500; padding: 0.55rem 0.6rem; border-bottom: 1px solid var(--border); }
+.tbl td { padding: 0.55rem 0.6rem; border-bottom: 1px solid var(--border); }
+.tbl tbody tr:hover { background: var(--muted); }
+.tbl .num, .tbl th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* tooltip / hover card (CSS hover) */
+.tip-wrap, .hover-wrap { position: relative; display: inline-flex; }
+.tip { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--primary); color: var(--primary-foreground); font-size: 0.75rem; padding: 0.3rem 0.55rem; border-radius: calc(var(--radius) - 1px); white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .15s; }
+.tip-wrap:hover .tip { opacity: 1; }
+.hover-card { position: absolute; top: calc(100% + 8px); left: 0; width: 260px; background: var(--popover); color: var(--popover-foreground); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.9rem; box-shadow: 0 8px 24px rgba(0,0,0,.14); opacity: 0; pointer-events: none; transform: translateY(-4px); transition: opacity .15s, transform .15s; z-index: 20; }
+.hover-wrap:hover .hover-card { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+/* menus / popovers / selects / dropdown / context */
+[data-menu-trigger], [data-select] { position: relative; }
+[data-menu] { position: absolute; top: calc(100% + 6px); left: 0; min-width: 200px; background: var(--popover); color: var(--popover-foreground); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.3rem; box-shadow: 0 8px 24px rgba(0,0,0,.14); opacity: 0; pointer-events: none; transform: translateY(-4px); transition: opacity .12s, transform .12s; z-index: 40; }
+[data-menu].open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.menu-item { display: flex; align-items: center; gap: 0.55rem; padding: 0.4rem 0.55rem; border-radius: calc(var(--radius) - 1px); font-size: 0.83rem; cursor: pointer; }
+.menu-item:hover { background: var(--accent); color: var(--accent-foreground); }
+.menu-item.danger { color: var(--destructive); }
+.menu-label { padding: 0.35rem 0.55rem; font-size: 0.72rem; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.06em; }
+.menu-sep { height: 1px; background: var(--border); margin: 0.3rem 0; }
+.select-trigger { display: flex; align-items: center; justify-content: space-between; cursor: pointer; max-width: 260px; }
+[data-select-option] { }
+[data-select-option].selected { background: var(--accent); color: var(--accent-foreground); }
+
+/* overlays: dialog / sheet / drawer */
+.overlay { position: fixed; inset: 0; z-index: 50; display: none; }
+.overlay.open { display: block; }
+.overlay .backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.5); animation: fade .2s; }
+@keyframes fade { from { opacity: 0; } }
+.dialog { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(460px, 92vw); background: var(--card); color: var(--card-foreground); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 24px 60px rgba(0,0,0,.28); animation: pop .2s; }
+@keyframes pop { from { opacity: 0; transform: translate(-50%, -46%) scale(.97); } }
+.dialog .dh { padding: 1.25rem 1.25rem 0.4rem; }
+.dialog .dh h3 { margin: 0; font-size: 1.05rem; }
+.dialog .db { padding: 0.4rem 1.25rem 0.6rem; color: var(--muted-foreground); font-size: 0.87rem; }
+.dialog .df { padding: 1rem 1.25rem; display: flex; gap: 0.5rem; justify-content: flex-end; }
+.sheet { position: absolute; top: 0; right: 0; height: 100%; width: min(400px, 90vw); background: var(--card); color: var(--card-foreground); border-left: 1px solid var(--border); box-shadow: -12px 0 40px rgba(0,0,0,.2); animation: slideR .25s; padding: 1.5rem; }
+@keyframes slideR { from { transform: translateX(100%); } }
+.drawer { position: absolute; bottom: 0; left: 0; width: 100%; max-height: 80%; background: var(--card); color: var(--card-foreground); border-top: 1px solid var(--border); border-radius: var(--radius) var(--radius) 0 0; box-shadow: 0 -12px 40px rgba(0,0,0,.2); animation: slideU .25s; padding: 1.5rem; }
+.drawer .grab { width: 40px; height: 4px; border-radius: 999px; background: var(--border); margin: -0.5rem auto 1rem; }
+@keyframes slideU { from { transform: translateY(100%); } }
+
+/* command palette */
+#cmdk { position: fixed; inset: 0; z-index: 55; display: none; align-items: flex-start; justify-content: center; padding-top: 12vh; background: rgba(0,0,0,.5); }
+#cmdk.open { display: flex; }
+.cmd { width: min(560px, 92vw); background: var(--popover); color: var(--popover-foreground); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 24px 60px rgba(0,0,0,.3); overflow: hidden; animation: pop .18s; }
+.cmd input { width: 100%; border: none; border-bottom: 1px solid var(--border); background: transparent; color: inherit; padding: 0.9rem 1rem; font-size: 0.95rem; outline: none; }
+.cmd .list { max-height: 320px; overflow-y: auto; padding: 0.4rem; }
+[data-cmd-item] { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.7rem; border-radius: calc(var(--radius) - 1px); font-size: 0.86rem; cursor: pointer; }
+[data-cmd-item]:hover { background: var(--accent); color: var(--accent-foreground); }
+[data-cmd-item][hidden] { display: none; }
+
+/* toast */
+.toaster { position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 70; display: flex; flex-direction: column; gap: 0.6rem; }
+.toast { background: var(--card); color: var(--card-foreground); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.8rem 1rem; box-shadow: 0 8px 28px rgba(0,0,0,.18); min-width: 260px; opacity: 0; transform: translateX(20px); transition: opacity .25s, transform .25s; }
+.toast.show { opacity: 1; transform: translateX(0); }
+
+/* breadcrumb / pagination */
+.crumb { display: flex; align-items: center; gap: 0.4rem; font-size: 0.83rem; color: var(--muted-foreground); }
+.crumb a:hover { color: var(--foreground); }
+.crumb .cur { color: var(--foreground); font-weight: 500; }
+.pagination { display: inline-flex; gap: 0.3rem; }
+[data-page] { min-width: 2rem; height: 2rem; display: grid; place-items: center; border: 1px solid var(--border); border-radius: calc(var(--radius) - 1px); cursor: pointer; font-size: 0.83rem; background: var(--background); }
+[data-page].active { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }
+
+/* carousel */
+[data-carousel] { position: relative; overflow: hidden; border-radius: var(--radius); border: 1px solid var(--border); }
+[data-carousel-track] { display: flex; transition: transform .35s ease; }
+[data-carousel-item] { min-width: 100%; height: 180px; display: grid; place-items: center; font-size: 2rem; font-weight: 700; color: var(--muted-foreground); background: var(--muted); }
+[data-carousel-prev], [data-carousel-next] { position: absolute; top: 50%; transform: translateY(-50%); width: 2rem; height: 2rem; border-radius: 999px; border: 1px solid var(--border); background: var(--background); cursor: pointer; display: grid; place-items: center; }
+[data-carousel-prev] { left: 0.5rem; } [data-carousel-next] { right: 0.5rem; }
+
+/* calendar */
+.cal { width: 260px; border: 1px solid var(--border); border-radius: var(--radius); padding: 0.9rem; background: var(--card); }
+.cal-h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; font-size: 0.85rem; font-weight: 500; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
+.cal-grid .dow { font-size: 0.68rem; color: var(--muted-foreground); padding: 0.25rem 0; }
+.cal-grid .day { font-size: 0.78rem; padding: 0.3rem 0; border-radius: calc(var(--radius) - 1px); cursor: pointer; }
+.cal-grid .day:hover { background: var(--accent); color: var(--accent-foreground); }
+.cal-grid .day.sel { background: var(--primary); color: var(--primary-foreground); }
+.cal-grid .day.out { color: var(--muted-foreground); opacity: 0.4; }
+
+/* menubar / navigation menu */
+.menubar { display: inline-flex; gap: 0.15rem; border: 1px solid var(--border); border-radius: var(--radius); padding: 0.2rem; }
+.menubar [data-menu-trigger] { border: none; background: transparent; color: var(--foreground); padding: 0.35rem 0.7rem; border-radius: calc(var(--radius) - 1px); cursor: pointer; font-size: 0.83rem; }
+.menubar [data-menu-trigger]:hover { background: var(--accent); color: var(--accent-foreground); }
+
+/* charts / kpi */
+.plot { width: 100%; height: auto; display: block; }
+.plot-card { padding: 1rem 1.1rem 0.9rem; overflow: hidden; }
+.plot-title { font-size: 13px; font-weight: 500; color: var(--foreground); margin: 0 0 0.5rem; }
+.plot-card figure { margin: 0; }
+.plot-card svg { max-width: 100%; height: auto; overflow: visible; }
+.spark svg { width: 96px; height: 30px; }
+.spark { width: 96px; height: 30px; }
+.kpi { padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: 0.55rem; }
+.kpi-mid { display: flex; align-items: flex-end; justify-content: space-between; gap: 0.75rem; }
+.kpi-value { font-size: 1.55rem; font-weight: 650; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.kpi-delta { display: flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; }
+.kpi-delta .pill { padding: 0.1rem 0.45rem; border-radius: 999px; font-weight: 600; }
+.kpi-delta.up .pill { background: color-mix(in oklab, var(--chart-1) 15%, var(--card)); color: var(--chart-1); }
+.kpi-delta.down .pill { background: color-mix(in oklab, var(--destructive) 15%, var(--card)); color: var(--destructive); }
+
+/* palette strip */
+.palette { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
+.sw { display: flex; align-items: center; gap: 0.45rem; font-size: 0.72rem; }
+.sw .chip { width: 1.15rem; height: 1.15rem; border-radius: 4px; border: 1px solid var(--border); }
+.sw code { color: var(--muted-foreground); }
+
+/* ---- Foundations: color panel ---- */
+.color-group-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted-foreground); font-weight: 600; margin: 1rem 0 0.6rem; }
+.color-group-title:first-child { margin-top: 0; }
+.color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.75rem; }
+.color-card { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+.color-swatch { height: 66px; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.1rem; }
+.color-swatch.bordered { border-bottom: 1px solid var(--border); }
+.color-meta { padding: 0.55rem 0.7rem; display: flex; flex-direction: column; gap: 0.15rem; }
+.color-name { font-size: 0.78rem; font-weight: 600; }
+.color-val { font-size: 0.68rem; color: var(--muted-foreground); }
+.color-hex { font-size: 0.68rem; color: var(--muted-foreground); text-transform: uppercase; }
+
+/* ---- Foundations: typography ---- */
+.type-specimens { gap: 0.1rem; }
+.type-row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+.type-row:last-child { border-bottom: none; }
+.type-sample { color: var(--foreground); font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif); }
+.type-sample.mono { font-family: var(--font-mono, ui-monospace, monospace); }
+.type-meta { font-size: 0.72rem; color: var(--muted-foreground); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* ---- Foundations: radius ---- */
+.radius-row { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.radius-item { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--muted-foreground); }
+.radius-box { width: 68px; height: 52px; background: var(--secondary); border: 1px solid var(--border); border-bottom: 2px solid var(--primary); }
+
+/* ---- Layout ---- */
+.page-header { border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; background: var(--card); width: 100%; }
+.ph-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin: 0.5rem 0 0.9rem; }
+.ph-row h2 { margin: 0; font-size: 1.25rem; letter-spacing: -0.01em; }
+.ph-row p { margin: 0.25rem 0 0; }
+.ph-actions { display: flex; gap: 0.5rem; flex: none; }
+.bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 92px; gap: 0.85rem; width: 100%; }
+.bento .card { padding: 0.9rem 1rem; display: flex; flex-direction: column; justify-content: space-between; }
+.bento .b-title { font-size: 0.72rem; color: var(--muted-foreground); }
+.bento .b-value { font-size: 1.4rem; font-weight: 650; letter-spacing: -0.02em; }
+.bento .lg { grid-column: span 2; grid-row: span 2; }
+.bento .wide { grid-column: span 2; }
+@media (max-width: 720px) { .bento { grid-template-columns: repeat(2, 1fr); } .bento .lg { grid-column: span 2; } }
+.split { display: grid; grid-template-columns: 1fr 1px 2fr; width: 100%; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; height: 200px; }
+.split-pane { padding: 1rem; overflow: auto; }
+.split-pane.list { background: var(--sidebar); }
+.split-pane .li { padding: 0.5rem 0.6rem; border-radius: calc(var(--radius) - 1px); font-size: 0.83rem; cursor: pointer; }
+.split-pane .li:hover, .split-pane .li.active { background: var(--accent); color: var(--accent-foreground); }
+.split-handle { background: var(--border); }
+.mini-app { display: grid; grid-template-columns: 130px 1fr; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; height: 230px; width: 100%; }
+.mini-side { background: var(--sidebar); color: var(--sidebar-foreground); border-right: 1px solid var(--border); padding: 0.7rem; display: flex; flex-direction: column; gap: 0.3rem; }
+.mini-side .m-brand { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; font-size: 0.8rem; margin-bottom: 0.5rem; }
+.mini-side .m-dot { width: 1.1rem; height: 1.1rem; border-radius: 4px; background: var(--sidebar-primary); }
+.mini-side .m-item { font-size: 0.72rem; color: var(--muted-foreground); padding: 0.28rem 0.4rem; border-radius: 4px; }
+.mini-side .m-item.on { background: var(--sidebar-accent); color: var(--foreground); }
+.mini-top { height: 40px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 0.9rem; gap: 0.5rem; }
+.mini-content { padding: 0.9rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+.mini-content .m-kpi { border: 1px solid var(--border); border-radius: calc(var(--radius) - 1px); padding: 0.55rem 0.65rem; }
+.mini-content .m-kpi b { font-size: 1rem; }
+.mini-content .m-chart { grid-column: span 3; border: 1px solid var(--border); border-radius: calc(var(--radius) - 1px); height: 66px; background: linear-gradient(90deg, color-mix(in oklab, var(--chart-1) 18%, var(--card)), var(--card)); }
+.stack-demo { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.vstack, .hstack { border: 1px dashed var(--border); border-radius: var(--radius); padding: 0.6rem; gap: 0.5rem; display: flex; }
+.vstack { flex-direction: column; }
+.stack-box { background: var(--secondary); color: var(--secondary-foreground); border-radius: calc(var(--radius) - 1px); padding: 0.4rem 0.8rem; font-size: 0.78rem; text-align: center; }
+
+/* ---- Chat ---- */
+.chat { width: min(440px, 100%); display: flex; flex-direction: column; height: 460px; overflow: hidden; }
+.chat-head { display: flex; align-items: center; gap: 0.6rem; padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); }
+.chat-head .status { color: var(--chart-5); }
+.chat-body { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.6rem; background: color-mix(in oklab, var(--muted) 40%, var(--background)); }
+.msg { display: flex; flex-direction: column; max-width: 78%; gap: 0.15rem; }
+.msg.in { align-self: flex-start; align-items: flex-start; }
+.msg.out { align-self: flex-end; align-items: flex-end; }
+.bubble { padding: 0.5rem 0.75rem; border-radius: var(--radius); font-size: 0.86rem; line-height: 1.35; }
+.msg.in .bubble { background: var(--card); color: var(--card-foreground); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+.msg.out .bubble { background: var(--primary); color: var(--primary-foreground); border-bottom-right-radius: 4px; }
+.msg-time { font-size: 0.65rem; color: var(--muted-foreground); padding: 0 0.2rem; }
+.chat-typing { display: inline-flex; gap: 3px; padding: 0.6rem 0.8rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); border-bottom-left-radius: 4px; }
+.chat-typing span { width: 6px; height: 6px; border-radius: 999px; background: var(--muted-foreground); animation: typing 1.2s infinite; }
+.chat-typing span:nth-child(2) { animation-delay: 0.15s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes typing { 0%, 60%, 100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+.chat-input { display: flex; gap: 0.5rem; padding: 0.7rem; border-top: 1px solid var(--border); }
+.chat-input .input { flex: 1; min-width: 0; }
+
+/* ---- Advanced forms ---- */
+.form-field { display: flex; flex-direction: column; gap: 0.35rem; max-width: 340px; }
+.form-field .label { margin: 0; }
+.form-field .req { color: var(--destructive); }
+.form-field .err-msg { font-size: 0.75rem; color: var(--destructive); }
+.input.invalid, .invalid > .select-trigger, .invalid.combobox-trigger { border-color: var(--destructive); }
+.input.invalid:focus { outline-color: var(--destructive); }
+.input-icon { position: relative; display: flex; align-items: center; }
+.input-icon .lead { position: absolute; left: 0.7rem; color: var(--muted-foreground); pointer-events: none; font-size: 0.9rem; }
+.input-icon .input { padding-left: 2rem; }
+.input-icon .clear { position: absolute; right: 0.5rem; border: none; background: var(--muted); color: var(--muted-foreground); width: 1.15rem; height: 1.15rem; border-radius: 999px; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 0.7rem; }
+.input-icon.has-value .clear { display: inline-flex; }
+.pw-wrap { position: relative; }
+.pw-wrap .toggle-pw { position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); border: none; background: none; color: var(--muted-foreground); cursor: pointer; font-size: 0.9rem; }
+.pw-meter { height: 4px; border-radius: 999px; background: var(--secondary); overflow: hidden; margin-top: 0.4rem; }
+.pw-meter > span { display: block; height: 100%; width: 0; transition: width .2s, background .2s; }
+.pw-hint { font-size: 0.72rem; color: var(--muted-foreground); margin-top: 0.25rem; }
+.otp { display: flex; gap: 0.5rem; }
+.otp input { width: 2.6rem; height: 3rem; text-align: center; font-size: 1.1rem; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background); color: var(--foreground); font-variant-numeric: tabular-nums; }
+.otp input:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+.dropzone { border: 1.5px dashed var(--border); border-radius: var(--radius); padding: 1.4rem; text-align: center; color: var(--muted-foreground); cursor: pointer; transition: border-color .15s, background .15s; max-width: 360px; }
+.dropzone.drag, .dropzone:hover { border-color: var(--primary); background: color-mix(in oklab, var(--primary) 5%, var(--background)); }
+.dropzone .dz-file { color: var(--foreground); font-size: 0.83rem; margin-top: 0.4rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; border: 1px solid var(--input); border-radius: var(--radius); padding: 0.35rem 0.4rem; max-width: 360px; }
+.tags:focus-within { outline: 2px solid var(--ring); outline-offset: 1px; }
+.tags .tag { display: inline-flex; align-items: center; gap: 0.3rem; background: var(--secondary); color: var(--secondary-foreground); border-radius: calc(var(--radius) - 2px); padding: 0.15rem 0.45rem; font-size: 0.78rem; }
+.tags .tag button { border: none; background: none; color: inherit; cursor: pointer; font-size: 0.8rem; line-height: 1; opacity: 0.7; }
+.tags .tag button:hover { opacity: 1; }
+.tags input { border: none; outline: none; background: none; color: inherit; flex: 1; min-width: 80px; font-size: 0.83rem; padding: 0.15rem; }
+.segmented { display: inline-flex; background: var(--muted); border-radius: var(--radius); padding: 0.2rem; gap: 0.15rem; }
+.segmented button { border: none; background: none; color: var(--muted-foreground); padding: 0.35rem 0.85rem; border-radius: calc(var(--radius) - 1px); cursor: pointer; font-size: 0.83rem; font-weight: 500; }
+.segmented button.on { background: var(--background); color: var(--foreground); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.combobox-trigger, .multiselect-trigger { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; width: 100%; max-width: 320px; padding: 0.5rem 0.75rem; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background); color: var(--foreground); font-size: 0.875rem; cursor: pointer; text-align: left; }
+.combobox-trigger .ph, .multiselect-trigger .ph { color: var(--muted-foreground); }
+[data-combobox] [data-menu], [data-multiselect] [data-menu] { min-width: 100%; max-width: 320px; }
+[data-menu] .cb-search { width: calc(100% - 0.6rem); margin: 0.15rem 0.3rem 0.3rem; padding: 0.4rem 0.55rem; border: 1px solid var(--input); border-radius: calc(var(--radius) - 1px); background: var(--background); color: var(--foreground); font-size: 0.83rem; outline: none; }
+[data-menu] .cb-list { max-height: 200px; overflow-y: auto; }
+[data-cb-option][hidden] { display: none; }
+.ms-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.ms-chips .chip-mini { background: var(--secondary); color: var(--secondary-foreground); border-radius: 999px; padding: 0.05rem 0.5rem; font-size: 0.72rem; }
+.check-line { display: flex; align-items: center; gap: 0.55rem; padding: 0.4rem 0.55rem; border-radius: calc(var(--radius) - 1px); cursor: pointer; font-size: 0.83rem; }
+.check-line:hover { background: var(--accent); color: var(--accent-foreground); }
+
+/* ---- Blocks: framed page templates ---- */
+.block-frame { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--muted); width: 100%; }
+.block-bar { display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); background: var(--card); }
+.block-bar .dot { width: 0.6rem; height: 0.6rem; border-radius: 999px; background: var(--border); }
+.block-bar .url { margin-left: 0.5rem; font-size: 0.72rem; color: var(--muted-foreground); background: var(--muted); padding: 0.15rem 0.6rem; border-radius: 999px; }
+.block-stage { min-height: 440px; display: grid; place-items: center; padding: 2rem; background: color-mix(in oklab, var(--muted) 45%, var(--background)); }
+.auth-card { width: min(380px, 100%); background: var(--card); color: var(--card-foreground); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; box-shadow: 0 12px 40px rgba(0,0,0,.08); }
+.auth-card .auth-logo { width: 2.5rem; height: 2.5rem; border-radius: var(--radius); background: var(--primary); color: var(--primary-foreground); display: grid; place-items: center; font-weight: 700; margin: 0 auto 1rem; }
+.auth-card h3 { text-align: center; margin: 0 0 0.25rem; font-size: 1.25rem; }
+.auth-card .sub { text-align: center; color: var(--muted-foreground); font-size: 0.85rem; margin: 0 0 1.25rem; }
+.auth-card .field { gap: 0.35rem; margin-bottom: 0.85rem; max-width: none; }
+.auth-card .row-between { display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.85rem; }
+.auth-card .btn { width: 100%; }
+.auth-divider { display: flex; align-items: center; gap: 0.75rem; color: var(--muted-foreground); font-size: 0.72rem; margin: 1rem 0; }
+.auth-divider::before, .auth-divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+.auth-foot { text-align: center; font-size: 0.82rem; color: var(--muted-foreground); margin-top: 1rem; }
+.auth-foot a { color: var(--primary); font-weight: 500; }
+
+/* ---- Error / empty ---- */
+.errstate { text-align: center; max-width: 420px; }
+.errstate .code { font-size: 4rem; font-weight: 700; letter-spacing: -0.03em; color: var(--primary); line-height: 1; }
+.errstate h3 { margin: 0.75rem 0 0.4rem; font-size: 1.35rem; }
+.errstate p { color: var(--muted-foreground); margin: 0 0 1.25rem; }
+.emptystate { text-align: center; padding: 2.5rem 1rem; color: var(--muted-foreground); border: 1.5px dashed var(--border); border-radius: var(--radius); }
+.emptystate .ico { font-size: 2rem; opacity: 0.5; }
+.emptystate h4 { margin: 0.6rem 0 0.3rem; color: var(--foreground); font-size: 1rem; }
+.emptystate p { margin: 0 0 1rem; font-size: 0.85rem; }
+
+/* ---- AI harness ---- */
+.ai-shell { display: grid; grid-template-columns: 210px 1fr; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; height: 620px; background: var(--background); width: 100%; }
+.ai-rail { border-right: 1px solid var(--border); background: var(--sidebar); display: flex; flex-direction: column; min-width: 0; }
+.ai-rail-head { padding: 0.75rem; border-bottom: 1px solid var(--border); }
+.ai-rail-list { overflow-y: auto; padding: 0.5rem; display: flex; flex-direction: column; gap: 0.15rem; }
+.ai-rail-item { padding: 0.5rem 0.6rem; border-radius: calc(var(--radius) - 1px); font-size: 0.8rem; color: var(--muted-foreground); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ai-rail-item:hover { background: var(--sidebar-accent); color: var(--sidebar-accent-foreground); }
+.ai-rail-item.on { background: var(--sidebar-accent); color: var(--foreground); font-weight: 500; }
+.ai-rail-group { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted-foreground); padding: 0.5rem 0.6rem 0.25rem; }
+.ai-main { display: flex; flex-direction: column; min-width: 0; }
+.ai-convo { flex: 1; overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 1.5rem; }
+.ai-msg { display: flex; gap: 0.75rem; }
+.ai-avatar { width: 1.75rem; height: 1.75rem; border-radius: 999px; flex: none; display: grid; place-items: center; font-size: 0.72rem; font-weight: 700; }
+.ai-msg.user .ai-avatar { background: var(--secondary); color: var(--secondary-foreground); }
+.ai-msg.assistant .ai-avatar { background: var(--primary); color: var(--primary-foreground); }
+.ai-body { min-width: 0; flex: 1; }
+.ai-role { font-size: 0.72rem; font-weight: 600; color: var(--muted-foreground); margin-bottom: 0.3rem; }
+.ai-content { font-size: 0.9rem; line-height: 1.6; color: var(--foreground); }
+.ai-content p { margin: 0 0 0.7rem; }
+.ai-content p:last-child { margin-bottom: 0; }
+.ai-content ul { margin: 0 0 0.7rem; padding-left: 1.2rem; }
+.ai-content li { margin: 0.2rem 0; }
+.ai-content code { font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.82em; background: var(--muted); padding: 0.1rem 0.35rem; border-radius: 4px; }
+.ai-content h4 { margin: 0.2rem 0 0.5rem; font-size: 0.95rem; }
+.ai-cursor { display: inline-block; width: 0.5rem; height: 1rem; background: var(--primary); vertical-align: text-bottom; animation: blink 1s steps(2) infinite; margin-left: 1px; }
+@keyframes blink { 50% { opacity: 0; } }
+/* code block */
+.ai-code { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin: 0 0 0.7rem; background: color-mix(in oklab, var(--muted) 55%, var(--background)); }
+.ai-code-head { display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0.7rem; border-bottom: 1px solid var(--border); font-size: 0.72rem; color: var(--muted-foreground); }
+.ai-code-copy { border: none; background: none; color: var(--muted-foreground); cursor: pointer; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 0.3rem; }
+.ai-code-copy:hover { color: var(--foreground); }
+.ai-code pre { margin: 0; padding: 0.75rem 0.85rem; overflow-x: auto; font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.8rem; line-height: 1.55; }
+.tok-key { color: var(--chart-1); } .tok-str { color: var(--chart-5); } .tok-num { color: var(--chart-3); } .tok-com { color: var(--muted-foreground); font-style: italic; } .tok-fn { color: var(--chart-2); }
+/* diff */
+.ai-diff { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin: 0 0 0.7rem; font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.78rem; }
+.ai-diff-line { display: grid; grid-template-columns: 1.4rem 1fr; }
+.ai-diff-line .gutter { text-align: center; color: var(--muted-foreground); user-select: none; }
+.ai-diff-line .code { padding-right: 0.6rem; white-space: pre; overflow-x: auto; }
+.ai-diff-line.add { background: color-mix(in oklab, var(--chart-5) 14%, var(--background)); }
+.ai-diff-line.add .gutter { color: var(--chart-5); }
+.ai-diff-line.del { background: color-mix(in oklab, var(--destructive) 12%, var(--background)); }
+.ai-diff-line.del .gutter { color: var(--destructive); }
+/* tool call */
+.ai-tool { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin: 0 0 0.7rem; }
+.ai-tool-head { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.7rem; font-size: 0.82rem; cursor: pointer; background: var(--card); }
+.ai-tool-head .t-name { font-weight: 500; }
+.ai-tool-head .t-arg { color: var(--muted-foreground); font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.78rem; }
+.ai-tool-status { margin-left: auto; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 0.3rem; }
+.ai-tool-status.done { color: var(--chart-5); }
+.ai-tool-status.run { color: var(--chart-3); }
+.spinner { width: 0.8rem; height: 0.8rem; border: 2px solid color-mix(in oklab, var(--chart-3) 40%, transparent); border-top-color: var(--chart-3); border-radius: 999px; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.ai-tool-body { display: none; padding: 0.6rem 0.75rem; border-top: 1px solid var(--border); background: color-mix(in oklab, var(--muted) 40%, var(--background)); font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.76rem; color: var(--muted-foreground); white-space: pre-wrap; max-height: 160px; overflow-y: auto; }
+.ai-tool.open .ai-tool-body { display: block; }
+.ai-tool.open .t-chev { transform: rotate(90deg); }
+.t-chev { transition: transform .2s; color: var(--muted-foreground); }
+/* reasoning */
+.ai-reasoning { margin: 0 0 0.7rem; }
+.ai-reasoning-head { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--muted-foreground); cursor: pointer; }
+.ai-reasoning-body { display: none; margin-top: 0.4rem; padding-left: 0.85rem; border-left: 2px solid var(--border); font-size: 0.82rem; color: var(--muted-foreground); font-style: italic; line-height: 1.55; }
+.ai-reasoning.open .ai-reasoning-body { display: block; }
+.ai-reasoning.open .t-chev { transform: rotate(90deg); }
+/* message actions */
+.ai-actions { display: flex; gap: 0.15rem; margin-top: 0.5rem; opacity: 0; transition: opacity .15s; }
+.ai-msg:hover .ai-actions { opacity: 1; }
+.ai-act { border: none; background: none; color: var(--muted-foreground); cursor: pointer; padding: 0.25rem 0.35rem; border-radius: calc(var(--radius) - 2px); font-size: 0.8rem; }
+.ai-act:hover { background: var(--accent); color: var(--accent-foreground); }
+.ai-act.on { color: var(--primary); }
+/* plan / todo */
+.ai-plan { border: 1px solid var(--border); border-radius: var(--radius); padding: 0.7rem 0.85rem; margin: 0 0 0.7rem; }
+.ai-plan-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted-foreground); margin-bottom: 0.5rem; font-weight: 600; }
+.ai-plan-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; padding: 0.2rem 0; }
+.ai-plan-item .mark { width: 1.05rem; height: 1.05rem; flex: none; border-radius: 999px; display: grid; place-items: center; font-size: 0.65rem; border: 1px solid var(--border); }
+.ai-plan-item.done .mark { background: var(--chart-5); color: #fff; border-color: transparent; }
+.ai-plan-item.run .mark { border-color: var(--chart-3); color: var(--chart-3); }
+.ai-plan-item.done { color: var(--muted-foreground); text-decoration: line-through; }
+/* citations */
+.ai-cite { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.4rem; }
+.ai-cite a { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: var(--muted-foreground); border: 1px solid var(--border); border-radius: 999px; padding: 0.1rem 0.5rem; }
+.ai-cite a:hover { border-color: var(--primary); color: var(--foreground); }
+.ai-cite .num { width: 1rem; height: 1rem; border-radius: 999px; background: var(--primary); color: var(--primary-foreground); display: grid; place-items: center; font-size: 0.62rem; }
+/* suggested prompts */
+.ai-suggest { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.ai-suggest button { border: 1px solid var(--border); background: var(--card); color: var(--foreground); border-radius: var(--radius); padding: 0.55rem 0.8rem; font-size: 0.82rem; cursor: pointer; text-align: left; }
+.ai-suggest button:hover { border-color: var(--primary); background: var(--accent); }
+/* composer */
+.ai-composer { border-top: 1px solid var(--border); padding: 0.75rem; }
+.ai-composer-box { border: 1px solid var(--input); border-radius: var(--radius); background: var(--background); transition: border-color .15s; }
+.ai-composer-box:focus-within { border-color: var(--ring); box-shadow: 0 0 0 1px var(--ring); }
+.ai-composer textarea { width: 100%; border: none; outline: none; background: none; color: var(--foreground); resize: none; font-family: inherit; font-size: 0.9rem; line-height: 1.5; padding: 0.7rem 0.8rem 0.2rem; max-height: 140px; }
+.ai-composer textarea::placeholder { color: var(--muted-foreground); }
+.ai-composer-tools { display: flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.5rem 0.5rem; }
+.ai-tool-btn { border: none; background: none; color: var(--muted-foreground); cursor: pointer; width: 1.9rem; height: 1.9rem; border-radius: calc(var(--radius) - 1px); font-size: 0.95rem; }
+.ai-tool-btn:hover { background: var(--accent); color: var(--accent-foreground); }
+.ai-model { position: relative; }
+.ai-model-trigger { display: inline-flex; align-items: center; gap: 0.35rem; border: 1px solid var(--border); border-radius: 999px; padding: 0.25rem 0.65rem; font-size: 0.76rem; color: var(--foreground); background: var(--background); cursor: pointer; }
+.ai-send { margin-left: auto; width: 2rem; height: 2rem; border-radius: 999px; border: none; background: var(--primary); color: var(--primary-foreground); cursor: pointer; display: grid; place-items: center; font-size: 0.95rem; }
+.ai-send.stop { background: var(--destructive); }
+.ai-send:disabled { opacity: 0.4; cursor: default; }
+.ai-usage { font-size: 0.68rem; color: var(--muted-foreground); display: flex; align-items: center; gap: 0.4rem; }
+.ai-usage .bar { width: 60px; height: 4px; border-radius: 999px; background: var(--secondary); overflow: hidden; }
+.ai-usage .bar > span { display: block; height: 100%; background: var(--primary); }
+.ai-empty { text-align: center; margin: auto; max-width: 460px; }
+.ai-empty .mark { width: 3rem; height: 3rem; border-radius: var(--radius); background: var(--primary); color: var(--primary-foreground); display: grid; place-items: center; font-weight: 700; font-size: 1.2rem; margin: 0 auto 0.9rem; }
+.ai-empty h3 { margin: 0 0 0.35rem; font-size: 1.3rem; }
+.ai-empty p { color: var(--muted-foreground); margin: 0 0 1.25rem; }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="mark">A</span><div><b>Acme</b><span>design system</span></div></div>
+    <div class="nav-group">Forms</div><div class="nav"><a href="#button" data-nav-link>Button</a><a href="#input" data-nav-link>Input &amp; Textarea</a><a href="#checkbox-radio" data-nav-link>Checkbox &amp; Radio</a><a href="#switch-slider" data-nav-link>Switch, Slider &amp; Toggle</a><a href="#select" data-nav-link>Select</a><a href="#form-field" data-nav-link>Form field &amp; validation</a><a href="#combobox" data-nav-link>Combobox &amp; multi-select</a><a href="#datepicker" data-nav-link>Date picker</a><a href="#otp-password" data-nav-link>Input OTP &amp; password</a><a href="#file-upload" data-nav-link>File upload</a><a href="#search-tags" data-nav-link>Search, tags &amp; segmented</a></div><div class="nav-group">Data display</div><div class="nav"><a href="#badge" data-nav-link>Badge</a><a href="#avatar" data-nav-link>Avatar</a><a href="#card" data-nav-link>Card</a><a href="#table" data-nav-link>Table</a><a href="#progress-skeleton" data-nav-link>Progress &amp; Skeleton</a><a href="#tabs" data-nav-link>Tabs</a><a href="#accordion" data-nav-link>Accordion</a><a href="#carousel" data-nav-link>Carousel</a><a href="#calendar" data-nav-link>Calendar</a><a href="#tooltip-hover" data-nav-link>Tooltip &amp; Hover Card</a></div><div class="nav-group">Communication</div><div class="nav"><a href="#chat" data-nav-link>Chat</a></div><div class="nav-group">Overlays &amp; menus</div><div class="nav"><a href="#dialog" data-nav-link>Dialog &amp; Alert Dialog</a><a href="#sheet-drawer" data-nav-link>Sheet &amp; Drawer</a><a href="#dropdown" data-nav-link>Dropdown &amp; Context Menu</a><a href="#popover" data-nav-link>Popover</a><a href="#menubar" data-nav-link>Menubar</a><a href="#command" data-nav-link>Command</a><a href="#alert" data-nav-link>Alert</a><a href="#toast" data-nav-link>Toast</a></div><div class="nav-group">Navigation</div><div class="nav"><a href="#breadcrumb-pagination" data-nav-link>Breadcrumb &amp; Pagination</a><a href="#navmenu" data-nav-link>Navigation Menu</a></div>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <nav class="pagenav"><a href="index.html">Design system</a><a href="components.html" class="active">Components</a><a href="layouts.html">Layouts &amp; pages</a><a href="charts.html">Charts</a><a href="ai.html">AI harness</a></nav>
+      <div class="search" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
+        <span>🔍</span> Search… <kbd>⌘K</kbd>
+      </div>
+      <button class="btn btn-outline btn-sm" data-toggle-theme>Toggle theme</button>
+    </div>
+    <div class="content">
+      <div class="hero">
+        <h1>Acme components</h1>
+        <p>Every shadcn/ui component, live and interactive, in the brand theme.</p>
+      </div>
+      <section class="block" id="button">
+    <h2>Button</h2>
+    <p class="desc">Variants, sizes, and states.</p>
+    <div class="demo "><button class="btn btn-primary">Primary</button>
+           <button class="btn btn-secondary">Secondary</button>
+           <button class="btn btn-outline">Outline</button>
+           <button class="btn btn-ghost">Ghost</button>
+           <button class="btn btn-destructive">Destructive</button>
+           <button class="btn btn-link">Link</button></div><div class="demo "><button class="btn btn-primary btn-sm">Small</button>
+           <button class="btn btn-primary">Default</button>
+           <button class="btn btn-primary btn-lg">Large</button>
+           <button class="btn btn-outline btn-icon" aria-label="settings">⚙</button>
+           <button class="btn btn-primary" disabled>Disabled</button>
+           <button class="btn btn-secondary">◐ Loading…</button></div>
+  </section>
+<section class="block" id="input">
+    <h2>Input &amp; Textarea</h2>
+    <p class="desc">Text fields with labels and hints.</p>
+    <div class="demo col"><div class="field"><label class="label">Email</label><input class="input" type="email" placeholder="you@imf.org" /><span class="hint">We'll never share it.</span></div>
+         <div class="field"><label class="label">Message</label><textarea class="textarea" placeholder="Type your note…"></textarea></div>
+         <div class="field"><label class="label">Disabled</label><input class="input" placeholder="Disabled" disabled /></div></div>
+  </section>
+<section class="block" id="checkbox-radio">
+    <h2>Checkbox &amp; Radio</h2>
+    <p class="desc">Selection controls.</p>
+    <div class="demo "><label class="check"><input type="checkbox" checked /> Include projections</label>
+         <label class="check"><input type="checkbox" /> Seasonally adjusted</label>
+         <span class="sep-v" style="height:24px"></span>
+         <label class="radio"><input type="radio" name="freq" checked /> Annual</label>
+         <label class="radio"><input type="radio" name="freq" /> Quarterly</label>
+         <label class="radio"><input type="radio" name="freq" /> Monthly</label></div>
+  </section>
+<section class="block" id="switch-slider">
+    <h2>Switch, Slider &amp; Toggle</h2>
+    <p class="desc">Boolean, range, and toggle controls.</p>
+    <div class="demo "><label class="switch"><input type="checkbox" checked /><span class="track"><span class="thumb"></span></span> Dark projections</label>
+         <span class="sep-v" style="height:24px"></span>
+         <div style="display:flex;align-items:center;gap:.6rem"><input class="slider" type="range" min="0" max="100" value="64" data-slider /><span class="muted" data-slider-value>64</span></div>
+         <span class="sep-v" style="height:24px"></span>
+         <div class="toggle-group" data-toggle-group="single"><button class="toggle on" data-toggle>Bold</button><button class="toggle" data-toggle>Italic</button><button class="toggle" data-toggle>Underline</button></div></div>
+  </section>
+<section class="block" id="select">
+    <h2>Select</h2>
+    <p class="desc">A custom, keyboard-friendly select.</p>
+    <div class="demo col"><div class="field" data-select><label class="label">Region</label>
+          <button class="select-trigger" data-menu-trigger><span data-select-value>Advanced economies</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div data-menu>
+            <div class="menu-item" data-select-option>Advanced economies</div>
+            <div class="menu-item" data-select-option>Emerging markets</div>
+            <div class="menu-item" data-select-option>Low-income countries</div>
+            <div class="menu-item" data-select-option>Euro area</div>
+          </div>
+        </div></div>
+  </section>
+<section class="block" id="form-field">
+    <h2>Form field &amp; validation</h2>
+    <p class="desc">Label, description, required, and inline error states. The email validates live on input.</p>
+    <div class="demo col"><div class="form-field"><label class="label">Institutional email <span class="req">*</span></label><input class="input" data-validate="email" placeholder="you@imf.org" /><span class="hint">We'll only use this to sign you in.</span><span class="err-msg" data-err hidden>Enter a valid email address.</span></div>
+         <div class="form-field"><label class="label">API token</label><input class="input invalid" value="expired-token" /><span class="err-msg">This token has expired. Generate a new one.</span></div>
+         <div class="form-field"><label class="label">Display name</label><input class="input" value="Francois Chastel" /><span class="hint">Shown on your published reports.</span></div></div>
+  </section>
+<section class="block" id="combobox">
+    <h2>Combobox &amp; multi-select</h2>
+    <p class="desc">Searchable single-select and a checkbox multi-select with chips.</p>
+    <div class="demo "><div class="field" data-combobox><label class="label">Country</label>
+          <button class="combobox-trigger" data-menu-trigger><span data-combobox-value class="ph">Select a country…</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div data-menu><input class="cb-search" data-cb-search placeholder="Search…" /><div class="cb-list"><div class="menu-item" data-cb-option>United States</div><div class="menu-item" data-cb-option>France</div><div class="menu-item" data-cb-option>Japan</div><div class="menu-item" data-cb-option>Germany</div><div class="menu-item" data-cb-option>Brazil</div><div class="menu-item" data-cb-option>India</div><div class="menu-item" data-cb-option>Nigeria</div><div class="menu-item" data-cb-option>Mexico</div><div class="menu-item" data-cb-option>Indonesia</div><div class="menu-item" data-cb-option>South Africa</div></div></div>
+        </div>
+        <div class="field" data-multiselect><label class="label">Regions</label>
+          <button class="multiselect-trigger" data-menu-trigger><span class="ms-chips" data-ms-chips><span class="ph">Select regions…</span></span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div data-menu><label class="check-line"><input type="checkbox" data-ms-option value="Advanced economies" /> Advanced economies</label><label class="check-line"><input type="checkbox" data-ms-option value="Emerging markets" /> Emerging markets</label><label class="check-line"><input type="checkbox" data-ms-option value="Low-income" /> Low-income</label><label class="check-line"><input type="checkbox" data-ms-option value="Euro area" /> Euro area</label><label class="check-line"><input type="checkbox" data-ms-option value="ASEAN-5" /> ASEAN-5</label></div>
+        </div></div>
+  </section>
+<section class="block" id="datepicker">
+    <h2>Date picker</h2>
+    <p class="desc">An input with a calendar popover.</p>
+    <div class="demo "><div class="field" data-datepicker style="position:relative">
+          <label class="label">Reference date</label>
+          <button class="combobox-trigger" data-menu-trigger><span data-dp-value class="ph">Pick a date</span><span>📅</span></button>
+          <div data-menu><div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm">‹</button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm">›</button></div><div class="cal-grid"><span class="dow">Su</span><span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span><span class="day out">28</span><span class="day out">29</span><span class="day out">30</span><span class="day out">31</span><span class="day out">32</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day sel">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span></div></div></div>
+        </div></div>
+  </section>
+<section class="block" id="otp-password">
+    <h2>Input OTP &amp; password</h2>
+    <p class="desc">A one-time-code input (auto-advances, handles paste) and a password field with a strength meter.</p>
+    <div class="demo "><div class="field"><label class="label">Verification code</label><div class="otp" data-otp><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /></div></div>
+         <div class="field"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" data-password placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button" aria-label="show">👁</button></div><div class="pw-meter"><span data-pw-bar></span></div><span class="pw-hint" data-pw-hint>Use 8+ characters with letters, numbers &amp; symbols.</span></div></div>
+  </section>
+<section class="block" id="file-upload">
+    <h2>File upload</h2>
+    <p class="desc">A dropzone that accepts clicks and drag-and-drop.</p>
+    <div class="demo col"><label class="dropzone" data-dropzone><input type="file" hidden data-dz-input />
+          <div>⬆ <strong>Click to upload</strong> or drag and drop</div>
+          <div class="muted" style="font-size:.72rem">CSV, XLSX up to 10MB</div>
+          <div class="dz-file" data-dz-file hidden></div>
+        </label></div>
+  </section>
+<section class="block" id="search-tags">
+    <h2>Search, tags &amp; segmented</h2>
+    <p class="desc">A search input with clear, a tag input, a segmented control, and a currency input.</p>
+    <div class="demo "><div class="input-icon" data-search style="max-width:280px"><span class="lead">🔍</span><input class="input" data-search-input placeholder="Search indicators…" /><button class="clear" data-search-clear aria-label="clear">×</button></div>
+         <div class="tags" data-tags style="max-width:280px"><span class="tag">macro<button data-tag-remove aria-label="remove">×</button></span><span class="tag">weo<button data-tag-remove aria-label="remove">×</button></span><input data-tags-input placeholder="Add tag…" /></div>
+         <div class="segmented" data-segmented><button class="on">Chart</button><button>Table</button><button>Map</button></div>
+         <div class="input-icon" style="max-width:160px"><span class="lead">$</span><input class="input" value="48,200" inputmode="numeric" /></div></div>
+  </section>
+<section class="block" id="badge">
+    <h2>Badge</h2>
+    <p class="desc">Status and category labels.</p>
+    <div class="demo "><span class="badge badge-primary">Advanced</span>
+         <span class="badge badge-secondary">Emerging</span>
+         <span class="badge badge-destructive">At risk</span>
+         <span class="badge badge-outline">v2.0</span></div>
+  </section>
+<section class="block" id="avatar">
+    <h2>Avatar</h2>
+    <p class="desc">User and entity images with fallbacks.</p>
+    <div class="demo "><span class="avatar">FC</span>
+         <span class="avatar" style="background:var(--chart-2);color:#fff">IMF</span>
+         <div class="avatar-group"><span class="avatar">A</span><span class="avatar" style="background:var(--chart-3);color:#fff">B</span><span class="avatar" style="background:var(--chart-4);color:#fff">C</span><span class="avatar" style="background:var(--secondary)">+9</span></div></div>
+  </section>
+<section class="block" id="card">
+    <h2>Card</h2>
+    <p class="desc">A container with header, content, and footer.</p>
+    <div class="demo "><div class="card" style="width:340px">
+          <div class="card-h"><div class="card-t">World Economic Outlook</div><div class="card-d">October 2026 update</div></div>
+          <div class="card-b">Global growth is projected to hold at 3.2%, with disinflation continuing across most regions.</div>
+          <div class="card-f"><button class="btn btn-ghost btn-sm">Dismiss</button><button class="btn btn-primary btn-sm">Read report</button></div>
+        </div></div>
+  </section>
+<section class="block" id="table">
+    <h2>Table</h2>
+    <p class="desc">Rows with hover states and numeric alignment.</p>
+    <div class="demo col"><table class="tbl"><caption>Real GDP growth (%), by group</caption>
+          <thead><tr><th>Group</th><th class="num">2024</th><th class="num">2025F</th><th class="num">Weight</th></tr></thead>
+          <tbody>
+            <tr><td>Advanced economies</td><td class="num">1.8</td><td class="num">2.0</td><td class="num">26.3</td></tr>
+            <tr><td>Emerging markets</td><td class="num">4.2</td><td class="num">3.9</td><td class="num">48.1</td></tr>
+            <tr><td>Low-income countries</td><td class="num">5.0</td><td class="num">4.7</td><td class="num">8.4</td></tr>
+            <tr><td><strong>World</strong></td><td class="num"><strong>3.2</strong></td><td class="num"><strong>3.1</strong></td><td class="num"><strong>100.0</strong></td></tr>
+          </tbody></table></div>
+  </section>
+<section class="block" id="progress-skeleton">
+    <h2>Progress &amp; Skeleton</h2>
+    <p class="desc">Loading and progress indicators.</p>
+    <div class="demo "><div style="flex:1;min-width:200px"><div class="progress"><span style="width:64%"></span></div></div>
+         <span class="sep-v" style="height:36px"></span>
+         <div style="display:flex;flex-direction:column;gap:.5rem;flex:1;min-width:200px">
+           <div class="skeleton" style="height:12px;width:80%"></div>
+           <div class="skeleton" style="height:12px;width:60%"></div>
+           <div class="skeleton" style="height:12px;width:70%"></div>
+         </div></div>
+  </section>
+<section class="block" id="tabs">
+    <h2>Tabs</h2>
+    <p class="desc">Switch between views.</p>
+    <div class="demo col"><div data-tabs style="width:100%">
+          <div class="tabs-list"><button data-tab="growth" aria-selected="true">Growth</button><button data-tab="inflation" aria-selected="false">Inflation</button><button data-tab="debt" aria-selected="false">Debt</button></div>
+          <div data-tab-panel="growth">World output is projected at 3.2% for 2025, broadly stable versus the prior forecast.</div>
+          <div data-tab-panel="inflation" hidden>Headline inflation continues to ease toward central-bank targets in most economies.</div>
+          <div data-tab-panel="debt" hidden>Global public debt approaches 93% of GDP, with wide dispersion across groups.</div>
+        </div></div>
+  </section>
+<section class="block" id="accordion">
+    <h2>Accordion</h2>
+    <p class="desc">Vertically stacked, collapsible sections.</p>
+    <div class="demo col"><div data-accordion="single" style="width:100%">
+          <div data-acc-item class="open"><button data-acc-trigger aria-expanded="true">What is the WEO?<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div class="acc-content"><div class="acc-content-inner">The World Economic Outlook presents the IMF's analysis and projections of economic developments.</div></div></div>
+          <div data-acc-item><button data-acc-trigger aria-expanded="false">How often is it published?<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div class="acc-content"><div class="acc-content-inner">Twice a year, in April and October, with interim updates in January and July.</div></div></div>
+          <div data-acc-item><button data-acc-trigger aria-expanded="false">Where does the data come from?<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div class="acc-content"><div class="acc-content-inner">National authorities and IMF staff estimates, compiled into a consistent framework.</div></div></div>
+        </div></div>
+  </section>
+<section class="block" id="carousel">
+    <h2>Carousel</h2>
+    <p class="desc">A slideshow with previous/next controls.</p>
+    <div class="demo col"><div data-carousel style="width:100%">
+          <div data-carousel-track>
+            <div data-carousel-item>2023</div><div data-carousel-item>2024</div><div data-carousel-item>2025</div><div data-carousel-item>2026</div>
+          </div>
+          <button data-carousel-prev aria-label="prev">‹</button><button data-carousel-next aria-label="next">›</button>
+        </div></div>
+  </section>
+<section class="block" id="calendar">
+    <h2>Calendar</h2>
+    <p class="desc">A month view for date selection.</p>
+    <div class="demo "><div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm">‹</button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm">›</button></div><div class="cal-grid"><span class="dow">Su</span><span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span><span class="day out">28</span><span class="day out">29</span><span class="day out">30</span><span class="day out">31</span><span class="day out">32</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day sel">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span></div></div></div>
+  </section>
+<section class="block" id="tooltip-hover">
+    <h2>Tooltip &amp; Hover Card</h2>
+    <p class="desc">Contextual information on hover.</p>
+    <div class="demo "><span class="tip-wrap"><button class="btn btn-outline">Hover me<span class="tip">Updated 1 Sep 2026</span></button></span>
+         <span class="hover-wrap"><button class="btn btn-ghost">@imf</button><div class="hover-card"><div style="display:flex;gap:.6rem;align-items:center"><span class="avatar" style="background:var(--chart-2);color:#fff">IMF</span><div><strong>International Monetary Fund</strong><div class="muted" style="font-size:.78rem">190 member countries</div></div></div><p class="muted" style="font-size:.82rem;margin:.6rem 0 0">Working to foster global monetary cooperation and financial stability.</p></div></span></div>
+  </section>
+<section class="block" id="chat">
+    <h2>Chat</h2>
+    <p class="desc">A conversational UI — message bubbles, a typing indicator, and a live composer. Type a message and send.</p>
+    <div class="demo col"><div class="chat card" data-chat>
+          <div class="chat-head"><span class="avatar" style="background:var(--chart-2);color:#fff">IMF</span><div><strong>WEO Assistant</strong><div style="font-size:.72rem"><span class="status">●</span> <span class="muted">online</span></div></div></div>
+          <div class="chat-body" data-chat-body>
+            <div class="msg in"><div class="bubble">Hi! Ask me about the latest World Economic Outlook projections.</div><span class="msg-time">09:24</span></div>
+            <div class="msg out"><div class="bubble">What's the 2025 world growth forecast?</div><span class="msg-time">09:25</span></div>
+            <div class="msg in"><div class="bubble">Global growth is projected at 3.1% for 2025, broadly stable versus the April forecast.</div><span class="msg-time">09:25</span></div>
+          </div>
+          <form class="chat-input" data-chat-form>
+            <input class="input" data-chat-text placeholder="Type a message…" autocomplete="off" />
+            <button class="btn btn-primary" type="submit">Send</button>
+          </form>
+        </div></div>
+  </section>
+<section class="block" id="dialog">
+    <h2>Dialog &amp; Alert Dialog</h2>
+    <p class="desc">Modal windows for content and confirmations.</p>
+    <div class="demo "><button class="btn btn-primary" data-open="dlg-edit">Edit forecast</button>
+         <button class="btn btn-destructive" data-open="dlg-del">Delete series</button></div>
+  </section>
+<section class="block" id="sheet-drawer">
+    <h2>Sheet &amp; Drawer</h2>
+    <p class="desc">Panels that slide in from an edge.</p>
+    <div class="demo "><button class="btn btn-outline" data-open="sheet-1">Open sheet →</button>
+         <button class="btn btn-outline" data-open="drawer-1">Open drawer ↑</button></div>
+  </section>
+<section class="block" id="dropdown">
+    <h2>Dropdown &amp; Context Menu</h2>
+    <p class="desc">Menus triggered by click or right-click.</p>
+    <div class="demo "><div data-menu-trigger style="position:relative;display:inline-block">
+           <button class="btn btn-outline">Options <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+           <div data-menu>
+             <div class="menu-label">Series</div>
+             <div class="menu-item">✎ Rename</div>
+             <div class="menu-item">⧉ Duplicate</div>
+             <div class="menu-sep"></div>
+             <div class="menu-item danger">🗑 Delete</div>
+           </div>
+         </div>
+         <div data-context style="position:relative"><div class="card" style="padding:1rem 1.5rem">Right-click me
+           <div data-menu><div class="menu-item">Copy value</div><div class="menu-item">Export CSV</div><div class="menu-sep"></div><div class="menu-item danger">Remove</div></div>
+         </div></div></div>
+  </section>
+<section class="block" id="popover">
+    <h2>Popover</h2>
+    <p class="desc">Rich floating content anchored to a trigger.</p>
+    <div class="demo "><div data-menu-trigger style="position:relative;display:inline-block">
+          <button class="btn btn-outline">Adjust range</button>
+          <div data-menu style="min-width:240px;padding:0.9rem">
+            <div class="label">From</div><input class="input" value="2015" />
+            <div class="label" style="margin-top:.6rem">To</div><input class="input" value="2029" />
+            <button class="btn btn-primary btn-sm" data-menu-trigger style="margin-top:.8rem;width:100%">Apply</button>
+          </div>
+         </div></div>
+  </section>
+<section class="block" id="menubar">
+    <h2>Menubar</h2>
+    <p class="desc">An application-style menu bar.</p>
+    <div class="demo "><div class="menubar">
+          <div style="position:relative"><button data-menu-trigger>File</button><div data-menu><div class="menu-item">New report</div><div class="menu-item">Open…</div><div class="menu-sep"></div><div class="menu-item">Export PDF</div></div></div>
+          <div style="position:relative"><button data-menu-trigger>View</button><div data-menu><div class="menu-item">Light</div><div class="menu-item">Dark</div></div></div>
+          <div style="position:relative"><button data-menu-trigger>Help</button><div data-menu><div class="menu-item">Documentation</div><div class="menu-item">About</div></div></div>
+        </div></div>
+  </section>
+<section class="block" id="command">
+    <h2>Command</h2>
+    <p class="desc">A ⌘K command palette. Press ⌘K / Ctrl-K to open, or the button.</p>
+    <div class="demo "><button class="btn btn-outline" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">Open command… <kbd style="margin-left:.5rem;font-size:.7rem;border:1px solid var(--border);border-radius:4px;padding:0 .35rem;background:var(--muted)">⌘K</kbd></button></div>
+  </section>
+<section class="block" id="alert">
+    <h2>Alert</h2>
+    <p class="desc">Inline callouts.</p>
+    <div class="demo col"><div class="alert" style="width:100%"><span class="ico">ℹ</span><div><strong>Heads up</strong><div class="muted" style="font-size:.82rem">The October WEO update is now available.</div></div></div></div><div class="demo col"><div class="alert alert-destructive" style="width:100%"><span class="ico">⚠</span><div><strong>Downside risk</strong><div style="font-size:.82rem">Financial conditions have tightened materially.</div></div></div></div>
+  </section>
+<section class="block" id="toast">
+    <h2>Toast</h2>
+    <p class="desc">Transient notifications (Sonner-style).</p>
+    <div class="demo "><button class="btn btn-primary" data-toast="Projection saved to your workspace." data-toast-title="Saved">Show toast</button>
+         <button class="btn btn-outline" data-toast="Export started — we'll email you when it's ready." data-toast-title="Exporting">Show info toast</button></div>
+  </section>
+<section class="block" id="breadcrumb-pagination">
+    <h2>Breadcrumb &amp; Pagination</h2>
+    <p class="desc">Wayfinding controls.</p>
+    <div class="demo col"><nav class="crumb"><a href="#">Data</a> / <a href="#">WEO</a> / <span class="cur">Real GDP growth</span></nav></div><div class="demo "><nav class="pagination" data-pagination><span data-page>‹</span><span data-page class="active">1</span><span data-page>2</span><span data-page>3</span><span data-page>…</span><span data-page>12</span><span data-page>›</span></nav></div>
+  </section>
+<section class="block" id="navmenu">
+    <h2>Navigation Menu</h2>
+    <p class="desc">A top-level navigation with dropdown panels.</p>
+    <div class="demo "><div class="menubar" style="border-radius:999px;padding:.25rem">
+          <div style="position:relative"><button data-menu-trigger>Publications <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div data-menu style="min-width:280px"><div class="menu-item">World Economic Outlook</div><div class="menu-item">Global Financial Stability Report</div><div class="menu-item">Fiscal Monitor</div></div></div>
+          <div style="position:relative"><button data-menu-trigger>Data <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div data-menu><div class="menu-item">DataMapper</div><div class="menu-item">WEO database</div></div></div>
+          <button data-menu-trigger style="border:none;background:transparent;padding:.35rem .7rem;cursor:pointer">About</button>
+        </div></div>
+  </section>
+      <footer class="muted" style="font-size:.75rem;border-top:1px solid var(--border);padding-top:1.25rem;margin-top:3rem">Generated by shadcn-theming · synthetic, illustrative data</footer>
+    </div>
+  </main>
+</div>
+
+  <div class="overlay" id="dlg-edit"><div class="backdrop" data-close></div>
+    <div class="dialog"><div class="dh"><h3>Edit forecast</h3></div>
+      <div class="db">Adjust the projected growth path. Changes apply to the working scenario only.</div>
+      <div style="padding:0 1.25rem"><label class="label">2025 growth (%)</label><input class="input" value="3.1" /></div>
+      <div class="df"><button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-primary" data-close>Save changes</button></div>
+    </div></div>
+
+  <div class="overlay" id="dlg-del"><div class="backdrop" data-close></div>
+    <div class="dialog"><div class="dh"><h3>Delete this series?</h3></div>
+      <div class="db">This action cannot be undone. The series and its projections will be permanently removed.</div>
+      <div class="df"><button class="btn btn-outline" data-close>Cancel</button><button class="btn btn-destructive" data-close>Delete</button></div>
+    </div></div>
+
+  <div class="overlay" id="sheet-1"><div class="backdrop" data-close></div>
+    <div class="sheet"><div style="display:flex;justify-content:space-between;align-items:start"><div><h3 style="margin:0">Filters</h3><p class="muted" style="font-size:.83rem;margin:.3rem 0 0">Refine the dataset</p></div><button class="btn btn-ghost btn-icon" data-close>✕</button></div>
+      <div style="margin-top:1.25rem;display:flex;flex-direction:column;gap:1rem">
+        <div class="field"><label class="label">Indicator</label><input class="input" value="Real GDP growth" /></div>
+        <label class="check"><input type="checkbox" checked /> Include projections</label>
+        <label class="check"><input type="checkbox" /> Seasonally adjusted</label>
+      </div>
+      <div style="margin-top:1.5rem;display:flex;gap:.5rem"><button class="btn btn-outline" data-close style="flex:1">Reset</button><button class="btn btn-primary" data-close style="flex:1">Apply</button></div>
+    </div></div>
+
+  <div class="overlay" id="drawer-1"><div class="backdrop" data-close></div>
+    <div class="drawer"><div class="grab"></div><h3 style="margin:0 0 .3rem">Quick note</h3><p class="muted" style="font-size:.85rem;margin:0 0 1rem">Attach a comment to this data point.</p>
+      <textarea class="textarea" placeholder="Type a note…"></textarea>
+      <div style="margin-top:1rem;display:flex;justify-content:flex-end;gap:.5rem"><button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-primary" data-close>Save</button></div>
+    </div></div>
+
+  <div id="cmdk"><div class="cmd">
+    <input data-cmd-input placeholder="Type a command or search…" />
+    <div class="list">
+      <div class="menu-label">Pages</div>
+      <div data-cmd-item onclick="location.href='index.html'">Design system</div><div data-cmd-item onclick="location.href='components.html'">Components</div><div data-cmd-item onclick="location.href='layouts.html'">Layouts &amp; pages</div><div data-cmd-item onclick="location.href='charts.html'">Charts</div><div data-cmd-item onclick="location.href='ai.html'">AI harness</div>
+    </div>
+  </div></div>
+
+<script>(function uiMain() {
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const closest = (t, sel) => t?.closest(sel);
+  document.addEventListener("click", (e) => {
+    if (closest(e.target, "[data-toggle-theme]")) document.documentElement.classList.toggle("dark");
+  });
+  document.addEventListener("click", (e) => {
+    const trigger = closest(e.target, "[data-tab]");
+    if (!trigger) return;
+    const wrap = trigger.closest("[data-tabs]");
+    if (!wrap) return;
+    const value = trigger.dataset.tab;
+    $$("[data-tab]", wrap).forEach((t) => t.setAttribute("aria-selected", String(t === trigger)));
+    $$("[data-tab-panel]", wrap).forEach((p2) => {
+      p2.hidden = p2.getAttribute("data-tab-panel") !== value;
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const trigger = closest(e.target, "[data-acc-trigger]");
+    if (!trigger) return;
+    const item = trigger.closest("[data-acc-item]");
+    const acc = trigger.closest("[data-accordion]");
+    const open = item.classList.contains("open");
+    if (acc?.getAttribute("data-accordion") === "single") {
+      $$("[data-acc-item]", acc).forEach((it) => it.classList.remove("open"));
+    }
+    item.classList.toggle("open", !open);
+    trigger.setAttribute("aria-expanded", String(!open));
+  });
+  const openOverlay = (id) => {
+    const ov = document.getElementById(id);
+    if (ov) {
+      ov.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+  };
+  const closeOverlay = (ov) => {
+    if (!ov) return;
+    ov.classList.remove("open");
+    if (!$(".overlay.open")) document.body.style.overflow = "";
+  };
+  document.addEventListener("click", (e) => {
+    const opener = closest(e.target, "[data-open]");
+    if (opener) {
+      openOverlay(opener.dataset.open);
+      return;
+    }
+    if (closest(e.target, "[data-close]")) {
+      closeOverlay(closest(e.target, ".overlay"));
+      return;
+    }
+    const ov = e.target;
+    if (ov.classList?.contains("overlay") && ov.classList.contains("open")) closeOverlay(ov);
+  });
+  const closeMenus = (except) => {
+    $$("[data-menu].open").forEach((m) => {
+      if (m !== except) m.classList.remove("open");
+    });
+  };
+  document.addEventListener("click", (e) => {
+    const trigger = closest(e.target, "[data-menu-trigger]");
+    if (trigger) {
+      const menu = trigger.parentElement?.querySelector("[data-menu]");
+      const isOpen = menu?.classList.contains("open");
+      closeMenus(menu);
+      menu?.classList.toggle("open", !isOpen);
+      return;
+    }
+    if (!closest(e.target, "[data-menu]")) closeMenus();
+    const opt2 = closest(e.target, "[data-select-option]");
+    if (opt2) {
+      const wrap = opt2.closest("[data-select]");
+      const label = $("[data-select-value]", wrap);
+      label.textContent = opt2.textContent;
+      $$("[data-select-option]", wrap).forEach((o) => o.classList.toggle("selected", o === opt2));
+      closeMenus();
+    }
+  });
+  document.addEventListener("contextmenu", (e) => {
+    const host = closest(e.target, "[data-context]");
+    if (!host) return;
+    e.preventDefault();
+    const menu = host.querySelector("[data-menu]");
+    if (!menu) return;
+    closeMenus(menu);
+    menu.style.position = "fixed";
+    menu.style.left = Math.min(e.clientX, window.innerWidth - 200) + "px";
+    menu.style.top = e.clientY + "px";
+    menu.classList.add("open");
+  });
+  const cmd = document.getElementById("cmdk");
+  document.addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      if (cmd) {
+        cmd.classList.toggle("open");
+        if (cmd.classList.contains("open")) setTimeout(() => $("[data-cmd-input]", cmd)?.focus(), 20);
+      }
+    }
+    if (e.key === "Escape") {
+      $$(".overlay.open").forEach((o) => o.classList.remove("open"));
+      cmd?.classList.remove("open");
+      closeMenus();
+      document.body.style.overflow = "";
+    }
+  });
+  if (cmd) {
+    cmd.addEventListener("input", (e) => {
+      const q = e.target.value?.toLowerCase() ?? "";
+      $$("[data-cmd-item]", cmd).forEach((it) => {
+        it.hidden = !it.textContent?.toLowerCase().includes(q);
+      });
+    });
+    cmd.addEventListener("click", (e) => {
+      if (e.target.id === "cmdk") cmd.classList.remove("open");
+    });
+  }
+  let toaster = document.getElementById("toaster");
+  if (!toaster) {
+    toaster = document.createElement("div");
+    toaster.id = "toaster";
+    toaster.className = "toaster";
+    document.body.appendChild(toaster);
+  }
+  document.addEventListener("click", (e) => {
+    const btn = closest(e.target, "[data-toast]");
+    if (!btn) return;
+    const t = document.createElement("div");
+    t.className = "toast";
+    t.innerHTML = `<div><strong>${btn.dataset.toastTitle || "Notification"}</strong><div class="muted" style="font-size:.8rem">${btn.dataset.toast || "Event has been created."}</div></div>`;
+    toaster.appendChild(t);
+    requestAnimationFrame(() => t.classList.add("show"));
+    setTimeout(() => {
+      t.classList.remove("show");
+      setTimeout(() => t.remove(), 250);
+    }, 3200);
+  });
+  const clock = () => {
+    const d = /* @__PURE__ */ new Date();
+    return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  };
+  const CHAT_REPLIES = [
+    "Global growth is projected at 3.2% for 2025, broadly stable.",
+    "Headline inflation continues to ease toward central-bank targets.",
+    "That series is in the WEO database \u2014 I can export it for you.",
+    "Public debt is approaching 93% of GDP globally."
+  ];
+  document.addEventListener("submit", (e) => {
+    const form = closest(e.target, "[data-chat-form]");
+    if (!form) return;
+    e.preventDefault();
+    const input = form.querySelector("[data-chat-text]");
+    const body = form.closest("[data-chat]")?.querySelector("[data-chat-body]");
+    if (!input || !body) return;
+    const text2 = input.value.trim();
+    if (!text2) return;
+    const add = (cls, content) => {
+      const m = document.createElement("div");
+      m.className = "msg " + cls;
+      m.innerHTML = `<div class="bubble"></div><span class="msg-time">${clock()}</span>`;
+      m.querySelector(".bubble").textContent = content;
+      body.appendChild(m);
+      body.scrollTop = body.scrollHeight;
+      return m;
+    };
+    add("out", text2);
+    input.value = "";
+    const typing = document.createElement("div");
+    typing.className = "msg in";
+    typing.innerHTML = `<div class="chat-typing"><span></span><span></span><span></span></div>`;
+    body.appendChild(typing);
+    body.scrollTop = body.scrollHeight;
+    const reply = CHAT_REPLIES[text2.length % CHAT_REPLIES.length];
+    setTimeout(() => {
+      typing.remove();
+      add("in", reply);
+    }, 900);
+  });
+  document.addEventListener("click", (e) => {
+    const tg = closest(e.target, "[data-toggle]");
+    if (!tg) return;
+    const group = tg.closest("[data-toggle-group='single']");
+    if (group) $$("[data-toggle]", group).forEach((b) => b.classList.remove("on"));
+    tg.classList.toggle("on");
+  });
+  document.addEventListener("input", (e) => {
+    const s = closest(e.target, "[data-cb-search]");
+    if (!s) return;
+    const q = s.value.toLowerCase();
+    s.parentElement?.querySelectorAll("[data-cb-option]").forEach((o) => {
+      o.hidden = !(o.textContent ?? "").toLowerCase().includes(q);
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const opt2 = closest(e.target, "[data-cb-option]");
+    if (opt2) {
+      const box = opt2.closest("[data-combobox]");
+      const label = box?.querySelector("[data-combobox-value]");
+      if (label) {
+        label.textContent = opt2.textContent;
+        label.classList.remove("ph");
+      }
+      closeMenus();
+      return;
+    }
+    const day = closest(e.target, ".cal .day");
+    if (day && !day.classList.contains("out")) {
+      const dp = day.closest("[data-datepicker]");
+      if (dp) {
+        day.closest(".cal-grid")?.querySelectorAll(".day").forEach((d) => d.classList.remove("sel"));
+        day.classList.add("sel");
+        const val = dp.querySelector("[data-dp-value]");
+        if (val) {
+          val.textContent = `September ${day.textContent}, 2026`;
+          val.classList.remove("ph");
+        }
+        closeMenus();
+      }
+    }
+  });
+  document.addEventListener("change", (e) => {
+    const opt2 = closest(e.target, "[data-ms-option]");
+    if (!opt2) return;
+    const box = opt2.closest("[data-multiselect]");
+    const chips = box?.querySelector("[data-ms-chips]");
+    if (!box || !chips) return;
+    const checked = $$("[data-ms-option]", box).filter((c) => c.checked);
+    chips.innerHTML = checked.length ? checked.map((c) => `<span class="chip-mini">${c.value}</span>`).join("") : `<span class="ph">Select regions\u2026</span>`;
+  });
+  $$("[data-otp]").forEach((otp) => {
+    const inputs = $$("input", otp);
+    otp.addEventListener("input", (e) => {
+      const t = e.target;
+      t.value = t.value.replace(/\D/g, "").slice(0, 1);
+      if (t.value) inputs[inputs.indexOf(t) + 1]?.focus();
+    });
+    otp.addEventListener("keydown", (e) => {
+      const t = e.target;
+      if (e.key === "Backspace" && !t.value) inputs[inputs.indexOf(t) - 1]?.focus();
+    });
+    otp.addEventListener("paste", (e) => {
+      e.preventDefault();
+      const txt = ((e.clipboardData?.getData("text") ?? "").match(/\d/g) ?? []).slice(0, inputs.length);
+      inputs.forEach((inp, i) => inp.value = txt[i] ?? "");
+      inputs[Math.min(txt.length, inputs.length - 1)]?.focus();
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const t = closest(e.target, "[data-toggle-pw]");
+    if (!t) return;
+    const inp = t.parentElement?.querySelector("input");
+    if (inp) inp.type = inp.type === "password" ? "text" : "password";
+  });
+  const PW_COLORS = ["transparent", "var(--destructive)", "var(--chart-3)", "var(--chart-1)", "var(--chart-5)"];
+  const PW_HINTS = ["", "Weak \u2014 add length and variety.", "Fair \u2014 add numbers or symbols.", "Good.", "Strong password."];
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-password]");
+    if (!inp) return;
+    const v = inp.value;
+    let score = 0;
+    if (v.length >= 8) score++;
+    if (/[a-z]/.test(v) && /[A-Z]/.test(v)) score++;
+    if (/\d/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    const field = inp.closest(".field, .form-field");
+    const bar = field?.querySelector("[data-pw-bar]");
+    if (bar) {
+      bar.style.width = `${score / 4 * 100}%`;
+      bar.style.background = PW_COLORS[score];
+    }
+    const hint = field?.querySelector("[data-pw-hint]");
+    if (hint && v) hint.textContent = PW_HINTS[score];
+  });
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-validate='email']");
+    if (!inp) return;
+    const ok = inp.value === "" || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(inp.value);
+    inp.classList.toggle("invalid", !ok);
+    const err = inp.closest(".form-field")?.querySelector("[data-err]");
+    if (err) err.hidden = ok;
+  });
+  $$("[data-dropzone]").forEach((dz) => {
+    const input = $("[data-dz-input]", dz);
+    const fileEl = $("[data-dz-file]", dz);
+    const show = (name) => {
+      if (fileEl) {
+        ;
+        fileEl.hidden = false;
+        fileEl.textContent = "\u2713 " + name;
+      }
+    };
+    input?.addEventListener("change", () => {
+      if (input.files?.[0]) show(input.files[0].name);
+    });
+    ["dragover", "dragenter"].forEach(
+      (ev) => dz.addEventListener(ev, (e) => {
+        e.preventDefault();
+        dz.classList.add("drag");
+      })
+    );
+    ["dragleave", "drop"].forEach(
+      (ev) => dz.addEventListener(ev, (e) => {
+        e.preventDefault();
+        dz.classList.remove("drag");
+      })
+    );
+    dz.addEventListener("drop", (e) => {
+      const f = e.dataTransfer?.files?.[0];
+      if (f) show(f.name);
+    });
+  });
+  document.addEventListener("keydown", (e) => {
+    const inp = closest(e.target, "[data-tags-input]");
+    if (!inp || e.key !== "Enter") return;
+    e.preventDefault();
+    const v = inp.value.trim();
+    if (!v) return;
+    const chip = document.createElement("span");
+    chip.className = "tag";
+    chip.append(v);
+    const b = document.createElement("button");
+    b.setAttribute("data-tag-remove", "");
+    b.setAttribute("aria-label", "remove");
+    b.textContent = "\xD7";
+    chip.append(b);
+    inp.parentElement?.insertBefore(chip, inp);
+    inp.value = "";
+  });
+  document.addEventListener("click", (e) => {
+    const rm = closest(e.target, "[data-tag-remove]");
+    if (rm) rm.closest(".tag")?.remove();
+  });
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-search-input]");
+    if (inp) inp.closest("[data-search]")?.classList.toggle("has-value", inp.value.length > 0);
+  });
+  document.addEventListener("click", (e) => {
+    const c = closest(e.target, "[data-search-clear]");
+    if (c) {
+      const box = c.closest("[data-search]");
+      const inp = box?.querySelector("[data-search-input]");
+      if (inp) {
+        inp.value = "";
+        box?.classList.remove("has-value");
+        inp.focus();
+      }
+      return;
+    }
+    const seg = closest(e.target, "[data-segmented] button");
+    if (seg) {
+      $$("button", seg.closest("[data-segmented]")).forEach((x) => x.classList.remove("on"));
+      seg.classList.add("on");
+    }
+  });
+  $$("[data-carousel]").forEach((car) => {
+    const track = $("[data-carousel-track]", car);
+    let idx = 0;
+    const count = $$("[data-carousel-item]", car).length;
+    const go = (n) => {
+      idx = (n + count) % count;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+    };
+    car.addEventListener("click", (e) => {
+      if (closest(e.target, "[data-carousel-next]")) go(idx + 1);
+      if (closest(e.target, "[data-carousel-prev]")) go(idx - 1);
+    });
+  });
+  $$("[data-slider]").forEach((s) => {
+    const out = s.parentElement?.querySelector("[data-slider-value]");
+    const upd = () => {
+      if (out) out.textContent = s.value;
+      const pct = (+s.value - +s.min) / (+s.max - +s.min) * 100;
+      s.style.background = `linear-gradient(to right, var(--primary) ${pct}%, var(--secondary) ${pct}%)`;
+    };
+    s.addEventListener("input", upd);
+    upd();
+  });
+  document.addEventListener("click", (e) => {
+    const p2 = closest(e.target, "[data-page]");
+    if (!p2) return;
+    const nav = p2.closest("[data-pagination]");
+    if (nav) $$("[data-page]", nav).forEach((x) => x.classList.toggle("active", x === p2));
+  });
+  $$("[data-ai-shell]").forEach((shell) => {
+    const convo = shell.querySelector("[data-ai-convo]");
+    const input = shell.querySelector("[data-ai-input]");
+    const send = shell.querySelector("[data-ai-send]");
+    if (!convo || !input || !send) return;
+    let timer = 0;
+    const scroll = () => {
+      convo.scrollTop = convo.scrollHeight;
+    };
+    const REPLY = "Here's how I'd approach that. I'll add the chart component, wire it to the WEO series, and keep it token-driven so it matches the theme \u2014 then verify the projection band renders.";
+    const submit = () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = 0;
+        send.classList.remove("stop");
+        send.textContent = "\u2191";
+        convo.querySelector(".ai-cursor")?.remove();
+        return;
+      }
+      const text2 = input.value.trim();
+      if (!text2) return;
+      convo.insertAdjacentHTML(
+        "beforeend",
+        `<div class="ai-msg user"><div class="ai-avatar">FC</div><div class="ai-body"><div class="ai-role">You</div><div class="ai-content"></div></div></div>`
+      );
+      convo.lastElementChild.querySelector(".ai-content").textContent = text2;
+      input.value = "";
+      input.style.height = "auto";
+      scroll();
+      convo.insertAdjacentHTML(
+        "beforeend",
+        `<div class="ai-msg assistant"><div class="ai-avatar">\u25C6</div><div class="ai-body"><div class="ai-role">Analyst</div><div class="ai-content"><span class="ai-stream"></span><span class="ai-cursor"></span></div></div></div>`
+      );
+      const contentEl = convo.lastElementChild.querySelector(".ai-content");
+      const streamEl = contentEl.querySelector(".ai-stream");
+      send.classList.add("stop");
+      send.textContent = "\u25A0";
+      let i = 0;
+      timer = window.setInterval(() => {
+        i += 2;
+        streamEl.textContent = REPLY.slice(0, i);
+        scroll();
+        if (i >= REPLY.length) {
+          clearInterval(timer);
+          timer = 0;
+          contentEl.querySelector(".ai-cursor")?.remove();
+          send.classList.remove("stop");
+          send.textContent = "\u2191";
+        }
+      }, 20);
+    };
+    send.addEventListener("click", submit);
+    input.addEventListener("keydown", (e) => {
+      const ke = e;
+      if ((ke.metaKey || ke.ctrlKey) && ke.key === "Enter") {
+        e.preventDefault();
+        submit();
+      }
+    });
+    input.addEventListener("input", () => {
+      input.style.height = "auto";
+      input.style.height = Math.min(input.scrollHeight, 140) + "px";
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const toolT = closest(e.target, "[data-ai-tool-toggle]");
+    if (toolT) return void toolT.closest(".ai-tool")?.classList.toggle("open");
+    const rez = closest(e.target, "[data-ai-reasoning-toggle]");
+    if (rez) return void rez.closest(".ai-reasoning")?.classList.toggle("open");
+    const vote = closest(e.target, "[data-ai-vote]");
+    if (vote) {
+      vote.parentElement?.querySelectorAll("[data-ai-vote]").forEach((v) => v.classList.remove("on"));
+      vote.classList.add("on");
+      return;
+    }
+    const copyCode = closest(e.target, "[data-ai-copy-code]");
+    if (copyCode) {
+      const code = copyCode.closest(".ai-code")?.querySelector("code")?.textContent ?? "";
+      navigator.clipboard?.writeText(code).catch(() => {
+      });
+      copyCode.textContent = "\u2713 Copied";
+      setTimeout(() => copyCode.textContent = "\u29C9 Copy", 1200);
+      return;
+    }
+    const copyMsg = closest(e.target, "[data-ai-copy]");
+    if (copyMsg) {
+      const c = copyMsg.closest(".ai-body")?.querySelector(".ai-content")?.textContent ?? "";
+      navigator.clipboard?.writeText(c).catch(() => {
+      });
+      copyMsg.classList.add("on");
+      setTimeout(() => copyMsg.classList.remove("on"), 1e3);
+      return;
+    }
+    const sugg = closest(e.target, "[data-ai-suggest]");
+    if (sugg) {
+      const wrap = sugg.closest(".ai-empty")?.parentElement;
+      const inp = wrap?.querySelector("[data-ai-input]");
+      if (inp) {
+        inp.value = (sugg.textContent ?? "").replace(/^\S+\s/, "");
+        inp.focus();
+      }
+      return;
+    }
+    const model = closest(e.target, "[data-ai-model-option]");
+    if (model) {
+      const label = model.closest(".ai-model")?.querySelector("[data-ai-model-value]");
+      if (label) label.textContent = model.textContent;
+      closeMenus();
+    }
+  });
+  const links = $$("[data-nav-link]");
+  const sections = links.map((l) => document.getElementById(l.getAttribute("href").slice(1))).filter(Boolean);
+  if ("IntersectionObserver" in window && sections.length) {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            const id = en.target.id;
+            links.forEach((l) => l.classList.toggle("active", l.getAttribute("href") === "#" + id));
+          }
+        });
+      },
+      { rootMargin: "-20% 0px -70% 0px", threshold: 0 }
+    );
+    sections.forEach((s) => obs.observe(s));
+  }
+  document.addEventListener("click", (e) => {
+    const link = closest(e.target, "[data-nav-link]");
+    if (!link) return;
+    const target = document.getElementById(link.getAttribute("href").slice(1));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+})();</script>
+</body>
+</html>

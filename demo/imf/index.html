@@ -1,9 +1,81 @@
-/**
- * The stylesheet for the component explorer. Every value is expressed through
- * shadcn theme tokens (`--primary`, `--border`, `--radius`, …) so the whole
- * gallery recolors with any generated brand theme.
- */
-export const EXPLORE_CSS = `
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IMF — design system</title>
+<style>
+:root {
+  --radius: 0.1875rem;
+  --font-sans: "Avenir Next World", "Avenir Next", Mulish, Helvetica, Arial, sans-serif;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2178 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2178 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2178 0 0);
+  --primary: oklch(0.4228 0.1389 254.944);
+  --primary-foreground: oklch(0.985 0.02 254.944);
+  --secondary: oklch(0.97 0.0425 245.779);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.5444 0 0);
+  --accent: oklch(0.95 0.0461 194.061);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.5134 0.1617 24.89);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.65 0.1389 254.944);
+  --chart-1: oklch(0.4228 0.1389 254.944);
+  --chart-2: oklch(0.6929 0.1008 210.356);
+  --chart-3: oklch(0.6889 0.1194 68.414);
+  --chart-4: oklch(0.5134 0.1617 24.89);
+  --chart-5: oklch(0.5853 0.1407 153.248);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.2178 0 0);
+  --sidebar-primary: oklch(0.4228 0.1389 254.944);
+  --sidebar-primary-foreground: oklch(0.985 0.02 254.944);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.65 0.1389 254.944);
+}
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.7028 0.1389 254.944);
+  --primary-foreground: oklch(0.145 0.02 254.944);
+  --secondary: oklch(0.3412 0.0764 245.779);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.3 0.0807 194.061);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.5134 0.1617 24.89);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0.1389 254.944);
+  --chart-1: oklch(0.4228 0.1389 254.944);
+  --chart-2: oklch(0.6929 0.1008 210.356);
+  --chart-3: oklch(0.6889 0.1194 68.414);
+  --chart-4: oklch(0.5134 0.1617 24.89);
+  --chart-5: oklch(0.5853 0.1407 153.248);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.7028 0.1389 254.944);
+  --sidebar-primary-foreground: oklch(0.145 0.02 254.944);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0.1389 254.944);
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif); background: var(--background); color: var(--foreground); font-size: 14px; }
@@ -517,4 +589,650 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 .ai-empty .mark { width: 3rem; height: 3rem; border-radius: var(--radius); background: var(--primary); color: var(--primary-foreground); display: grid; place-items: center; font-weight: 700; font-size: 1.2rem; margin: 0 auto 0.9rem; }
 .ai-empty h3 { margin: 0 0 0.35rem; font-size: 1.3rem; }
 .ai-empty p { color: var(--muted-foreground); margin: 0 0 1.25rem; }
-`;
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="mark">I</span><div><b>IMF</b><span>design system</span></div></div>
+    <div class="nav-group">Overview</div><div class="nav"><a href="#overview" data-nav-link>Overview</a></div><div class="nav-group">Foundations</div><div class="nav"><a href="#colors" data-nav-link>Colors</a><a href="#typography" data-nav-link>Typography</a><a href="#radius" data-nav-link>Radius</a></div>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <nav class="pagenav"><a href="index.html" class="active">Design system</a><a href="components.html">Components</a><a href="layouts.html">Layouts &amp; pages</a><a href="charts.html">Charts</a><a href="ai.html">AI harness</a></nav>
+      <div class="search" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
+        <span>🔍</span> Search… <kbd>⌘K</kbd>
+      </div>
+      <button class="btn btn-outline btn-sm" data-toggle-theme>Toggle theme</button>
+    </div>
+    <div class="content">
+      <div class="hero">
+        <h1>IMF design system</h1>
+        <p>The theme, palette, typography, and headline indicators — the foundations everything is built from.</p>
+      </div>
+      <section class="block" id="overview">
+    <h2>Overview</h2>
+    <p class="desc">The generated theme and headline indicators. Every element on this page is styled with the same tokens.</p>
+    <div class="demo col"><div class="palette"><div class="sw"><span class="chip" style="background:var(--background)"></span><code>background</code></div><div class="sw"><span class="chip" style="background:var(--foreground)"></span><code>foreground</code></div><div class="sw"><span class="chip" style="background:var(--card)"></span><code>card</code></div><div class="sw"><span class="chip" style="background:var(--popover)"></span><code>popover</code></div><div class="sw"><span class="chip" style="background:var(--primary)"></span><code>primary</code></div><div class="sw"><span class="chip" style="background:var(--secondary)"></span><code>secondary</code></div><div class="sw"><span class="chip" style="background:var(--muted)"></span><code>muted</code></div><div class="sw"><span class="chip" style="background:var(--accent)"></span><code>accent</code></div><div class="sw"><span class="chip" style="background:var(--destructive)"></span><code>destructive</code></div><div class="sw"><span class="chip" style="background:var(--border)"></span><code>border</code></div><div class="sw"><span class="chip" style="background:var(--input)"></span><code>input</code></div><div class="sw"><span class="chip" style="background:var(--ring)"></span><code>ring</code></div><div class="sw"><span class="chip" style="background:var(--chart-1)"></span><code>chart-1</code></div><div class="sw"><span class="chip" style="background:var(--chart-2)"></span><code>chart-2</code></div><div class="sw"><span class="chip" style="background:var(--chart-3)"></span><code>chart-3</code></div><div class="sw"><span class="chip" style="background:var(--chart-4)"></span><code>chart-4</code></div><div class="sw"><span class="chip" style="background:var(--chart-5)"></span><code>chart-5</code></div></div></div>
+        <div class="grid4" style="margin-top:1rem"><div class="card kpi">
+    <span class="muted" style="font-size:.8rem">World GDP growth</span>
+    <div class="kpi-mid"><div class="kpi-value">3.2%</div>
+      <svg viewBox="0 0 96 30" class="spark" preserveAspectRatio="none"><path d="M0.0,10.0 L13.7,10.9 L27.4,12.4 L41.1,28.5 L54.9,1.5 L68.6,10.0 L82.3,10.9 L96.0,11.2 L96,30 L0,30 Z" fill="var(--chart-1)" fill-opacity="0.1"/><path d="M0.0,10.0 L13.7,10.9 L27.4,12.4 L41.1,28.5 L54.9,1.5 L68.6,10.0 L82.3,10.9 L96.0,11.2" fill="none" stroke="var(--chart-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="96.0" cy="11.2" r="2" fill="var(--chart-1)"/></svg></div>
+    <div class="kpi-delta up"><span class="pill">▲ 0.1%</span><span class="muted">vs WEO Apr</span></div>
+  </div><div class="card kpi">
+    <span class="muted" style="font-size:.8rem">Global inflation</span>
+    <div class="kpi-mid"><div class="kpi-value">5.8%</div>
+      <svg viewBox="0 0 96 30" class="spark" preserveAspectRatio="none"><path d="M0.0,28.5 L19.2,27.0 L38.4,21.1 L57.6,1.5 L76.8,10.3 L96.0,15.7 L96,30 L0,30 Z" fill="var(--destructive)" fill-opacity="0.1"/><path d="M0.0,28.5 L19.2,27.0 L38.4,21.1 L57.6,1.5 L76.8,10.3 L96.0,15.7" fill="none" stroke="var(--destructive)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="96.0" cy="15.7" r="2" fill="var(--destructive)"/></svg></div>
+    <div class="kpi-delta down"><span class="pill">▼ 1.2%</span><span class="muted">yoy</span></div>
+  </div><div class="card kpi">
+    <span class="muted" style="font-size:.8rem">Public debt / GDP</span>
+    <div class="kpi-mid"><div class="kpi-value">93.2%</div>
+      <svg viewBox="0 0 96 30" class="spark" preserveAspectRatio="none"><path d="M0.0,28.5 L19.2,21.3 L38.4,1.5 L57.6,6.9 L76.8,10.5 L96.0,12.3 L96,30 L0,30 Z" fill="var(--chart-1)" fill-opacity="0.1"/><path d="M0.0,28.5 L19.2,21.3 L38.4,1.5 L57.6,6.9 L76.8,10.5 L96.0,12.3" fill="none" stroke="var(--chart-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="96.0" cy="12.3" r="2" fill="var(--chart-1)"/></svg></div>
+    <div class="kpi-delta up"><span class="pill">▲ 1.6%</span><span class="muted">vs 2023</span></div>
+  </div><div class="card kpi">
+    <span class="muted" style="font-size:.8rem">Trade volume</span>
+    <div class="kpi-mid"><div class="kpi-value">+3.4%</div>
+      <svg viewBox="0 0 96 30" class="spark" preserveAspectRatio="none"><path d="M0.0,27.4 L19.2,28.5 L38.4,1.5 L57.6,3.8 L76.8,27.9 L96.0,13.6 L96,30 L0,30 Z" fill="var(--chart-1)" fill-opacity="0.1"/><path d="M0.0,27.4 L19.2,28.5 L38.4,1.5 L57.6,3.8 L76.8,27.9 L96.0,13.6" fill="none" stroke="var(--chart-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="96.0" cy="13.6" r="2" fill="var(--chart-1)"/></svg></div>
+    <div class="kpi-delta up"><span class="pill">▲ 2.1%</span><span class="muted">yoy</span></div>
+  </div></div>
+  </section>
+<section class="block" id="colors">
+    <h2>Colors</h2>
+    <p class="desc">The full semantic color palette. Swatches are live (toggle the theme); the values shown are the light-theme OKLCH plus an sRGB hex.</p>
+    <div class="demo col">
+        <div class="color-group-title">Base</div><div class="color-grid"><div class="color-card"><div class="color-swatch" style="background:var(--background);color:var(--foreground)">Aa</div><div class="color-meta"><code class="color-name">--background</code><code class="color-val">oklch(1 0 0)</code><code class="color-hex">#ffffff</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--card);color:var(--card-foreground)">Aa</div><div class="color-meta"><code class="color-name">--card</code><code class="color-val">oklch(1 0 0)</code><code class="color-hex">#ffffff</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--popover);color:var(--popover-foreground)">Aa</div><div class="color-meta"><code class="color-name">--popover</code><code class="color-val">oklch(1 0 0)</code><code class="color-hex">#ffffff</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--muted);color:var(--muted-foreground)">Aa</div><div class="color-meta"><code class="color-name">--muted</code><code class="color-val">oklch(0.97 0 0)</code><code class="color-hex">#f5f5f5</code></div></div></div>
+        <div class="color-group-title">Brand & feedback</div><div class="color-grid"><div class="color-card"><div class="color-swatch" style="background:var(--primary);color:var(--primary-foreground)">Aa</div><div class="color-meta"><code class="color-name">--primary</code><code class="color-val">oklch(0.4228 0.1389 254.944)</code><code class="color-hex">#004c97</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--secondary);color:var(--secondary-foreground)">Aa</div><div class="color-meta"><code class="color-name">--secondary</code><code class="color-val">oklch(0.97 0.0425 245.779)</code><code class="color-hex">#edf6ff</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--accent);color:var(--accent-foreground)">Aa</div><div class="color-meta"><code class="color-name">--accent</code><code class="color-val">oklch(0.95 0.0461 194.061)</code><code class="color-hex">#ccf9f7</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--destructive);color:var(--destructive-foreground)">Aa</div><div class="color-meta"><code class="color-name">--destructive</code><code class="color-val">oklch(0.5134 0.1617 24.89)</code><code class="color-hex">#b13434</code></div></div></div>
+        <div class="color-group-title">Lines & ring</div><div class="color-grid"><div class="color-card"><div class="color-swatch bordered" style="background:var(--border)"></div><div class="color-meta"><code class="color-name">--border</code><code class="color-val">oklch(0.922 0 0)</code><code class="color-hex">#e5e5e5</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--input)"></div><div class="color-meta"><code class="color-name">--input</code><code class="color-val">oklch(0.922 0 0)</code><code class="color-hex">#e5e5e5</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--ring)"></div><div class="color-meta"><code class="color-name">--ring</code><code class="color-val">oklch(0.65 0.1389 254.944)</code><code class="color-hex">#5091e2</code></div></div></div>
+        <div class="color-group-title">Charts</div><div class="color-grid"><div class="color-card"><div class="color-swatch bordered" style="background:var(--chart-1)"></div><div class="color-meta"><code class="color-name">--chart-1</code><code class="color-val">oklch(0.4228 0.1389 254.944)</code><code class="color-hex">#004c97</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--chart-2)"></div><div class="color-meta"><code class="color-name">--chart-2</code><code class="color-val">oklch(0.6929 0.1008 210.356)</code><code class="color-hex">#3fadbf</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--chart-3)"></div><div class="color-meta"><code class="color-name">--chart-3</code><code class="color-val">oklch(0.6889 0.1194 68.414)</code><code class="color-hex">#cb8c40</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--chart-4)"></div><div class="color-meta"><code class="color-name">--chart-4</code><code class="color-val">oklch(0.5134 0.1617 24.89)</code><code class="color-hex">#b13434</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--chart-5)"></div><div class="color-meta"><code class="color-name">--chart-5</code><code class="color-val">oklch(0.5853 0.1407 153.248)</code><code class="color-hex">#1c9352</code></div></div></div>
+        <div class="color-group-title">Sidebar</div><div class="color-grid"><div class="color-card"><div class="color-swatch" style="background:var(--sidebar);color:var(--sidebar-foreground)">Aa</div><div class="color-meta"><code class="color-name">--sidebar</code><code class="color-val">oklch(0.985 0 0)</code><code class="color-hex">#fafafa</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--sidebar-primary);color:var(--sidebar-primary-foreground)">Aa</div><div class="color-meta"><code class="color-name">--sidebar-primary</code><code class="color-val">oklch(0.4228 0.1389 254.944)</code><code class="color-hex">#004c97</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--sidebar-accent);color:var(--sidebar-accent-foreground)">Aa</div><div class="color-meta"><code class="color-name">--sidebar-accent</code><code class="color-val">oklch(0.97 0 0)</code><code class="color-hex">#f5f5f5</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--sidebar-border)"></div><div class="color-meta"><code class="color-name">--sidebar-border</code><code class="color-val">oklch(0.922 0 0)</code><code class="color-hex">#e5e5e5</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--sidebar-ring)"></div><div class="color-meta"><code class="color-name">--sidebar-ring</code><code class="color-val">oklch(0.65 0.1389 254.944)</code><code class="color-hex">#5091e2</code></div></div></div>
+      </div>
+  </section>
+<section class="block" id="typography">
+    <h2>Typography</h2>
+    <p class="desc">The type scale, set in the brand's font.</p>
+    <div class="demo col"><div class="type-specimens" style="width:100%">
+          <div class="type-row"><span class="type-sample" style="font-size:2.5rem;font-weight:650;letter-spacing:-0.02em">Global growth outlook</span><span class="type-meta">Display · 40 / 650</span></div>
+          <div class="type-row"><span class="type-sample" style="font-size:1.875rem;font-weight:600;letter-spacing:-0.02em">World Economic Outlook</span><span class="type-meta">H1 · 30 / 600</span></div>
+          <div class="type-row"><span class="type-sample" style="font-size:1.5rem;font-weight:600">Regional analysis</span><span class="type-meta">H2 · 24 / 600</span></div>
+          <div class="type-row"><span class="type-sample" style="font-size:1.25rem;font-weight:600">Projected indicators</span><span class="type-meta">H3 · 20 / 600</span></div>
+          <div class="type-row"><span class="type-sample" style="font-size:1rem">Global growth is projected to hold at 3.2% in 2025 as disinflation continues across most economies.</span><span class="type-meta">Body · 16 / 400</span></div>
+          <div class="type-row"><span class="type-sample muted" style="font-size:0.8125rem">Source: IMF staff estimates · synthetic data</span><span class="type-meta">Small · 13 / 400</span></div>
+          <div class="type-row"><span class="type-sample mono" style="font-size:0.8125rem">NGDP_RPCH @ WEO = 3.20</span><span class="type-meta">Mono · 13</span></div>
+        </div></div>
+  </section>
+<section class="block" id="radius">
+    <h2>Radius</h2>
+    <p class="desc">Corner radii derived from the --radius token.</p>
+    <div class="demo "><div class="radius-row">
+          <div class="radius-item"><span class="radius-box" style="border-radius:calc(var(--radius) - 4px)"></span>sm</div>
+          <div class="radius-item"><span class="radius-box" style="border-radius:calc(var(--radius) - 2px)"></span>md</div>
+          <div class="radius-item"><span class="radius-box" style="border-radius:var(--radius)"></span>lg</div>
+          <div class="radius-item"><span class="radius-box" style="border-radius:calc(var(--radius) + 4px)"></span>xl</div>
+          <div class="radius-item"><span class="radius-box" style="border-radius:999px"></span>full</div>
+        </div></div>
+  </section>
+      <footer class="muted" style="font-size:.75rem;border-top:1px solid var(--border);padding-top:1.25rem;margin-top:3rem">Generated by shadcn-theming · synthetic, illustrative data</footer>
+    </div>
+  </main>
+</div>
+
+  <div class="overlay" id="dlg-edit"><div class="backdrop" data-close></div>
+    <div class="dialog"><div class="dh"><h3>Edit forecast</h3></div>
+      <div class="db">Adjust the projected growth path. Changes apply to the working scenario only.</div>
+      <div style="padding:0 1.25rem"><label class="label">2025 growth (%)</label><input class="input" value="3.1" /></div>
+      <div class="df"><button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-primary" data-close>Save changes</button></div>
+    </div></div>
+
+  <div class="overlay" id="dlg-del"><div class="backdrop" data-close></div>
+    <div class="dialog"><div class="dh"><h3>Delete this series?</h3></div>
+      <div class="db">This action cannot be undone. The series and its projections will be permanently removed.</div>
+      <div class="df"><button class="btn btn-outline" data-close>Cancel</button><button class="btn btn-destructive" data-close>Delete</button></div>
+    </div></div>
+
+  <div class="overlay" id="sheet-1"><div class="backdrop" data-close></div>
+    <div class="sheet"><div style="display:flex;justify-content:space-between;align-items:start"><div><h3 style="margin:0">Filters</h3><p class="muted" style="font-size:.83rem;margin:.3rem 0 0">Refine the dataset</p></div><button class="btn btn-ghost btn-icon" data-close>✕</button></div>
+      <div style="margin-top:1.25rem;display:flex;flex-direction:column;gap:1rem">
+        <div class="field"><label class="label">Indicator</label><input class="input" value="Real GDP growth" /></div>
+        <label class="check"><input type="checkbox" checked /> Include projections</label>
+        <label class="check"><input type="checkbox" /> Seasonally adjusted</label>
+      </div>
+      <div style="margin-top:1.5rem;display:flex;gap:.5rem"><button class="btn btn-outline" data-close style="flex:1">Reset</button><button class="btn btn-primary" data-close style="flex:1">Apply</button></div>
+    </div></div>
+
+  <div class="overlay" id="drawer-1"><div class="backdrop" data-close></div>
+    <div class="drawer"><div class="grab"></div><h3 style="margin:0 0 .3rem">Quick note</h3><p class="muted" style="font-size:.85rem;margin:0 0 1rem">Attach a comment to this data point.</p>
+      <textarea class="textarea" placeholder="Type a note…"></textarea>
+      <div style="margin-top:1rem;display:flex;justify-content:flex-end;gap:.5rem"><button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-primary" data-close>Save</button></div>
+    </div></div>
+
+  <div id="cmdk"><div class="cmd">
+    <input data-cmd-input placeholder="Type a command or search…" />
+    <div class="list">
+      <div class="menu-label">Pages</div>
+      <div data-cmd-item onclick="location.href='index.html'">Design system</div><div data-cmd-item onclick="location.href='components.html'">Components</div><div data-cmd-item onclick="location.href='layouts.html'">Layouts &amp; pages</div><div data-cmd-item onclick="location.href='charts.html'">Charts</div><div data-cmd-item onclick="location.href='ai.html'">AI harness</div>
+    </div>
+  </div></div>
+
+<script>(function uiMain() {
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const closest = (t, sel) => t?.closest(sel);
+  document.addEventListener("click", (e) => {
+    if (closest(e.target, "[data-toggle-theme]")) document.documentElement.classList.toggle("dark");
+  });
+  document.addEventListener("click", (e) => {
+    const trigger = closest(e.target, "[data-tab]");
+    if (!trigger) return;
+    const wrap = trigger.closest("[data-tabs]");
+    if (!wrap) return;
+    const value = trigger.dataset.tab;
+    $$("[data-tab]", wrap).forEach((t) => t.setAttribute("aria-selected", String(t === trigger)));
+    $$("[data-tab-panel]", wrap).forEach((p2) => {
+      p2.hidden = p2.getAttribute("data-tab-panel") !== value;
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const trigger = closest(e.target, "[data-acc-trigger]");
+    if (!trigger) return;
+    const item = trigger.closest("[data-acc-item]");
+    const acc = trigger.closest("[data-accordion]");
+    const open = item.classList.contains("open");
+    if (acc?.getAttribute("data-accordion") === "single") {
+      $$("[data-acc-item]", acc).forEach((it) => it.classList.remove("open"));
+    }
+    item.classList.toggle("open", !open);
+    trigger.setAttribute("aria-expanded", String(!open));
+  });
+  const openOverlay = (id) => {
+    const ov = document.getElementById(id);
+    if (ov) {
+      ov.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+  };
+  const closeOverlay = (ov) => {
+    if (!ov) return;
+    ov.classList.remove("open");
+    if (!$(".overlay.open")) document.body.style.overflow = "";
+  };
+  document.addEventListener("click", (e) => {
+    const opener = closest(e.target, "[data-open]");
+    if (opener) {
+      openOverlay(opener.dataset.open);
+      return;
+    }
+    if (closest(e.target, "[data-close]")) {
+      closeOverlay(closest(e.target, ".overlay"));
+      return;
+    }
+    const ov = e.target;
+    if (ov.classList?.contains("overlay") && ov.classList.contains("open")) closeOverlay(ov);
+  });
+  const closeMenus = (except) => {
+    $$("[data-menu].open").forEach((m) => {
+      if (m !== except) m.classList.remove("open");
+    });
+  };
+  document.addEventListener("click", (e) => {
+    const trigger = closest(e.target, "[data-menu-trigger]");
+    if (trigger) {
+      const menu = trigger.parentElement?.querySelector("[data-menu]");
+      const isOpen = menu?.classList.contains("open");
+      closeMenus(menu);
+      menu?.classList.toggle("open", !isOpen);
+      return;
+    }
+    if (!closest(e.target, "[data-menu]")) closeMenus();
+    const opt2 = closest(e.target, "[data-select-option]");
+    if (opt2) {
+      const wrap = opt2.closest("[data-select]");
+      const label = $("[data-select-value]", wrap);
+      label.textContent = opt2.textContent;
+      $$("[data-select-option]", wrap).forEach((o) => o.classList.toggle("selected", o === opt2));
+      closeMenus();
+    }
+  });
+  document.addEventListener("contextmenu", (e) => {
+    const host = closest(e.target, "[data-context]");
+    if (!host) return;
+    e.preventDefault();
+    const menu = host.querySelector("[data-menu]");
+    if (!menu) return;
+    closeMenus(menu);
+    menu.style.position = "fixed";
+    menu.style.left = Math.min(e.clientX, window.innerWidth - 200) + "px";
+    menu.style.top = e.clientY + "px";
+    menu.classList.add("open");
+  });
+  const cmd = document.getElementById("cmdk");
+  document.addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      if (cmd) {
+        cmd.classList.toggle("open");
+        if (cmd.classList.contains("open")) setTimeout(() => $("[data-cmd-input]", cmd)?.focus(), 20);
+      }
+    }
+    if (e.key === "Escape") {
+      $$(".overlay.open").forEach((o) => o.classList.remove("open"));
+      cmd?.classList.remove("open");
+      closeMenus();
+      document.body.style.overflow = "";
+    }
+  });
+  if (cmd) {
+    cmd.addEventListener("input", (e) => {
+      const q = e.target.value?.toLowerCase() ?? "";
+      $$("[data-cmd-item]", cmd).forEach((it) => {
+        it.hidden = !it.textContent?.toLowerCase().includes(q);
+      });
+    });
+    cmd.addEventListener("click", (e) => {
+      if (e.target.id === "cmdk") cmd.classList.remove("open");
+    });
+  }
+  let toaster = document.getElementById("toaster");
+  if (!toaster) {
+    toaster = document.createElement("div");
+    toaster.id = "toaster";
+    toaster.className = "toaster";
+    document.body.appendChild(toaster);
+  }
+  document.addEventListener("click", (e) => {
+    const btn = closest(e.target, "[data-toast]");
+    if (!btn) return;
+    const t = document.createElement("div");
+    t.className = "toast";
+    t.innerHTML = `<div><strong>${btn.dataset.toastTitle || "Notification"}</strong><div class="muted" style="font-size:.8rem">${btn.dataset.toast || "Event has been created."}</div></div>`;
+    toaster.appendChild(t);
+    requestAnimationFrame(() => t.classList.add("show"));
+    setTimeout(() => {
+      t.classList.remove("show");
+      setTimeout(() => t.remove(), 250);
+    }, 3200);
+  });
+  const clock = () => {
+    const d = /* @__PURE__ */ new Date();
+    return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  };
+  const CHAT_REPLIES = [
+    "Global growth is projected at 3.2% for 2025, broadly stable.",
+    "Headline inflation continues to ease toward central-bank targets.",
+    "That series is in the WEO database \u2014 I can export it for you.",
+    "Public debt is approaching 93% of GDP globally."
+  ];
+  document.addEventListener("submit", (e) => {
+    const form = closest(e.target, "[data-chat-form]");
+    if (!form) return;
+    e.preventDefault();
+    const input = form.querySelector("[data-chat-text]");
+    const body = form.closest("[data-chat]")?.querySelector("[data-chat-body]");
+    if (!input || !body) return;
+    const text2 = input.value.trim();
+    if (!text2) return;
+    const add = (cls, content) => {
+      const m = document.createElement("div");
+      m.className = "msg " + cls;
+      m.innerHTML = `<div class="bubble"></div><span class="msg-time">${clock()}</span>`;
+      m.querySelector(".bubble").textContent = content;
+      body.appendChild(m);
+      body.scrollTop = body.scrollHeight;
+      return m;
+    };
+    add("out", text2);
+    input.value = "";
+    const typing = document.createElement("div");
+    typing.className = "msg in";
+    typing.innerHTML = `<div class="chat-typing"><span></span><span></span><span></span></div>`;
+    body.appendChild(typing);
+    body.scrollTop = body.scrollHeight;
+    const reply = CHAT_REPLIES[text2.length % CHAT_REPLIES.length];
+    setTimeout(() => {
+      typing.remove();
+      add("in", reply);
+    }, 900);
+  });
+  document.addEventListener("click", (e) => {
+    const tg = closest(e.target, "[data-toggle]");
+    if (!tg) return;
+    const group = tg.closest("[data-toggle-group='single']");
+    if (group) $$("[data-toggle]", group).forEach((b) => b.classList.remove("on"));
+    tg.classList.toggle("on");
+  });
+  document.addEventListener("input", (e) => {
+    const s = closest(e.target, "[data-cb-search]");
+    if (!s) return;
+    const q = s.value.toLowerCase();
+    s.parentElement?.querySelectorAll("[data-cb-option]").forEach((o) => {
+      o.hidden = !(o.textContent ?? "").toLowerCase().includes(q);
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const opt2 = closest(e.target, "[data-cb-option]");
+    if (opt2) {
+      const box = opt2.closest("[data-combobox]");
+      const label = box?.querySelector("[data-combobox-value]");
+      if (label) {
+        label.textContent = opt2.textContent;
+        label.classList.remove("ph");
+      }
+      closeMenus();
+      return;
+    }
+    const day = closest(e.target, ".cal .day");
+    if (day && !day.classList.contains("out")) {
+      const dp = day.closest("[data-datepicker]");
+      if (dp) {
+        day.closest(".cal-grid")?.querySelectorAll(".day").forEach((d) => d.classList.remove("sel"));
+        day.classList.add("sel");
+        const val = dp.querySelector("[data-dp-value]");
+        if (val) {
+          val.textContent = `September ${day.textContent}, 2026`;
+          val.classList.remove("ph");
+        }
+        closeMenus();
+      }
+    }
+  });
+  document.addEventListener("change", (e) => {
+    const opt2 = closest(e.target, "[data-ms-option]");
+    if (!opt2) return;
+    const box = opt2.closest("[data-multiselect]");
+    const chips = box?.querySelector("[data-ms-chips]");
+    if (!box || !chips) return;
+    const checked = $$("[data-ms-option]", box).filter((c) => c.checked);
+    chips.innerHTML = checked.length ? checked.map((c) => `<span class="chip-mini">${c.value}</span>`).join("") : `<span class="ph">Select regions\u2026</span>`;
+  });
+  $$("[data-otp]").forEach((otp) => {
+    const inputs = $$("input", otp);
+    otp.addEventListener("input", (e) => {
+      const t = e.target;
+      t.value = t.value.replace(/\D/g, "").slice(0, 1);
+      if (t.value) inputs[inputs.indexOf(t) + 1]?.focus();
+    });
+    otp.addEventListener("keydown", (e) => {
+      const t = e.target;
+      if (e.key === "Backspace" && !t.value) inputs[inputs.indexOf(t) - 1]?.focus();
+    });
+    otp.addEventListener("paste", (e) => {
+      e.preventDefault();
+      const txt = ((e.clipboardData?.getData("text") ?? "").match(/\d/g) ?? []).slice(0, inputs.length);
+      inputs.forEach((inp, i) => inp.value = txt[i] ?? "");
+      inputs[Math.min(txt.length, inputs.length - 1)]?.focus();
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const t = closest(e.target, "[data-toggle-pw]");
+    if (!t) return;
+    const inp = t.parentElement?.querySelector("input");
+    if (inp) inp.type = inp.type === "password" ? "text" : "password";
+  });
+  const PW_COLORS = ["transparent", "var(--destructive)", "var(--chart-3)", "var(--chart-1)", "var(--chart-5)"];
+  const PW_HINTS = ["", "Weak \u2014 add length and variety.", "Fair \u2014 add numbers or symbols.", "Good.", "Strong password."];
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-password]");
+    if (!inp) return;
+    const v = inp.value;
+    let score = 0;
+    if (v.length >= 8) score++;
+    if (/[a-z]/.test(v) && /[A-Z]/.test(v)) score++;
+    if (/\d/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    const field = inp.closest(".field, .form-field");
+    const bar = field?.querySelector("[data-pw-bar]");
+    if (bar) {
+      bar.style.width = `${score / 4 * 100}%`;
+      bar.style.background = PW_COLORS[score];
+    }
+    const hint = field?.querySelector("[data-pw-hint]");
+    if (hint && v) hint.textContent = PW_HINTS[score];
+  });
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-validate='email']");
+    if (!inp) return;
+    const ok = inp.value === "" || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(inp.value);
+    inp.classList.toggle("invalid", !ok);
+    const err = inp.closest(".form-field")?.querySelector("[data-err]");
+    if (err) err.hidden = ok;
+  });
+  $$("[data-dropzone]").forEach((dz) => {
+    const input = $("[data-dz-input]", dz);
+    const fileEl = $("[data-dz-file]", dz);
+    const show = (name) => {
+      if (fileEl) {
+        ;
+        fileEl.hidden = false;
+        fileEl.textContent = "\u2713 " + name;
+      }
+    };
+    input?.addEventListener("change", () => {
+      if (input.files?.[0]) show(input.files[0].name);
+    });
+    ["dragover", "dragenter"].forEach(
+      (ev) => dz.addEventListener(ev, (e) => {
+        e.preventDefault();
+        dz.classList.add("drag");
+      })
+    );
+    ["dragleave", "drop"].forEach(
+      (ev) => dz.addEventListener(ev, (e) => {
+        e.preventDefault();
+        dz.classList.remove("drag");
+      })
+    );
+    dz.addEventListener("drop", (e) => {
+      const f = e.dataTransfer?.files?.[0];
+      if (f) show(f.name);
+    });
+  });
+  document.addEventListener("keydown", (e) => {
+    const inp = closest(e.target, "[data-tags-input]");
+    if (!inp || e.key !== "Enter") return;
+    e.preventDefault();
+    const v = inp.value.trim();
+    if (!v) return;
+    const chip = document.createElement("span");
+    chip.className = "tag";
+    chip.append(v);
+    const b = document.createElement("button");
+    b.setAttribute("data-tag-remove", "");
+    b.setAttribute("aria-label", "remove");
+    b.textContent = "\xD7";
+    chip.append(b);
+    inp.parentElement?.insertBefore(chip, inp);
+    inp.value = "";
+  });
+  document.addEventListener("click", (e) => {
+    const rm = closest(e.target, "[data-tag-remove]");
+    if (rm) rm.closest(".tag")?.remove();
+  });
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-search-input]");
+    if (inp) inp.closest("[data-search]")?.classList.toggle("has-value", inp.value.length > 0);
+  });
+  document.addEventListener("click", (e) => {
+    const c = closest(e.target, "[data-search-clear]");
+    if (c) {
+      const box = c.closest("[data-search]");
+      const inp = box?.querySelector("[data-search-input]");
+      if (inp) {
+        inp.value = "";
+        box?.classList.remove("has-value");
+        inp.focus();
+      }
+      return;
+    }
+    const seg = closest(e.target, "[data-segmented] button");
+    if (seg) {
+      $$("button", seg.closest("[data-segmented]")).forEach((x) => x.classList.remove("on"));
+      seg.classList.add("on");
+    }
+  });
+  $$("[data-carousel]").forEach((car) => {
+    const track = $("[data-carousel-track]", car);
+    let idx = 0;
+    const count = $$("[data-carousel-item]", car).length;
+    const go = (n) => {
+      idx = (n + count) % count;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+    };
+    car.addEventListener("click", (e) => {
+      if (closest(e.target, "[data-carousel-next]")) go(idx + 1);
+      if (closest(e.target, "[data-carousel-prev]")) go(idx - 1);
+    });
+  });
+  $$("[data-slider]").forEach((s) => {
+    const out = s.parentElement?.querySelector("[data-slider-value]");
+    const upd = () => {
+      if (out) out.textContent = s.value;
+      const pct = (+s.value - +s.min) / (+s.max - +s.min) * 100;
+      s.style.background = `linear-gradient(to right, var(--primary) ${pct}%, var(--secondary) ${pct}%)`;
+    };
+    s.addEventListener("input", upd);
+    upd();
+  });
+  document.addEventListener("click", (e) => {
+    const p2 = closest(e.target, "[data-page]");
+    if (!p2) return;
+    const nav = p2.closest("[data-pagination]");
+    if (nav) $$("[data-page]", nav).forEach((x) => x.classList.toggle("active", x === p2));
+  });
+  $$("[data-ai-shell]").forEach((shell) => {
+    const convo = shell.querySelector("[data-ai-convo]");
+    const input = shell.querySelector("[data-ai-input]");
+    const send = shell.querySelector("[data-ai-send]");
+    if (!convo || !input || !send) return;
+    let timer = 0;
+    const scroll = () => {
+      convo.scrollTop = convo.scrollHeight;
+    };
+    const REPLY = "Here's how I'd approach that. I'll add the chart component, wire it to the WEO series, and keep it token-driven so it matches the theme \u2014 then verify the projection band renders.";
+    const submit = () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = 0;
+        send.classList.remove("stop");
+        send.textContent = "\u2191";
+        convo.querySelector(".ai-cursor")?.remove();
+        return;
+      }
+      const text2 = input.value.trim();
+      if (!text2) return;
+      convo.insertAdjacentHTML(
+        "beforeend",
+        `<div class="ai-msg user"><div class="ai-avatar">FC</div><div class="ai-body"><div class="ai-role">You</div><div class="ai-content"></div></div></div>`
+      );
+      convo.lastElementChild.querySelector(".ai-content").textContent = text2;
+      input.value = "";
+      input.style.height = "auto";
+      scroll();
+      convo.insertAdjacentHTML(
+        "beforeend",
+        `<div class="ai-msg assistant"><div class="ai-avatar">\u25C6</div><div class="ai-body"><div class="ai-role">Analyst</div><div class="ai-content"><span class="ai-stream"></span><span class="ai-cursor"></span></div></div></div>`
+      );
+      const contentEl = convo.lastElementChild.querySelector(".ai-content");
+      const streamEl = contentEl.querySelector(".ai-stream");
+      send.classList.add("stop");
+      send.textContent = "\u25A0";
+      let i = 0;
+      timer = window.setInterval(() => {
+        i += 2;
+        streamEl.textContent = REPLY.slice(0, i);
+        scroll();
+        if (i >= REPLY.length) {
+          clearInterval(timer);
+          timer = 0;
+          contentEl.querySelector(".ai-cursor")?.remove();
+          send.classList.remove("stop");
+          send.textContent = "\u2191";
+        }
+      }, 20);
+    };
+    send.addEventListener("click", submit);
+    input.addEventListener("keydown", (e) => {
+      const ke = e;
+      if ((ke.metaKey || ke.ctrlKey) && ke.key === "Enter") {
+        e.preventDefault();
+        submit();
+      }
+    });
+    input.addEventListener("input", () => {
+      input.style.height = "auto";
+      input.style.height = Math.min(input.scrollHeight, 140) + "px";
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const toolT = closest(e.target, "[data-ai-tool-toggle]");
+    if (toolT) return void toolT.closest(".ai-tool")?.classList.toggle("open");
+    const rez = closest(e.target, "[data-ai-reasoning-toggle]");
+    if (rez) return void rez.closest(".ai-reasoning")?.classList.toggle("open");
+    const vote = closest(e.target, "[data-ai-vote]");
+    if (vote) {
+      vote.parentElement?.querySelectorAll("[data-ai-vote]").forEach((v) => v.classList.remove("on"));
+      vote.classList.add("on");
+      return;
+    }
+    const copyCode = closest(e.target, "[data-ai-copy-code]");
+    if (copyCode) {
+      const code = copyCode.closest(".ai-code")?.querySelector("code")?.textContent ?? "";
+      navigator.clipboard?.writeText(code).catch(() => {
+      });
+      copyCode.textContent = "\u2713 Copied";
+      setTimeout(() => copyCode.textContent = "\u29C9 Copy", 1200);
+      return;
+    }
+    const copyMsg = closest(e.target, "[data-ai-copy]");
+    if (copyMsg) {
+      const c = copyMsg.closest(".ai-body")?.querySelector(".ai-content")?.textContent ?? "";
+      navigator.clipboard?.writeText(c).catch(() => {
+      });
+      copyMsg.classList.add("on");
+      setTimeout(() => copyMsg.classList.remove("on"), 1e3);
+      return;
+    }
+    const sugg = closest(e.target, "[data-ai-suggest]");
+    if (sugg) {
+      const wrap = sugg.closest(".ai-empty")?.parentElement;
+      const inp = wrap?.querySelector("[data-ai-input]");
+      if (inp) {
+        inp.value = (sugg.textContent ?? "").replace(/^\S+\s/, "");
+        inp.focus();
+      }
+      return;
+    }
+    const model = closest(e.target, "[data-ai-model-option]");
+    if (model) {
+      const label = model.closest(".ai-model")?.querySelector("[data-ai-model-value]");
+      if (label) label.textContent = model.textContent;
+      closeMenus();
+    }
+  });
+  const links = $$("[data-nav-link]");
+  const sections = links.map((l) => document.getElementById(l.getAttribute("href").slice(1))).filter(Boolean);
+  if ("IntersectionObserver" in window && sections.length) {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            const id = en.target.id;
+            links.forEach((l) => l.classList.toggle("active", l.getAttribute("href") === "#" + id));
+          }
+        });
+      },
+      { rootMargin: "-20% 0px -70% 0px", threshold: 0 }
+    );
+    sections.forEach((s) => obs.observe(s));
+  }
+  document.addEventListener("click", (e) => {
+    const link = closest(e.target, "[data-nav-link]");
+    if (!link) return;
+    const target = document.getElementById(link.getAttribute("href").slice(1));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+})();</script>
+</body>
+</html>

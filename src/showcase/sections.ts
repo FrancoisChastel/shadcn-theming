@@ -23,13 +23,27 @@ const chev = '<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill=
 const blockFrame = (url: string, inner: string) =>
   `<div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">${url}</span></div><div class="block-stage">${inner}</div></div>`;
 
+/** A tiny inline-SVG sparkline (no runtime needed). */
+function sparklineSvg(data: number[], color: string): string {
+  const w = 96;
+  const h = 30;
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+  const range = max - min || 1;
+  const step = w / (data.length - 1);
+  const pts = data.map((v, i) => [i * step, h - 1.5 - ((v - min) / range) * (h - 3)] as const);
+  const line = pts.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
+  const last = pts[pts.length - 1]!;
+  return `<svg viewBox="0 0 ${w} ${h}" class="spark" preserveAspectRatio="none"><path d="${line} L${w},${h} L0,${h} Z" fill="${color}" fill-opacity="0.1"/><path d="${line}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="2" fill="${color}"/></svg>`;
+}
+
 function kpiCard(k: Kpi): string {
   const trend = k.delta > 0 ? "up" : "down";
   const arrow = k.delta > 0 ? "▲" : "▼";
   return `<div class="card kpi">
     <span class="muted" style="font-size:.8rem">${k.label}</span>
     <div class="kpi-mid"><div class="kpi-value">${k.value}</div>
-      <span class="spark" data-spark='${JSON.stringify(k.data)}' data-trend="${trend}"></span></div>
+      ${sparklineSvg(k.data, trend === "down" ? "var(--destructive)" : "var(--chart-1)")}</div>
     <div class="kpi-delta ${trend}"><span class="pill">${arrow} ${Math.abs(k.delta)}%</span><span class="muted">${k.deltaLabel}</span></div>
   </div>`;
 }

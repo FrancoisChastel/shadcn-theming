@@ -1,8 +1,9 @@
 /**
- * Render the component explorer — a shadcn-website-style page that shows every
- * component, live and interactive, in the brand's theme. Self-contained: theme
- * tokens, CSS, HTML, and the inlined vanilla-JS runtime (charts + interactivity)
- * all ship in one file with zero dependencies.
+ * Render the component explorer as a small multi-page site (Home, Foundations,
+ * Components, Layouts & pages, Charts, AI harness) sharing a top nav and theme.
+ * Each page is self-contained: theme tokens, CSS, HTML, and the inlined
+ * vanilla-JS runtime. Observable Plot (for charts) is inlined only on pages that
+ * actually contain charts, so text-only pages stay small.
  */
 import type { Brand } from "../core/brand-schema.js";
 import { renderRootBlock, renderDarkBlock } from "../core/render.js";
@@ -30,8 +31,32 @@ function esc(s: string): string {
   return s.replace(/[&<>]/g, (c) => (c === "&" ? "&amp;" : c === "<" ? "&lt;" : "&gt;"));
 }
 
-/** Sidebar grouped nav from the section list. */
-function renderNav(sections: Section[]): string {
+interface PageDef {
+  file: string;
+  label: string;
+  title: string;
+  subtitle: string;
+  groups: string[];
+}
+
+/** The pages of the site and which section-groups belong to each. */
+const PAGES: PageDef[] = [
+  { file: "index.html", label: "Design system", title: "design system", subtitle: "The theme, palette, typography, and headline indicators — the foundations everything is built from.", groups: ["Overview", "Foundations"] },
+  { file: "components.html", label: "Components", title: "components", subtitle: "Every shadcn/ui component, live and interactive, in the brand theme.", groups: ["Forms", "Data display", "Communication", "Overlays & menus", "Navigation"] },
+  { file: "layouts.html", label: "Layouts & pages", title: "layouts & pages", subtitle: "Layout primitives plus ready-made page templates (auth, errors, empty states).", groups: ["Layout", "Blocks"] },
+  { file: "charts.html", label: "Charts", title: "charts", subtitle: "Scientific and business charts built on Observable Plot, plus KPI extensions.", groups: ["Extensions", "Scientific charts"] },
+  { file: "ai.html", label: "AI harness", title: "AI harness", subtitle: "A Claude Code / Pi-style AI experience: streaming, tools, code, diffs, and a plan.", groups: ["AI harness"] },
+];
+
+/** Top-of-page navigation between site pages. */
+function renderTopNav(activeFile: string): string {
+  return `<nav class="pagenav">${PAGES.map(
+    (p) => `<a href="${p.file}"${p.file === activeFile ? ' class="active"' : ""}>${esc(p.label)}</a>`,
+  ).join("")}</nav>`;
+}
+
+/** Sidebar grouped nav from a page's section list. */
+function renderSidebarNav(sections: Section[]): string {
   const groups = new Map<string, Section[]>();
   for (const s of sections) {
     if (!groups.has(s.group)) groups.set(s.group, []);
@@ -90,28 +115,77 @@ function overlays(): string {
   <div id="cmdk"><div class="cmd">
     <input data-cmd-input placeholder="Type a command or search…" />
     <div class="list">
-      <div class="menu-label">Suggestions</div>
-      <div data-cmd-item>📈 Open World Economic Outlook</div>
-      <div data-cmd-item>🗺 Open DataMapper</div>
-      <div data-cmd-item>➕ New projection</div>
-      <div data-cmd-item>📤 Export current view</div>
-      <div class="menu-label">Navigation</div>
-      <div data-cmd-item>Go to Buttons</div>
-      <div data-cmd-item>Go to Scientific charts</div>
-      <div data-cmd-item>Go to Overlays</div>
+      <div class="menu-label">Pages</div>
+      ${PAGES.map((p) => `<div data-cmd-item onclick="location.href='${p.file}'">${esc(p.label)}</div>`).join("")}
     </div>
   </div></div>`;
 }
 
-/** Render the full explorer document. */
-export function renderExploreHtml(brand: Brand, tokens: ThemeTokens): string {
-  const light = tokens.light ?? tokens.dark!;
-  const rootBlock = renderRootBlock(tokens, light);
-  const darkBlock = tokens.dark && tokens.light ? renderDarkBlock(tokens.dark) : "";
-  const sections = buildSections(light, brand.name);
-  const initial = brand.name.trim().charAt(0).toUpperCase() || "•";
+interface ShellOptions {
+  brand: Brand;
+  rootBlock: string;
+  darkBlock: string;
+  initial: string;
+  sections: Section[];
+  data: ShowcaseData;
+  activeFile: string;
+  title: string;
+  subtitle: string;
+  showTopNav: boolean;
+}
 
-  const data: ShowcaseData = {
+/** Render one full HTML page. */
+function pageShell(o: ShellOptions): string {
+  const needsCharts = o.sections.some((s) => s.html.includes("data-chart") || s.html.includes("data-spark"));
+  const runtime = `(${uiMain.toString()})();` + (needsCharts ? `\n(${chartMain.toString()})(${JSON.stringify(o.data)});` : "");
+  const plotScripts = needsCharts ? renderPlotScripts() : "";
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>${esc(o.brand.name)} — ${esc(o.title)}</title>
+<style>
+${o.rootBlock}
+${o.darkBlock}
+${EXPLORE_CSS}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="mark">${esc(o.initial)}</span><div><b>${esc(o.brand.name)}</b><span>design system</span></div></div>
+    ${renderSidebarNav(o.sections)}
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      ${o.showTopNav ? renderTopNav(o.activeFile) : ""}
+      <div class="search" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
+        <span>🔍</span> Search… <kbd>⌘K</kbd>
+      </div>
+      <button class="btn btn-outline btn-sm" data-toggle-theme>Toggle theme</button>
+    </div>
+    <div class="content">
+      <div class="hero">
+        <h1>${esc(o.brand.name)} ${esc(o.title)}</h1>
+        <p>${esc(o.subtitle)}</p>
+      </div>
+      ${o.sections.map(renderSection).join("\n")}
+      <footer class="muted" style="font-size:.75rem;border-top:1px solid var(--border);padding-top:1.25rem;margin-top:3rem">Generated by shadcn-theming · synthetic, illustrative data</footer>
+    </div>
+  </main>
+</div>
+${overlays()}
+${plotScripts}
+<script>${runtime}</script>
+</body>
+</html>
+`;
+}
+
+function buildData(): ShowcaseData {
+  return {
     gdpProjection,
     growthDistribution,
     phillips,
@@ -124,51 +198,57 @@ export function renderExploreHtml(brand: Brand, tokens: ThemeTokens): string {
     donutParts,
     bulletKpis,
   };
+}
 
-  const runtime = `
-    (${chartMain.toString()})(${JSON.stringify(data)});
-    (${uiMain.toString()})();
-  `;
+/**
+ * Render the explorer as a multi-page site: `{ "index.html": html, … }`.
+ */
+export function renderExploreSite(brand: Brand, tokens: ThemeTokens): Record<string, string> {
+  const light = tokens.light ?? tokens.dark!;
+  const rootBlock = renderRootBlock(tokens, light);
+  const darkBlock = tokens.dark && tokens.light ? renderDarkBlock(tokens.dark) : "";
+  const initial = brand.name.trim().charAt(0).toUpperCase() || "•";
+  const all = buildSections(light, brand.name);
+  const data = buildData();
 
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>${esc(brand.name)} — component explorer</title>
-<style>
-${rootBlock}
-${darkBlock}
-${EXPLORE_CSS}
-</style>
-</head>
-<body>
-<div class="app">
-  <aside class="side">
-    <div class="brand"><span class="mark">${esc(initial)}</span><div><b>${esc(brand.name)}</b><span>component explorer</span></div></div>
-    ${renderNav(sections)}
-  </aside>
-  <main class="main">
-    <div class="topbar">
-      <div class="search" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
-        <span>🔍</span> Search components… <kbd>⌘K</kbd>
-      </div>
-      <button class="btn btn-outline btn-sm" data-toggle-theme>Toggle theme</button>
-    </div>
-    <div class="content">
-      <div class="hero">
-        <h1>${esc(brand.name)} design system</h1>
-        <p>Every shadcn/ui component, live and interactive, in the ${esc(brand.name)} theme — plus registry extensions and native scientific charts. Try the controls, open the dialogs, press <kbd style="border:1px solid var(--border);border-radius:4px;padding:0 .3rem;background:var(--muted)">⌘K</kbd>.</p>
-      </div>
-      ${sections.map(renderSection).join("\n")}
-      <footer class="muted" style="font-size:.75rem;border-top:1px solid var(--border);padding-top:1.25rem;margin-top:3rem">Generated by shadcn-theming · synthetic, illustrative data</footer>
-    </div>
-  </main>
-</div>
-${overlays()}
-${renderPlotScripts()}
-<script>${runtime}</script>
-</body>
-</html>
-`;
+  const site: Record<string, string> = {};
+  for (const page of PAGES) {
+    const sections = all.filter((s) => page.groups.includes(s.group));
+    if (sections.length === 0) continue;
+    site[page.file] = pageShell({
+      brand,
+      rootBlock,
+      darkBlock,
+      initial,
+      sections,
+      data,
+      activeFile: page.file,
+      title: page.title,
+      subtitle: page.subtitle,
+      showTopNav: true,
+    });
+  }
+  return site;
+}
+
+/**
+ * Render a single combined page with every section (no cross-page nav).
+ */
+export function renderExploreHtml(brand: Brand, tokens: ThemeTokens): string {
+  const light = tokens.light ?? tokens.dark!;
+  const rootBlock = renderRootBlock(tokens, light);
+  const darkBlock = tokens.dark && tokens.light ? renderDarkBlock(tokens.dark) : "";
+  const initial = brand.name.trim().charAt(0).toUpperCase() || "•";
+  return pageShell({
+    brand,
+    rootBlock,
+    darkBlock,
+    initial,
+    sections: buildSections(light, brand.name),
+    data: buildData(),
+    activeFile: "",
+    title: "component explorer",
+    subtitle: `Every shadcn/ui component, live and interactive, in the ${brand.name} theme.`,
+    showTopNav: false,
+  });
 }

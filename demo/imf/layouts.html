@@ -1,9 +1,81 @@
-/**
- * The stylesheet for the component explorer. Every value is expressed through
- * shadcn theme tokens (`--primary`, `--border`, `--radius`, …) so the whole
- * gallery recolors with any generated brand theme.
- */
-export const EXPLORE_CSS = `
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IMF — layouts &amp; pages</title>
+<style>
+:root {
+  --radius: 0.1875rem;
+  --font-sans: "Avenir Next World", "Avenir Next", Mulish, Helvetica, Arial, sans-serif;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2178 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2178 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2178 0 0);
+  --primary: oklch(0.4228 0.1389 254.944);
+  --primary-foreground: oklch(0.985 0.02 254.944);
+  --secondary: oklch(0.97 0.0425 245.779);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.5444 0 0);
+  --accent: oklch(0.95 0.0461 194.061);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.5134 0.1617 24.89);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.65 0.1389 254.944);
+  --chart-1: oklch(0.4228 0.1389 254.944);
+  --chart-2: oklch(0.6929 0.1008 210.356);
+  --chart-3: oklch(0.6889 0.1194 68.414);
+  --chart-4: oklch(0.5134 0.1617 24.89);
+  --chart-5: oklch(0.5853 0.1407 153.248);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.2178 0 0);
+  --sidebar-primary: oklch(0.4228 0.1389 254.944);
+  --sidebar-primary-foreground: oklch(0.985 0.02 254.944);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.65 0.1389 254.944);
+}
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.7028 0.1389 254.944);
+  --primary-foreground: oklch(0.145 0.02 254.944);
+  --secondary: oklch(0.3412 0.0764 245.779);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.3 0.0807 194.061);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.5134 0.1617 24.89);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0.1389 254.944);
+  --chart-1: oklch(0.4228 0.1389 254.944);
+  --chart-2: oklch(0.6929 0.1008 210.356);
+  --chart-3: oklch(0.6889 0.1194 68.414);
+  --chart-4: oklch(0.5134 0.1617 24.89);
+  --chart-5: oklch(0.5853 0.1407 153.248);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.7028 0.1389 254.944);
+  --sidebar-primary-foreground: oklch(0.145 0.02 254.944);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0.1389 254.944);
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif); background: var(--background); color: var(--foreground); font-size: 14px; }
@@ -517,4 +589,701 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 .ai-empty .mark { width: 3rem; height: 3rem; border-radius: var(--radius); background: var(--primary); color: var(--primary-foreground); display: grid; place-items: center; font-weight: 700; font-size: 1.2rem; margin: 0 auto 0.9rem; }
 .ai-empty h3 { margin: 0 0 0.35rem; font-size: 1.3rem; }
 .ai-empty p { color: var(--muted-foreground); margin: 0 0 1.25rem; }
-`;
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="mark">I</span><div><b>IMF</b><span>design system</span></div></div>
+    <div class="nav-group">Layout</div><div class="nav"><a href="#page-header" data-nav-link>Page header</a><a href="#bento" data-nav-link>Bento grid</a><a href="#split" data-nav-link>Split view</a><a href="#dashboard-shell" data-nav-link>Dashboard shell</a><a href="#stack" data-nav-link>Stack</a></div><div class="nav-group">Blocks</div><div class="nav"><a href="#login" data-nav-link>Login</a><a href="#signup" data-nav-link>Sign up</a><a href="#forgot-password" data-nav-link>Forgot password</a><a href="#two-factor" data-nav-link>Two-factor</a><a href="#error-404" data-nav-link>Error page</a><a href="#empty-state" data-nav-link>Empty state</a></div>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <nav class="pagenav"><a href="index.html">Design system</a><a href="components.html">Components</a><a href="layouts.html" class="active">Layouts &amp; pages</a><a href="charts.html">Charts</a><a href="ai.html">AI harness</a></nav>
+      <div class="search" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
+        <span>🔍</span> Search… <kbd>⌘K</kbd>
+      </div>
+      <button class="btn btn-outline btn-sm" data-toggle-theme>Toggle theme</button>
+    </div>
+    <div class="content">
+      <div class="hero">
+        <h1>IMF layouts &amp; pages</h1>
+        <p>Layout primitives plus ready-made page templates (auth, errors, empty states).</p>
+      </div>
+      <section class="block" id="page-header">
+    <h2>Page header</h2>
+    <p class="desc">A page title block with breadcrumb, description, actions, and tabs.</p>
+    <div class="demo col"><div class="page-header">
+          <nav class="crumb"><a href="#">Data</a> / <a href="#">WEO</a> / <span class="cur">Real GDP growth</span></nav>
+          <div class="ph-row">
+            <div><h2>Real GDP growth</h2><p class="muted">World Economic Outlook · updated 1 Sep 2026</p></div>
+            <div class="ph-actions"><button class="btn btn-outline btn-sm">Export</button><button class="btn btn-primary btn-sm">New projection</button></div>
+          </div>
+          <div data-tabs><div class="tabs-list"><button data-tab="a" aria-selected="true">Overview</button><button data-tab="b" aria-selected="false">By region</button><button data-tab="c" aria-selected="false">History</button></div><div data-tab-panel="a"></div><div data-tab-panel="b" hidden></div><div data-tab-panel="c" hidden></div></div>
+        </div></div>
+  </section>
+<section class="block" id="bento">
+    <h2>Bento grid</h2>
+    <p class="desc">An editorial grid with mixed spans.</p>
+    <div class="demo col"><div class="bento">
+          <div class="card lg"><span class="b-title">World GDP growth</span><span class="b-value">3.2%</span><span class="muted" style="font-size:.72rem">+0.1 vs April WEO</span></div>
+          <div class="card"><span class="b-title">Inflation</span><span class="b-value">5.8%</span></div>
+          <div class="card"><span class="b-title">Unemployment</span><span class="b-value">6.1%</span></div>
+          <div class="card wide"><span class="b-title">Public debt / GDP</span><span class="b-value">93.2%</span></div>
+          <div class="card"><span class="b-title">Trade</span><span class="b-value">+3.4%</span></div>
+          <div class="card"><span class="b-title">Reserves</span><span class="b-value">12.1T</span></div>
+        </div></div>
+  </section>
+<section class="block" id="split">
+    <h2>Split view</h2>
+    <p class="desc">A master–detail layout: a list pane beside a detail pane.</p>
+    <div class="demo col"><div class="split">
+          <div class="split-pane list"><div class="li active">Advanced economies</div><div class="li">Emerging markets</div><div class="li">Low-income countries</div><div class="li">Euro area</div><div class="li">ASEAN-5</div></div>
+          <div class="split-handle"></div>
+          <div class="split-pane"><h3 style="margin:0 0 .4rem">Advanced economies</h3><p class="muted" style="font-size:.85rem;margin:0 0 .8rem">Real GDP growth is projected at 1.8% in 2025, little changed from the prior forecast.</p><div class="grid3"><div class="card" style="padding:.7rem"><span class="muted" style="font-size:.7rem">2024</span><div style="font-weight:650">1.8%</div></div><div class="card" style="padding:.7rem"><span class="muted" style="font-size:.7rem">2025F</span><div style="font-weight:650">2.0%</div></div><div class="card" style="padding:.7rem"><span class="muted" style="font-size:.7rem">Weight</span><div style="font-weight:650">26.3</div></div></div></div>
+        </div></div>
+  </section>
+<section class="block" id="dashboard-shell">
+    <h2>Dashboard shell</h2>
+    <p class="desc">The app-shell foundation: sidebar, top bar, and a content area.</p>
+    <div class="demo col"><div class="mini-app">
+          <div class="mini-side"><div class="m-brand"><span class="m-dot"></span> IMF</div><div class="m-item on">Overview</div><div class="m-item">Indicators</div><div class="m-item">Projections</div><div class="m-item">Reports</div></div>
+          <div><div class="mini-top"><span class="badge badge-secondary">Q3 2026</span><span class="muted" style="font-size:.75rem;margin-left:auto">francois@imf.org</span></div>
+            <div class="mini-content"><div class="m-kpi"><span class="muted" style="font-size:.65rem">GDP</span><b>3.2%</b></div><div class="m-kpi"><span class="muted" style="font-size:.65rem">CPI</span><b>5.8%</b></div><div class="m-kpi"><span class="muted" style="font-size:.65rem">Debt</span><b>93%</b></div><div class="m-chart"></div></div>
+          </div>
+        </div></div>
+  </section>
+<section class="block" id="stack">
+    <h2>Stack</h2>
+    <p class="desc">Vertical and horizontal stacks with consistent gaps.</p>
+    <div class="demo "><div class="stack-demo">
+          <div class="vstack"><span class="stack-box">Item 1</span><span class="stack-box">Item 2</span><span class="stack-box">Item 3</span></div>
+          <div class="hstack"><span class="stack-box">A</span><span class="stack-box">B</span><span class="stack-box">C</span><span class="stack-box">D</span></div>
+        </div></div>
+  </section>
+<section class="block" id="login">
+    <h2>Login</h2>
+    <p class="desc">A sign-in page with email/password, remember-me, SSO, and sign-up link.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/login</span></div><div class="block-stage"><div class="auth-card">
+            <div class="auth-logo">I</div>
+            <h3>Sign in</h3><p class="sub">Access the IMF data workspace</p>
+            <div class="field auth-fld"><label class="label">Email</label><input class="input" placeholder="you@imf.org" /></div>
+            <div class="field auth-fld"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button">👁</button></div></div>
+            <div class="row-between"><label class="check"><input type="checkbox" /> Remember me</label><a href="#" style="color:var(--primary)">Forgot password?</a></div>
+            <button class="btn btn-primary">Sign in</button>
+            <div class="auth-divider">or</div>
+            <button class="btn btn-outline">◈ Continue with SSO</button>
+            <div class="auth-foot">New here? <a href="#">Create an account</a></div>
+          </div></div></div></div>
+  </section>
+<section class="block" id="signup">
+    <h2>Sign up</h2>
+    <p class="desc">A registration page with name, email, password strength, and terms.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/signup</span></div><div class="block-stage"><div class="auth-card">
+            <div class="auth-logo">I</div>
+            <h3>Create your account</h3><p class="sub">Start exploring IMF data</p>
+            <div class="field auth-fld"><label class="label">Full name</label><input class="input" placeholder="Jane Analyst" /></div>
+            <div class="field auth-fld"><label class="label">Email</label><input class="input" placeholder="you@imf.org" /></div>
+            <div class="field auth-fld"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" data-password placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button">👁</button></div><div class="pw-meter"><span data-pw-bar></span></div></div>
+            <label class="check" style="margin-bottom:.85rem;font-size:.8rem"><input type="checkbox" /> I agree to the terms &amp; privacy policy</label>
+            <button class="btn btn-primary">Create account</button>
+            <div class="auth-foot">Already have an account? <a href="#">Sign in</a></div>
+          </div></div></div></div>
+  </section>
+<section class="block" id="forgot-password">
+    <h2>Forgot password</h2>
+    <p class="desc">Request a password-reset link.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/forgot</span></div><div class="block-stage"><div class="auth-card">
+            <div class="auth-logo">I</div>
+            <h3>Reset your password</h3><p class="sub">We'll email you a secure reset link</p>
+            <div class="field auth-fld"><label class="label">Email</label><input class="input" placeholder="you@imf.org" /></div>
+            <button class="btn btn-primary">Send reset link</button>
+            <div class="auth-foot"><a href="#">← Back to sign in</a></div>
+          </div></div></div></div>
+  </section>
+<section class="block" id="two-factor">
+    <h2>Two-factor</h2>
+    <p class="desc">Enter the one-time verification code.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/verify</span></div><div class="block-stage"><div class="auth-card">
+            <div class="auth-logo">I</div>
+            <h3>Two-factor authentication</h3><p class="sub">Enter the 6-digit code from your authenticator</p>
+            <div class="otp" data-otp style="justify-content:center;margin-bottom:1.1rem"><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /></div>
+            <button class="btn btn-primary">Verify</button>
+            <div class="auth-foot">Didn't get a code? <a href="#">Resend</a></div>
+          </div></div></div></div>
+  </section>
+<section class="block" id="error-404">
+    <h2>Error page</h2>
+    <p class="desc">A friendly 404 with recovery actions.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/404</span></div><div class="block-stage"><div class="errstate"><div class="code">404</div><h3>Page not found</h3><p>The page you're looking for doesn't exist or has moved.</p><div style="display:flex;gap:.5rem;justify-content:center"><button class="btn btn-outline">Go back</button><button class="btn btn-primary">Home</button></div></div></div></div></div>
+  </section>
+<section class="block" id="empty-state">
+    <h2>Empty state</h2>
+    <p class="desc">A first-run placeholder that prompts the next action.</p>
+    <div class="demo col"><div class="emptystate" style="max-width:380px;margin:0 auto"><div class="ico">📊</div><h4>No datasets yet</h4><p>Create your first projection to see it here.</p><button class="btn btn-primary btn-sm">New projection</button></div></div>
+  </section>
+      <footer class="muted" style="font-size:.75rem;border-top:1px solid var(--border);padding-top:1.25rem;margin-top:3rem">Generated by shadcn-theming · synthetic, illustrative data</footer>
+    </div>
+  </main>
+</div>
+
+  <div class="overlay" id="dlg-edit"><div class="backdrop" data-close></div>
+    <div class="dialog"><div class="dh"><h3>Edit forecast</h3></div>
+      <div class="db">Adjust the projected growth path. Changes apply to the working scenario only.</div>
+      <div style="padding:0 1.25rem"><label class="label">2025 growth (%)</label><input class="input" value="3.1" /></div>
+      <div class="df"><button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-primary" data-close>Save changes</button></div>
+    </div></div>
+
+  <div class="overlay" id="dlg-del"><div class="backdrop" data-close></div>
+    <div class="dialog"><div class="dh"><h3>Delete this series?</h3></div>
+      <div class="db">This action cannot be undone. The series and its projections will be permanently removed.</div>
+      <div class="df"><button class="btn btn-outline" data-close>Cancel</button><button class="btn btn-destructive" data-close>Delete</button></div>
+    </div></div>
+
+  <div class="overlay" id="sheet-1"><div class="backdrop" data-close></div>
+    <div class="sheet"><div style="display:flex;justify-content:space-between;align-items:start"><div><h3 style="margin:0">Filters</h3><p class="muted" style="font-size:.83rem;margin:.3rem 0 0">Refine the dataset</p></div><button class="btn btn-ghost btn-icon" data-close>✕</button></div>
+      <div style="margin-top:1.25rem;display:flex;flex-direction:column;gap:1rem">
+        <div class="field"><label class="label">Indicator</label><input class="input" value="Real GDP growth" /></div>
+        <label class="check"><input type="checkbox" checked /> Include projections</label>
+        <label class="check"><input type="checkbox" /> Seasonally adjusted</label>
+      </div>
+      <div style="margin-top:1.5rem;display:flex;gap:.5rem"><button class="btn btn-outline" data-close style="flex:1">Reset</button><button class="btn btn-primary" data-close style="flex:1">Apply</button></div>
+    </div></div>
+
+  <div class="overlay" id="drawer-1"><div class="backdrop" data-close></div>
+    <div class="drawer"><div class="grab"></div><h3 style="margin:0 0 .3rem">Quick note</h3><p class="muted" style="font-size:.85rem;margin:0 0 1rem">Attach a comment to this data point.</p>
+      <textarea class="textarea" placeholder="Type a note…"></textarea>
+      <div style="margin-top:1rem;display:flex;justify-content:flex-end;gap:.5rem"><button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-primary" data-close>Save</button></div>
+    </div></div>
+
+  <div id="cmdk"><div class="cmd">
+    <input data-cmd-input placeholder="Type a command or search…" />
+    <div class="list">
+      <div class="menu-label">Pages</div>
+      <div data-cmd-item onclick="location.href='index.html'">Design system</div><div data-cmd-item onclick="location.href='components.html'">Components</div><div data-cmd-item onclick="location.href='layouts.html'">Layouts &amp; pages</div><div data-cmd-item onclick="location.href='charts.html'">Charts</div><div data-cmd-item onclick="location.href='ai.html'">AI harness</div>
+    </div>
+  </div></div>
+
+<script>(function uiMain() {
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const closest = (t, sel) => t?.closest(sel);
+  document.addEventListener("click", (e) => {
+    if (closest(e.target, "[data-toggle-theme]")) document.documentElement.classList.toggle("dark");
+  });
+  document.addEventListener("click", (e) => {
+    const trigger = closest(e.target, "[data-tab]");
+    if (!trigger) return;
+    const wrap = trigger.closest("[data-tabs]");
+    if (!wrap) return;
+    const value = trigger.dataset.tab;
+    $$("[data-tab]", wrap).forEach((t) => t.setAttribute("aria-selected", String(t === trigger)));
+    $$("[data-tab-panel]", wrap).forEach((p2) => {
+      p2.hidden = p2.getAttribute("data-tab-panel") !== value;
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const trigger = closest(e.target, "[data-acc-trigger]");
+    if (!trigger) return;
+    const item = trigger.closest("[data-acc-item]");
+    const acc = trigger.closest("[data-accordion]");
+    const open = item.classList.contains("open");
+    if (acc?.getAttribute("data-accordion") === "single") {
+      $$("[data-acc-item]", acc).forEach((it) => it.classList.remove("open"));
+    }
+    item.classList.toggle("open", !open);
+    trigger.setAttribute("aria-expanded", String(!open));
+  });
+  const openOverlay = (id) => {
+    const ov = document.getElementById(id);
+    if (ov) {
+      ov.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+  };
+  const closeOverlay = (ov) => {
+    if (!ov) return;
+    ov.classList.remove("open");
+    if (!$(".overlay.open")) document.body.style.overflow = "";
+  };
+  document.addEventListener("click", (e) => {
+    const opener = closest(e.target, "[data-open]");
+    if (opener) {
+      openOverlay(opener.dataset.open);
+      return;
+    }
+    if (closest(e.target, "[data-close]")) {
+      closeOverlay(closest(e.target, ".overlay"));
+      return;
+    }
+    const ov = e.target;
+    if (ov.classList?.contains("overlay") && ov.classList.contains("open")) closeOverlay(ov);
+  });
+  const closeMenus = (except) => {
+    $$("[data-menu].open").forEach((m) => {
+      if (m !== except) m.classList.remove("open");
+    });
+  };
+  document.addEventListener("click", (e) => {
+    const trigger = closest(e.target, "[data-menu-trigger]");
+    if (trigger) {
+      const menu = trigger.parentElement?.querySelector("[data-menu]");
+      const isOpen = menu?.classList.contains("open");
+      closeMenus(menu);
+      menu?.classList.toggle("open", !isOpen);
+      return;
+    }
+    if (!closest(e.target, "[data-menu]")) closeMenus();
+    const opt2 = closest(e.target, "[data-select-option]");
+    if (opt2) {
+      const wrap = opt2.closest("[data-select]");
+      const label = $("[data-select-value]", wrap);
+      label.textContent = opt2.textContent;
+      $$("[data-select-option]", wrap).forEach((o) => o.classList.toggle("selected", o === opt2));
+      closeMenus();
+    }
+  });
+  document.addEventListener("contextmenu", (e) => {
+    const host = closest(e.target, "[data-context]");
+    if (!host) return;
+    e.preventDefault();
+    const menu = host.querySelector("[data-menu]");
+    if (!menu) return;
+    closeMenus(menu);
+    menu.style.position = "fixed";
+    menu.style.left = Math.min(e.clientX, window.innerWidth - 200) + "px";
+    menu.style.top = e.clientY + "px";
+    menu.classList.add("open");
+  });
+  const cmd = document.getElementById("cmdk");
+  document.addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      if (cmd) {
+        cmd.classList.toggle("open");
+        if (cmd.classList.contains("open")) setTimeout(() => $("[data-cmd-input]", cmd)?.focus(), 20);
+      }
+    }
+    if (e.key === "Escape") {
+      $$(".overlay.open").forEach((o) => o.classList.remove("open"));
+      cmd?.classList.remove("open");
+      closeMenus();
+      document.body.style.overflow = "";
+    }
+  });
+  if (cmd) {
+    cmd.addEventListener("input", (e) => {
+      const q = e.target.value?.toLowerCase() ?? "";
+      $$("[data-cmd-item]", cmd).forEach((it) => {
+        it.hidden = !it.textContent?.toLowerCase().includes(q);
+      });
+    });
+    cmd.addEventListener("click", (e) => {
+      if (e.target.id === "cmdk") cmd.classList.remove("open");
+    });
+  }
+  let toaster = document.getElementById("toaster");
+  if (!toaster) {
+    toaster = document.createElement("div");
+    toaster.id = "toaster";
+    toaster.className = "toaster";
+    document.body.appendChild(toaster);
+  }
+  document.addEventListener("click", (e) => {
+    const btn = closest(e.target, "[data-toast]");
+    if (!btn) return;
+    const t = document.createElement("div");
+    t.className = "toast";
+    t.innerHTML = `<div><strong>${btn.dataset.toastTitle || "Notification"}</strong><div class="muted" style="font-size:.8rem">${btn.dataset.toast || "Event has been created."}</div></div>`;
+    toaster.appendChild(t);
+    requestAnimationFrame(() => t.classList.add("show"));
+    setTimeout(() => {
+      t.classList.remove("show");
+      setTimeout(() => t.remove(), 250);
+    }, 3200);
+  });
+  const clock = () => {
+    const d = /* @__PURE__ */ new Date();
+    return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  };
+  const CHAT_REPLIES = [
+    "Global growth is projected at 3.2% for 2025, broadly stable.",
+    "Headline inflation continues to ease toward central-bank targets.",
+    "That series is in the WEO database \u2014 I can export it for you.",
+    "Public debt is approaching 93% of GDP globally."
+  ];
+  document.addEventListener("submit", (e) => {
+    const form = closest(e.target, "[data-chat-form]");
+    if (!form) return;
+    e.preventDefault();
+    const input = form.querySelector("[data-chat-text]");
+    const body = form.closest("[data-chat]")?.querySelector("[data-chat-body]");
+    if (!input || !body) return;
+    const text2 = input.value.trim();
+    if (!text2) return;
+    const add = (cls, content) => {
+      const m = document.createElement("div");
+      m.className = "msg " + cls;
+      m.innerHTML = `<div class="bubble"></div><span class="msg-time">${clock()}</span>`;
+      m.querySelector(".bubble").textContent = content;
+      body.appendChild(m);
+      body.scrollTop = body.scrollHeight;
+      return m;
+    };
+    add("out", text2);
+    input.value = "";
+    const typing = document.createElement("div");
+    typing.className = "msg in";
+    typing.innerHTML = `<div class="chat-typing"><span></span><span></span><span></span></div>`;
+    body.appendChild(typing);
+    body.scrollTop = body.scrollHeight;
+    const reply = CHAT_REPLIES[text2.length % CHAT_REPLIES.length];
+    setTimeout(() => {
+      typing.remove();
+      add("in", reply);
+    }, 900);
+  });
+  document.addEventListener("click", (e) => {
+    const tg = closest(e.target, "[data-toggle]");
+    if (!tg) return;
+    const group = tg.closest("[data-toggle-group='single']");
+    if (group) $$("[data-toggle]", group).forEach((b) => b.classList.remove("on"));
+    tg.classList.toggle("on");
+  });
+  document.addEventListener("input", (e) => {
+    const s = closest(e.target, "[data-cb-search]");
+    if (!s) return;
+    const q = s.value.toLowerCase();
+    s.parentElement?.querySelectorAll("[data-cb-option]").forEach((o) => {
+      o.hidden = !(o.textContent ?? "").toLowerCase().includes(q);
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const opt2 = closest(e.target, "[data-cb-option]");
+    if (opt2) {
+      const box = opt2.closest("[data-combobox]");
+      const label = box?.querySelector("[data-combobox-value]");
+      if (label) {
+        label.textContent = opt2.textContent;
+        label.classList.remove("ph");
+      }
+      closeMenus();
+      return;
+    }
+    const day = closest(e.target, ".cal .day");
+    if (day && !day.classList.contains("out")) {
+      const dp = day.closest("[data-datepicker]");
+      if (dp) {
+        day.closest(".cal-grid")?.querySelectorAll(".day").forEach((d) => d.classList.remove("sel"));
+        day.classList.add("sel");
+        const val = dp.querySelector("[data-dp-value]");
+        if (val) {
+          val.textContent = `September ${day.textContent}, 2026`;
+          val.classList.remove("ph");
+        }
+        closeMenus();
+      }
+    }
+  });
+  document.addEventListener("change", (e) => {
+    const opt2 = closest(e.target, "[data-ms-option]");
+    if (!opt2) return;
+    const box = opt2.closest("[data-multiselect]");
+    const chips = box?.querySelector("[data-ms-chips]");
+    if (!box || !chips) return;
+    const checked = $$("[data-ms-option]", box).filter((c) => c.checked);
+    chips.innerHTML = checked.length ? checked.map((c) => `<span class="chip-mini">${c.value}</span>`).join("") : `<span class="ph">Select regions\u2026</span>`;
+  });
+  $$("[data-otp]").forEach((otp) => {
+    const inputs = $$("input", otp);
+    otp.addEventListener("input", (e) => {
+      const t = e.target;
+      t.value = t.value.replace(/\D/g, "").slice(0, 1);
+      if (t.value) inputs[inputs.indexOf(t) + 1]?.focus();
+    });
+    otp.addEventListener("keydown", (e) => {
+      const t = e.target;
+      if (e.key === "Backspace" && !t.value) inputs[inputs.indexOf(t) - 1]?.focus();
+    });
+    otp.addEventListener("paste", (e) => {
+      e.preventDefault();
+      const txt = ((e.clipboardData?.getData("text") ?? "").match(/\d/g) ?? []).slice(0, inputs.length);
+      inputs.forEach((inp, i) => inp.value = txt[i] ?? "");
+      inputs[Math.min(txt.length, inputs.length - 1)]?.focus();
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const t = closest(e.target, "[data-toggle-pw]");
+    if (!t) return;
+    const inp = t.parentElement?.querySelector("input");
+    if (inp) inp.type = inp.type === "password" ? "text" : "password";
+  });
+  const PW_COLORS = ["transparent", "var(--destructive)", "var(--chart-3)", "var(--chart-1)", "var(--chart-5)"];
+  const PW_HINTS = ["", "Weak \u2014 add length and variety.", "Fair \u2014 add numbers or symbols.", "Good.", "Strong password."];
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-password]");
+    if (!inp) return;
+    const v = inp.value;
+    let score = 0;
+    if (v.length >= 8) score++;
+    if (/[a-z]/.test(v) && /[A-Z]/.test(v)) score++;
+    if (/\d/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    const field = inp.closest(".field, .form-field");
+    const bar = field?.querySelector("[data-pw-bar]");
+    if (bar) {
+      bar.style.width = `${score / 4 * 100}%`;
+      bar.style.background = PW_COLORS[score];
+    }
+    const hint = field?.querySelector("[data-pw-hint]");
+    if (hint && v) hint.textContent = PW_HINTS[score];
+  });
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-validate='email']");
+    if (!inp) return;
+    const ok = inp.value === "" || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(inp.value);
+    inp.classList.toggle("invalid", !ok);
+    const err = inp.closest(".form-field")?.querySelector("[data-err]");
+    if (err) err.hidden = ok;
+  });
+  $$("[data-dropzone]").forEach((dz) => {
+    const input = $("[data-dz-input]", dz);
+    const fileEl = $("[data-dz-file]", dz);
+    const show = (name) => {
+      if (fileEl) {
+        ;
+        fileEl.hidden = false;
+        fileEl.textContent = "\u2713 " + name;
+      }
+    };
+    input?.addEventListener("change", () => {
+      if (input.files?.[0]) show(input.files[0].name);
+    });
+    ["dragover", "dragenter"].forEach(
+      (ev) => dz.addEventListener(ev, (e) => {
+        e.preventDefault();
+        dz.classList.add("drag");
+      })
+    );
+    ["dragleave", "drop"].forEach(
+      (ev) => dz.addEventListener(ev, (e) => {
+        e.preventDefault();
+        dz.classList.remove("drag");
+      })
+    );
+    dz.addEventListener("drop", (e) => {
+      const f = e.dataTransfer?.files?.[0];
+      if (f) show(f.name);
+    });
+  });
+  document.addEventListener("keydown", (e) => {
+    const inp = closest(e.target, "[data-tags-input]");
+    if (!inp || e.key !== "Enter") return;
+    e.preventDefault();
+    const v = inp.value.trim();
+    if (!v) return;
+    const chip = document.createElement("span");
+    chip.className = "tag";
+    chip.append(v);
+    const b = document.createElement("button");
+    b.setAttribute("data-tag-remove", "");
+    b.setAttribute("aria-label", "remove");
+    b.textContent = "\xD7";
+    chip.append(b);
+    inp.parentElement?.insertBefore(chip, inp);
+    inp.value = "";
+  });
+  document.addEventListener("click", (e) => {
+    const rm = closest(e.target, "[data-tag-remove]");
+    if (rm) rm.closest(".tag")?.remove();
+  });
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-search-input]");
+    if (inp) inp.closest("[data-search]")?.classList.toggle("has-value", inp.value.length > 0);
+  });
+  document.addEventListener("click", (e) => {
+    const c = closest(e.target, "[data-search-clear]");
+    if (c) {
+      const box = c.closest("[data-search]");
+      const inp = box?.querySelector("[data-search-input]");
+      if (inp) {
+        inp.value = "";
+        box?.classList.remove("has-value");
+        inp.focus();
+      }
+      return;
+    }
+    const seg = closest(e.target, "[data-segmented] button");
+    if (seg) {
+      $$("button", seg.closest("[data-segmented]")).forEach((x) => x.classList.remove("on"));
+      seg.classList.add("on");
+    }
+  });
+  $$("[data-carousel]").forEach((car) => {
+    const track = $("[data-carousel-track]", car);
+    let idx = 0;
+    const count = $$("[data-carousel-item]", car).length;
+    const go = (n) => {
+      idx = (n + count) % count;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+    };
+    car.addEventListener("click", (e) => {
+      if (closest(e.target, "[data-carousel-next]")) go(idx + 1);
+      if (closest(e.target, "[data-carousel-prev]")) go(idx - 1);
+    });
+  });
+  $$("[data-slider]").forEach((s) => {
+    const out = s.parentElement?.querySelector("[data-slider-value]");
+    const upd = () => {
+      if (out) out.textContent = s.value;
+      const pct = (+s.value - +s.min) / (+s.max - +s.min) * 100;
+      s.style.background = `linear-gradient(to right, var(--primary) ${pct}%, var(--secondary) ${pct}%)`;
+    };
+    s.addEventListener("input", upd);
+    upd();
+  });
+  document.addEventListener("click", (e) => {
+    const p2 = closest(e.target, "[data-page]");
+    if (!p2) return;
+    const nav = p2.closest("[data-pagination]");
+    if (nav) $$("[data-page]", nav).forEach((x) => x.classList.toggle("active", x === p2));
+  });
+  $$("[data-ai-shell]").forEach((shell) => {
+    const convo = shell.querySelector("[data-ai-convo]");
+    const input = shell.querySelector("[data-ai-input]");
+    const send = shell.querySelector("[data-ai-send]");
+    if (!convo || !input || !send) return;
+    let timer = 0;
+    const scroll = () => {
+      convo.scrollTop = convo.scrollHeight;
+    };
+    const REPLY = "Here's how I'd approach that. I'll add the chart component, wire it to the WEO series, and keep it token-driven so it matches the theme \u2014 then verify the projection band renders.";
+    const submit = () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = 0;
+        send.classList.remove("stop");
+        send.textContent = "\u2191";
+        convo.querySelector(".ai-cursor")?.remove();
+        return;
+      }
+      const text2 = input.value.trim();
+      if (!text2) return;
+      convo.insertAdjacentHTML(
+        "beforeend",
+        `<div class="ai-msg user"><div class="ai-avatar">FC</div><div class="ai-body"><div class="ai-role">You</div><div class="ai-content"></div></div></div>`
+      );
+      convo.lastElementChild.querySelector(".ai-content").textContent = text2;
+      input.value = "";
+      input.style.height = "auto";
+      scroll();
+      convo.insertAdjacentHTML(
+        "beforeend",
+        `<div class="ai-msg assistant"><div class="ai-avatar">\u25C6</div><div class="ai-body"><div class="ai-role">Analyst</div><div class="ai-content"><span class="ai-stream"></span><span class="ai-cursor"></span></div></div></div>`
+      );
+      const contentEl = convo.lastElementChild.querySelector(".ai-content");
+      const streamEl = contentEl.querySelector(".ai-stream");
+      send.classList.add("stop");
+      send.textContent = "\u25A0";
+      let i = 0;
+      timer = window.setInterval(() => {
+        i += 2;
+        streamEl.textContent = REPLY.slice(0, i);
+        scroll();
+        if (i >= REPLY.length) {
+          clearInterval(timer);
+          timer = 0;
+          contentEl.querySelector(".ai-cursor")?.remove();
+          send.classList.remove("stop");
+          send.textContent = "\u2191";
+        }
+      }, 20);
+    };
+    send.addEventListener("click", submit);
+    input.addEventListener("keydown", (e) => {
+      const ke = e;
+      if ((ke.metaKey || ke.ctrlKey) && ke.key === "Enter") {
+        e.preventDefault();
+        submit();
+      }
+    });
+    input.addEventListener("input", () => {
+      input.style.height = "auto";
+      input.style.height = Math.min(input.scrollHeight, 140) + "px";
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const toolT = closest(e.target, "[data-ai-tool-toggle]");
+    if (toolT) return void toolT.closest(".ai-tool")?.classList.toggle("open");
+    const rez = closest(e.target, "[data-ai-reasoning-toggle]");
+    if (rez) return void rez.closest(".ai-reasoning")?.classList.toggle("open");
+    const vote = closest(e.target, "[data-ai-vote]");
+    if (vote) {
+      vote.parentElement?.querySelectorAll("[data-ai-vote]").forEach((v) => v.classList.remove("on"));
+      vote.classList.add("on");
+      return;
+    }
+    const copyCode = closest(e.target, "[data-ai-copy-code]");
+    if (copyCode) {
+      const code = copyCode.closest(".ai-code")?.querySelector("code")?.textContent ?? "";
+      navigator.clipboard?.writeText(code).catch(() => {
+      });
+      copyCode.textContent = "\u2713 Copied";
+      setTimeout(() => copyCode.textContent = "\u29C9 Copy", 1200);
+      return;
+    }
+    const copyMsg = closest(e.target, "[data-ai-copy]");
+    if (copyMsg) {
+      const c = copyMsg.closest(".ai-body")?.querySelector(".ai-content")?.textContent ?? "";
+      navigator.clipboard?.writeText(c).catch(() => {
+      });
+      copyMsg.classList.add("on");
+      setTimeout(() => copyMsg.classList.remove("on"), 1e3);
+      return;
+    }
+    const sugg = closest(e.target, "[data-ai-suggest]");
+    if (sugg) {
+      const wrap = sugg.closest(".ai-empty")?.parentElement;
+      const inp = wrap?.querySelector("[data-ai-input]");
+      if (inp) {
+        inp.value = (sugg.textContent ?? "").replace(/^\S+\s/, "");
+        inp.focus();
+      }
+      return;
+    }
+    const model = closest(e.target, "[data-ai-model-option]");
+    if (model) {
+      const label = model.closest(".ai-model")?.querySelector("[data-ai-model-value]");
+      if (label) label.textContent = model.textContent;
+      closeMenus();
+    }
+  });
+  const links = $$("[data-nav-link]");
+  const sections = links.map((l) => document.getElementById(l.getAttribute("href").slice(1))).filter(Boolean);
+  if ("IntersectionObserver" in window && sections.length) {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            const id = en.target.id;
+            links.forEach((l) => l.classList.toggle("active", l.getAttribute("href") === "#" + id));
+          }
+        });
+      },
+      { rootMargin: "-20% 0px -70% 0px", threshold: 0 }
+    );
+    sections.forEach((s) => obs.observe(s));
+  }
+  document.addEventListener("click", (e) => {
+    const link = closest(e.target, "[data-nav-link]");
+    if (!link) return;
+    const target = document.getElementById(link.getAttribute("href").slice(1));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+})();</script>
+</body>
+</html>

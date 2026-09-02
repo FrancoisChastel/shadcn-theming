@@ -129,8 +129,8 @@ program
 program
   .command("explore")
   .argument("<brand.json>", "path to a brand.json")
-  .description("Render an interactive component explorer (every component + charts)")
-  .option("-o, --out <file>", "output HTML path")
+  .description("Render a multi-page component explorer site (every component + charts)")
+  .option("-o, --out <dir>", "output directory for the site")
   .action(run(async (brandPath: string, opts: ExploreOptions) => {
     await exploreCommand(brandPath, opts);
   }));

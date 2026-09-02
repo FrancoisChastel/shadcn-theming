@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>shadcn-theming — demos</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #0f1720; --muted: #5b6674; --border: #e5e7eb;
+    --card: #ffffff; --primary: #004c97; --primary-fg: #ffffff; --accent: #eef4fb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0b1220; --fg: #e6ebf2; --muted: #9aa6b5; --border: #1e293b; --card: #111a2b; --primary: #4b8fd6; --primary-fg: #071018; --accent: #14202f; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--fg); line-height: 1.5; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
+  header { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 2.5rem; }
+  .mark { width: 2.6rem; height: 2.6rem; border-radius: 8px; background: var(--primary); color: var(--primary-fg); display: grid; place-items: center; font-weight: 800; font-size: 1.1rem; }
+  header h1 { font-size: 1.15rem; margin: 0; letter-spacing: -0.01em; }
+  header p { margin: 0; color: var(--muted); font-size: 0.85rem; }
+  .hero h2 { font-size: clamp(1.9rem, 1rem + 3vw, 3rem); line-height: 1.1; letter-spacing: -0.03em; margin: 0 0 0.75rem; }
+  .hero p { font-size: 1.05rem; color: var(--muted); max-width: 60ch; margin: 0 0 2.5rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+  a.card { display: block; text-decoration: none; color: inherit; border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; background: var(--card); transition: border-color .15s, transform .15s; }
+  a.card:hover { border-color: var(--primary); transform: translateY(-2px); }
+  a.card .k { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--primary); font-weight: 700; }
+  a.card h3 { margin: 0.5rem 0 0.35rem; font-size: 1.15rem; letter-spacing: -0.01em; }
+  a.card p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+  a.card .go { margin-top: 0.9rem; font-size: 0.82rem; color: var(--primary); font-weight: 600; }
+  .links { margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; font-size: 0.88rem; }
+  .links a { color: var(--primary); font-weight: 500; }
+  footer { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.78rem; }
+  code { background: var(--accent); padding: 0.15rem 0.4rem; border-radius: 5px; font-size: 0.85em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="mark">S</span>
+    <div><h1>shadcn-theming</h1><p>Adapt shadcn/ui to any company brand</p></div>
+  </header>
+
+  <div class="hero">
+    <h2>One brand in. A whole design system out.</h2>
+    <p>Turn a brand guide, logo, website, or design tokens into a contrast-safe shadcn/ui theme — then explore every component, layout, page template, chart, and an AI harness, live and interactive. These demos are branded as the <strong>IMF</strong>.</p>
+  </div>
+
+  <div class="grid">
+    <a class="card" href="imf/index.html">
+      <div class="k">IMF · flagship</div>
+      <h3>Component explorer</h3>
+      <p>Design system, every component, layouts, page templates, charts, and the AI harness — in the IMF theme.</p>
+      <div class="go">Open explorer →</div>
+    </a>
+    <a class="card" href="imf-showcase.html">
+      <div class="k">IMF</div>
+      <h3>Analytics dashboard</h3>
+      <p>A single-page dashboard: KPIs and the scientific charts on synthetic macro data.</p>
+      <div class="go">Open dashboard →</div>
+    </a>
+    <a class="card" href="acme/index.html">
+      <div class="k">Acme · generic</div>
+      <h3>The same, re-branded</h3>
+      <p>The identical explorer generated from a different brand — proof it re-themes automatically.</p>
+      <div class="go">Open Acme →</div>
+    </a>
+  </div>
+
+  <div class="links">
+    <a href="https://github.com/FrancoisChastel/shadcn-theming">GitHub repository</a>
+    <a href="https://github.com/FrancoisChastel/shadcn-theming/tree/main/registry">Registry components</a>
+    <a href="https://github.com/FrancoisChastel/shadcn-theming/tree/main/skills">Agent skills</a>
+  </div>
+
+  <footer>
+    Try it yourself: <code>npx shadcn-theming explore brand.json -o site</code>. Pages are self-contained and offline; only the charts page inlines Observable Plot + d3. Data is synthetic and illustrative.
+  </footer>
+</div>
+</body>
+</html>

@@ -5,6 +5,7 @@
 [![CI](https://github.com/FrancoisChastel/shadcn-theming/actions/workflows/ci.yml/badge.svg)](https://github.com/FrancoisChastel/shadcn-theming/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/shadcn-theming.svg)](https://www.npmjs.com/package/shadcn-theming)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![live demo](https://img.shields.io/badge/demo-live-004C97.svg)](https://francoischastel.github.io/shadcn-theming/)
 
 It ships as **three things**:
 
@@ -36,7 +37,7 @@ npx shadcn-theming apply brand.json --dry-run     # preview the patch
 npx shadcn-theming apply brand.json --yes         # write it
 ```
 
-👉 **Live preview:** open [`demo/index.html`](demo/index.html) in a browser (or `npm run cli -- preview examples/acme.brand.json -o demo/index.html`).
+👉 **Live demo:** **[francoischastel.github.io/shadcn-theming](https://francoischastel.github.io/shadcn-theming/)** — the full multi-page explorer (Design system · Components · Layouts · Templates · Charts · AI harness) branded as the IMF, plus a re-branded Acme build.
 
 ## Brand inputs
 

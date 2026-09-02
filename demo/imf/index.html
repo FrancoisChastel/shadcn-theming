@@ -710,6 +710,25 @@ table.dt .dt-check input { accent-color: var(--primary); }
 .dl dd { margin: 0; font-variant-numeric: tabular-nums; }
 .gauge-wrap { display: flex; gap: 1.5rem; flex-wrap: wrap; }
 
+/* ---- System page templates ---- */
+.sys-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 1.1rem; overflow: auto; }
+.sresult { display: flex; flex-direction: column; gap: 0.9rem; }
+.sresult .sr { border-bottom: 1px solid var(--border); padding-bottom: 0.85rem; }
+.sresult .sr .ttl { color: var(--primary); font-weight: 500; }
+.sresult .sr .snip { font-size: 0.85rem; color: var(--muted-foreground); margin: 0.2rem 0; }
+.sresult .sr .m { font-size: 0.72rem; color: var(--muted-foreground); }
+.filter-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.filter-chips .fc { border: 1px solid var(--border); border-radius: 999px; padding: 0.2rem 0.65rem; font-size: 0.76rem; cursor: pointer; color: var(--muted-foreground); }
+.filter-chips .fc.on { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }
+.notif .ni { display: flex; gap: 0.75rem; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
+.notif .ni .nico { width: 2rem; height: 2rem; border-radius: 999px; background: var(--secondary); display: grid; place-items: center; flex: none; }
+.notif .ni .nt { font-size: 0.72rem; color: var(--muted-foreground); }
+.notif .ni .dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--primary); flex: none; }
+.settings-layout { display: grid; grid-template-columns: 170px 1fr; gap: 1.5rem; padding: 1.25rem; }
+.settings-nav a { display: block; padding: 0.4rem 0.6rem; border-radius: calc(var(--radius) - 1px); font-size: 0.84rem; color: var(--muted-foreground); }
+.settings-nav a.active { background: var(--accent); color: var(--foreground); font-weight: 500; }
+@media (max-width: 820px) { .settings-layout { grid-template-columns: 1fr; } }
+
 </style>
 </head>
 <body>
@@ -717,7 +736,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
 <div class="app">
   <aside class="side" aria-label="Sections">
     <div class="brand"><span class="mark" aria-hidden="true">I</span><div><b>IMF</b><span>design system</span></div></div>
-    <div class="nav-group">Overview</div><div class="nav"><a href="#overview" data-nav-link>Overview</a></div><div class="nav-group">Foundations</div><div class="nav"><a href="#colors" data-nav-link>Colors</a><a href="#typography" data-nav-link>Typography</a><a href="#radius" data-nav-link>Radius</a><a href="#spacing" data-nav-link>Spacing</a><a href="#elevation" data-nav-link>Elevation</a><a href="#motion" data-nav-link>Motion</a><a href="#icons" data-nav-link>Icons</a></div>
+    <div class="nav-group">Overview</div><div class="nav"><a href="#overview" data-nav-link>Overview</a></div><div class="nav-group">Foundations</div><div class="nav"><a href="#colors" data-nav-link>Colors</a><a href="#typography" data-nav-link>Typography</a><a href="#radius" data-nav-link>Radius</a><a href="#spacing" data-nav-link>Spacing</a><a href="#elevation" data-nav-link>Elevation</a><a href="#motion" data-nav-link>Motion</a><a href="#icons" data-nav-link>Icons</a><a href="#i18n" data-nav-link>Localization &amp; RTL</a></div>
   </aside>
   <main class="main" id="main">
     <div class="topbar">
@@ -821,6 +840,26 @@ table.dt .dt-check input { accent-color: var(--primary); }
     <h2>Icons</h2>
     <p class="desc">A stroke icon set (1.5–2px, currentColor) that inherits text color.</p>
     <div class="demo col"><div class="icon-grid"><div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>search</div><div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>check</div><div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>close</div><div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>plus</div><div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>chevron</div><div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>download</div><div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>bell</div><div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></svg>user</div><div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>globe</div><div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>chart</div><div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>file</div><div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>settings</div></div></div>
+  </section>
+<section class="block" id="i18n">
+    <h2>Localization &amp; RTL</h2>
+    <p class="desc">A language switcher — selecting العربية (Arabic) flips the sample to right-to-left and translates it.</p>
+    <div class="demo col"><div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem">
+          <div data-menu-trigger style="position:relative"><button class="combobox-trigger" style="max-width:200px">🌐 <span data-lang-value>English</span> <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+            <div data-menu>
+              <div class="menu-item" data-lang="en" data-dir="ltr">English</div>
+              <div class="menu-item" data-lang="fr" data-dir="ltr">Français</div>
+              <div class="menu-item" data-lang="es" data-dir="ltr">Español</div>
+              <div class="menu-item" data-lang="ar" data-dir="rtl">العربية</div>
+            </div>
+          </div>
+          <span class="muted" style="font-size:.8rem">Direction and copy update together.</span>
+        </div>
+        <div class="card" data-i18n-sample dir="ltr" style="padding:1.1rem 1.25rem;max-width:440px">
+          <div class="card-t" data-i18n="title">World Economic Outlook</div>
+          <p class="muted" style="font-size:.86rem;margin:.4rem 0 .8rem" data-i18n="body">Global growth is projected to hold at 3.2% in 2025.</p>
+          <div style="display:flex;gap:.5rem"><button class="btn btn-outline btn-sm" data-i18n="cancel">Cancel</button><button class="btn btn-primary btn-sm" data-i18n="read">Read report</button></div>
+        </div></div>
   </section>
       <footer class="muted" style="font-size:.75rem;border-top:1px solid var(--border);padding-top:1.25rem;margin-top:3rem">Generated by shadcn-theming · synthetic, illustrative data</footer>
     </div>
@@ -951,6 +990,28 @@ table.dt .dt-check input { accent-color: var(--primary); }
   document.addEventListener("click", (e) => {
     const t = closest(e.target, "[data-tree-toggle]");
     if (t) t.closest(".tree-item")?.classList.toggle("open");
+  });
+  const I18N = {
+    en: { label: "English", title: "World Economic Outlook", body: "Global growth is projected to hold at 3.2% in 2025.", cancel: "Cancel", read: "Read report" },
+    fr: { label: "Fran\xE7ais", title: "Perspectives de l'\xE9conomie mondiale", body: "La croissance mondiale devrait se maintenir \xE0 3,2 % en 2025.", cancel: "Annuler", read: "Lire le rapport" },
+    es: { label: "Espa\xF1ol", title: "Perspectivas de la econom\xEDa mundial", body: "Se proyecta que el crecimiento mundial se mantenga en 3,2 % en 2025.", cancel: "Cancelar", read: "Leer informe" },
+    ar: { label: "\u0627\u0644\u0639\u0631\u0628\u064A\u0629", title: "\u0622\u0641\u0627\u0642 \u0627\u0644\u0627\u0642\u062A\u0635\u0627\u062F \u0627\u0644\u0639\u0627\u0644\u0645\u064A", body: "\u0645\u0646 \u0627\u0644\u0645\u062A\u0648\u0642\u0639 \u0623\u0646 \u064A\u0628\u0642\u0649 \u0627\u0644\u0646\u0645\u0648 \u0627\u0644\u0639\u0627\u0644\u0645\u064A \u0639\u0646\u062F 3.2\u066A \u0641\u064A \u0639\u0627\u0645 2025.", cancel: "\u0625\u0644\u063A\u0627\u0621", read: "\u0642\u0631\u0627\u0621\u0629 \u0627\u0644\u062A\u0642\u0631\u064A\u0631" }
+  };
+  document.addEventListener("click", (e) => {
+    const opt2 = closest(e.target, "[data-lang]");
+    if (!opt2) return;
+    const t = I18N[opt2.getAttribute("data-lang") ?? "en"];
+    if (!t) return;
+    const dir = opt2.getAttribute("data-dir") ?? "ltr";
+    $$("[data-i18n-sample]").forEach((s) => {
+      s.setAttribute("dir", dir);
+      $$("[data-i18n]", s).forEach((el) => {
+        const v = t[el.getAttribute("data-i18n") ?? ""];
+        if (v) el.textContent = v;
+      });
+    });
+    $$("[data-lang-value]").forEach((v) => v.textContent = t.label ?? "");
+    closeMenus();
   });
   let lastOpener = null;
   const openOverlay = (id) => {

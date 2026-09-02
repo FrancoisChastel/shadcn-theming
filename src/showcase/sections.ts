@@ -183,6 +183,31 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       desc: "A stroke icon set (1.5–2px, currentColor) that inherits text color.",
       html: demo(iconGrid(), "col"),
     },
+    {
+      id: "i18n",
+      group: "Foundations",
+      title: "Localization & RTL",
+      desc: "A language switcher — selecting العربية (Arabic) flips the sample to right-to-left and translates it.",
+      html: demo(
+        `<div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem">
+          <div data-menu-trigger style="position:relative"><button class="combobox-trigger" style="max-width:200px">🌐 <span data-lang-value>English</span> ${chev}</button>
+            <div data-menu>
+              <div class="menu-item" data-lang="en" data-dir="ltr">English</div>
+              <div class="menu-item" data-lang="fr" data-dir="ltr">Français</div>
+              <div class="menu-item" data-lang="es" data-dir="ltr">Español</div>
+              <div class="menu-item" data-lang="ar" data-dir="rtl">العربية</div>
+            </div>
+          </div>
+          <span class="muted" style="font-size:.8rem">Direction and copy update together.</span>
+        </div>
+        <div class="card" data-i18n-sample dir="ltr" style="padding:1.1rem 1.25rem;max-width:440px">
+          <div class="card-t" data-i18n="title">World Economic Outlook</div>
+          <p class="muted" style="font-size:.86rem;margin:.4rem 0 .8rem" data-i18n="body">Global growth is projected to hold at 3.2% in 2025.</p>
+          <div style="display:flex;gap:.5rem"><button class="btn btn-outline btn-sm" data-i18n="cancel">Cancel</button><button class="btn btn-primary btn-sm" data-i18n="read">Read report</button></div>
+        </div>`,
+        "col",
+      ),
+    },
 
     // ---------------- Forms ----------------
     {

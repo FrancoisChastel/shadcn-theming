@@ -710,6 +710,25 @@ table.dt .dt-check input { accent-color: var(--primary); }
 .dl dd { margin: 0; font-variant-numeric: tabular-nums; }
 .gauge-wrap { display: flex; gap: 1.5rem; flex-wrap: wrap; }
 
+/* ---- System page templates ---- */
+.sys-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 1.1rem; overflow: auto; }
+.sresult { display: flex; flex-direction: column; gap: 0.9rem; }
+.sresult .sr { border-bottom: 1px solid var(--border); padding-bottom: 0.85rem; }
+.sresult .sr .ttl { color: var(--primary); font-weight: 500; }
+.sresult .sr .snip { font-size: 0.85rem; color: var(--muted-foreground); margin: 0.2rem 0; }
+.sresult .sr .m { font-size: 0.72rem; color: var(--muted-foreground); }
+.filter-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.filter-chips .fc { border: 1px solid var(--border); border-radius: 999px; padding: 0.2rem 0.65rem; font-size: 0.76rem; cursor: pointer; color: var(--muted-foreground); }
+.filter-chips .fc.on { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }
+.notif .ni { display: flex; gap: 0.75rem; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
+.notif .ni .nico { width: 2rem; height: 2rem; border-radius: 999px; background: var(--secondary); display: grid; place-items: center; flex: none; }
+.notif .ni .nt { font-size: 0.72rem; color: var(--muted-foreground); }
+.notif .ni .dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--primary); flex: none; }
+.settings-layout { display: grid; grid-template-columns: 170px 1fr; gap: 1.5rem; padding: 1.25rem; }
+.settings-nav a { display: block; padding: 0.4rem 0.6rem; border-radius: calc(var(--radius) - 1px); font-size: 0.84rem; color: var(--muted-foreground); }
+.settings-nav a.active { background: var(--accent); color: var(--foreground); font-weight: 500; }
+@media (max-width: 820px) { .settings-layout { grid-template-columns: 1fr; } }
+
 </style>
 </head>
 <body>
@@ -717,7 +736,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
 <div class="app">
   <aside class="side" aria-label="Sections">
     <div class="brand"><span class="mark" aria-hidden="true">A</span><div><b>Acme</b><span>design system</span></div></div>
-    <div class="nav-group">Templates</div><div class="nav"><a href="#tpl-data-explorer" data-nav-link>Data explorer</a><a href="#tpl-country-profile" data-nav-link>Country profile</a><a href="#tpl-publication" data-nav-link>Publication reader</a></div>
+    <div class="nav-group">Templates</div><div class="nav"><a href="#tpl-dashboard" data-nav-link>Dashboard</a><a href="#tpl-data-explorer" data-nav-link>Data explorer</a><a href="#tpl-country-profile" data-nav-link>Country profile</a><a href="#tpl-publication" data-nav-link>Publication reader</a><a href="#tpl-search" data-nav-link>Search results</a><a href="#tpl-notifications" data-nav-link>Notifications</a><a href="#tpl-settings" data-nav-link>Settings</a></div>
   </aside>
   <main class="main" id="main">
     <div class="topbar">
@@ -732,7 +751,20 @@ table.dt .dt-check input { accent-color: var(--primary); }
         <h1>Acme page templates</h1>
         <p>Composite IMF page templates — data explorer, country profile, publication reader.</p>
       </div>
-      <section class="block" id="tpl-data-explorer">
+      <section class="block" id="tpl-dashboard">
+    <h2>Dashboard</h2>
+    <p class="desc">An analytics home: header, KPI row, charts, and a recent-releases table.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/dashboard</span></div><div class="block-stage" style="padding:0;display:block"><div class="country">
+      <div class="ex-head" style="padding:1rem 1.25rem;border-bottom:1px solid var(--border)"><h3>Overview</h3><div style="display:flex;gap:.5rem;align-items:center"><button class="btn btn-outline btn-sm">Last 12 months ▾</button><button class="btn btn-primary btn-sm">Export</button></div></div>
+      <div class="sys-body">
+        <div class="kpi-row"><div class="mini-kpi"><div class="l">World GDP growth</div><div class="v">3.2%</div><div class="d" style="color:var(--chart-5)">▲ 0.1</div></div><div class="mini-kpi"><div class="l">Inflation</div><div class="v">5.8%</div><div class="d" style="color:var(--destructive)">▼ 1.2</div></div><div class="mini-kpi"><div class="l">Debt / GDP</div><div class="v">93.2%</div><div class="d" style="color:var(--destructive)">▼ 1.6</div></div><div class="mini-kpi"><div class="l">Trade</div><div class="v">+3.4%</div><div class="d" style="color:var(--chart-5)">▲ 2.1</div></div></div>
+        <div class="grid2"><div class="card plot-card" data-chart="timeseries" data-title="Growth by region"></div><div class="card plot-card" data-chart="donut" data-title="Reserves by currency"></div></div>
+        <table class="tbl"><caption>Recent releases</caption><thead><tr><th>Report</th><th>Date</th><th class="num">Downloads</th></tr></thead>
+          <tbody><tr><td>World Economic Outlook</td><td>Oct 2026</td><td class="num">48,201</td></tr><tr><td>Global Financial Stability</td><td>Oct 2026</td><td class="num">21,940</td></tr><tr><td>Fiscal Monitor</td><td>Oct 2026</td><td class="num">18,320</td></tr></tbody></table>
+      </div>
+    </div></div></div></div>
+  </section>
+<section class="block" id="tpl-data-explorer">
     <h2>Data explorer</h2>
     <p class="desc">A DataMapper-style page: a filter panel, a chart/table/map switcher, and a results table.</p>
     <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">imf.org/datamapper</span></div><div class="block-stage" style="padding:0;display:block"><div class="explorer">
@@ -813,6 +845,41 @@ table.dt .dt-check input { accent-color: var(--primary); }
           <p>2. Regional aggregates are PPP-GDP weighted. See the Statistical Appendix for group definitions.</p>
         </div>
       </article>
+    </div></div></div></div>
+  </section>
+<section class="block" id="tpl-search">
+    <h2>Search results</h2>
+    <p class="desc">A results page with a query bar, filter chips, and a result list.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/search?q=inflation</span></div><div class="block-stage" style="padding:0;display:block"><div class="country">
+      <div class="ex-head" style="padding:1rem 1.25rem;border-bottom:1px solid var(--border)"><h3></h3><div style="display:flex;gap:.5rem;align-items:center"><div class="input-icon" data-search style="max-width:360px;flex:1"><span class="lead" aria-hidden="true">🔍</span><input class="input" value="inflation outlook" aria-label="Search" /><button class="clear" data-search-clear aria-label="clear">×</button></div></div></div>
+      <div class="sys-body">
+        <div class="filter-chips"><span class="fc on">All</span><span class="fc">Publications</span><span class="fc">Data</span><span class="fc">Blogs</span><span class="fc">Countries</span></div>
+        <span class="muted" style="font-size:.8rem">About 1,240 results</span>
+        <div class="sresult"><div class="sr"><div class="ttl">World Economic Outlook, October 2026</div><div class="snip">Global growth is projected to hold at 3.2% in 2025 as disinflation continues…</div><div class="m">Publication · imf.org/weo</div></div><div class="sr"><div class="ttl">Inflation dynamics in emerging markets</div><div class="snip">Services prices remain sticky while goods disinflation broadens across…</div><div class="m">Working Paper · WP/26/184</div></div><div class="sr"><div class="ttl">Consumer prices (annual %)</div><div class="snip">Time series across 190 economies, 1980–2029, with projections.</div><div class="m">Data · DataMapper</div></div><div class="sr"><div class="ttl">Why is inflation easing unevenly?</div><div class="snip">A look at the cross-country dispersion in the pace of disinflation.</div><div class="m">Blog · 12 Sep 2026</div></div></div>
+      </div>
+    </div></div></div></div>
+  </section>
+<section class="block" id="tpl-notifications">
+    <h2>Notifications</h2>
+    <p class="desc">A notification center with read/unread items.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/notifications</span></div><div class="block-stage" style="padding:0;display:block"><div class="country">
+      <div class="ex-head" style="padding:1rem 1.25rem;border-bottom:1px solid var(--border)"><h3>Notifications</h3><div style="display:flex;gap:.5rem;align-items:center"><button class="btn btn-ghost btn-sm">Mark all read</button></div></div>
+      <div class="sys-body"><div class="notif"><div class="ni"><span class="nico" aria-hidden="true">📈</span><div style="flex:1"><div style="font-size:.88rem">WEO October data is now available</div><div class="nt">2h ago</div></div><span class="dot"></span></div><div class="ni"><span class="nico" aria-hidden="true">💬</span><div style="flex:1"><div style="font-size:.88rem">New comment on your growth projection</div><div class="nt">5h ago</div></div><span class="dot"></span></div><div class="ni"><span class="nico" aria-hidden="true">✅</span><div style="flex:1"><div style="font-size:.88rem">Your CSV export completed</div><div class="nt">Yesterday</div></div></div><div class="ni"><span class="nico" aria-hidden="true">🔔</span><div style="flex:1"><div style="font-size:.88rem">Fiscal Monitor was published</div><div class="nt">2 days ago</div></div></div></div></div>
+    </div></div></div></div>
+  </section>
+<section class="block" id="tpl-settings">
+    <h2>Settings</h2>
+    <p class="desc">An account settings page with section nav and a profile form.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/settings</span></div><div class="block-stage" style="padding:0;display:block"><div class="settings-layout">
+      <nav class="settings-nav"><a class="active">Profile</a><a>Account</a><a>Notifications</a><a>API tokens</a></nav>
+      <div>
+        <h3 style="margin:0 0 .25rem">Profile</h3><p class="muted" style="font-size:.83rem;margin:0 0 1.1rem">How you appear across the workspace.</p>
+        <div class="field" style="margin-bottom:.85rem;max-width:360px"><label class="label">Display name</label><input class="input" value="Francois Chastel" /></div>
+        <div class="field" style="margin-bottom:.85rem;max-width:360px"><label class="label">Email</label><input class="input" value="francois@imf.org" /></div>
+        <div class="field" style="margin-bottom:.85rem;max-width:360px"><label class="label">Role</label><button class="combobox-trigger" data-menu-trigger style="max-width:260px">Economist <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button></div>
+        <label class="switch" style="margin-bottom:1.1rem"><input type="checkbox" checked /><span class="track"><span class="thumb"></span></span> Email me weekly digests</label>
+        <div style="display:flex;gap:.5rem"><button class="btn btn-ghost btn-sm">Cancel</button><button class="btn btn-primary btn-sm">Save changes</button></div>
+      </div>
     </div></div></div></div>
   </section>
       <footer class="muted" style="font-size:.75rem;border-top:1px solid var(--border);padding-top:1.25rem;margin-top:3rem">Generated by shadcn-theming · synthetic, illustrative data</footer>
@@ -949,6 +1016,28 @@ table.dt .dt-check input { accent-color: var(--primary); }
   document.addEventListener("click", (e) => {
     const t = closest(e.target, "[data-tree-toggle]");
     if (t) t.closest(".tree-item")?.classList.toggle("open");
+  });
+  const I18N = {
+    en: { label: "English", title: "World Economic Outlook", body: "Global growth is projected to hold at 3.2% in 2025.", cancel: "Cancel", read: "Read report" },
+    fr: { label: "Fran\xE7ais", title: "Perspectives de l'\xE9conomie mondiale", body: "La croissance mondiale devrait se maintenir \xE0 3,2 % en 2025.", cancel: "Annuler", read: "Lire le rapport" },
+    es: { label: "Espa\xF1ol", title: "Perspectivas de la econom\xEDa mundial", body: "Se proyecta que el crecimiento mundial se mantenga en 3,2 % en 2025.", cancel: "Cancelar", read: "Leer informe" },
+    ar: { label: "\u0627\u0644\u0639\u0631\u0628\u064A\u0629", title: "\u0622\u0641\u0627\u0642 \u0627\u0644\u0627\u0642\u062A\u0635\u0627\u062F \u0627\u0644\u0639\u0627\u0644\u0645\u064A", body: "\u0645\u0646 \u0627\u0644\u0645\u062A\u0648\u0642\u0639 \u0623\u0646 \u064A\u0628\u0642\u0649 \u0627\u0644\u0646\u0645\u0648 \u0627\u0644\u0639\u0627\u0644\u0645\u064A \u0639\u0646\u062F 3.2\u066A \u0641\u064A \u0639\u0627\u0645 2025.", cancel: "\u0625\u0644\u063A\u0627\u0621", read: "\u0642\u0631\u0627\u0621\u0629 \u0627\u0644\u062A\u0642\u0631\u064A\u0631" }
+  };
+  document.addEventListener("click", (e) => {
+    const opt2 = closest(e.target, "[data-lang]");
+    if (!opt2) return;
+    const t = I18N[opt2.getAttribute("data-lang") ?? "en"];
+    if (!t) return;
+    const dir = opt2.getAttribute("data-dir") ?? "ltr";
+    $$("[data-i18n-sample]").forEach((s) => {
+      s.setAttribute("dir", dir);
+      $$("[data-i18n]", s).forEach((el) => {
+        const v = t[el.getAttribute("data-i18n") ?? ""];
+        if (v) el.textContent = v;
+      });
+    });
+    $$("[data-lang-value]").forEach((v) => v.textContent = t.label ?? "");
+    closeMenus();
   });
   let lastOpener = null;
   const openOverlay = (id) => {

@@ -110,8 +110,91 @@ function publicationReader(): string {
   );
 }
 
+const sysHead = (title: string, right: string) =>
+  `<div class="ex-head" style="padding:1rem 1.25rem;border-bottom:1px solid var(--border)"><h3>${title}</h3><div style="display:flex;gap:.5rem;align-items:center">${right}</div></div>`;
+
+function dashboard(): string {
+  return frame(
+    "app.imf.org/dashboard",
+    `<div class="country">
+      ${sysHead("Overview", `<button class="btn btn-outline btn-sm">Last 12 months ▾</button><button class="btn btn-primary btn-sm">Export</button>`)}
+      <div class="sys-body">
+        <div class="kpi-row">${miniKpi("World GDP growth", "3.2%", "0.1", true)}${miniKpi("Inflation", "5.8%", "1.2", false)}${miniKpi("Debt / GDP", "93.2%", "1.6", false)}${miniKpi("Trade", "+3.4%", "2.1", true)}</div>
+        <div class="grid2"><div class="card plot-card" data-chart="timeseries" data-title="Growth by region"></div><div class="card plot-card" data-chart="donut" data-title="Reserves by currency"></div></div>
+        <table class="tbl"><caption>Recent releases</caption><thead><tr><th>Report</th><th>Date</th><th class="num">Downloads</th></tr></thead>
+          <tbody><tr><td>World Economic Outlook</td><td>Oct 2026</td><td class="num">48,201</td></tr><tr><td>Global Financial Stability</td><td>Oct 2026</td><td class="num">21,940</td></tr><tr><td>Fiscal Monitor</td><td>Oct 2026</td><td class="num">18,320</td></tr></tbody></table>
+      </div>
+    </div>`,
+  );
+}
+
+function searchResults(): string {
+  const results: Array<[string, string, string]> = [
+    ["World Economic Outlook, October 2026", "Global growth is projected to hold at 3.2% in 2025 as disinflation continues…", "Publication · imf.org/weo"],
+    ["Inflation dynamics in emerging markets", "Services prices remain sticky while goods disinflation broadens across…", "Working Paper · WP/26/184"],
+    ["Consumer prices (annual %)", "Time series across 190 economies, 1980–2029, with projections.", "Data · DataMapper"],
+    ["Why is inflation easing unevenly?", "A look at the cross-country dispersion in the pace of disinflation.", "Blog · 12 Sep 2026"],
+  ];
+  return frame(
+    "app.imf.org/search?q=inflation",
+    `<div class="country">
+      ${sysHead("", `<div class="input-icon" data-search style="max-width:360px;flex:1"><span class="lead" aria-hidden="true">🔍</span><input class="input" value="inflation outlook" aria-label="Search" /><button class="clear" data-search-clear aria-label="clear">×</button></div>`)}
+      <div class="sys-body">
+        <div class="filter-chips"><span class="fc on">All</span><span class="fc">Publications</span><span class="fc">Data</span><span class="fc">Blogs</span><span class="fc">Countries</span></div>
+        <span class="muted" style="font-size:.8rem">About 1,240 results</span>
+        <div class="sresult">${results.map((r) => `<div class="sr"><div class="ttl">${r[0]}</div><div class="snip">${r[1]}</div><div class="m">${r[2]}</div></div>`).join("")}</div>
+      </div>
+    </div>`,
+  );
+}
+
+function notifications(): string {
+  const items: Array<[string, string, string, boolean]> = [
+    ["📈", "WEO October data is now available", "2h ago", true],
+    ["💬", "New comment on your growth projection", "5h ago", true],
+    ["✅", "Your CSV export completed", "Yesterday", false],
+    ["🔔", "Fiscal Monitor was published", "2 days ago", false],
+  ];
+  return frame(
+    "app.imf.org/notifications",
+    `<div class="country">
+      ${sysHead("Notifications", `<button class="btn btn-ghost btn-sm">Mark all read</button>`)}
+      <div class="sys-body"><div class="notif">${items
+        .map(
+          (i) =>
+            `<div class="ni"><span class="nico" aria-hidden="true">${i[0]}</span><div style="flex:1"><div style="font-size:.88rem">${i[1]}</div><div class="nt">${i[2]}</div></div>${i[3] ? '<span class="dot"></span>' : ""}</div>`,
+        )
+        .join("")}</div></div>
+    </div>`,
+  );
+}
+
+function settings(): string {
+  return frame(
+    "app.imf.org/settings",
+    `<div class="settings-layout">
+      <nav class="settings-nav"><a class="active">Profile</a><a>Account</a><a>Notifications</a><a>API tokens</a></nav>
+      <div>
+        <h3 style="margin:0 0 .25rem">Profile</h3><p class="muted" style="font-size:.83rem;margin:0 0 1.1rem">How you appear across the workspace.</p>
+        <div class="field" style="margin-bottom:.85rem;max-width:360px"><label class="label">Display name</label><input class="input" value="Francois Chastel" /></div>
+        <div class="field" style="margin-bottom:.85rem;max-width:360px"><label class="label">Email</label><input class="input" value="francois@imf.org" /></div>
+        <div class="field" style="margin-bottom:.85rem;max-width:360px"><label class="label">Role</label><button class="combobox-trigger" data-menu-trigger style="max-width:260px">Economist ${chev}</button></div>
+        <label class="switch" style="margin-bottom:1.1rem"><input type="checkbox" checked /><span class="track"><span class="thumb"></span></span> Email me weekly digests</label>
+        <div style="display:flex;gap:.5rem"><button class="btn btn-ghost btn-sm">Cancel</button><button class="btn btn-primary btn-sm">Save changes</button></div>
+      </div>
+    </div>`,
+  );
+}
+
 export function templateSections(): Section[] {
   return [
+    {
+      id: "tpl-dashboard",
+      group: "Templates",
+      title: "Dashboard",
+      desc: "An analytics home: header, KPI row, charts, and a recent-releases table.",
+      html: demo(dashboard()),
+    },
     {
       id: "tpl-data-explorer",
       group: "Templates",
@@ -132,6 +215,27 @@ export function templateSections(): Section[] {
       title: "Publication reader",
       desc: "A WEO-style report reader: on-this-page nav, prose, a captioned figure, and footnotes.",
       html: demo(publicationReader()),
+    },
+    {
+      id: "tpl-search",
+      group: "Templates",
+      title: "Search results",
+      desc: "A results page with a query bar, filter chips, and a result list.",
+      html: demo(searchResults()),
+    },
+    {
+      id: "tpl-notifications",
+      group: "Templates",
+      title: "Notifications",
+      desc: "A notification center with read/unread items.",
+      html: demo(notifications()),
+    },
+    {
+      id: "tpl-settings",
+      group: "Templates",
+      title: "Settings",
+      desc: "An account settings page with section nav and a profile form.",
+      html: demo(settings()),
     },
   ];
 }

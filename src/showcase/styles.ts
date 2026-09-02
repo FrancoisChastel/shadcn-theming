@@ -637,4 +637,23 @@ table.dt .dt-check input { accent-color: var(--primary); }
 .dl dt { color: var(--muted-foreground); }
 .dl dd { margin: 0; font-variant-numeric: tabular-nums; }
 .gauge-wrap { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+
+/* ---- System page templates ---- */
+.sys-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 1.1rem; overflow: auto; }
+.sresult { display: flex; flex-direction: column; gap: 0.9rem; }
+.sresult .sr { border-bottom: 1px solid var(--border); padding-bottom: 0.85rem; }
+.sresult .sr .ttl { color: var(--primary); font-weight: 500; }
+.sresult .sr .snip { font-size: 0.85rem; color: var(--muted-foreground); margin: 0.2rem 0; }
+.sresult .sr .m { font-size: 0.72rem; color: var(--muted-foreground); }
+.filter-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.filter-chips .fc { border: 1px solid var(--border); border-radius: 999px; padding: 0.2rem 0.65rem; font-size: 0.76rem; cursor: pointer; color: var(--muted-foreground); }
+.filter-chips .fc.on { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }
+.notif .ni { display: flex; gap: 0.75rem; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
+.notif .ni .nico { width: 2rem; height: 2rem; border-radius: 999px; background: var(--secondary); display: grid; place-items: center; flex: none; }
+.notif .ni .nt { font-size: 0.72rem; color: var(--muted-foreground); }
+.notif .ni .dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--primary); flex: none; }
+.settings-layout { display: grid; grid-template-columns: 170px 1fr; gap: 1.5rem; padding: 1.25rem; }
+.settings-nav a { display: block; padding: 0.4rem 0.6rem; border-radius: calc(var(--radius) - 1px); font-size: 0.84rem; color: var(--muted-foreground); }
+.settings-nav a.active { background: var(--accent); color: var(--foreground); font-weight: 500; }
+@media (max-width: 820px) { .settings-layout { grid-template-columns: 1fr; } }
 `;

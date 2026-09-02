@@ -710,6 +710,25 @@ table.dt .dt-check input { accent-color: var(--primary); }
 .dl dd { margin: 0; font-variant-numeric: tabular-nums; }
 .gauge-wrap { display: flex; gap: 1.5rem; flex-wrap: wrap; }
 
+/* ---- System page templates ---- */
+.sys-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 1.1rem; overflow: auto; }
+.sresult { display: flex; flex-direction: column; gap: 0.9rem; }
+.sresult .sr { border-bottom: 1px solid var(--border); padding-bottom: 0.85rem; }
+.sresult .sr .ttl { color: var(--primary); font-weight: 500; }
+.sresult .sr .snip { font-size: 0.85rem; color: var(--muted-foreground); margin: 0.2rem 0; }
+.sresult .sr .m { font-size: 0.72rem; color: var(--muted-foreground); }
+.filter-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.filter-chips .fc { border: 1px solid var(--border); border-radius: 999px; padding: 0.2rem 0.65rem; font-size: 0.76rem; cursor: pointer; color: var(--muted-foreground); }
+.filter-chips .fc.on { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }
+.notif .ni { display: flex; gap: 0.75rem; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
+.notif .ni .nico { width: 2rem; height: 2rem; border-radius: 999px; background: var(--secondary); display: grid; place-items: center; flex: none; }
+.notif .ni .nt { font-size: 0.72rem; color: var(--muted-foreground); }
+.notif .ni .dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--primary); flex: none; }
+.settings-layout { display: grid; grid-template-columns: 170px 1fr; gap: 1.5rem; padding: 1.25rem; }
+.settings-nav a { display: block; padding: 0.4rem 0.6rem; border-radius: calc(var(--radius) - 1px); font-size: 0.84rem; color: var(--muted-foreground); }
+.settings-nav a.active { background: var(--accent); color: var(--foreground); font-weight: 500; }
+@media (max-width: 820px) { .settings-layout { grid-template-columns: 1fr; } }
+
 </style>
 </head>
 <body>
@@ -916,6 +935,28 @@ table.dt .dt-check input { accent-color: var(--primary); }
   document.addEventListener("click", (e) => {
     const t = closest(e.target, "[data-tree-toggle]");
     if (t) t.closest(".tree-item")?.classList.toggle("open");
+  });
+  const I18N = {
+    en: { label: "English", title: "World Economic Outlook", body: "Global growth is projected to hold at 3.2% in 2025.", cancel: "Cancel", read: "Read report" },
+    fr: { label: "Fran\xE7ais", title: "Perspectives de l'\xE9conomie mondiale", body: "La croissance mondiale devrait se maintenir \xE0 3,2 % en 2025.", cancel: "Annuler", read: "Lire le rapport" },
+    es: { label: "Espa\xF1ol", title: "Perspectivas de la econom\xEDa mundial", body: "Se proyecta que el crecimiento mundial se mantenga en 3,2 % en 2025.", cancel: "Cancelar", read: "Leer informe" },
+    ar: { label: "\u0627\u0644\u0639\u0631\u0628\u064A\u0629", title: "\u0622\u0641\u0627\u0642 \u0627\u0644\u0627\u0642\u062A\u0635\u0627\u062F \u0627\u0644\u0639\u0627\u0644\u0645\u064A", body: "\u0645\u0646 \u0627\u0644\u0645\u062A\u0648\u0642\u0639 \u0623\u0646 \u064A\u0628\u0642\u0649 \u0627\u0644\u0646\u0645\u0648 \u0627\u0644\u0639\u0627\u0644\u0645\u064A \u0639\u0646\u062F 3.2\u066A \u0641\u064A \u0639\u0627\u0645 2025.", cancel: "\u0625\u0644\u063A\u0627\u0621", read: "\u0642\u0631\u0627\u0621\u0629 \u0627\u0644\u062A\u0642\u0631\u064A\u0631" }
+  };
+  document.addEventListener("click", (e) => {
+    const opt2 = closest(e.target, "[data-lang]");
+    if (!opt2) return;
+    const t = I18N[opt2.getAttribute("data-lang") ?? "en"];
+    if (!t) return;
+    const dir = opt2.getAttribute("data-dir") ?? "ltr";
+    $$("[data-i18n-sample]").forEach((s) => {
+      s.setAttribute("dir", dir);
+      $$("[data-i18n]", s).forEach((el) => {
+        const v = t[el.getAttribute("data-i18n") ?? ""];
+        if (v) el.textContent = v;
+      });
+    });
+    $$("[data-lang-value]").forEach((v) => v.textContent = t.label ?? "");
+    closeMenus();
   });
   let lastOpener = null;
   const openOverlay = (id) => {

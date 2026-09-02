@@ -111,6 +111,30 @@ export function uiMain(): void {
     if (t) t.closest(".tree-item")?.classList.toggle("open");
   });
 
+  // ---- localization + RTL ----
+  const I18N: Record<string, Record<string, string>> = {
+    en: { label: "English", title: "World Economic Outlook", body: "Global growth is projected to hold at 3.2% in 2025.", cancel: "Cancel", read: "Read report" },
+    fr: { label: "Français", title: "Perspectives de l'économie mondiale", body: "La croissance mondiale devrait se maintenir à 3,2 % en 2025.", cancel: "Annuler", read: "Lire le rapport" },
+    es: { label: "Español", title: "Perspectivas de la economía mundial", body: "Se proyecta que el crecimiento mundial se mantenga en 3,2 % en 2025.", cancel: "Cancelar", read: "Leer informe" },
+    ar: { label: "العربية", title: "آفاق الاقتصاد العالمي", body: "من المتوقع أن يبقى النمو العالمي عند 3.2٪ في عام 2025.", cancel: "إلغاء", read: "قراءة التقرير" },
+  }
+  document.addEventListener("click", (e) => {
+    const opt = closest(e.target, "[data-lang]")
+    if (!opt) return
+    const t = I18N[opt.getAttribute("data-lang") ?? "en"]
+    if (!t) return
+    const dir = opt.getAttribute("data-dir") ?? "ltr"
+    $$("[data-i18n-sample]").forEach((s) => {
+      s.setAttribute("dir", dir)
+      $$("[data-i18n]", s).forEach((el) => {
+        const v = t[el.getAttribute("data-i18n") ?? ""]
+        if (v) el.textContent = v
+      })
+    })
+    $$("[data-lang-value]").forEach((v) => (v.textContent = t.label ?? ""))
+    closeMenus()
+  })
+
   // ---- overlays: dialog / alert-dialog / sheet / drawer ----
   let lastOpener: HTMLElement | null = null;
   const openOverlay = (id: string) => {

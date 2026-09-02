@@ -44,6 +44,7 @@ const PAGES: PageDef[] = [
   { file: "index.html", label: "Design system", title: "design system", subtitle: "The theme, palette, typography, and headline indicators — the foundations everything is built from.", groups: ["Overview", "Foundations"] },
   { file: "components.html", label: "Components", title: "components", subtitle: "Every shadcn/ui component, live and interactive, in the brand theme.", groups: ["Forms", "Data display", "Communication", "Overlays & menus", "Navigation"] },
   { file: "layouts.html", label: "Layouts & pages", title: "layouts & pages", subtitle: "Layout primitives plus ready-made page templates (auth, errors, empty states).", groups: ["Layout", "Blocks"] },
+  { file: "templates.html", label: "Templates", title: "page templates", subtitle: "Composite IMF page templates — data explorer, country profile, publication reader.", groups: ["Templates"] },
   { file: "charts.html", label: "Charts", title: "charts", subtitle: "Scientific and business charts built on Observable Plot, plus KPI extensions.", groups: ["Extensions", "Scientific charts"] },
   { file: "ai.html", label: "AI harness", title: "AI harness", subtitle: "A Claude Code / Pi-style AI experience: streaming, tools, code, diffs, and a plan.", groups: ["AI harness"] },
 ];

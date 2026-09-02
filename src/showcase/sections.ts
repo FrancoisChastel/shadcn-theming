@@ -7,6 +7,7 @@ import { COLOR_TOKENS, type TokenMap } from "../core/tokens.js";
 import { parseColor, toHex } from "../core/color.js";
 import { kpis, type Kpi } from "./data.js";
 import { aiSections } from "./ai-sections.js";
+import { templateSections } from "./template-sections.js";
 
 export interface Section {
   id: string;
@@ -784,6 +785,9 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       desc: "Registry extension components — installable via npx shadcn add.",
       html: `<div class="grid4">${kpis.map(kpiCard).join("")}</div>`,
     },
+
+    // ---------------- Templates ----------------
+    ...templateSections(),
 
     // ---------------- AI harness ----------------
     ...aiSections(brandName),

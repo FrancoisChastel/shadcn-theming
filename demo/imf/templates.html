@@ -3,77 +3,77 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Acme — charts</title>
+<title>IMF — page templates</title>
 <style>
 :root {
-  --radius: 0.5rem;
-  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
-  --background: oklch(1 0.004 276.966);
-  --foreground: oklch(0.145 0.004 276.966);
-  --card: oklch(1 0.004 276.966);
-  --card-foreground: oklch(0.145 0.004 276.966);
-  --popover: oklch(1 0.004 276.966);
-  --popover-foreground: oklch(0.145 0.004 276.966);
-  --primary: oklch(0.5106 0.2301 276.966);
-  --primary-foreground: oklch(0.985 0.02 276.966);
-  --secondary: oklch(0.97 0.004 276.966);
-  --secondary-foreground: oklch(0.205 0.004 276.966);
-  --muted: oklch(0.97 0.004 276.966);
-  --muted-foreground: oklch(0.5444 0.004 276.966);
-  --accent: oklch(0.95 0.0747 47.604);
-  --accent-foreground: oklch(0.205 0.004 276.966);
-  --destructive: oklch(0.5858 0.222 17.585);
-  --destructive-foreground: oklch(0.9853 0 0);
-  --border: oklch(0.922 0.004 276.966);
-  --input: oklch(0.922 0.004 276.966);
-  --ring: oklch(0.65 0.16 276.966);
-  --chart-1: oklch(0.62 0.2072 276.966);
-  --chart-2: oklch(0.68 0.2301 324.966);
-  --chart-3: oklch(0.57 0.1434 244.966);
-  --chart-4: oklch(0.7 0.195 12.966);
-  --chart-5: oklch(0.59 0.1235 76.966);
-  --sidebar: oklch(0.985 0.004 276.966);
-  --sidebar-foreground: oklch(0.145 0.004 276.966);
-  --sidebar-primary: oklch(0.5106 0.2301 276.966);
-  --sidebar-primary-foreground: oklch(0.985 0.02 276.966);
-  --sidebar-accent: oklch(0.97 0.004 276.966);
-  --sidebar-accent-foreground: oklch(0.205 0.004 276.966);
-  --sidebar-border: oklch(0.922 0.004 276.966);
-  --sidebar-ring: oklch(0.65 0.16 276.966);
+  --radius: 0.1875rem;
+  --font-sans: "Avenir Next World", "Avenir Next", Mulish, Helvetica, Arial, sans-serif;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2178 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2178 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2178 0 0);
+  --primary: oklch(0.4228 0.1389 254.944);
+  --primary-foreground: oklch(0.985 0.02 254.944);
+  --secondary: oklch(0.97 0.0425 245.779);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.5444 0 0);
+  --accent: oklch(0.95 0.0461 194.061);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.5134 0.1617 24.89);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.65 0.1389 254.944);
+  --chart-1: oklch(0.4228 0.1389 254.944);
+  --chart-2: oklch(0.6929 0.1008 210.356);
+  --chart-3: oklch(0.6889 0.1194 68.414);
+  --chart-4: oklch(0.5134 0.1617 24.89);
+  --chart-5: oklch(0.5853 0.1407 153.248);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.2178 0 0);
+  --sidebar-primary: oklch(0.4228 0.1389 254.944);
+  --sidebar-primary-foreground: oklch(0.985 0.02 254.944);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.65 0.1389 254.944);
 }
 .dark {
-  --background: oklch(0.145 0.004 276.966);
-  --foreground: oklch(0.985 0.004 276.966);
-  --card: oklch(0.205 0.004 276.966);
-  --card-foreground: oklch(0.985 0.004 276.966);
-  --popover: oklch(0.205 0.004 276.966);
-  --popover-foreground: oklch(0.985 0.004 276.966);
-  --primary: oklch(0.74 0.1352 276.966);
-  --primary-foreground: oklch(0.145 0.02 276.966);
-  --secondary: oklch(0.269 0.004 276.966);
-  --secondary-foreground: oklch(0.985 0.004 276.966);
-  --muted: oklch(0.269 0.004 276.966);
-  --muted-foreground: oklch(0.708 0.004 276.966);
-  --accent: oklch(0.3 0.1307 47.604);
-  --accent-foreground: oklch(0.985 0.004 276.966);
-  --destructive: oklch(0.5858 0.222 17.585);
-  --destructive-foreground: oklch(0.9853 0 0);
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.7028 0.1389 254.944);
+  --primary-foreground: oklch(0.145 0.02 254.944);
+  --secondary: oklch(0.3412 0.0764 245.779);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.3 0.0807 194.061);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.5134 0.1617 24.89);
+  --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0.16 276.966);
-  --chart-1: oklch(0.7 0.1585 276.966);
-  --chart-2: oklch(0.76 0.2282 324.966);
-  --chart-3: oklch(0.65 0.1635 244.966);
-  --chart-4: oklch(0.78 0.1307 12.966);
-  --chart-5: oklch(0.67 0.1402 76.966);
-  --sidebar: oklch(0.205 0.004 276.966);
-  --sidebar-foreground: oklch(0.985 0.004 276.966);
-  --sidebar-primary: oklch(0.74 0.1352 276.966);
-  --sidebar-primary-foreground: oklch(0.145 0.02 276.966);
-  --sidebar-accent: oklch(0.269 0.004 276.966);
-  --sidebar-accent-foreground: oklch(0.985 0.004 276.966);
+  --ring: oklch(0.556 0.1389 254.944);
+  --chart-1: oklch(0.4228 0.1389 254.944);
+  --chart-2: oklch(0.6929 0.1008 210.356);
+  --chart-3: oklch(0.6889 0.1194 68.414);
+  --chart-4: oklch(0.5134 0.1617 24.89);
+  --chart-5: oklch(0.5853 0.1407 153.248);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.7028 0.1389 254.944);
+  --sidebar-primary-foreground: oklch(0.145 0.02 254.944);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0.16 276.966);
+  --sidebar-ring: oklch(0.556 0.1389 254.944);
 }
 
 * { box-sizing: border-box; }
@@ -664,12 +664,12 @@ table.dt .dt-check input { accent-color: var(--primary); }
 <a href="#main" class="skip-link">Skip to content</a>
 <div class="app">
   <aside class="side" aria-label="Sections">
-    <div class="brand"><span class="mark" aria-hidden="true">A</span><div><b>Acme</b><span>design system</span></div></div>
-    <div class="nav-group">Extensions</div><div class="nav"><a href="#sparkline-stat" data-nav-link>Sparkline &amp; Stat Card</a></div><div class="nav-group">Scientific charts</div><div class="nav"><a href="#charts" data-nav-link>Scientific charts</a><a href="#chart-gallery" data-nav-link>Chart gallery</a></div>
+    <div class="brand"><span class="mark" aria-hidden="true">I</span><div><b>IMF</b><span>design system</span></div></div>
+    <div class="nav-group">Templates</div><div class="nav"><a href="#tpl-data-explorer" data-nav-link>Data explorer</a><a href="#tpl-country-profile" data-nav-link>Country profile</a><a href="#tpl-publication" data-nav-link>Publication reader</a></div>
   </aside>
   <main class="main" id="main">
     <div class="topbar">
-      <nav class="pagenav"><a href="index.html">Design system</a><a href="components.html">Components</a><a href="layouts.html">Layouts &amp; pages</a><a href="templates.html">Templates</a><a href="charts.html" class="active">Charts</a><a href="ai.html">AI harness</a></nav>
+      <nav class="pagenav"><a href="index.html">Design system</a><a href="components.html">Components</a><a href="layouts.html">Layouts &amp; pages</a><a href="templates.html" class="active">Templates</a><a href="charts.html">Charts</a><a href="ai.html">AI harness</a></nav>
       <button type="button" class="search" aria-label="Search — open command palette" aria-keyshortcuts="Meta+K Control+K" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
         <span aria-hidden="true">🔍</span> Search… <kbd>⌘K</kbd>
       </button>
@@ -677,58 +677,91 @@ table.dt .dt-check input { accent-color: var(--primary); }
     </div>
     <div class="content">
       <div class="hero">
-        <h1>Acme charts</h1>
-        <p>Scientific and business charts built on Observable Plot, plus KPI extensions.</p>
+        <h1>IMF page templates</h1>
+        <p>Composite IMF page templates — data explorer, country profile, publication reader.</p>
       </div>
-      <section class="block" id="sparkline-stat">
-    <h2>Sparkline &amp; Stat Card</h2>
-    <p class="desc">Registry extension components — installable via npx shadcn add.</p>
-    <div class="grid4"><div class="card kpi">
-    <span class="muted" style="font-size:.8rem">World GDP growth</span>
-    <div class="kpi-mid"><div class="kpi-value">3.2%</div>
-      <svg viewBox="0 0 96 30" class="spark" preserveAspectRatio="none"><path d="M0.0,10.0 L13.7,10.9 L27.4,12.4 L41.1,28.5 L54.9,1.5 L68.6,10.0 L82.3,10.9 L96.0,11.2 L96,30 L0,30 Z" fill="var(--chart-1)" fill-opacity="0.1"/><path d="M0.0,10.0 L13.7,10.9 L27.4,12.4 L41.1,28.5 L54.9,1.5 L68.6,10.0 L82.3,10.9 L96.0,11.2" fill="none" stroke="var(--chart-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="96.0" cy="11.2" r="2" fill="var(--chart-1)"/></svg></div>
-    <div class="kpi-delta up"><span class="pill">▲ 0.1%</span><span class="muted">vs WEO Apr</span></div>
-  </div><div class="card kpi">
-    <span class="muted" style="font-size:.8rem">Global inflation</span>
-    <div class="kpi-mid"><div class="kpi-value">5.8%</div>
-      <svg viewBox="0 0 96 30" class="spark" preserveAspectRatio="none"><path d="M0.0,28.5 L19.2,27.0 L38.4,21.1 L57.6,1.5 L76.8,10.3 L96.0,15.7 L96,30 L0,30 Z" fill="var(--destructive)" fill-opacity="0.1"/><path d="M0.0,28.5 L19.2,27.0 L38.4,21.1 L57.6,1.5 L76.8,10.3 L96.0,15.7" fill="none" stroke="var(--destructive)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="96.0" cy="15.7" r="2" fill="var(--destructive)"/></svg></div>
-    <div class="kpi-delta down"><span class="pill">▼ 1.2%</span><span class="muted">yoy</span></div>
-  </div><div class="card kpi">
-    <span class="muted" style="font-size:.8rem">Public debt / GDP</span>
-    <div class="kpi-mid"><div class="kpi-value">93.2%</div>
-      <svg viewBox="0 0 96 30" class="spark" preserveAspectRatio="none"><path d="M0.0,28.5 L19.2,21.3 L38.4,1.5 L57.6,6.9 L76.8,10.5 L96.0,12.3 L96,30 L0,30 Z" fill="var(--chart-1)" fill-opacity="0.1"/><path d="M0.0,28.5 L19.2,21.3 L38.4,1.5 L57.6,6.9 L76.8,10.5 L96.0,12.3" fill="none" stroke="var(--chart-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="96.0" cy="12.3" r="2" fill="var(--chart-1)"/></svg></div>
-    <div class="kpi-delta up"><span class="pill">▲ 1.6%</span><span class="muted">vs 2023</span></div>
-  </div><div class="card kpi">
-    <span class="muted" style="font-size:.8rem">Trade volume</span>
-    <div class="kpi-mid"><div class="kpi-value">+3.4%</div>
-      <svg viewBox="0 0 96 30" class="spark" preserveAspectRatio="none"><path d="M0.0,27.4 L19.2,28.5 L38.4,1.5 L57.6,3.8 L76.8,27.9 L96.0,13.6 L96,30 L0,30 Z" fill="var(--chart-1)" fill-opacity="0.1"/><path d="M0.0,27.4 L19.2,28.5 L38.4,1.5 L57.6,3.8 L76.8,27.9 L96.0,13.6" fill="none" stroke="var(--chart-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="96.0" cy="13.6" r="2" fill="var(--chart-1)"/></svg></div>
-    <div class="kpi-delta up"><span class="pill">▲ 2.1%</span><span class="muted">yoy</span></div>
-  </div></div>
-  </section>
-<section class="block" id="charts">
-    <h2>Scientific charts</h2>
-    <p class="desc">Statistical charts rendered client-side with Observable Plot (KDE, OLS regression + confidence band, quantiles, correlation). Hover for values.</p>
-    <div class="card plot-card" data-chart="areaband" data-title="World GDP growth — WEO projection" style="margin-bottom:1rem"></div>
-        <div class="grid2">
-          <div class="card plot-card" data-chart="histogram" data-title="Distribution of country growth"></div>
-          <div class="card plot-card" data-chart="scatter" data-title="Phillips curve"></div>
-          <div class="card plot-card" data-chart="boxplot" data-title="Growth dispersion by group"></div>
-          <div class="card plot-card" data-chart="heatmap" data-title="Macro indicator correlations"></div>
+      <section class="block" id="tpl-data-explorer">
+    <h2>Data explorer</h2>
+    <p class="desc">A DataMapper-style page: a filter panel, a chart/table/map switcher, and a results table.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">imf.org/datamapper</span></div><div class="block-stage" style="padding:0;display:block"><div class="explorer">
+      <div class="ex-filters">
+        <div><div class="label">Indicator</div><button class="combobox-trigger" data-menu-trigger style="max-width:none">Real GDP growth <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button></div>
+        <div><div class="label">Regions</div>
+          <label class="check-line"><input type="checkbox" checked /> Advanced</label>
+          <label class="check-line"><input type="checkbox" checked /> Emerging</label>
+          <label class="check-line"><input type="checkbox" /> Low-income</label>
         </div>
+        <div><div class="label">From</div><input class="input" value="2015" aria-label="From year" /></div>
+        <div><div class="label">To</div><input class="input" value="2029" aria-label="To year" /></div>
+        <button class="btn btn-primary" style="margin-top:auto">Apply</button>
+      </div>
+      <div class="ex-main">
+        <div class="ex-head"><h3>Real GDP growth</h3>
+          <div data-tabs><div class="tabs-list"><button data-tab="c" aria-selected="true">Chart</button><button data-tab="t" aria-selected="false">Table</button><button data-tab="m" aria-selected="false">Map</button></div></div>
+        </div>
+        <div class="card plot-card" data-chart="timeseries" data-title="Real GDP growth by region"></div>
+        <table class="tbl"><thead><tr><th>Country</th><th class="num">2024</th><th class="num">Inflation</th><th class="num">Debt/GDP</th></tr></thead>
+          <tbody><tr><td>United States</td><td class="num">2.8</td><td class="num">3.1</td><td class="num">121</td></tr><tr><td>China</td><td class="num">5.0</td><td class="num">0.7</td><td class="num">83</td></tr><tr><td>Japan</td><td class="num">1.9</td><td class="num">2.8</td><td class="num">252</td></tr><tr><td>Germany</td><td class="num">0.2</td><td class="num">2.9</td><td class="num">64</td></tr></tbody></table>
+      </div>
+    </div></div></div></div>
   </section>
-<section class="block" id="chart-gallery">
-    <h2>Chart gallery</h2>
-    <p class="desc">More Observable-Plot chart types — time series, bars, area, donut, bullet, and lollipop — all theme-colored with legends and hover tips.</p>
-    <div class="grid2">
-          <div class="card plot-card" data-chart="timeseries" data-title="Real GDP growth by region"></div>
-          <div class="card plot-card" data-chart="area-stacked" data-title="Contribution to growth (stacked)"></div>
-          <div class="card plot-card" data-chart="bar-grouped" data-title="Indicators by region (grouped)"></div>
-          <div class="card plot-card" data-chart="bar-stacked" data-title="Indicators by region (stacked)"></div>
-          <div class="card plot-card" data-chart="diverging" data-title="Current-account balance"></div>
-          <div class="card plot-card" data-chart="lollipop" data-title="Current account — ranked"></div>
-          <div class="card plot-card" data-chart="donut" data-title="Allocated reserves by currency"></div>
+<section class="block" id="tpl-country-profile">
+    <h2>Country profile</h2>
+    <p class="desc">A member-country page: header, KPI row, projection + target charts, and an indicator table.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">imf.org/countries/USA</span></div><div class="block-stage" style="padding:0;display:block"><div class="country">
+      <div class="country-head">
+        <span class="flag">🇺🇸</span>
+        <div style="flex:1"><h3>United States</h3><div class="muted" style="font-size:.82rem">Article IV · Advanced economy</div></div>
+        <span class="badge badge-secondary">G7</span><span class="badge badge-outline">SDR 82.99bn quota</span>
+        <button class="btn btn-outline btn-sm">Download data</button>
+      </div>
+      <div class="country-body">
+        <div class="kpi-row">
+          <div class="mini-kpi"><div class="l">GDP growth</div><div class="v">2.8%</div><div class="d" style="color:var(--chart-5)">▲ 0.3</div></div>
+          <div class="mini-kpi"><div class="l">Inflation</div><div class="v">3.1%</div><div class="d" style="color:var(--destructive)">▼ 0.6</div></div>
+          <div class="mini-kpi"><div class="l">Unemployment</div><div class="v">4.1%</div><div class="d" style="color:var(--chart-5)">▲ 0.2</div></div>
+          <div class="mini-kpi"><div class="l">Gov. debt / GDP</div><div class="v">121%</div><div class="d" style="color:var(--destructive)">▼ 2.4</div></div>
+        </div>
+        <div class="grid2">
+          <div class="card plot-card" data-chart="areaband" data-title="GDP growth — projection"></div>
           <div class="card plot-card" data-chart="bullet" data-title="Targets vs actuals"></div>
         </div>
+        <table class="tbl"><caption>Selected indicators (WEO)</caption>
+          <thead><tr><th>Indicator</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025F</th></tr></thead>
+          <tbody>
+            <tr><td>Real GDP growth (%)</td><td class="num">2.5</td><td class="num">2.8</td><td class="num">2.2</td></tr>
+            <tr><td>Inflation, avg (%)</td><td class="num">4.1</td><td class="num">3.1</td><td class="num">2.4</td></tr>
+            <tr><td>Current account (% GDP)</td><td class="num">-3.0</td><td class="num">-3.3</td><td class="num">-3.1</td></tr>
+            <tr><td>Gross public debt (% GDP)</td><td class="num">118</td><td class="num">121</td><td class="num">124</td></tr>
+          </tbody></table>
+      </div>
+    </div></div></div></div>
+  </section>
+<section class="block" id="tpl-publication">
+    <h2>Publication reader</h2>
+    <p class="desc">A WEO-style report reader: on-this-page nav, prose, a captioned figure, and footnotes.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">imf.org/publications/weo</span></div><div class="block-stage" style="padding:0;display:block"><div class="reader">
+      <aside class="reader-toc">
+        <div class="toc-title">On this page</div>
+        <a href="#" class="active">Overview</a><a href="#">Global outlook</a><a href="#">Risks</a><a href="#">Policy</a>
+      </aside>
+      <article class="reader-body">
+        <div class="eyebrow">World Economic Outlook</div>
+        <h1>Global growth holds steady amid uneven disinflation</h1>
+        <div class="meta">October 2026 · IMF Research Department · 12 min read</div>
+        <p>Global activity is projected to expand 3.2 percent in 2025, broadly unchanged from the April forecast, as disinflation continues across most economies and financial conditions ease gradually.</p>
+        <h2 id="global">Global outlook</h2>
+        <p>Advanced economies are expected to grow 1.8 percent, while emerging market and developing economies expand a firmer 4.2 percent. Divergence across regions remains a defining feature of the outlook.</p>
+        <figure class="fig"><div class="card plot-card" data-chart="areaband" data-title="World GDP growth — WEO projection"></div><figcaption>Figure 1. World real GDP growth, with the October projection band. Source: IMF staff estimates.</figcaption></figure>
+        <p>Inflation is forecast to ease toward central-bank targets, though services prices remain sticky in several advanced economies.</p>
+        <h2 id="risks">Risks</h2>
+        <p>Risks to the outlook are broadly balanced. On the downside, renewed commodity-price volatility and tighter-for-longer financial conditions could weigh on growth.</p>
+        <div class="footnotes">
+          <p>1. Projections assume unchanged policies and are subject to considerable uncertainty.</p>
+          <p>2. Regional aggregates are PPP-GDP weighted. See the Statistical Appendix for group definitions.</p>
+        </div>
+      </article>
+    </div></div></div></div>
   </section>
       <footer class="muted" style="font-size:.75rem;border-top:1px solid var(--border);padding-top:1.25rem;margin-top:3rem">Generated by shadcn-theming · synthetic, illustrative data</footer>
     </div>

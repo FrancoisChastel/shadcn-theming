@@ -106,7 +106,7 @@ section.block { margin: 2.75rem 0; scroll-margin-top: 72px; }
 section.block > h2 { font-size: 1.15rem; margin: 0 0 0.25rem; letter-spacing: -0.01em; }
 section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-size: 0.86rem; }
 .demo { border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.85rem; align-items: center; background: var(--card); }
-.demo.col { flex-direction: column; align-items: stretch; }
+.demo.col { flex-direction: column; align-items: stretch; flex-wrap: nowrap; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
@@ -328,13 +328,93 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 .sw .chip { width: 1.15rem; height: 1.15rem; border-radius: 4px; border: 1px solid var(--border); }
 .sw code { color: var(--muted-foreground); }
 
+/* ---- Foundations: color panel ---- */
+.color-group-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted-foreground); font-weight: 600; margin: 1rem 0 0.6rem; }
+.color-group-title:first-child { margin-top: 0; }
+.color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.75rem; }
+.color-card { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+.color-swatch { height: 66px; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.1rem; }
+.color-swatch.bordered { border-bottom: 1px solid var(--border); }
+.color-meta { padding: 0.55rem 0.7rem; display: flex; flex-direction: column; gap: 0.15rem; }
+.color-name { font-size: 0.78rem; font-weight: 600; }
+.color-val { font-size: 0.68rem; color: var(--muted-foreground); }
+.color-hex { font-size: 0.68rem; color: var(--muted-foreground); text-transform: uppercase; }
+
+/* ---- Foundations: typography ---- */
+.type-specimens { gap: 0.1rem; }
+.type-row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+.type-row:last-child { border-bottom: none; }
+.type-sample { color: var(--foreground); font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif); }
+.type-sample.mono { font-family: var(--font-mono, ui-monospace, monospace); }
+.type-meta { font-size: 0.72rem; color: var(--muted-foreground); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* ---- Foundations: radius ---- */
+.radius-row { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.radius-item { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--muted-foreground); }
+.radius-box { width: 68px; height: 52px; background: var(--secondary); border: 1px solid var(--border); border-bottom: 2px solid var(--primary); }
+
+/* ---- Layout ---- */
+.page-header { border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; background: var(--card); width: 100%; }
+.ph-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin: 0.5rem 0 0.9rem; }
+.ph-row h2 { margin: 0; font-size: 1.25rem; letter-spacing: -0.01em; }
+.ph-row p { margin: 0.25rem 0 0; }
+.ph-actions { display: flex; gap: 0.5rem; flex: none; }
+.bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 92px; gap: 0.85rem; width: 100%; }
+.bento .card { padding: 0.9rem 1rem; display: flex; flex-direction: column; justify-content: space-between; }
+.bento .b-title { font-size: 0.72rem; color: var(--muted-foreground); }
+.bento .b-value { font-size: 1.4rem; font-weight: 650; letter-spacing: -0.02em; }
+.bento .lg { grid-column: span 2; grid-row: span 2; }
+.bento .wide { grid-column: span 2; }
+@media (max-width: 720px) { .bento { grid-template-columns: repeat(2, 1fr); } .bento .lg { grid-column: span 2; } }
+.split { display: grid; grid-template-columns: 1fr 1px 2fr; width: 100%; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; height: 200px; }
+.split-pane { padding: 1rem; overflow: auto; }
+.split-pane.list { background: var(--sidebar); }
+.split-pane .li { padding: 0.5rem 0.6rem; border-radius: calc(var(--radius) - 1px); font-size: 0.83rem; cursor: pointer; }
+.split-pane .li:hover, .split-pane .li.active { background: var(--accent); color: var(--accent-foreground); }
+.split-handle { background: var(--border); }
+.mini-app { display: grid; grid-template-columns: 130px 1fr; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; height: 230px; width: 100%; }
+.mini-side { background: var(--sidebar); color: var(--sidebar-foreground); border-right: 1px solid var(--border); padding: 0.7rem; display: flex; flex-direction: column; gap: 0.3rem; }
+.mini-side .m-brand { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; font-size: 0.8rem; margin-bottom: 0.5rem; }
+.mini-side .m-dot { width: 1.1rem; height: 1.1rem; border-radius: 4px; background: var(--sidebar-primary); }
+.mini-side .m-item { font-size: 0.72rem; color: var(--muted-foreground); padding: 0.28rem 0.4rem; border-radius: 4px; }
+.mini-side .m-item.on { background: var(--sidebar-accent); color: var(--foreground); }
+.mini-top { height: 40px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 0.9rem; gap: 0.5rem; }
+.mini-content { padding: 0.9rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+.mini-content .m-kpi { border: 1px solid var(--border); border-radius: calc(var(--radius) - 1px); padding: 0.55rem 0.65rem; }
+.mini-content .m-kpi b { font-size: 1rem; }
+.mini-content .m-chart { grid-column: span 3; border: 1px solid var(--border); border-radius: calc(var(--radius) - 1px); height: 66px; background: linear-gradient(90deg, color-mix(in oklab, var(--chart-1) 18%, var(--card)), var(--card)); }
+.stack-demo { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.vstack, .hstack { border: 1px dashed var(--border); border-radius: var(--radius); padding: 0.6rem; gap: 0.5rem; display: flex; }
+.vstack { flex-direction: column; }
+.stack-box { background: var(--secondary); color: var(--secondary-foreground); border-radius: calc(var(--radius) - 1px); padding: 0.4rem 0.8rem; font-size: 0.78rem; text-align: center; }
+
+/* ---- Chat ---- */
+.chat { width: min(440px, 100%); display: flex; flex-direction: column; height: 460px; overflow: hidden; }
+.chat-head { display: flex; align-items: center; gap: 0.6rem; padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); }
+.chat-head .status { color: var(--chart-5); }
+.chat-body { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.6rem; background: color-mix(in oklab, var(--muted) 40%, var(--background)); }
+.msg { display: flex; flex-direction: column; max-width: 78%; gap: 0.15rem; }
+.msg.in { align-self: flex-start; align-items: flex-start; }
+.msg.out { align-self: flex-end; align-items: flex-end; }
+.bubble { padding: 0.5rem 0.75rem; border-radius: var(--radius); font-size: 0.86rem; line-height: 1.35; }
+.msg.in .bubble { background: var(--card); color: var(--card-foreground); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+.msg.out .bubble { background: var(--primary); color: var(--primary-foreground); border-bottom-right-radius: 4px; }
+.msg-time { font-size: 0.65rem; color: var(--muted-foreground); padding: 0 0.2rem; }
+.chat-typing { display: inline-flex; gap: 3px; padding: 0.6rem 0.8rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); border-bottom-left-radius: 4px; }
+.chat-typing span { width: 6px; height: 6px; border-radius: 999px; background: var(--muted-foreground); animation: typing 1.2s infinite; }
+.chat-typing span:nth-child(2) { animation-delay: 0.15s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes typing { 0%, 60%, 100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+.chat-input { display: flex; gap: 0.5rem; padding: 0.7rem; border-top: 1px solid var(--border); }
+.chat-input .input { flex: 1; min-width: 0; }
+
 </style>
 </head>
 <body>
 <div class="app">
   <aside class="side">
     <div class="brand"><span class="mark">I</span><div><b>IMF</b><span>component explorer</span></div></div>
-    <div class="nav-group">Overview</div><div class="nav"><a href="#overview" data-nav-link>Overview</a></div><div class="nav-group">Forms</div><div class="nav"><a href="#button" data-nav-link>Button</a><a href="#input" data-nav-link>Input &amp; Textarea</a><a href="#checkbox-radio" data-nav-link>Checkbox &amp; Radio</a><a href="#switch-slider" data-nav-link>Switch, Slider &amp; Toggle</a><a href="#select" data-nav-link>Select</a></div><div class="nav-group">Data display</div><div class="nav"><a href="#badge" data-nav-link>Badge</a><a href="#avatar" data-nav-link>Avatar</a><a href="#card" data-nav-link>Card</a><a href="#table" data-nav-link>Table</a><a href="#progress-skeleton" data-nav-link>Progress &amp; Skeleton</a><a href="#tabs" data-nav-link>Tabs</a><a href="#accordion" data-nav-link>Accordion</a><a href="#carousel" data-nav-link>Carousel</a><a href="#calendar" data-nav-link>Calendar</a><a href="#tooltip-hover" data-nav-link>Tooltip &amp; Hover Card</a></div><div class="nav-group">Overlays &amp; menus</div><div class="nav"><a href="#dialog" data-nav-link>Dialog &amp; Alert Dialog</a><a href="#sheet-drawer" data-nav-link>Sheet &amp; Drawer</a><a href="#dropdown" data-nav-link>Dropdown &amp; Context Menu</a><a href="#popover" data-nav-link>Popover</a><a href="#menubar" data-nav-link>Menubar</a><a href="#command" data-nav-link>Command</a><a href="#alert" data-nav-link>Alert</a><a href="#toast" data-nav-link>Toast</a></div><div class="nav-group">Navigation</div><div class="nav"><a href="#breadcrumb-pagination" data-nav-link>Breadcrumb &amp; Pagination</a><a href="#navmenu" data-nav-link>Navigation Menu</a></div><div class="nav-group">Extensions</div><div class="nav"><a href="#sparkline-stat" data-nav-link>Sparkline &amp; Stat Card</a></div><div class="nav-group">Scientific charts</div><div class="nav"><a href="#charts" data-nav-link>Scientific charts</a></div>
+    <div class="nav-group">Overview</div><div class="nav"><a href="#overview" data-nav-link>Overview</a></div><div class="nav-group">Foundations</div><div class="nav"><a href="#colors" data-nav-link>Colors</a><a href="#typography" data-nav-link>Typography</a><a href="#radius" data-nav-link>Radius</a></div><div class="nav-group">Forms</div><div class="nav"><a href="#button" data-nav-link>Button</a><a href="#input" data-nav-link>Input &amp; Textarea</a><a href="#checkbox-radio" data-nav-link>Checkbox &amp; Radio</a><a href="#switch-slider" data-nav-link>Switch, Slider &amp; Toggle</a><a href="#select" data-nav-link>Select</a></div><div class="nav-group">Layout</div><div class="nav"><a href="#page-header" data-nav-link>Page header</a><a href="#bento" data-nav-link>Bento grid</a><a href="#split" data-nav-link>Split view</a><a href="#dashboard-shell" data-nav-link>Dashboard shell</a><a href="#stack" data-nav-link>Stack</a></div><div class="nav-group">Data display</div><div class="nav"><a href="#badge" data-nav-link>Badge</a><a href="#avatar" data-nav-link>Avatar</a><a href="#card" data-nav-link>Card</a><a href="#table" data-nav-link>Table</a><a href="#progress-skeleton" data-nav-link>Progress &amp; Skeleton</a><a href="#tabs" data-nav-link>Tabs</a><a href="#accordion" data-nav-link>Accordion</a><a href="#carousel" data-nav-link>Carousel</a><a href="#calendar" data-nav-link>Calendar</a><a href="#tooltip-hover" data-nav-link>Tooltip &amp; Hover Card</a></div><div class="nav-group">Communication</div><div class="nav"><a href="#chat" data-nav-link>Chat</a></div><div class="nav-group">Overlays &amp; menus</div><div class="nav"><a href="#dialog" data-nav-link>Dialog &amp; Alert Dialog</a><a href="#sheet-drawer" data-nav-link>Sheet &amp; Drawer</a><a href="#dropdown" data-nav-link>Dropdown &amp; Context Menu</a><a href="#popover" data-nav-link>Popover</a><a href="#menubar" data-nav-link>Menubar</a><a href="#command" data-nav-link>Command</a><a href="#alert" data-nav-link>Alert</a><a href="#toast" data-nav-link>Toast</a></div><div class="nav-group">Navigation</div><div class="nav"><a href="#breadcrumb-pagination" data-nav-link>Breadcrumb &amp; Pagination</a><a href="#navmenu" data-nav-link>Navigation Menu</a></div><div class="nav-group">Extensions</div><div class="nav"><a href="#sparkline-stat" data-nav-link>Sparkline &amp; Stat Card</a></div><div class="nav-group">Scientific charts</div><div class="nav"><a href="#charts" data-nav-link>Scientific charts</a></div>
   </aside>
   <main class="main">
     <div class="topbar">
@@ -373,6 +453,41 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
       <span class="spark" data-spark='[1,0.8,5.5,5.1,0.9,3.4]' data-trend="up"></span></div>
     <div class="kpi-delta up"><span class="pill">▲ 2.1%</span><span class="muted">yoy</span></div>
   </div></div>
+  </section>
+<section class="block" id="colors">
+    <h2>Colors</h2>
+    <p class="desc">The full semantic color palette. Swatches are live (toggle the theme); the values shown are the light-theme OKLCH plus an sRGB hex.</p>
+    <div class="demo col">
+        <div class="color-group-title">Base</div><div class="color-grid"><div class="color-card"><div class="color-swatch" style="background:var(--background);color:var(--foreground)">Aa</div><div class="color-meta"><code class="color-name">--background</code><code class="color-val">oklch(1 0 0)</code><code class="color-hex">#ffffff</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--card);color:var(--card-foreground)">Aa</div><div class="color-meta"><code class="color-name">--card</code><code class="color-val">oklch(1 0 0)</code><code class="color-hex">#ffffff</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--popover);color:var(--popover-foreground)">Aa</div><div class="color-meta"><code class="color-name">--popover</code><code class="color-val">oklch(1 0 0)</code><code class="color-hex">#ffffff</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--muted);color:var(--muted-foreground)">Aa</div><div class="color-meta"><code class="color-name">--muted</code><code class="color-val">oklch(0.97 0 0)</code><code class="color-hex">#f5f5f5</code></div></div></div>
+        <div class="color-group-title">Brand & feedback</div><div class="color-grid"><div class="color-card"><div class="color-swatch" style="background:var(--primary);color:var(--primary-foreground)">Aa</div><div class="color-meta"><code class="color-name">--primary</code><code class="color-val">oklch(0.4228 0.1389 254.944)</code><code class="color-hex">#004c97</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--secondary);color:var(--secondary-foreground)">Aa</div><div class="color-meta"><code class="color-name">--secondary</code><code class="color-val">oklch(0.97 0.0425 245.779)</code><code class="color-hex">#edf6ff</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--accent);color:var(--accent-foreground)">Aa</div><div class="color-meta"><code class="color-name">--accent</code><code class="color-val">oklch(0.95 0.0461 194.061)</code><code class="color-hex">#ccf9f7</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--destructive);color:var(--destructive-foreground)">Aa</div><div class="color-meta"><code class="color-name">--destructive</code><code class="color-val">oklch(0.5134 0.1617 24.89)</code><code class="color-hex">#b13434</code></div></div></div>
+        <div class="color-group-title">Lines & ring</div><div class="color-grid"><div class="color-card"><div class="color-swatch bordered" style="background:var(--border)"></div><div class="color-meta"><code class="color-name">--border</code><code class="color-val">oklch(0.922 0 0)</code><code class="color-hex">#e5e5e5</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--input)"></div><div class="color-meta"><code class="color-name">--input</code><code class="color-val">oklch(0.922 0 0)</code><code class="color-hex">#e5e5e5</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--ring)"></div><div class="color-meta"><code class="color-name">--ring</code><code class="color-val">oklch(0.65 0.1389 254.944)</code><code class="color-hex">#5091e2</code></div></div></div>
+        <div class="color-group-title">Charts</div><div class="color-grid"><div class="color-card"><div class="color-swatch bordered" style="background:var(--chart-1)"></div><div class="color-meta"><code class="color-name">--chart-1</code><code class="color-val">oklch(0.4228 0.1389 254.944)</code><code class="color-hex">#004c97</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--chart-2)"></div><div class="color-meta"><code class="color-name">--chart-2</code><code class="color-val">oklch(0.6929 0.1008 210.356)</code><code class="color-hex">#3fadbf</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--chart-3)"></div><div class="color-meta"><code class="color-name">--chart-3</code><code class="color-val">oklch(0.6889 0.1194 68.414)</code><code class="color-hex">#cb8c40</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--chart-4)"></div><div class="color-meta"><code class="color-name">--chart-4</code><code class="color-val">oklch(0.5134 0.1617 24.89)</code><code class="color-hex">#b13434</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--chart-5)"></div><div class="color-meta"><code class="color-name">--chart-5</code><code class="color-val">oklch(0.5853 0.1407 153.248)</code><code class="color-hex">#1c9352</code></div></div></div>
+        <div class="color-group-title">Sidebar</div><div class="color-grid"><div class="color-card"><div class="color-swatch" style="background:var(--sidebar);color:var(--sidebar-foreground)">Aa</div><div class="color-meta"><code class="color-name">--sidebar</code><code class="color-val">oklch(0.985 0 0)</code><code class="color-hex">#fafafa</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--sidebar-primary);color:var(--sidebar-primary-foreground)">Aa</div><div class="color-meta"><code class="color-name">--sidebar-primary</code><code class="color-val">oklch(0.4228 0.1389 254.944)</code><code class="color-hex">#004c97</code></div></div><div class="color-card"><div class="color-swatch" style="background:var(--sidebar-accent);color:var(--sidebar-accent-foreground)">Aa</div><div class="color-meta"><code class="color-name">--sidebar-accent</code><code class="color-val">oklch(0.97 0 0)</code><code class="color-hex">#f5f5f5</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--sidebar-border)"></div><div class="color-meta"><code class="color-name">--sidebar-border</code><code class="color-val">oklch(0.922 0 0)</code><code class="color-hex">#e5e5e5</code></div></div><div class="color-card"><div class="color-swatch bordered" style="background:var(--sidebar-ring)"></div><div class="color-meta"><code class="color-name">--sidebar-ring</code><code class="color-val">oklch(0.65 0.1389 254.944)</code><code class="color-hex">#5091e2</code></div></div></div>
+      </div>
+  </section>
+<section class="block" id="typography">
+    <h2>Typography</h2>
+    <p class="desc">The type scale, set in the brand's font.</p>
+    <div class="demo col"><div class="type-specimens" style="width:100%">
+          <div class="type-row"><span class="type-sample" style="font-size:2.5rem;font-weight:650;letter-spacing:-0.02em">Global growth outlook</span><span class="type-meta">Display · 40 / 650</span></div>
+          <div class="type-row"><span class="type-sample" style="font-size:1.875rem;font-weight:600;letter-spacing:-0.02em">World Economic Outlook</span><span class="type-meta">H1 · 30 / 600</span></div>
+          <div class="type-row"><span class="type-sample" style="font-size:1.5rem;font-weight:600">Regional analysis</span><span class="type-meta">H2 · 24 / 600</span></div>
+          <div class="type-row"><span class="type-sample" style="font-size:1.25rem;font-weight:600">Projected indicators</span><span class="type-meta">H3 · 20 / 600</span></div>
+          <div class="type-row"><span class="type-sample" style="font-size:1rem">Global growth is projected to hold at 3.2% in 2025 as disinflation continues across most economies.</span><span class="type-meta">Body · 16 / 400</span></div>
+          <div class="type-row"><span class="type-sample muted" style="font-size:0.8125rem">Source: IMF staff estimates · synthetic data</span><span class="type-meta">Small · 13 / 400</span></div>
+          <div class="type-row"><span class="type-sample mono" style="font-size:0.8125rem">NGDP_RPCH @ WEO = 3.20</span><span class="type-meta">Mono · 13</span></div>
+        </div></div>
+  </section>
+<section class="block" id="radius">
+    <h2>Radius</h2>
+    <p class="desc">Corner radii derived from the --radius token.</p>
+    <div class="demo "><div class="radius-row">
+          <div class="radius-item"><span class="radius-box" style="border-radius:calc(var(--radius) - 4px)"></span>sm</div>
+          <div class="radius-item"><span class="radius-box" style="border-radius:calc(var(--radius) - 2px)"></span>md</div>
+          <div class="radius-item"><span class="radius-box" style="border-radius:var(--radius)"></span>lg</div>
+          <div class="radius-item"><span class="radius-box" style="border-radius:calc(var(--radius) + 4px)"></span>xl</div>
+          <div class="radius-item"><span class="radius-box" style="border-radius:999px"></span>full</div>
+        </div></div>
   </section>
 <section class="block" id="button">
     <h2>Button</h2>
@@ -426,6 +541,57 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
             <div class="menu-item" data-select-option>Low-income countries</div>
             <div class="menu-item" data-select-option>Euro area</div>
           </div>
+        </div></div>
+  </section>
+<section class="block" id="page-header">
+    <h2>Page header</h2>
+    <p class="desc">A page title block with breadcrumb, description, actions, and tabs.</p>
+    <div class="demo col"><div class="page-header">
+          <nav class="crumb"><a href="#">Data</a> / <a href="#">WEO</a> / <span class="cur">Real GDP growth</span></nav>
+          <div class="ph-row">
+            <div><h2>Real GDP growth</h2><p class="muted">World Economic Outlook · updated 1 Sep 2026</p></div>
+            <div class="ph-actions"><button class="btn btn-outline btn-sm">Export</button><button class="btn btn-primary btn-sm">New projection</button></div>
+          </div>
+          <div data-tabs><div class="tabs-list"><button data-tab="a" aria-selected="true">Overview</button><button data-tab="b" aria-selected="false">By region</button><button data-tab="c" aria-selected="false">History</button></div><div data-tab-panel="a"></div><div data-tab-panel="b" hidden></div><div data-tab-panel="c" hidden></div></div>
+        </div></div>
+  </section>
+<section class="block" id="bento">
+    <h2>Bento grid</h2>
+    <p class="desc">An editorial grid with mixed spans.</p>
+    <div class="demo col"><div class="bento">
+          <div class="card lg"><span class="b-title">World GDP growth</span><span class="b-value">3.2%</span><span class="muted" style="font-size:.72rem">+0.1 vs April WEO</span></div>
+          <div class="card"><span class="b-title">Inflation</span><span class="b-value">5.8%</span></div>
+          <div class="card"><span class="b-title">Unemployment</span><span class="b-value">6.1%</span></div>
+          <div class="card wide"><span class="b-title">Public debt / GDP</span><span class="b-value">93.2%</span></div>
+          <div class="card"><span class="b-title">Trade</span><span class="b-value">+3.4%</span></div>
+          <div class="card"><span class="b-title">Reserves</span><span class="b-value">12.1T</span></div>
+        </div></div>
+  </section>
+<section class="block" id="split">
+    <h2>Split view</h2>
+    <p class="desc">A master–detail layout: a list pane beside a detail pane.</p>
+    <div class="demo col"><div class="split">
+          <div class="split-pane list"><div class="li active">Advanced economies</div><div class="li">Emerging markets</div><div class="li">Low-income countries</div><div class="li">Euro area</div><div class="li">ASEAN-5</div></div>
+          <div class="split-handle"></div>
+          <div class="split-pane"><h3 style="margin:0 0 .4rem">Advanced economies</h3><p class="muted" style="font-size:.85rem;margin:0 0 .8rem">Real GDP growth is projected at 1.8% in 2025, little changed from the prior forecast.</p><div class="grid3"><div class="card" style="padding:.7rem"><span class="muted" style="font-size:.7rem">2024</span><div style="font-weight:650">1.8%</div></div><div class="card" style="padding:.7rem"><span class="muted" style="font-size:.7rem">2025F</span><div style="font-weight:650">2.0%</div></div><div class="card" style="padding:.7rem"><span class="muted" style="font-size:.7rem">Weight</span><div style="font-weight:650">26.3</div></div></div></div>
+        </div></div>
+  </section>
+<section class="block" id="dashboard-shell">
+    <h2>Dashboard shell</h2>
+    <p class="desc">The app-shell foundation: sidebar, top bar, and a content area.</p>
+    <div class="demo col"><div class="mini-app">
+          <div class="mini-side"><div class="m-brand"><span class="m-dot"></span> IMF</div><div class="m-item on">Overview</div><div class="m-item">Indicators</div><div class="m-item">Projections</div><div class="m-item">Reports</div></div>
+          <div><div class="mini-top"><span class="badge badge-secondary">Q3 2026</span><span class="muted" style="font-size:.75rem;margin-left:auto">francois@imf.org</span></div>
+            <div class="mini-content"><div class="m-kpi"><span class="muted" style="font-size:.65rem">GDP</span><b>3.2%</b></div><div class="m-kpi"><span class="muted" style="font-size:.65rem">CPI</span><b>5.8%</b></div><div class="m-kpi"><span class="muted" style="font-size:.65rem">Debt</span><b>93%</b></div><div class="m-chart"></div></div>
+          </div>
+        </div></div>
+  </section>
+<section class="block" id="stack">
+    <h2>Stack</h2>
+    <p class="desc">Vertical and horizontal stacks with consistent gaps.</p>
+    <div class="demo "><div class="stack-demo">
+          <div class="vstack"><span class="stack-box">Item 1</span><span class="stack-box">Item 2</span><span class="stack-box">Item 3</span></div>
+          <div class="hstack"><span class="stack-box">A</span><span class="stack-box">B</span><span class="stack-box">C</span><span class="stack-box">D</span></div>
         </div></div>
   </section>
 <section class="block" id="badge">
@@ -514,6 +680,22 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
     <p class="desc">Contextual information on hover.</p>
     <div class="demo "><span class="tip-wrap"><button class="btn btn-outline">Hover me<span class="tip">Updated 1 Sep 2026</span></button></span>
          <span class="hover-wrap"><button class="btn btn-ghost">@imf</button><div class="hover-card"><div style="display:flex;gap:.6rem;align-items:center"><span class="avatar" style="background:var(--chart-2);color:#fff">IMF</span><div><strong>International Monetary Fund</strong><div class="muted" style="font-size:.78rem">190 member countries</div></div></div><p class="muted" style="font-size:.82rem;margin:.6rem 0 0">Working to foster global monetary cooperation and financial stability.</p></div></span></div>
+  </section>
+<section class="block" id="chat">
+    <h2>Chat</h2>
+    <p class="desc">A conversational UI — message bubbles, a typing indicator, and a live composer. Type a message and send.</p>
+    <div class="demo col"><div class="chat card" data-chat>
+          <div class="chat-head"><span class="avatar" style="background:var(--chart-2);color:#fff">IMF</span><div><strong>WEO Assistant</strong><div style="font-size:.72rem"><span class="status">●</span> <span class="muted">online</span></div></div></div>
+          <div class="chat-body" data-chat-body>
+            <div class="msg in"><div class="bubble">Hi! Ask me about the latest World Economic Outlook projections.</div><span class="msg-time">09:24</span></div>
+            <div class="msg out"><div class="bubble">What's the 2025 world growth forecast?</div><span class="msg-time">09:25</span></div>
+            <div class="msg in"><div class="bubble">Global growth is projected at 3.1% for 2025, broadly stable versus the April forecast.</div><span class="msg-time">09:25</span></div>
+          </div>
+          <form class="chat-input" data-chat-form>
+            <input class="input" data-chat-text placeholder="Type a message…" autocomplete="off" />
+            <button class="btn btn-primary" type="submit">Send</button>
+          </form>
+        </div></div>
   </section>
 <section class="block" id="dialog">
     <h2>Dialog &amp; Alert Dialog</h2>
@@ -1036,6 +1218,47 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
       t.classList.remove("show");
       setTimeout(() => t.remove(), 250);
     }, 3200);
+  });
+  const clock = () => {
+    const d = /* @__PURE__ */ new Date();
+    return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  };
+  const CHAT_REPLIES = [
+    "Global growth is projected at 3.2% for 2025, broadly stable.",
+    "Headline inflation continues to ease toward central-bank targets.",
+    "That series is in the WEO database \u2014 I can export it for you.",
+    "Public debt is approaching 93% of GDP globally."
+  ];
+  document.addEventListener("submit", (e) => {
+    const form = closest(e.target, "[data-chat-form]");
+    if (!form) return;
+    e.preventDefault();
+    const input = form.querySelector("[data-chat-text]");
+    const body = form.closest("[data-chat]")?.querySelector("[data-chat-body]");
+    if (!input || !body) return;
+    const text2 = input.value.trim();
+    if (!text2) return;
+    const add = (cls, content) => {
+      const m = document.createElement("div");
+      m.className = "msg " + cls;
+      m.innerHTML = `<div class="bubble"></div><span class="msg-time">${clock()}</span>`;
+      m.querySelector(".bubble").textContent = content;
+      body.appendChild(m);
+      body.scrollTop = body.scrollHeight;
+      return m;
+    };
+    add("out", text2);
+    input.value = "";
+    const typing = document.createElement("div");
+    typing.className = "msg in";
+    typing.innerHTML = `<div class="chat-typing"><span></span><span></span><span></span></div>`;
+    body.appendChild(typing);
+    body.scrollTop = body.scrollHeight;
+    const reply = CHAT_REPLIES[text2.length % CHAT_REPLIES.length];
+    setTimeout(() => {
+      typing.remove();
+      add("in", reply);
+    }, 900);
   });
   document.addEventListener("click", (e) => {
     const tg = closest(e.target, "[data-toggle]");

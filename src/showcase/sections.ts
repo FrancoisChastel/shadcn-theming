@@ -4,6 +4,7 @@
  * runtime (see runtime-ui.ts). All markup is token-driven (see styles.ts).
  */
 import { COLOR_TOKENS, type TokenMap } from "../core/tokens.js";
+import { parseColor, toHex } from "../core/color.js";
 import { kpis, type Kpi } from "./data.js";
 
 export interface Section {
@@ -34,6 +35,27 @@ export function buildSections(light: TokenMap): Section[] {
     .map((k) => `<div class="sw"><span class="chip" style="background:var(--${k})"></span><code>${k}</code></div>`)
     .join("");
 
+  // ---- color-panel helpers (values shown are the light theme; swatches are live) ----
+  const val = (k: string) => light[k as keyof TokenMap] ?? "";
+  const safeHex = (v: string) => {
+    try {
+      return toHex(parseColor(v));
+    } catch {
+      return "";
+    }
+  };
+  const meta = (key: string) => {
+    const v = val(key);
+    const hex = safeHex(v);
+    return `<div class="color-meta"><code class="color-name">--${key}</code><code class="color-val">${v}</code>${hex ? `<code class="color-hex">${hex}</code>` : ""}</div>`;
+  };
+  const pairCard = (surface: string, fg: string) =>
+    `<div class="color-card"><div class="color-swatch" style="background:var(--${surface});color:var(--${fg})">Aa</div>${meta(surface)}</div>`;
+  const soloCard = (key: string) =>
+    `<div class="color-card"><div class="color-swatch bordered" style="background:var(--${key})"></div>${meta(key)}</div>`;
+  const colorGroup = (title: string, cards: string) =>
+    `<div class="color-group-title">${title}</div><div class="color-grid">${cards}</div>`;
+
   return [
     // ---------------- Overview ----------------
     {
@@ -43,6 +65,54 @@ export function buildSections(light: TokenMap): Section[] {
       desc: "The generated theme and headline indicators. Every element on this page is styled with the same tokens.",
       html: `<div class="demo col"><div class="palette">${palette}</div></div>
         <div class="grid4" style="margin-top:1rem">${kpis.map(kpiCard).join("")}</div>`,
+    },
+
+    // ---------------- Foundations ----------------
+    {
+      id: "colors",
+      group: "Foundations",
+      title: "Colors",
+      desc: "The full semantic color palette. Swatches are live (toggle the theme); the values shown are the light-theme OKLCH plus an sRGB hex.",
+      html: `<div class="demo col">
+        ${colorGroup("Base", pairCard("background", "foreground") + pairCard("card", "card-foreground") + pairCard("popover", "popover-foreground") + pairCard("muted", "muted-foreground"))}
+        ${colorGroup("Brand & feedback", pairCard("primary", "primary-foreground") + pairCard("secondary", "secondary-foreground") + pairCard("accent", "accent-foreground") + pairCard("destructive", "destructive-foreground"))}
+        ${colorGroup("Lines & ring", soloCard("border") + soloCard("input") + soloCard("ring"))}
+        ${colorGroup("Charts", ["chart-1", "chart-2", "chart-3", "chart-4", "chart-5"].map(soloCard).join(""))}
+        ${colorGroup("Sidebar", pairCard("sidebar", "sidebar-foreground") + pairCard("sidebar-primary", "sidebar-primary-foreground") + pairCard("sidebar-accent", "sidebar-accent-foreground") + soloCard("sidebar-border") + soloCard("sidebar-ring"))}
+      </div>`,
+    },
+    {
+      id: "typography",
+      group: "Foundations",
+      title: "Typography",
+      desc: "The type scale, set in the brand's font.",
+      html: demo(
+        `<div class="type-specimens" style="width:100%">
+          <div class="type-row"><span class="type-sample" style="font-size:2.5rem;font-weight:650;letter-spacing:-0.02em">Global growth outlook</span><span class="type-meta">Display · 40 / 650</span></div>
+          <div class="type-row"><span class="type-sample" style="font-size:1.875rem;font-weight:600;letter-spacing:-0.02em">World Economic Outlook</span><span class="type-meta">H1 · 30 / 600</span></div>
+          <div class="type-row"><span class="type-sample" style="font-size:1.5rem;font-weight:600">Regional analysis</span><span class="type-meta">H2 · 24 / 600</span></div>
+          <div class="type-row"><span class="type-sample" style="font-size:1.25rem;font-weight:600">Projected indicators</span><span class="type-meta">H3 · 20 / 600</span></div>
+          <div class="type-row"><span class="type-sample" style="font-size:1rem">Global growth is projected to hold at 3.2% in 2025 as disinflation continues across most economies.</span><span class="type-meta">Body · 16 / 400</span></div>
+          <div class="type-row"><span class="type-sample muted" style="font-size:0.8125rem">Source: IMF staff estimates · synthetic data</span><span class="type-meta">Small · 13 / 400</span></div>
+          <div class="type-row"><span class="type-sample mono" style="font-size:0.8125rem">NGDP_RPCH @ WEO = 3.20</span><span class="type-meta">Mono · 13</span></div>
+        </div>`,
+        "col",
+      ),
+    },
+    {
+      id: "radius",
+      group: "Foundations",
+      title: "Radius",
+      desc: "Corner radii derived from the --radius token.",
+      html: demo(
+        `<div class="radius-row">
+          <div class="radius-item"><span class="radius-box" style="border-radius:calc(var(--radius) - 4px)"></span>sm</div>
+          <div class="radius-item"><span class="radius-box" style="border-radius:calc(var(--radius) - 2px)"></span>md</div>
+          <div class="radius-item"><span class="radius-box" style="border-radius:var(--radius)"></span>lg</div>
+          <div class="radius-item"><span class="radius-box" style="border-radius:calc(var(--radius) + 4px)"></span>xl</div>
+          <div class="radius-item"><span class="radius-box" style="border-radius:999px"></span>full</div>
+        </div>`,
+      ),
     },
 
     // ---------------- Forms ----------------
@@ -124,6 +194,83 @@ export function buildSections(light: TokenMap): Section[] {
           </div>
         </div>`,
         "col",
+      ),
+    },
+
+    // ---------------- Layout ----------------
+    {
+      id: "page-header",
+      group: "Layout",
+      title: "Page header",
+      desc: "A page title block with breadcrumb, description, actions, and tabs.",
+      html: demo(
+        `<div class="page-header">
+          <nav class="crumb"><a href="#">Data</a> / <a href="#">WEO</a> / <span class="cur">Real GDP growth</span></nav>
+          <div class="ph-row">
+            <div><h2>Real GDP growth</h2><p class="muted">World Economic Outlook · updated 1 Sep 2026</p></div>
+            <div class="ph-actions"><button class="btn btn-outline btn-sm">Export</button><button class="btn btn-primary btn-sm">New projection</button></div>
+          </div>
+          <div data-tabs><div class="tabs-list"><button data-tab="a" aria-selected="true">Overview</button><button data-tab="b" aria-selected="false">By region</button><button data-tab="c" aria-selected="false">History</button></div><div data-tab-panel="a"></div><div data-tab-panel="b" hidden></div><div data-tab-panel="c" hidden></div></div>
+        </div>`,
+        "col",
+      ),
+    },
+    {
+      id: "bento",
+      group: "Layout",
+      title: "Bento grid",
+      desc: "An editorial grid with mixed spans.",
+      html: demo(
+        `<div class="bento">
+          <div class="card lg"><span class="b-title">World GDP growth</span><span class="b-value">3.2%</span><span class="muted" style="font-size:.72rem">+0.1 vs April WEO</span></div>
+          <div class="card"><span class="b-title">Inflation</span><span class="b-value">5.8%</span></div>
+          <div class="card"><span class="b-title">Unemployment</span><span class="b-value">6.1%</span></div>
+          <div class="card wide"><span class="b-title">Public debt / GDP</span><span class="b-value">93.2%</span></div>
+          <div class="card"><span class="b-title">Trade</span><span class="b-value">+3.4%</span></div>
+          <div class="card"><span class="b-title">Reserves</span><span class="b-value">12.1T</span></div>
+        </div>`,
+        "col",
+      ),
+    },
+    {
+      id: "split",
+      group: "Layout",
+      title: "Split view",
+      desc: "A master–detail layout: a list pane beside a detail pane.",
+      html: demo(
+        `<div class="split">
+          <div class="split-pane list"><div class="li active">Advanced economies</div><div class="li">Emerging markets</div><div class="li">Low-income countries</div><div class="li">Euro area</div><div class="li">ASEAN-5</div></div>
+          <div class="split-handle"></div>
+          <div class="split-pane"><h3 style="margin:0 0 .4rem">Advanced economies</h3><p class="muted" style="font-size:.85rem;margin:0 0 .8rem">Real GDP growth is projected at 1.8% in 2025, little changed from the prior forecast.</p><div class="grid3"><div class="card" style="padding:.7rem"><span class="muted" style="font-size:.7rem">2024</span><div style="font-weight:650">1.8%</div></div><div class="card" style="padding:.7rem"><span class="muted" style="font-size:.7rem">2025F</span><div style="font-weight:650">2.0%</div></div><div class="card" style="padding:.7rem"><span class="muted" style="font-size:.7rem">Weight</span><div style="font-weight:650">26.3</div></div></div></div>
+        </div>`,
+        "col",
+      ),
+    },
+    {
+      id: "dashboard-shell",
+      group: "Layout",
+      title: "Dashboard shell",
+      desc: "The app-shell foundation: sidebar, top bar, and a content area.",
+      html: demo(
+        `<div class="mini-app">
+          <div class="mini-side"><div class="m-brand"><span class="m-dot"></span> IMF</div><div class="m-item on">Overview</div><div class="m-item">Indicators</div><div class="m-item">Projections</div><div class="m-item">Reports</div></div>
+          <div><div class="mini-top"><span class="badge badge-secondary">Q3 2026</span><span class="muted" style="font-size:.75rem;margin-left:auto">francois@imf.org</span></div>
+            <div class="mini-content"><div class="m-kpi"><span class="muted" style="font-size:.65rem">GDP</span><b>3.2%</b></div><div class="m-kpi"><span class="muted" style="font-size:.65rem">CPI</span><b>5.8%</b></div><div class="m-kpi"><span class="muted" style="font-size:.65rem">Debt</span><b>93%</b></div><div class="m-chart"></div></div>
+          </div>
+        </div>`,
+        "col",
+      ),
+    },
+    {
+      id: "stack",
+      group: "Layout",
+      title: "Stack",
+      desc: "Vertical and horizontal stacks with consistent gaps.",
+      html: demo(
+        `<div class="stack-demo">
+          <div class="vstack"><span class="stack-box">Item 1</span><span class="stack-box">Item 2</span><span class="stack-box">Item 3</span></div>
+          <div class="hstack"><span class="stack-box">A</span><span class="stack-box">B</span><span class="stack-box">C</span><span class="stack-box">D</span></div>
+        </div>`,
       ),
     },
 
@@ -255,6 +402,29 @@ export function buildSections(light: TokenMap): Section[] {
       html: demo(
         `<span class="tip-wrap"><button class="btn btn-outline">Hover me<span class="tip">Updated 1 Sep 2026</span></button></span>
          <span class="hover-wrap"><button class="btn btn-ghost">@imf</button><div class="hover-card"><div style="display:flex;gap:.6rem;align-items:center"><span class="avatar" style="background:var(--chart-2);color:#fff">IMF</span><div><strong>International Monetary Fund</strong><div class="muted" style="font-size:.78rem">190 member countries</div></div></div><p class="muted" style="font-size:.82rem;margin:.6rem 0 0">Working to foster global monetary cooperation and financial stability.</p></div></span>`,
+      ),
+    },
+
+    // ---------------- Communication ----------------
+    {
+      id: "chat",
+      group: "Communication",
+      title: "Chat",
+      desc: "A conversational UI — message bubbles, a typing indicator, and a live composer. Type a message and send.",
+      html: demo(
+        `<div class="chat card" data-chat>
+          <div class="chat-head"><span class="avatar" style="background:var(--chart-2);color:#fff">IMF</span><div><strong>WEO Assistant</strong><div style="font-size:.72rem"><span class="status">●</span> <span class="muted">online</span></div></div></div>
+          <div class="chat-body" data-chat-body>
+            <div class="msg in"><div class="bubble">Hi! Ask me about the latest World Economic Outlook projections.</div><span class="msg-time">09:24</span></div>
+            <div class="msg out"><div class="bubble">What's the 2025 world growth forecast?</div><span class="msg-time">09:25</span></div>
+            <div class="msg in"><div class="bubble">Global growth is projected at 3.1% for 2025, broadly stable versus the April forecast.</div><span class="msg-time">09:25</span></div>
+          </div>
+          <form class="chat-input" data-chat-form>
+            <input class="input" data-chat-text placeholder="Type a message…" autocomplete="off" />
+            <button class="btn btn-primary" type="submit">Send</button>
+          </form>
+        </div>`,
+        "col",
       ),
     },
 

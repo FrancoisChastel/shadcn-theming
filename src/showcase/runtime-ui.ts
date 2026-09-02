@@ -164,6 +164,49 @@ export function uiMain(): void {
     }, 3200);
   });
 
+  // ---- chat ----
+  const clock = () => {
+    const d = new Date()
+    return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`
+  }
+  const CHAT_REPLIES = [
+    "Global growth is projected at 3.2% for 2025, broadly stable.",
+    "Headline inflation continues to ease toward central-bank targets.",
+    "That series is in the WEO database — I can export it for you.",
+    "Public debt is approaching 93% of GDP globally.",
+  ]
+  document.addEventListener("submit", (e) => {
+    const form = closest(e.target, "[data-chat-form]")
+    if (!form) return
+    e.preventDefault()
+    const input = form.querySelector<HTMLInputElement>("[data-chat-text]")
+    const body = form.closest("[data-chat]")?.querySelector("[data-chat-body]") as HTMLElement | null
+    if (!input || !body) return
+    const text = input.value.trim()
+    if (!text) return
+    const add = (cls: string, content: string) => {
+      const m = document.createElement("div")
+      m.className = "msg " + cls
+      m.innerHTML = `<div class="bubble"></div><span class="msg-time">${clock()}</span>`
+      m.querySelector(".bubble")!.textContent = content // textContent avoids injection
+      body.appendChild(m)
+      body.scrollTop = body.scrollHeight
+      return m
+    }
+    add("out", text)
+    input.value = ""
+    const typing = document.createElement("div")
+    typing.className = "msg in"
+    typing.innerHTML = `<div class="chat-typing"><span></span><span></span><span></span></div>`
+    body.appendChild(typing)
+    body.scrollTop = body.scrollHeight
+    const reply = CHAT_REPLIES[text.length % CHAT_REPLIES.length]!
+    setTimeout(() => {
+      typing.remove()
+      add("in", reply)
+    }, 900)
+  })
+
   // ---- toggle / toggle group ----
   document.addEventListener("click", (e) => {
     const tg = closest(e.target, "[data-toggle]");

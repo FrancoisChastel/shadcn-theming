@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bar-chart",
+  "type": "registry:component",
+  "title": "Bar Chart",
+  "description": "A grouped or stacked bar chart (Observable Plot), prop-driven, with a legend.",
+  "dependencies": [
+    "@observablehq/plot"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/bar-chart.tsx",
+      "type": "registry:component",
+      "target": "components/ui/bar-chart.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as Plot from \"@observablehq/plot\"\n\nimport { cn } from \"@/lib/utils\"\nimport { usePlot } from \"@/lib/use-plot\"\n\nconst PLOT_STYLE = {\n  background: \"transparent\",\n  color: \"var(--muted-foreground)\",\n  fontFamily: \"inherit\",\n  fontSize: \"11px\",\n}\n\nconst SERIES = [\n  \"var(--chart-1)\",\n  \"var(--chart-2)\",\n  \"var(--chart-3)\",\n  \"var(--chart-4)\",\n  \"var(--chart-5)\",\n]\n\nexport interface BarDatum {\n  /** Category on the x-axis. */\n  group: string\n  /** Series (the color/legend dimension). */\n  series: string\n  value: number\n}\n\nexport interface BarChartProps {\n  data: BarDatum[]\n  /** Stack series instead of grouping them side by side. Default false. */\n  stacked?: boolean\n  title?: string\n  yLabel?: string\n  height?: number\n  className?: string\n}\n\n/**\n * A grouped or stacked bar chart (Observable Plot). Series are colored from the\n * theme's chart palette with a legend.\n */\nexport function BarChart({ data, stacked = false, title, yLabel, height = 300, className }: BarChartProps) {\n  const ref = usePlot(\n    (width) => {\n      if (!data?.length) return null\n      const seriesNames = [...new Set(data.map((d) => d.series))]\n      const bar = stacked\n        ? Plot.barY(data, { x: \"group\", y: \"value\", fill: \"series\", tip: true })\n        : Plot.barY(data, { x: \"series\", y: \"value\", fx: \"group\", fill: \"series\", tip: true })\n      return Plot.plot({\n        width,\n        height,\n        marginTop: 16,\n        style: PLOT_STYLE,\n        x: stacked ? { label: null } : { axis: null },\n        ...(stacked ? {} : { fx: { label: null } }),\n        y: { label: yLabel ?? null, grid: true },\n        color: { domain: seriesNames, range: SERIES, legend: true },\n        marks: [bar, Plot.ruleY([0])],\n      })\n    },\n    [data, stacked, yLabel, height],\n  )\n\n  return (\n    <figure className={cn(\"m-0\", className)}>\n      {title ? (\n        <figcaption style={{ fontSize: 13, fontWeight: 500, marginBottom: 8, color: \"var(--foreground)\" }}>{title}</figcaption>\n      ) : null}\n      <div ref={ref} />\n    </figure>\n  )\n}\n"
+    }
+  ]
+}

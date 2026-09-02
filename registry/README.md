@@ -44,6 +44,18 @@ tokens, so they match any brand.
 
 Each chart pulls in `@observablehq/plot` and the `use-plot` hook automatically.
 
+### Business charts
+
+| Item | Description |
+| --- | --- |
+| `line-chart` | Multi-series line / time series with a legend. |
+| `bar-chart` | Grouped or stacked bars (`stacked` prop). |
+| `donut-chart` | Composition donut with legend + center label (d3-shape). |
+| `bullet-chart` | KPI vs target (track + actual bar + target tick). |
+
+For a full prop reference and install-and-use guidance, see the
+[`shadcn-theming-components` skill](../skills/shadcn-theming-components/SKILL.md).
+
 Install (dependencies resolve automatically — `plot-frame` and `stats` come with
 any chart):
 

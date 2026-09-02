@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bullet-chart",
+  "type": "registry:component",
+  "title": "Bullet Chart",
+  "description": "A KPI-vs-target bullet chart (Observable Plot): track, actual bar, and target tick per row.",
+  "dependencies": [
+    "@observablehq/plot"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/bullet-chart.tsx",
+      "type": "registry:component",
+      "target": "components/ui/bullet-chart.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as Plot from \"@observablehq/plot\"\n\nimport { cn } from \"@/lib/utils\"\nimport { usePlot } from \"@/lib/use-plot\"\n\nconst PLOT_STYLE = {\n  background: \"transparent\",\n  color: \"var(--muted-foreground)\",\n  fontFamily: \"inherit\",\n  fontSize: \"11px\",\n}\n\nexport interface BulletDatum {\n  label: string\n  value: number\n  target: number\n  max: number\n  unit?: string\n}\n\nexport interface BulletChartProps {\n  data: BulletDatum[]\n  title?: string\n  color?: string\n  className?: string\n}\n\n/**\n * A bullet chart (Observable Plot) — a track, an actual-value bar, and a target\n * tick per row. Good for KPI vs target displays.\n */\nexport function BulletChart({ data, title, color = \"var(--chart-1)\", className }: BulletChartProps) {\n  const ref = usePlot(\n    (width) => {\n      if (!data?.length) return null\n      return Plot.plot({\n        width,\n        height: 46 * data.length + 26,\n        marginLeft: 96,\n        marginTop: 12,\n        style: PLOT_STYLE,\n        x: { label: null, grid: true },\n        y: { label: null, domain: data.map((d) => d.label) },\n        marks: [\n          Plot.barX(data, { x: \"max\", y: \"label\", fill: \"var(--muted)\" }),\n          Plot.barX(data, {\n            x: \"value\",\n            y: \"label\",\n            fill: color,\n            inset: 8,\n            tip: true,\n            title: (d: BulletDatum) => `${d.label}: ${d.value}${d.unit ?? \"\"} (target ${d.target})`,\n          }),\n          Plot.tickX(data, { x: \"target\", y: \"label\", stroke: \"var(--foreground)\", strokeWidth: 2 }),\n        ],\n      })\n    },\n    [data, color],\n  )\n\n  return (\n    <figure className={cn(\"m-0\", className)}>\n      {title ? (\n        <figcaption style={{ fontSize: 13, fontWeight: 500, marginBottom: 8, color: \"var(--foreground)\" }}>{title}</figcaption>\n      ) : null}\n      <div ref={ref} />\n    </figure>\n  )\n}\n"
+    }
+  ]
+}

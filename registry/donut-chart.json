@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "donut-chart",
+  "type": "registry:component",
+  "title": "Donut Chart",
+  "description": "A donut chart (d3-shape) with a legend and center label, colored from the chart palette.",
+  "dependencies": [
+    "d3-shape"
+  ],
+  "files": [
+    {
+      "path": "components/ui/donut-chart.tsx",
+      "type": "registry:component",
+      "target": "components/ui/donut-chart.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { pie, arc } from \"d3-shape\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst SERIES = [\n  \"var(--chart-1)\",\n  \"var(--chart-2)\",\n  \"var(--chart-3)\",\n  \"var(--chart-4)\",\n  \"var(--chart-5)\",\n]\n\nexport interface DonutSlice {\n  label: string\n  value: number\n}\n\nexport interface DonutChartProps {\n  data: DonutSlice[]\n  title?: string\n  /** Big number in the middle; defaults to the total. */\n  centerLabel?: string\n  centerSub?: string\n  size?: number\n  className?: string\n}\n\nconst color = (i: number) => SERIES[i % SERIES.length]!\n\n/**\n * A donut chart (d3-shape) with a legend and center label. Slices use the\n * theme's chart palette.\n */\nexport function DonutChart({ data, title, centerLabel, centerSub, size = 240, className }: DonutChartProps) {\n  const total = data.reduce((a, b) => a + b.value, 0)\n  const r = size / 2\n  const arcs = React.useMemo(() => {\n    const gen = pie<DonutSlice>().value((d) => d.value).sort(null)\n    // eslint-disable-next-line @typescript-eslint/no-explicit-any\n    const a = arc().innerRadius(r * 0.62).outerRadius(r - 4).padAngle(0.012).cornerRadius(2) as any\n    return gen(data).map((s) => (a(s) as string) ?? \"\")\n  }, [data, r])\n\n  return (\n    <figure className={cn(\"m-0\", className)}>\n      {title ? (\n        <figcaption style={{ fontSize: 13, fontWeight: 500, marginBottom: 8, color: \"var(--foreground)\" }}>{title}</figcaption>\n      ) : null}\n      <div style={{ display: \"flex\", alignItems: \"center\", gap: 16, flexWrap: \"wrap\" }}>\n        <svg\n          viewBox={`0 0 ${size} ${size}`}\n          width={size}\n          height={size}\n          role=\"img\"\n          aria-label={title ?? \"donut chart\"}\n        >\n          <g transform={`translate(${r},${r})`}>\n            {arcs.map((d, i) => (\n              <path key={i} d={d} fill={color(i)} />\n            ))}\n            <text textAnchor=\"middle\" dy=\"-0.05em\" fontSize={20} fontWeight={650} fill=\"var(--foreground)\">\n              {centerLabel ?? String(total)}\n            </text>\n            {centerSub ? (\n              <text textAnchor=\"middle\" dy=\"1.3em\" fontSize={11} fill=\"var(--muted-foreground)\">\n                {centerSub}\n              </text>\n            ) : null}\n          </g>\n        </svg>\n        <ul style={{ listStyle: \"none\", margin: 0, padding: 0, fontSize: 12, color: \"var(--muted-foreground)\" }}>\n          {data.map((d, i) => (\n            <li key={d.label} style={{ display: \"flex\", alignItems: \"center\", gap: 8, padding: \"3px 0\" }}>\n              <span style={{ width: 10, height: 10, borderRadius: 2, background: color(i), display: \"inline-block\" }} />\n              {d.label} {Math.round((d.value / total) * 100)}%\n            </li>\n          ))}\n        </ul>\n      </div>\n    </figure>\n  )\n}\n"
+    }
+  ]
+}

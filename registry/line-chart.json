@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "line-chart",
+  "type": "registry:component",
+  "title": "Line Chart",
+  "description": "A multi-series line / time-series chart (Observable Plot) with a theme-colored legend.",
+  "dependencies": [
+    "@observablehq/plot"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/line-chart.tsx",
+      "type": "registry:component",
+      "target": "components/ui/line-chart.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as Plot from \"@observablehq/plot\"\n\nimport { cn } from \"@/lib/utils\"\nimport { usePlot } from \"@/lib/use-plot\"\n\nconst PLOT_STYLE = {\n  background: \"transparent\",\n  color: \"var(--muted-foreground)\",\n  fontFamily: \"inherit\",\n  fontSize: \"11px\",\n}\n\nconst SERIES = [\n  \"var(--chart-1)\",\n  \"var(--chart-2)\",\n  \"var(--chart-3)\",\n  \"var(--chart-4)\",\n  \"var(--chart-5)\",\n]\n\nexport interface LineSeries {\n  name: string\n  points: Array<{ x: number; y: number }>\n}\n\nexport interface LineChartProps {\n  series: LineSeries[]\n  title?: string\n  xLabel?: string\n  yLabel?: string\n  height?: number\n  /** Format x-axis ticks, e.g. `String` for integer years. */\n  xTickFormat?: string\n  /** Show markers at each point. */\n  dots?: boolean\n  className?: string\n}\n\n/**\n * A multi-series line / time-series chart (Observable Plot). Each series is\n * colored from the theme's chart palette, with a color legend.\n */\nexport function LineChart({\n  series,\n  title,\n  xLabel,\n  yLabel,\n  height = 300,\n  xTickFormat,\n  dots = false,\n  className,\n}: LineChartProps) {\n  const ref = usePlot(\n    (width) => {\n      if (!series?.length) return null\n      const rows = series.flatMap((s) => s.points.map((p) => ({ name: s.name, x: p.x, y: p.y })))\n      const marks: Plot.Markish[] = [\n        Plot.ruleY([0], { stroke: \"var(--muted-foreground)\", strokeOpacity: 0.3 }),\n        Plot.lineY(rows, { x: \"x\", y: \"y\", stroke: \"name\", strokeWidth: 2, tip: true }),\n      ]\n      if (dots) marks.push(Plot.dot(rows, { x: \"x\", y: \"y\", fill: \"name\", r: 2.5 }))\n      return Plot.plot({\n        width,\n        height,\n        marginTop: 16,\n        style: PLOT_STYLE,\n        x: { label: xLabel ?? null, ...(xTickFormat ? { tickFormat: xTickFormat } : {}) },\n        y: { label: yLabel ?? null, grid: true },\n        color: { domain: series.map((s) => s.name), range: SERIES, legend: true },\n        marks,\n      })\n    },\n    [series, xLabel, yLabel, height, xTickFormat, dots],\n  )\n\n  return (\n    <figure className={cn(\"m-0\", className)}>\n      {title ? (\n        <figcaption style={{ fontSize: 13, fontWeight: 500, marginBottom: 8, color: \"var(--foreground)\" }}>{title}</figcaption>\n      ) : null}\n      <div ref={ref} />\n    </figure>\n  )\n}\n"
+    }
+  ]
+}

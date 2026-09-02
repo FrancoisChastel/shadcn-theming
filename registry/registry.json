@@ -164,6 +164,83 @@
           "target": "components/ui/correlation-heatmap.tsx"
         }
       ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "line-chart",
+      "type": "registry:component",
+      "title": "Line Chart",
+      "description": "A multi-series line / time-series chart (Observable Plot) with a theme-colored legend.",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/line-chart.tsx",
+          "type": "registry:component",
+          "target": "components/ui/line-chart.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bar-chart",
+      "type": "registry:component",
+      "title": "Bar Chart",
+      "description": "A grouped or stacked bar chart (Observable Plot), prop-driven, with a legend.",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/bar-chart.tsx",
+          "type": "registry:component",
+          "target": "components/ui/bar-chart.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bullet-chart",
+      "type": "registry:component",
+      "title": "Bullet Chart",
+      "description": "A KPI-vs-target bullet chart (Observable Plot): track, actual bar, and target tick per row.",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/bullet-chart.tsx",
+          "type": "registry:component",
+          "target": "components/ui/bullet-chart.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "donut-chart",
+      "type": "registry:component",
+      "title": "Donut Chart",
+      "description": "A donut chart (d3-shape) with a legend and center label, colored from the chart palette.",
+      "dependencies": [
+        "d3-shape"
+      ],
+      "files": [
+        {
+          "path": "components/ui/donut-chart.tsx",
+          "type": "registry:component",
+          "target": "components/ui/donut-chart.tsx"
+        }
+      ]
     }
   ]
 }

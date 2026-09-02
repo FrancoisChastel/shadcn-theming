@@ -42,6 +42,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   both as React registry components (`@observablehq/plot` + a `use-plot` hook)
   and, inlined with d3, in the self-contained showcase/explorer pages.
 
+- **Component explorer** grew into a multi-page site (`explore` → a directory:
+  Design system, Components, Layouts & pages, Charts, AI harness) with a shared
+  top nav; Observable Plot inlined only on chart pages.
+- **More components**: advanced forms (combobox, multi-select, date picker,
+  OTP, password strength, dropzone, tags, segmented, search), page templates
+  (login, sign-up, reset, 2FA, 404, empty state), layout blocks (page header,
+  bento, split, dashboard shell, stacks), a chat component, an AI-harness group,
+  and a Foundations color panel + typography/radius.
+- **More registry chart components**: `line-chart`, `bar-chart`, `donut-chart`
+  (d3-shape), `bullet-chart` — installable via `npx shadcn add`.
+- **`shadcn-theming-components` skill** documenting how to install and use the
+  registry components.
+- **Accessibility**: a WCAG 2.2 AA pass (ARIA roles, `aria-expanded`, dialog
+  focus management, skip link, accessible names, reduced-motion, print CSS).
+
 ### Fixed
 
 - Explicit `background`/`foreground` are now applied only to the appearance they

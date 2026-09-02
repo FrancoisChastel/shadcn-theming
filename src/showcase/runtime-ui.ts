@@ -105,6 +105,12 @@ export function uiMain(): void {
     trigger.setAttribute("aria-expanded", String(!open));
   });
 
+  // ---- tree view ----
+  document.addEventListener("click", (e) => {
+    const t = closest(e.target, "[data-tree-toggle]");
+    if (t) t.closest(".tree-item")?.classList.toggle("open");
+  });
+
   // ---- overlays: dialog / alert-dialog / sheet / drawer ----
   let lastOpener: HTMLElement | null = null;
   const openOverlay = (id: string) => {

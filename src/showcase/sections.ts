@@ -135,6 +135,54 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
         </div>`,
       ),
     },
+    {
+      id: "spacing",
+      group: "Foundations",
+      title: "Spacing",
+      desc: "The spacing scale (rem), used for padding, gaps, and margins.",
+      html: demo(
+        `<div class="spacing-row" style="width:100%">${[
+          ["1", 4], ["2", 8], ["3", 12], ["4", 16], ["6", 24], ["8", 32], ["12", 48], ["16", 64],
+        ]
+          .map(([n, px]) => `<div class="spacing-item"><code>${n}</code><span class="bar" style="width:${px}px"></span>${px}px</div>`)
+          .join("")}</div>`,
+        "col",
+      ),
+    },
+    {
+      id: "elevation",
+      group: "Foundations",
+      title: "Elevation",
+      desc: "Shadow steps for layering surfaces.",
+      html: demo(
+        `<div class="elev-row">
+          <div class="elev-item elev-sm">sm</div>
+          <div class="elev-item elev-md">md</div>
+          <div class="elev-item elev-lg">lg</div>
+          <div class="elev-item elev-xl">xl</div>
+        </div>`,
+      ),
+    },
+    {
+      id: "motion",
+      group: "Foundations",
+      title: "Motion",
+      desc: "Duration + easing tokens (hover a swatch). Respects prefers-reduced-motion.",
+      html: demo(
+        `<div class="motion-row">
+          <div class="motion-item motion-fast"><div class="motion-box"></div>fast · 150ms</div>
+          <div class="motion-item motion-normal"><div class="motion-box"></div>normal · 300ms</div>
+          <div class="motion-item motion-slow"><div class="motion-box"></div>slow · 600ms</div>
+        </div>`,
+      ),
+    },
+    {
+      id: "icons",
+      group: "Foundations",
+      title: "Icons",
+      desc: "A stroke icon set (1.5–2px, currentColor) that inherits text color.",
+      html: demo(iconGrid(), "col"),
+    },
 
     // ---------------- Forms ----------------
     {
@@ -433,6 +481,76 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       title: "Data table",
       desc: "An interactive table — click a header to sort, filter by name, select rows, paginate, and export CSV.",
       html: demo(dataTableHtml(), "col"),
+    },
+    {
+      id: "tree",
+      group: "Data display",
+      title: "Tree view",
+      desc: "A collapsible hierarchy — click a folder to expand or collapse.",
+      html: demo(treeHtml(), "col"),
+    },
+    {
+      id: "timeline",
+      group: "Data display",
+      title: "Timeline",
+      desc: "A vertical sequence of events.",
+      html: demo(
+        `<div class="timeline" style="width:100%">
+          <div class="tl-item"><div class="tl-time">Oct 2026</div><div class="tl-title">WEO published</div><div class="muted" style="font-size:.82rem">Global growth held at 3.2%.</div></div>
+          <div class="tl-item"><div class="tl-time">Jul 2026</div><div class="tl-title">WEO Update</div><div class="muted" style="font-size:.82rem">Interim forecast revision.</div></div>
+          <div class="tl-item muted"><div class="tl-time">Apr 2026</div><div class="tl-title">Spring Meetings</div><div class="muted" style="font-size:.82rem">Fiscal Monitor released.</div></div>
+        </div>`,
+        "col",
+      ),
+    },
+    {
+      id: "stepper",
+      group: "Data display",
+      title: "Stepper",
+      desc: "A multi-step progress indicator.",
+      html: demo(
+        `<div class="stepper" style="width:100%">
+          <div class="step done"><span class="num">✓</span><span class="st-label">Account</span><span class="line"></span></div>
+          <div class="step done"><span class="num">✓</span><span class="st-label">Profile</span><span class="line"></span></div>
+          <div class="step active"><span class="num">3</span><span class="st-label">Review</span><span class="line"></span></div>
+          <div class="step pending"><span class="num">4</span><span class="st-label">Done</span></div>
+        </div>`,
+        "col",
+      ),
+    },
+    {
+      id: "gauge",
+      group: "Data display",
+      title: "Gauge",
+      desc: "Radial gauges for bounded metrics.",
+      html: demo(
+        `<div class="gauge-wrap">${gaugeSvg(3.2, 6, "GDP growth", "%")}${gaugeSvg(72, 100, "Capacity", "%")}${gaugeSvg(7.4, 12, "Reserves cover", "mo")}</div>`,
+      ),
+    },
+    {
+      id: "description-list",
+      group: "Data display",
+      title: "Description list",
+      desc: "Key–value metadata pairs.",
+      html: demo(
+        `<dl class="dl">
+          <dt>Country</dt><dd>United States</dd>
+          <dt>Membership</dt><dd>Since 1945</dd>
+          <dt>Quota</dt><dd>SDR 82,994.2 million</dd>
+          <dt>Latest Article IV</dt><dd>July 2026</dd>
+        </dl>`,
+        "col",
+      ),
+    },
+    {
+      id: "code-block",
+      group: "Data display",
+      title: "Code block",
+      desc: "A syntax-highlighted block with a copy button.",
+      html: demo(
+        `<div class="ai-code" style="max-width:520px"><div class="ai-code-head"><span>bash</span><button class="ai-code-copy" data-ai-copy-code>⧉ Copy</button></div><pre><code><span class="tok-com"># apply a brand theme</span>\n<span class="tok-fn">npx</span> shadcn-theming apply brand.json <span class="tok-key">--yes</span></code></pre></div>`,
+        "col",
+      ),
     },
     {
       id: "progress-skeleton",
@@ -881,5 +999,56 @@ function dataTableHtml(): string {
       <span data-dt-selected>0 selected</span>
       <div class="pagination" data-dt-pager></div>
     </div>
+  </div>`;
+}
+
+const ICONS: Array<[string, string]> = [
+  ["search", '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>'],
+  ["check", '<path d="M20 6 9 17l-5-5"/>'],
+  ["close", '<path d="M18 6 6 18M6 6l12 12"/>'],
+  ["plus", '<path d="M12 5v14M5 12h14"/>'],
+  ["chevron", '<path d="m9 18 6-6-6-6"/>'],
+  ["download", '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>'],
+  ["bell", '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>'],
+  ["user", '<circle cx="12" cy="8" r="4"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/>'],
+  ["globe", '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/>'],
+  ["chart", '<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/>'],
+  ["file", '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>'],
+  ["settings", '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>'],
+];
+
+function iconGrid(): string {
+  return `<div class="icon-grid">${ICONS.map(
+    ([name, paths]) =>
+      `<div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>${name}</div>`,
+  ).join("")}</div>`;
+}
+
+/** A semicircular gauge from 0..max. */
+function gaugeSvg(value: number, max: number, label: string, unit = ""): string {
+  const t = Math.min(Math.max(value / max, 0), 1) * 180;
+  const rad = (deg: number) => (deg * Math.PI) / 180;
+  const ex = (60 - 50 * Math.cos(rad(t))).toFixed(1);
+  const ey = (60 - 50 * Math.sin(rad(t))).toFixed(1);
+  return `<div class="motion-item"><svg viewBox="0 0 120 74" width="120" role="img" aria-label="${label} ${value}${unit}">
+    <path d="M10,60 A50,50 0 0 1 110,60" fill="none" stroke="var(--secondary)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M10,60 A50,50 0 0 1 ${ex},${ey}" fill="none" stroke="var(--chart-1)" stroke-width="10" stroke-linecap="round"/>
+    <text x="60" y="56" text-anchor="middle" font-size="18" font-weight="650" fill="var(--foreground)">${value}${unit}</text>
+  </svg><div>${label}</div></div>`;
+}
+
+function treeHtml(): string {
+  const node = (label: string, children?: string, open = false) =>
+    children
+      ? `<div class="tree-item${open ? " open" : ""}"><div class="tree-row" data-tree-toggle><svg class="tw-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>📁 ${label}</div><div class="tree-children">${children}</div></div>`
+      : `<div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span>📄 ${label}</div></div>`;
+  return `<div class="tree">
+    ${node(
+      "app",
+      node("dashboard", node("page.tsx") + node("growth-chart.tsx"), true) + node("layout.tsx"),
+      true,
+    )}
+    ${node("components", node("ui", node("data-table.tsx") + node("stat-card.tsx")))}
+    ${node("lib", node("utils.ts") + node("stats.ts"))}
   </div>`;
 }

@@ -408,13 +408,84 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 .chat-input { display: flex; gap: 0.5rem; padding: 0.7rem; border-top: 1px solid var(--border); }
 .chat-input .input { flex: 1; min-width: 0; }
 
+/* ---- Advanced forms ---- */
+.form-field { display: flex; flex-direction: column; gap: 0.35rem; max-width: 340px; }
+.form-field .label { margin: 0; }
+.form-field .req { color: var(--destructive); }
+.form-field .err-msg { font-size: 0.75rem; color: var(--destructive); }
+.input.invalid, .invalid > .select-trigger, .invalid.combobox-trigger { border-color: var(--destructive); }
+.input.invalid:focus { outline-color: var(--destructive); }
+.input-icon { position: relative; display: flex; align-items: center; }
+.input-icon .lead { position: absolute; left: 0.7rem; color: var(--muted-foreground); pointer-events: none; font-size: 0.9rem; }
+.input-icon .input { padding-left: 2rem; }
+.input-icon .clear { position: absolute; right: 0.5rem; border: none; background: var(--muted); color: var(--muted-foreground); width: 1.15rem; height: 1.15rem; border-radius: 999px; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 0.7rem; }
+.input-icon.has-value .clear { display: inline-flex; }
+.pw-wrap { position: relative; }
+.pw-wrap .toggle-pw { position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); border: none; background: none; color: var(--muted-foreground); cursor: pointer; font-size: 0.9rem; }
+.pw-meter { height: 4px; border-radius: 999px; background: var(--secondary); overflow: hidden; margin-top: 0.4rem; }
+.pw-meter > span { display: block; height: 100%; width: 0; transition: width .2s, background .2s; }
+.pw-hint { font-size: 0.72rem; color: var(--muted-foreground); margin-top: 0.25rem; }
+.otp { display: flex; gap: 0.5rem; }
+.otp input { width: 2.6rem; height: 3rem; text-align: center; font-size: 1.1rem; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background); color: var(--foreground); font-variant-numeric: tabular-nums; }
+.otp input:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+.dropzone { border: 1.5px dashed var(--border); border-radius: var(--radius); padding: 1.4rem; text-align: center; color: var(--muted-foreground); cursor: pointer; transition: border-color .15s, background .15s; max-width: 360px; }
+.dropzone.drag, .dropzone:hover { border-color: var(--primary); background: color-mix(in oklab, var(--primary) 5%, var(--background)); }
+.dropzone .dz-file { color: var(--foreground); font-size: 0.83rem; margin-top: 0.4rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; border: 1px solid var(--input); border-radius: var(--radius); padding: 0.35rem 0.4rem; max-width: 360px; }
+.tags:focus-within { outline: 2px solid var(--ring); outline-offset: 1px; }
+.tags .tag { display: inline-flex; align-items: center; gap: 0.3rem; background: var(--secondary); color: var(--secondary-foreground); border-radius: calc(var(--radius) - 2px); padding: 0.15rem 0.45rem; font-size: 0.78rem; }
+.tags .tag button { border: none; background: none; color: inherit; cursor: pointer; font-size: 0.8rem; line-height: 1; opacity: 0.7; }
+.tags .tag button:hover { opacity: 1; }
+.tags input { border: none; outline: none; background: none; color: inherit; flex: 1; min-width: 80px; font-size: 0.83rem; padding: 0.15rem; }
+.segmented { display: inline-flex; background: var(--muted); border-radius: var(--radius); padding: 0.2rem; gap: 0.15rem; }
+.segmented button { border: none; background: none; color: var(--muted-foreground); padding: 0.35rem 0.85rem; border-radius: calc(var(--radius) - 1px); cursor: pointer; font-size: 0.83rem; font-weight: 500; }
+.segmented button.on { background: var(--background); color: var(--foreground); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.combobox-trigger, .multiselect-trigger { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; width: 100%; max-width: 320px; padding: 0.5rem 0.75rem; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background); color: var(--foreground); font-size: 0.875rem; cursor: pointer; text-align: left; }
+.combobox-trigger .ph, .multiselect-trigger .ph { color: var(--muted-foreground); }
+[data-combobox] [data-menu], [data-multiselect] [data-menu] { min-width: 100%; max-width: 320px; }
+[data-menu] .cb-search { width: calc(100% - 0.6rem); margin: 0.15rem 0.3rem 0.3rem; padding: 0.4rem 0.55rem; border: 1px solid var(--input); border-radius: calc(var(--radius) - 1px); background: var(--background); color: var(--foreground); font-size: 0.83rem; outline: none; }
+[data-menu] .cb-list { max-height: 200px; overflow-y: auto; }
+[data-cb-option][hidden] { display: none; }
+.ms-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.ms-chips .chip-mini { background: var(--secondary); color: var(--secondary-foreground); border-radius: 999px; padding: 0.05rem 0.5rem; font-size: 0.72rem; }
+.check-line { display: flex; align-items: center; gap: 0.55rem; padding: 0.4rem 0.55rem; border-radius: calc(var(--radius) - 1px); cursor: pointer; font-size: 0.83rem; }
+.check-line:hover { background: var(--accent); color: var(--accent-foreground); }
+
+/* ---- Blocks: framed page templates ---- */
+.block-frame { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--muted); width: 100%; }
+.block-bar { display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); background: var(--card); }
+.block-bar .dot { width: 0.6rem; height: 0.6rem; border-radius: 999px; background: var(--border); }
+.block-bar .url { margin-left: 0.5rem; font-size: 0.72rem; color: var(--muted-foreground); background: var(--muted); padding: 0.15rem 0.6rem; border-radius: 999px; }
+.block-stage { min-height: 440px; display: grid; place-items: center; padding: 2rem; background: color-mix(in oklab, var(--muted) 45%, var(--background)); }
+.auth-card { width: min(380px, 100%); background: var(--card); color: var(--card-foreground); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; box-shadow: 0 12px 40px rgba(0,0,0,.08); }
+.auth-card .auth-logo { width: 2.5rem; height: 2.5rem; border-radius: var(--radius); background: var(--primary); color: var(--primary-foreground); display: grid; place-items: center; font-weight: 700; margin: 0 auto 1rem; }
+.auth-card h3 { text-align: center; margin: 0 0 0.25rem; font-size: 1.25rem; }
+.auth-card .sub { text-align: center; color: var(--muted-foreground); font-size: 0.85rem; margin: 0 0 1.25rem; }
+.auth-card .field { gap: 0.35rem; margin-bottom: 0.85rem; max-width: none; }
+.auth-card .row-between { display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.85rem; }
+.auth-card .btn { width: 100%; }
+.auth-divider { display: flex; align-items: center; gap: 0.75rem; color: var(--muted-foreground); font-size: 0.72rem; margin: 1rem 0; }
+.auth-divider::before, .auth-divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+.auth-foot { text-align: center; font-size: 0.82rem; color: var(--muted-foreground); margin-top: 1rem; }
+.auth-foot a { color: var(--primary); font-weight: 500; }
+
+/* ---- Error / empty ---- */
+.errstate { text-align: center; max-width: 420px; }
+.errstate .code { font-size: 4rem; font-weight: 700; letter-spacing: -0.03em; color: var(--primary); line-height: 1; }
+.errstate h3 { margin: 0.75rem 0 0.4rem; font-size: 1.35rem; }
+.errstate p { color: var(--muted-foreground); margin: 0 0 1.25rem; }
+.emptystate { text-align: center; padding: 2.5rem 1rem; color: var(--muted-foreground); border: 1.5px dashed var(--border); border-radius: var(--radius); }
+.emptystate .ico { font-size: 2rem; opacity: 0.5; }
+.emptystate h4 { margin: 0.6rem 0 0.3rem; color: var(--foreground); font-size: 1rem; }
+.emptystate p { margin: 0 0 1rem; font-size: 0.85rem; }
+
 </style>
 </head>
 <body>
 <div class="app">
   <aside class="side">
     <div class="brand"><span class="mark">A</span><div><b>Acme</b><span>component explorer</span></div></div>
-    <div class="nav-group">Overview</div><div class="nav"><a href="#overview" data-nav-link>Overview</a></div><div class="nav-group">Foundations</div><div class="nav"><a href="#colors" data-nav-link>Colors</a><a href="#typography" data-nav-link>Typography</a><a href="#radius" data-nav-link>Radius</a></div><div class="nav-group">Forms</div><div class="nav"><a href="#button" data-nav-link>Button</a><a href="#input" data-nav-link>Input &amp; Textarea</a><a href="#checkbox-radio" data-nav-link>Checkbox &amp; Radio</a><a href="#switch-slider" data-nav-link>Switch, Slider &amp; Toggle</a><a href="#select" data-nav-link>Select</a></div><div class="nav-group">Layout</div><div class="nav"><a href="#page-header" data-nav-link>Page header</a><a href="#bento" data-nav-link>Bento grid</a><a href="#split" data-nav-link>Split view</a><a href="#dashboard-shell" data-nav-link>Dashboard shell</a><a href="#stack" data-nav-link>Stack</a></div><div class="nav-group">Data display</div><div class="nav"><a href="#badge" data-nav-link>Badge</a><a href="#avatar" data-nav-link>Avatar</a><a href="#card" data-nav-link>Card</a><a href="#table" data-nav-link>Table</a><a href="#progress-skeleton" data-nav-link>Progress &amp; Skeleton</a><a href="#tabs" data-nav-link>Tabs</a><a href="#accordion" data-nav-link>Accordion</a><a href="#carousel" data-nav-link>Carousel</a><a href="#calendar" data-nav-link>Calendar</a><a href="#tooltip-hover" data-nav-link>Tooltip &amp; Hover Card</a></div><div class="nav-group">Communication</div><div class="nav"><a href="#chat" data-nav-link>Chat</a></div><div class="nav-group">Overlays &amp; menus</div><div class="nav"><a href="#dialog" data-nav-link>Dialog &amp; Alert Dialog</a><a href="#sheet-drawer" data-nav-link>Sheet &amp; Drawer</a><a href="#dropdown" data-nav-link>Dropdown &amp; Context Menu</a><a href="#popover" data-nav-link>Popover</a><a href="#menubar" data-nav-link>Menubar</a><a href="#command" data-nav-link>Command</a><a href="#alert" data-nav-link>Alert</a><a href="#toast" data-nav-link>Toast</a></div><div class="nav-group">Navigation</div><div class="nav"><a href="#breadcrumb-pagination" data-nav-link>Breadcrumb &amp; Pagination</a><a href="#navmenu" data-nav-link>Navigation Menu</a></div><div class="nav-group">Extensions</div><div class="nav"><a href="#sparkline-stat" data-nav-link>Sparkline &amp; Stat Card</a></div><div class="nav-group">Scientific charts</div><div class="nav"><a href="#charts" data-nav-link>Scientific charts</a></div>
+    <div class="nav-group">Overview</div><div class="nav"><a href="#overview" data-nav-link>Overview</a></div><div class="nav-group">Foundations</div><div class="nav"><a href="#colors" data-nav-link>Colors</a><a href="#typography" data-nav-link>Typography</a><a href="#radius" data-nav-link>Radius</a></div><div class="nav-group">Forms</div><div class="nav"><a href="#button" data-nav-link>Button</a><a href="#input" data-nav-link>Input &amp; Textarea</a><a href="#checkbox-radio" data-nav-link>Checkbox &amp; Radio</a><a href="#switch-slider" data-nav-link>Switch, Slider &amp; Toggle</a><a href="#select" data-nav-link>Select</a><a href="#form-field" data-nav-link>Form field &amp; validation</a><a href="#combobox" data-nav-link>Combobox &amp; multi-select</a><a href="#datepicker" data-nav-link>Date picker</a><a href="#otp-password" data-nav-link>Input OTP &amp; password</a><a href="#file-upload" data-nav-link>File upload</a><a href="#search-tags" data-nav-link>Search, tags &amp; segmented</a></div><div class="nav-group">Layout</div><div class="nav"><a href="#page-header" data-nav-link>Page header</a><a href="#bento" data-nav-link>Bento grid</a><a href="#split" data-nav-link>Split view</a><a href="#dashboard-shell" data-nav-link>Dashboard shell</a><a href="#stack" data-nav-link>Stack</a></div><div class="nav-group">Data display</div><div class="nav"><a href="#badge" data-nav-link>Badge</a><a href="#avatar" data-nav-link>Avatar</a><a href="#card" data-nav-link>Card</a><a href="#table" data-nav-link>Table</a><a href="#progress-skeleton" data-nav-link>Progress &amp; Skeleton</a><a href="#tabs" data-nav-link>Tabs</a><a href="#accordion" data-nav-link>Accordion</a><a href="#carousel" data-nav-link>Carousel</a><a href="#calendar" data-nav-link>Calendar</a><a href="#tooltip-hover" data-nav-link>Tooltip &amp; Hover Card</a></div><div class="nav-group">Communication</div><div class="nav"><a href="#chat" data-nav-link>Chat</a></div><div class="nav-group">Overlays &amp; menus</div><div class="nav"><a href="#dialog" data-nav-link>Dialog &amp; Alert Dialog</a><a href="#sheet-drawer" data-nav-link>Sheet &amp; Drawer</a><a href="#dropdown" data-nav-link>Dropdown &amp; Context Menu</a><a href="#popover" data-nav-link>Popover</a><a href="#menubar" data-nav-link>Menubar</a><a href="#command" data-nav-link>Command</a><a href="#alert" data-nav-link>Alert</a><a href="#toast" data-nav-link>Toast</a></div><div class="nav-group">Navigation</div><div class="nav"><a href="#breadcrumb-pagination" data-nav-link>Breadcrumb &amp; Pagination</a><a href="#navmenu" data-nav-link>Navigation Menu</a></div><div class="nav-group">Blocks</div><div class="nav"><a href="#login" data-nav-link>Login</a><a href="#signup" data-nav-link>Sign up</a><a href="#forgot-password" data-nav-link>Forgot password</a><a href="#two-factor" data-nav-link>Two-factor</a><a href="#error-404" data-nav-link>Error page</a><a href="#empty-state" data-nav-link>Empty state</a></div><div class="nav-group">Extensions</div><div class="nav"><a href="#sparkline-stat" data-nav-link>Sparkline &amp; Stat Card</a></div><div class="nav-group">Scientific charts</div><div class="nav"><a href="#charts" data-nav-link>Scientific charts</a></div>
   </aside>
   <main class="main">
     <div class="topbar">
@@ -542,6 +613,57 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
             <div class="menu-item" data-select-option>Euro area</div>
           </div>
         </div></div>
+  </section>
+<section class="block" id="form-field">
+    <h2>Form field &amp; validation</h2>
+    <p class="desc">Label, description, required, and inline error states. The email validates live on input.</p>
+    <div class="demo col"><div class="form-field"><label class="label">Institutional email <span class="req">*</span></label><input class="input" data-validate="email" placeholder="you@imf.org" /><span class="hint">We'll only use this to sign you in.</span><span class="err-msg" data-err hidden>Enter a valid email address.</span></div>
+         <div class="form-field"><label class="label">API token</label><input class="input invalid" value="expired-token" /><span class="err-msg">This token has expired. Generate a new one.</span></div>
+         <div class="form-field"><label class="label">Display name</label><input class="input" value="Francois Chastel" /><span class="hint">Shown on your published reports.</span></div></div>
+  </section>
+<section class="block" id="combobox">
+    <h2>Combobox &amp; multi-select</h2>
+    <p class="desc">Searchable single-select and a checkbox multi-select with chips.</p>
+    <div class="demo "><div class="field" data-combobox><label class="label">Country</label>
+          <button class="combobox-trigger" data-menu-trigger><span data-combobox-value class="ph">Select a country…</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div data-menu><input class="cb-search" data-cb-search placeholder="Search…" /><div class="cb-list"><div class="menu-item" data-cb-option>United States</div><div class="menu-item" data-cb-option>France</div><div class="menu-item" data-cb-option>Japan</div><div class="menu-item" data-cb-option>Germany</div><div class="menu-item" data-cb-option>Brazil</div><div class="menu-item" data-cb-option>India</div><div class="menu-item" data-cb-option>Nigeria</div><div class="menu-item" data-cb-option>Mexico</div><div class="menu-item" data-cb-option>Indonesia</div><div class="menu-item" data-cb-option>South Africa</div></div></div>
+        </div>
+        <div class="field" data-multiselect><label class="label">Regions</label>
+          <button class="multiselect-trigger" data-menu-trigger><span class="ms-chips" data-ms-chips><span class="ph">Select regions…</span></span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div data-menu><label class="check-line"><input type="checkbox" data-ms-option value="Advanced economies" /> Advanced economies</label><label class="check-line"><input type="checkbox" data-ms-option value="Emerging markets" /> Emerging markets</label><label class="check-line"><input type="checkbox" data-ms-option value="Low-income" /> Low-income</label><label class="check-line"><input type="checkbox" data-ms-option value="Euro area" /> Euro area</label><label class="check-line"><input type="checkbox" data-ms-option value="ASEAN-5" /> ASEAN-5</label></div>
+        </div></div>
+  </section>
+<section class="block" id="datepicker">
+    <h2>Date picker</h2>
+    <p class="desc">An input with a calendar popover.</p>
+    <div class="demo "><div class="field" data-datepicker style="position:relative">
+          <label class="label">Reference date</label>
+          <button class="combobox-trigger" data-menu-trigger><span data-dp-value class="ph">Pick a date</span><span>📅</span></button>
+          <div data-menu><div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm">‹</button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm">›</button></div><div class="cal-grid"><span class="dow">Su</span><span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span><span class="day out">28</span><span class="day out">29</span><span class="day out">30</span><span class="day out">31</span><span class="day out">32</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day sel">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span></div></div></div>
+        </div></div>
+  </section>
+<section class="block" id="otp-password">
+    <h2>Input OTP &amp; password</h2>
+    <p class="desc">A one-time-code input (auto-advances, handles paste) and a password field with a strength meter.</p>
+    <div class="demo "><div class="field"><label class="label">Verification code</label><div class="otp" data-otp><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /></div></div>
+         <div class="field"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" data-password placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button" aria-label="show">👁</button></div><div class="pw-meter"><span data-pw-bar></span></div><span class="pw-hint" data-pw-hint>Use 8+ characters with letters, numbers &amp; symbols.</span></div></div>
+  </section>
+<section class="block" id="file-upload">
+    <h2>File upload</h2>
+    <p class="desc">A dropzone that accepts clicks and drag-and-drop.</p>
+    <div class="demo col"><label class="dropzone" data-dropzone><input type="file" hidden data-dz-input />
+          <div>⬆ <strong>Click to upload</strong> or drag and drop</div>
+          <div class="muted" style="font-size:.72rem">CSV, XLSX up to 10MB</div>
+          <div class="dz-file" data-dz-file hidden></div>
+        </label></div>
+  </section>
+<section class="block" id="search-tags">
+    <h2>Search, tags &amp; segmented</h2>
+    <p class="desc">A search input with clear, a tag input, a segmented control, and a currency input.</p>
+    <div class="demo "><div class="input-icon" data-search style="max-width:280px"><span class="lead">🔍</span><input class="input" data-search-input placeholder="Search indicators…" /><button class="clear" data-search-clear aria-label="clear">×</button></div>
+         <div class="tags" data-tags style="max-width:280px"><span class="tag">macro<button data-tag-remove aria-label="remove">×</button></span><span class="tag">weo<button data-tag-remove aria-label="remove">×</button></span><input data-tags-input placeholder="Add tag…" /></div>
+         <div class="segmented" data-segmented><button class="on">Chart</button><button>Table</button><button>Map</button></div>
+         <div class="input-icon" style="max-width:160px"><span class="lead">$</span><input class="input" value="48,200" inputmode="numeric" /></div></div>
   </section>
 <section class="block" id="page-header">
     <h2>Page header</h2>
@@ -776,6 +898,67 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
           <div style="position:relative"><button data-menu-trigger>Data <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div data-menu><div class="menu-item">DataMapper</div><div class="menu-item">WEO database</div></div></div>
           <button data-menu-trigger style="border:none;background:transparent;padding:.35rem .7rem;cursor:pointer">About</button>
         </div></div>
+  </section>
+<section class="block" id="login">
+    <h2>Login</h2>
+    <p class="desc">A sign-in page with email/password, remember-me, SSO, and sign-up link.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/login</span></div><div class="block-stage"><div class="auth-card">
+            <div class="auth-logo">A</div>
+            <h3>Sign in</h3><p class="sub">Access the Acme data workspace</p>
+            <div class="field auth-fld"><label class="label">Email</label><input class="input" placeholder="you@imf.org" /></div>
+            <div class="field auth-fld"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button">👁</button></div></div>
+            <div class="row-between"><label class="check"><input type="checkbox" /> Remember me</label><a href="#" style="color:var(--primary)">Forgot password?</a></div>
+            <button class="btn btn-primary">Sign in</button>
+            <div class="auth-divider">or</div>
+            <button class="btn btn-outline">◈ Continue with SSO</button>
+            <div class="auth-foot">New here? <a href="#">Create an account</a></div>
+          </div></div></div></div>
+  </section>
+<section class="block" id="signup">
+    <h2>Sign up</h2>
+    <p class="desc">A registration page with name, email, password strength, and terms.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/signup</span></div><div class="block-stage"><div class="auth-card">
+            <div class="auth-logo">A</div>
+            <h3>Create your account</h3><p class="sub">Start exploring Acme data</p>
+            <div class="field auth-fld"><label class="label">Full name</label><input class="input" placeholder="Jane Analyst" /></div>
+            <div class="field auth-fld"><label class="label">Email</label><input class="input" placeholder="you@imf.org" /></div>
+            <div class="field auth-fld"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" data-password placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button">👁</button></div><div class="pw-meter"><span data-pw-bar></span></div></div>
+            <label class="check" style="margin-bottom:.85rem;font-size:.8rem"><input type="checkbox" /> I agree to the terms &amp; privacy policy</label>
+            <button class="btn btn-primary">Create account</button>
+            <div class="auth-foot">Already have an account? <a href="#">Sign in</a></div>
+          </div></div></div></div>
+  </section>
+<section class="block" id="forgot-password">
+    <h2>Forgot password</h2>
+    <p class="desc">Request a password-reset link.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/forgot</span></div><div class="block-stage"><div class="auth-card">
+            <div class="auth-logo">A</div>
+            <h3>Reset your password</h3><p class="sub">We'll email you a secure reset link</p>
+            <div class="field auth-fld"><label class="label">Email</label><input class="input" placeholder="you@imf.org" /></div>
+            <button class="btn btn-primary">Send reset link</button>
+            <div class="auth-foot"><a href="#">← Back to sign in</a></div>
+          </div></div></div></div>
+  </section>
+<section class="block" id="two-factor">
+    <h2>Two-factor</h2>
+    <p class="desc">Enter the one-time verification code.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/verify</span></div><div class="block-stage"><div class="auth-card">
+            <div class="auth-logo">A</div>
+            <h3>Two-factor authentication</h3><p class="sub">Enter the 6-digit code from your authenticator</p>
+            <div class="otp" data-otp style="justify-content:center;margin-bottom:1.1rem"><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /></div>
+            <button class="btn btn-primary">Verify</button>
+            <div class="auth-foot">Didn't get a code? <a href="#">Resend</a></div>
+          </div></div></div></div>
+  </section>
+<section class="block" id="error-404">
+    <h2>Error page</h2>
+    <p class="desc">A friendly 404 with recovery actions.</p>
+    <div class="demo col"><div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.imf.org/404</span></div><div class="block-stage"><div class="errstate"><div class="code">404</div><h3>Page not found</h3><p>The page you're looking for doesn't exist or has moved.</p><div style="display:flex;gap:.5rem;justify-content:center"><button class="btn btn-outline">Go back</button><button class="btn btn-primary">Home</button></div></div></div></div></div>
+  </section>
+<section class="block" id="empty-state">
+    <h2>Empty state</h2>
+    <p class="desc">A first-run placeholder that prompts the next action.</p>
+    <div class="demo col"><div class="emptystate" style="max-width:380px;margin:0 auto"><div class="ico">📊</div><h4>No datasets yet</h4><p>Create your first projection to see it here.</p><button class="btn btn-primary btn-sm">New projection</button></div></div>
   </section>
 <section class="block" id="sparkline-stat">
     <h2>Sparkline &amp; Stat Card</h2>
@@ -1266,6 +1449,175 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
     const group = tg.closest("[data-toggle-group='single']");
     if (group) $$("[data-toggle]", group).forEach((b) => b.classList.remove("on"));
     tg.classList.toggle("on");
+  });
+  document.addEventListener("input", (e) => {
+    const s = closest(e.target, "[data-cb-search]");
+    if (!s) return;
+    const q = s.value.toLowerCase();
+    s.parentElement?.querySelectorAll("[data-cb-option]").forEach((o) => {
+      o.hidden = !(o.textContent ?? "").toLowerCase().includes(q);
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const opt2 = closest(e.target, "[data-cb-option]");
+    if (opt2) {
+      const box = opt2.closest("[data-combobox]");
+      const label = box?.querySelector("[data-combobox-value]");
+      if (label) {
+        label.textContent = opt2.textContent;
+        label.classList.remove("ph");
+      }
+      closeMenus();
+      return;
+    }
+    const day = closest(e.target, ".cal .day");
+    if (day && !day.classList.contains("out")) {
+      const dp = day.closest("[data-datepicker]");
+      if (dp) {
+        day.closest(".cal-grid")?.querySelectorAll(".day").forEach((d) => d.classList.remove("sel"));
+        day.classList.add("sel");
+        const val = dp.querySelector("[data-dp-value]");
+        if (val) {
+          val.textContent = `September ${day.textContent}, 2026`;
+          val.classList.remove("ph");
+        }
+        closeMenus();
+      }
+    }
+  });
+  document.addEventListener("change", (e) => {
+    const opt2 = closest(e.target, "[data-ms-option]");
+    if (!opt2) return;
+    const box = opt2.closest("[data-multiselect]");
+    const chips = box?.querySelector("[data-ms-chips]");
+    if (!box || !chips) return;
+    const checked = $$("[data-ms-option]", box).filter((c) => c.checked);
+    chips.innerHTML = checked.length ? checked.map((c) => `<span class="chip-mini">${c.value}</span>`).join("") : `<span class="ph">Select regions\u2026</span>`;
+  });
+  $$("[data-otp]").forEach((otp) => {
+    const inputs = $$("input", otp);
+    otp.addEventListener("input", (e) => {
+      const t = e.target;
+      t.value = t.value.replace(/\D/g, "").slice(0, 1);
+      if (t.value) inputs[inputs.indexOf(t) + 1]?.focus();
+    });
+    otp.addEventListener("keydown", (e) => {
+      const t = e.target;
+      if (e.key === "Backspace" && !t.value) inputs[inputs.indexOf(t) - 1]?.focus();
+    });
+    otp.addEventListener("paste", (e) => {
+      e.preventDefault();
+      const txt = ((e.clipboardData?.getData("text") ?? "").match(/\d/g) ?? []).slice(0, inputs.length);
+      inputs.forEach((inp, i) => inp.value = txt[i] ?? "");
+      inputs[Math.min(txt.length, inputs.length - 1)]?.focus();
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const t = closest(e.target, "[data-toggle-pw]");
+    if (!t) return;
+    const inp = t.parentElement?.querySelector("input");
+    if (inp) inp.type = inp.type === "password" ? "text" : "password";
+  });
+  const PW_COLORS = ["transparent", "var(--destructive)", "var(--chart-3)", "var(--chart-1)", "var(--chart-5)"];
+  const PW_HINTS = ["", "Weak \u2014 add length and variety.", "Fair \u2014 add numbers or symbols.", "Good.", "Strong password."];
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-password]");
+    if (!inp) return;
+    const v = inp.value;
+    let score = 0;
+    if (v.length >= 8) score++;
+    if (/[a-z]/.test(v) && /[A-Z]/.test(v)) score++;
+    if (/\d/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    const field = inp.closest(".field, .form-field");
+    const bar = field?.querySelector("[data-pw-bar]");
+    if (bar) {
+      bar.style.width = `${score / 4 * 100}%`;
+      bar.style.background = PW_COLORS[score];
+    }
+    const hint = field?.querySelector("[data-pw-hint]");
+    if (hint && v) hint.textContent = PW_HINTS[score];
+  });
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-validate='email']");
+    if (!inp) return;
+    const ok = inp.value === "" || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(inp.value);
+    inp.classList.toggle("invalid", !ok);
+    const err = inp.closest(".form-field")?.querySelector("[data-err]");
+    if (err) err.hidden = ok;
+  });
+  $$("[data-dropzone]").forEach((dz) => {
+    const input = $("[data-dz-input]", dz);
+    const fileEl = $("[data-dz-file]", dz);
+    const show = (name) => {
+      if (fileEl) {
+        ;
+        fileEl.hidden = false;
+        fileEl.textContent = "\u2713 " + name;
+      }
+    };
+    input?.addEventListener("change", () => {
+      if (input.files?.[0]) show(input.files[0].name);
+    });
+    ["dragover", "dragenter"].forEach(
+      (ev) => dz.addEventListener(ev, (e) => {
+        e.preventDefault();
+        dz.classList.add("drag");
+      })
+    );
+    ["dragleave", "drop"].forEach(
+      (ev) => dz.addEventListener(ev, (e) => {
+        e.preventDefault();
+        dz.classList.remove("drag");
+      })
+    );
+    dz.addEventListener("drop", (e) => {
+      const f = e.dataTransfer?.files?.[0];
+      if (f) show(f.name);
+    });
+  });
+  document.addEventListener("keydown", (e) => {
+    const inp = closest(e.target, "[data-tags-input]");
+    if (!inp || e.key !== "Enter") return;
+    e.preventDefault();
+    const v = inp.value.trim();
+    if (!v) return;
+    const chip = document.createElement("span");
+    chip.className = "tag";
+    chip.append(v);
+    const b = document.createElement("button");
+    b.setAttribute("data-tag-remove", "");
+    b.setAttribute("aria-label", "remove");
+    b.textContent = "\xD7";
+    chip.append(b);
+    inp.parentElement?.insertBefore(chip, inp);
+    inp.value = "";
+  });
+  document.addEventListener("click", (e) => {
+    const rm = closest(e.target, "[data-tag-remove]");
+    if (rm) rm.closest(".tag")?.remove();
+  });
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-search-input]");
+    if (inp) inp.closest("[data-search]")?.classList.toggle("has-value", inp.value.length > 0);
+  });
+  document.addEventListener("click", (e) => {
+    const c = closest(e.target, "[data-search-clear]");
+    if (c) {
+      const box = c.closest("[data-search]");
+      const inp = box?.querySelector("[data-search-input]");
+      if (inp) {
+        inp.value = "";
+        box?.classList.remove("has-value");
+        inp.focus();
+      }
+      return;
+    }
+    const seg = closest(e.target, "[data-segmented] button");
+    if (seg) {
+      $$("button", seg.closest("[data-segmented]")).forEach((x) => x.classList.remove("on"));
+      seg.classList.add("on");
+    }
   });
   $$("[data-carousel]").forEach((car) => {
     const track = $("[data-carousel-track]", car);

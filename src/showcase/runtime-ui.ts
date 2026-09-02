@@ -216,6 +216,190 @@ export function uiMain(): void {
     tg.classList.toggle("on");
   });
 
+  // ---- combobox / multiselect / datepicker ----
+  document.addEventListener("input", (e) => {
+    const s = closest(e.target, "[data-cb-search]") as HTMLInputElement | null
+    if (!s) return
+    const q = s.value.toLowerCase()
+    s.parentElement?.querySelectorAll<HTMLElement>("[data-cb-option]").forEach((o) => {
+      o.hidden = !(o.textContent ?? "").toLowerCase().includes(q)
+    })
+  })
+  document.addEventListener("click", (e) => {
+    const opt = closest(e.target, "[data-cb-option]")
+    if (opt) {
+      const box = opt.closest("[data-combobox]")
+      const label = box?.querySelector("[data-combobox-value]")
+      if (label) {
+        label.textContent = opt.textContent
+        label.classList.remove("ph")
+      }
+      closeMenus()
+      return
+    }
+    const day = closest(e.target, ".cal .day")
+    if (day && !day.classList.contains("out")) {
+      const dp = day.closest("[data-datepicker]")
+      if (dp) {
+        day.closest(".cal-grid")?.querySelectorAll(".day").forEach((d) => d.classList.remove("sel"))
+        day.classList.add("sel")
+        const val = dp.querySelector("[data-dp-value]")
+        if (val) {
+          val.textContent = `September ${day.textContent}, 2026`
+          val.classList.remove("ph")
+        }
+        closeMenus()
+      }
+    }
+  })
+  document.addEventListener("change", (e) => {
+    const opt = closest(e.target, "[data-ms-option]") as HTMLInputElement | null
+    if (!opt) return
+    const box = opt.closest("[data-multiselect]")
+    const chips = box?.querySelector("[data-ms-chips]")
+    if (!box || !chips) return
+    const checked = $$<HTMLInputElement>("[data-ms-option]", box).filter((c) => c.checked)
+    chips.innerHTML = checked.length
+      ? checked.map((c) => `<span class="chip-mini">${c.value}</span>`).join("")
+      : `<span class="ph">Select regions…</span>`
+  })
+
+  // ---- input OTP ----
+  $$("[data-otp]").forEach((otp) => {
+    const inputs = $$<HTMLInputElement>("input", otp)
+    otp.addEventListener("input", (e) => {
+      const t = e.target as HTMLInputElement
+      t.value = t.value.replace(/\D/g, "").slice(0, 1)
+      if (t.value) inputs[inputs.indexOf(t) + 1]?.focus()
+    })
+    otp.addEventListener("keydown", (e) => {
+      const t = e.target as HTMLInputElement
+      if ((e as KeyboardEvent).key === "Backspace" && !t.value) inputs[inputs.indexOf(t) - 1]?.focus()
+    })
+    otp.addEventListener("paste", (e) => {
+      e.preventDefault()
+      const txt = (((e as ClipboardEvent).clipboardData?.getData("text") ?? "").match(/\d/g) ?? []).slice(0, inputs.length)
+      inputs.forEach((inp, i) => (inp.value = txt[i] ?? ""))
+      inputs[Math.min(txt.length, inputs.length - 1)]?.focus()
+    })
+  })
+
+  // ---- password: show/hide + strength ----
+  document.addEventListener("click", (e) => {
+    const t = closest(e.target, "[data-toggle-pw]")
+    if (!t) return
+    const inp = t.parentElement?.querySelector("input") as HTMLInputElement | null
+    if (inp) inp.type = inp.type === "password" ? "text" : "password"
+  })
+  const PW_COLORS = ["transparent", "var(--destructive)", "var(--chart-3)", "var(--chart-1)", "var(--chart-5)"]
+  const PW_HINTS = ["", "Weak — add length and variety.", "Fair — add numbers or symbols.", "Good.", "Strong password."]
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-password]") as HTMLInputElement | null
+    if (!inp) return
+    const v = inp.value
+    let score = 0
+    if (v.length >= 8) score++
+    if (/[a-z]/.test(v) && /[A-Z]/.test(v)) score++
+    if (/\d/.test(v)) score++
+    if (/[^A-Za-z0-9]/.test(v)) score++
+    const field = inp.closest(".field, .form-field")
+    const bar = field?.querySelector("[data-pw-bar]") as HTMLElement | null
+    if (bar) {
+      bar.style.width = `${(score / 4) * 100}%`
+      bar.style.background = PW_COLORS[score]!
+    }
+    const hint = field?.querySelector("[data-pw-hint]")
+    if (hint && v) hint.textContent = PW_HINTS[score]!
+  })
+
+  // ---- inline email validation ----
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-validate='email']") as HTMLInputElement | null
+    if (!inp) return
+    const ok = inp.value === "" || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(inp.value)
+    inp.classList.toggle("invalid", !ok)
+    const err = inp.closest(".form-field")?.querySelector("[data-err]") as HTMLElement | null
+    if (err) err.hidden = ok
+  })
+
+  // ---- file dropzone ----
+  $$("[data-dropzone]").forEach((dz) => {
+    const input = $<HTMLInputElement>("[data-dz-input]", dz)
+    const fileEl = $("[data-dz-file]", dz)
+    const show = (name: string) => {
+      if (fileEl) {
+        ;(fileEl as HTMLElement).hidden = false
+        fileEl.textContent = "✓ " + name
+      }
+    }
+    input?.addEventListener("change", () => {
+      if (input.files?.[0]) show(input.files[0].name)
+    })
+    ;["dragover", "dragenter"].forEach((ev) =>
+      dz.addEventListener(ev, (e) => {
+        e.preventDefault()
+        dz.classList.add("drag")
+      }),
+    )
+    ;["dragleave", "drop"].forEach((ev) =>
+      dz.addEventListener(ev, (e) => {
+        e.preventDefault()
+        dz.classList.remove("drag")
+      }),
+    )
+    dz.addEventListener("drop", (e) => {
+      const f = (e as DragEvent).dataTransfer?.files?.[0]
+      if (f) show(f.name)
+    })
+  })
+
+  // ---- tags input ----
+  document.addEventListener("keydown", (e) => {
+    const inp = closest(e.target, "[data-tags-input]") as HTMLInputElement | null
+    if (!inp || (e as KeyboardEvent).key !== "Enter") return
+    e.preventDefault()
+    const v = inp.value.trim()
+    if (!v) return
+    const chip = document.createElement("span")
+    chip.className = "tag"
+    chip.append(v)
+    const b = document.createElement("button")
+    b.setAttribute("data-tag-remove", "")
+    b.setAttribute("aria-label", "remove")
+    b.textContent = "×"
+    chip.append(b)
+    inp.parentElement?.insertBefore(chip, inp)
+    inp.value = ""
+  })
+  document.addEventListener("click", (e) => {
+    const rm = closest(e.target, "[data-tag-remove]")
+    if (rm) rm.closest(".tag")?.remove()
+  })
+
+  // ---- search clear + segmented ----
+  document.addEventListener("input", (e) => {
+    const inp = closest(e.target, "[data-search-input]") as HTMLInputElement | null
+    if (inp) inp.closest("[data-search]")?.classList.toggle("has-value", inp.value.length > 0)
+  })
+  document.addEventListener("click", (e) => {
+    const c = closest(e.target, "[data-search-clear]")
+    if (c) {
+      const box = c.closest("[data-search]")
+      const inp = box?.querySelector("[data-search-input]") as HTMLInputElement | null
+      if (inp) {
+        inp.value = ""
+        box?.classList.remove("has-value")
+        inp.focus()
+      }
+      return
+    }
+    const seg = closest(e.target, "[data-segmented] button")
+    if (seg) {
+      $$("button", seg.closest("[data-segmented]")!).forEach((x) => x.classList.remove("on"))
+      seg.classList.add("on")
+    }
+  })
+
   // ---- carousel ----
   $$("[data-carousel]").forEach((car) => {
     const track = $("[data-carousel-track]", car)!;

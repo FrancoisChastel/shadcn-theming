@@ -18,6 +18,10 @@ export interface Section {
 const demo = (inner: string, cls = "") => `<div class="demo ${cls}">${inner}</div>`;
 const chev = '<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>';
 
+/** A faux-browser frame around a full-page template preview. */
+const blockFrame = (url: string, inner: string) =>
+  `<div class="block-frame"><div class="block-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">${url}</span></div><div class="block-stage">${inner}</div></div>`;
+
 function kpiCard(k: Kpi): string {
   const trend = k.delta > 0 ? "up" : "down";
   const arrow = k.delta > 0 ? "▲" : "▼";
@@ -29,7 +33,8 @@ function kpiCard(k: Kpi): string {
   </div>`;
 }
 
-export function buildSections(light: TokenMap): Section[] {
+export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
+  const init = brandName.trim().charAt(0).toUpperCase() || "•";
   const paletteKeys = COLOR_TOKENS.filter((k) => !k.endsWith("-foreground") && !k.startsWith("sidebar"));
   const palette = paletteKeys
     .map((k) => `<div class="sw"><span class="chip" style="background:var(--${k})"></span><code>${k}</code></div>`)
@@ -194,6 +199,84 @@ export function buildSections(light: TokenMap): Section[] {
           </div>
         </div>`,
         "col",
+      ),
+    },
+
+    {
+      id: "form-field",
+      group: "Forms",
+      title: "Form field & validation",
+      desc: "Label, description, required, and inline error states. The email validates live on input.",
+      html: demo(
+        `<div class="form-field"><label class="label">Institutional email <span class="req">*</span></label><input class="input" data-validate="email" placeholder="you@imf.org" /><span class="hint">We'll only use this to sign you in.</span><span class="err-msg" data-err hidden>Enter a valid email address.</span></div>
+         <div class="form-field"><label class="label">API token</label><input class="input invalid" value="expired-token" /><span class="err-msg">This token has expired. Generate a new one.</span></div>
+         <div class="form-field"><label class="label">Display name</label><input class="input" value="Francois Chastel" /><span class="hint">Shown on your published reports.</span></div>`,
+        "col",
+      ),
+    },
+    {
+      id: "combobox",
+      group: "Forms",
+      title: "Combobox & multi-select",
+      desc: "Searchable single-select and a checkbox multi-select with chips.",
+      html: demo(
+        `<div class="field" data-combobox><label class="label">Country</label>
+          <button class="combobox-trigger" data-menu-trigger><span data-combobox-value class="ph">Select a country…</span>${chev}</button>
+          <div data-menu><input class="cb-search" data-cb-search placeholder="Search…" /><div class="cb-list">${["United States", "France", "Japan", "Germany", "Brazil", "India", "Nigeria", "Mexico", "Indonesia", "South Africa"].map((c) => `<div class="menu-item" data-cb-option>${c}</div>`).join("")}</div></div>
+        </div>
+        <div class="field" data-multiselect><label class="label">Regions</label>
+          <button class="multiselect-trigger" data-menu-trigger><span class="ms-chips" data-ms-chips><span class="ph">Select regions…</span></span>${chev}</button>
+          <div data-menu>${["Advanced economies", "Emerging markets", "Low-income", "Euro area", "ASEAN-5"].map((r) => `<label class="check-line"><input type="checkbox" data-ms-option value="${r}" /> ${r}</label>`).join("")}</div>
+        </div>`,
+      ),
+    },
+    {
+      id: "datepicker",
+      group: "Forms",
+      title: "Date picker",
+      desc: "An input with a calendar popover.",
+      html: demo(
+        `<div class="field" data-datepicker style="position:relative">
+          <label class="label">Reference date</label>
+          <button class="combobox-trigger" data-menu-trigger><span data-dp-value class="ph">Pick a date</span><span>📅</span></button>
+          <div data-menu>${calendarHtml()}</div>
+        </div>`,
+      ),
+    },
+    {
+      id: "otp-password",
+      group: "Forms",
+      title: "Input OTP & password",
+      desc: "A one-time-code input (auto-advances, handles paste) and a password field with a strength meter.",
+      html: demo(
+        `<div class="field"><label class="label">Verification code</label><div class="otp" data-otp>${Array.from({ length: 6 }, () => `<input maxlength="1" inputmode="numeric" aria-label="digit" />`).join("")}</div></div>
+         <div class="field"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" data-password placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button" aria-label="show">👁</button></div><div class="pw-meter"><span data-pw-bar></span></div><span class="pw-hint" data-pw-hint>Use 8+ characters with letters, numbers &amp; symbols.</span></div>`,
+      ),
+    },
+    {
+      id: "file-upload",
+      group: "Forms",
+      title: "File upload",
+      desc: "A dropzone that accepts clicks and drag-and-drop.",
+      html: demo(
+        `<label class="dropzone" data-dropzone><input type="file" hidden data-dz-input />
+          <div>⬆ <strong>Click to upload</strong> or drag and drop</div>
+          <div class="muted" style="font-size:.72rem">CSV, XLSX up to 10MB</div>
+          <div class="dz-file" data-dz-file hidden></div>
+        </label>`,
+        "col",
+      ),
+    },
+    {
+      id: "search-tags",
+      group: "Forms",
+      title: "Search, tags & segmented",
+      desc: "A search input with clear, a tag input, a segmented control, and a currency input.",
+      html: demo(
+        `<div class="input-icon" data-search style="max-width:280px"><span class="lead">🔍</span><input class="input" data-search-input placeholder="Search indicators…" /><button class="clear" data-search-clear aria-label="clear">×</button></div>
+         <div class="tags" data-tags style="max-width:280px"><span class="tag">macro<button data-tag-remove aria-label="remove">×</button></span><span class="tag">weo<button data-tag-remove aria-label="remove">×</button></span><input data-tags-input placeholder="Add tag…" /></div>
+         <div class="segmented" data-segmented><button class="on">Chart</button><button>Table</button><button>Map</button></div>
+         <div class="input-icon" style="max-width:160px"><span class="lead">$</span><input class="input" value="48,200" inputmode="numeric" /></div>`,
       ),
     },
 
@@ -560,6 +643,114 @@ export function buildSections(light: TokenMap): Section[] {
           <div style="position:relative"><button data-menu-trigger>Data ${chev}</button><div data-menu><div class="menu-item">DataMapper</div><div class="menu-item">WEO database</div></div></div>
           <button data-menu-trigger style="border:none;background:transparent;padding:.35rem .7rem;cursor:pointer">About</button>
         </div>`,
+      ),
+    },
+
+    // ---------------- Blocks (page templates) ----------------
+    {
+      id: "login",
+      group: "Blocks",
+      title: "Login",
+      desc: "A sign-in page with email/password, remember-me, SSO, and sign-up link.",
+      html: demo(
+        blockFrame(
+          "app.imf.org/login",
+          `<div class="auth-card">
+            <div class="auth-logo">${init}</div>
+            <h3>Sign in</h3><p class="sub">Access the ${brandName} data workspace</p>
+            <div class="field auth-fld"><label class="label">Email</label><input class="input" placeholder="you@imf.org" /></div>
+            <div class="field auth-fld"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button">👁</button></div></div>
+            <div class="row-between"><label class="check"><input type="checkbox" /> Remember me</label><a href="#" style="color:var(--primary)">Forgot password?</a></div>
+            <button class="btn btn-primary">Sign in</button>
+            <div class="auth-divider">or</div>
+            <button class="btn btn-outline">◈ Continue with SSO</button>
+            <div class="auth-foot">New here? <a href="#">Create an account</a></div>
+          </div>`,
+        ),
+        "col",
+      ),
+    },
+    {
+      id: "signup",
+      group: "Blocks",
+      title: "Sign up",
+      desc: "A registration page with name, email, password strength, and terms.",
+      html: demo(
+        blockFrame(
+          "app.imf.org/signup",
+          `<div class="auth-card">
+            <div class="auth-logo">${init}</div>
+            <h3>Create your account</h3><p class="sub">Start exploring ${brandName} data</p>
+            <div class="field auth-fld"><label class="label">Full name</label><input class="input" placeholder="Jane Analyst" /></div>
+            <div class="field auth-fld"><label class="label">Email</label><input class="input" placeholder="you@imf.org" /></div>
+            <div class="field auth-fld"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" data-password placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button">👁</button></div><div class="pw-meter"><span data-pw-bar></span></div></div>
+            <label class="check" style="margin-bottom:.85rem;font-size:.8rem"><input type="checkbox" /> I agree to the terms &amp; privacy policy</label>
+            <button class="btn btn-primary">Create account</button>
+            <div class="auth-foot">Already have an account? <a href="#">Sign in</a></div>
+          </div>`,
+        ),
+        "col",
+      ),
+    },
+    {
+      id: "forgot-password",
+      group: "Blocks",
+      title: "Forgot password",
+      desc: "Request a password-reset link.",
+      html: demo(
+        blockFrame(
+          "app.imf.org/forgot",
+          `<div class="auth-card">
+            <div class="auth-logo">${init}</div>
+            <h3>Reset your password</h3><p class="sub">We'll email you a secure reset link</p>
+            <div class="field auth-fld"><label class="label">Email</label><input class="input" placeholder="you@imf.org" /></div>
+            <button class="btn btn-primary">Send reset link</button>
+            <div class="auth-foot"><a href="#">← Back to sign in</a></div>
+          </div>`,
+        ),
+        "col",
+      ),
+    },
+    {
+      id: "two-factor",
+      group: "Blocks",
+      title: "Two-factor",
+      desc: "Enter the one-time verification code.",
+      html: demo(
+        blockFrame(
+          "app.imf.org/verify",
+          `<div class="auth-card">
+            <div class="auth-logo">${init}</div>
+            <h3>Two-factor authentication</h3><p class="sub">Enter the 6-digit code from your authenticator</p>
+            <div class="otp" data-otp style="justify-content:center;margin-bottom:1.1rem">${Array.from({ length: 6 }, () => `<input maxlength="1" inputmode="numeric" aria-label="digit" />`).join("")}</div>
+            <button class="btn btn-primary">Verify</button>
+            <div class="auth-foot">Didn't get a code? <a href="#">Resend</a></div>
+          </div>`,
+        ),
+        "col",
+      ),
+    },
+    {
+      id: "error-404",
+      group: "Blocks",
+      title: "Error page",
+      desc: "A friendly 404 with recovery actions.",
+      html: demo(
+        blockFrame(
+          "app.imf.org/404",
+          `<div class="errstate"><div class="code">404</div><h3>Page not found</h3><p>The page you're looking for doesn't exist or has moved.</p><div style="display:flex;gap:.5rem;justify-content:center"><button class="btn btn-outline">Go back</button><button class="btn btn-primary">Home</button></div></div>`,
+        ),
+        "col",
+      ),
+    },
+    {
+      id: "empty-state",
+      group: "Blocks",
+      title: "Empty state",
+      desc: "A first-run placeholder that prompts the next action.",
+      html: demo(
+        `<div class="emptystate" style="max-width:380px;margin:0 auto"><div class="ico">📊</div><h4>No datasets yet</h4><p>Create your first projection to see it here.</p><button class="btn btn-primary btn-sm">New projection</button></div>`,
+        "col",
       ),
     },
 

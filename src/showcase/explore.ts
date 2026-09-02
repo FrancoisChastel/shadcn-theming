@@ -103,7 +103,7 @@ export function renderExploreHtml(brand: Brand, tokens: ThemeTokens): string {
   const light = tokens.light ?? tokens.dark!;
   const rootBlock = renderRootBlock(tokens, light);
   const darkBlock = tokens.dark && tokens.light ? renderDarkBlock(tokens.dark) : "";
-  const sections = buildSections(light);
+  const sections = buildSections(light, brand.name);
   const initial = brand.name.trim().charAt(0).toUpperCase() || "•";
 
   const data: ShowcaseData = {

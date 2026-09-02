@@ -435,6 +435,119 @@ export function uiMain(): void {
     if (nav) $$("[data-page]", nav).forEach((x) => x.classList.toggle("active", x === p));
   });
 
+  // ---- AI harness: streaming composer ----
+  $$("[data-ai-shell]").forEach((shell) => {
+    const convo = shell.querySelector("[data-ai-convo]") as HTMLElement | null
+    const input = shell.querySelector("[data-ai-input]") as HTMLTextAreaElement | null
+    const send = shell.querySelector("[data-ai-send]") as HTMLElement | null
+    if (!convo || !input || !send) return
+    let timer = 0
+    const scroll = () => {
+      convo.scrollTop = convo.scrollHeight
+    }
+    const REPLY =
+      "Here's how I'd approach that. I'll add the chart component, wire it to the WEO series, and keep it token-driven so it matches the theme — then verify the projection band renders."
+    const submit = () => {
+      if (timer) {
+        clearInterval(timer)
+        timer = 0
+        send.classList.remove("stop")
+        send.textContent = "↑"
+        convo.querySelector(".ai-cursor")?.remove()
+        return
+      }
+      const text = input.value.trim()
+      if (!text) return
+      convo.insertAdjacentHTML(
+        "beforeend",
+        `<div class="ai-msg user"><div class="ai-avatar">FC</div><div class="ai-body"><div class="ai-role">You</div><div class="ai-content"></div></div></div>`,
+      )
+      ;(convo.lastElementChild!.querySelector(".ai-content") as HTMLElement).textContent = text
+      input.value = ""
+      input.style.height = "auto"
+      scroll()
+      convo.insertAdjacentHTML(
+        "beforeend",
+        `<div class="ai-msg assistant"><div class="ai-avatar">◆</div><div class="ai-body"><div class="ai-role">Analyst</div><div class="ai-content"><span class="ai-stream"></span><span class="ai-cursor"></span></div></div></div>`,
+      )
+      const contentEl = convo.lastElementChild!.querySelector(".ai-content") as HTMLElement
+      const streamEl = contentEl.querySelector(".ai-stream") as HTMLElement
+      send.classList.add("stop")
+      send.textContent = "■"
+      let i = 0
+      timer = window.setInterval(() => {
+        i += 2
+        streamEl.textContent = REPLY.slice(0, i)
+        scroll()
+        if (i >= REPLY.length) {
+          clearInterval(timer)
+          timer = 0
+          contentEl.querySelector(".ai-cursor")?.remove()
+          send.classList.remove("stop")
+          send.textContent = "↑"
+        }
+      }, 20)
+    }
+    send.addEventListener("click", submit)
+    input.addEventListener("keydown", (e) => {
+      const ke = e as KeyboardEvent
+      if ((ke.metaKey || ke.ctrlKey) && ke.key === "Enter") {
+        e.preventDefault()
+        submit()
+      }
+    })
+    input.addEventListener("input", () => {
+      input.style.height = "auto"
+      input.style.height = Math.min(input.scrollHeight, 140) + "px"
+    })
+  })
+
+  // ---- AI harness: collapsibles, copy, votes, suggestions, model ----
+  document.addEventListener("click", (e) => {
+    const toolT = closest(e.target, "[data-ai-tool-toggle]")
+    if (toolT) return void toolT.closest(".ai-tool")?.classList.toggle("open")
+    const rez = closest(e.target, "[data-ai-reasoning-toggle]")
+    if (rez) return void rez.closest(".ai-reasoning")?.classList.toggle("open")
+    const vote = closest(e.target, "[data-ai-vote]")
+    if (vote) {
+      vote.parentElement?.querySelectorAll("[data-ai-vote]").forEach((v) => v.classList.remove("on"))
+      vote.classList.add("on")
+      return
+    }
+    const copyCode = closest(e.target, "[data-ai-copy-code]")
+    if (copyCode) {
+      const code = copyCode.closest(".ai-code")?.querySelector("code")?.textContent ?? ""
+      navigator.clipboard?.writeText(code).catch(() => {})
+      copyCode.textContent = "✓ Copied"
+      setTimeout(() => (copyCode.textContent = "⧉ Copy"), 1200)
+      return
+    }
+    const copyMsg = closest(e.target, "[data-ai-copy]")
+    if (copyMsg) {
+      const c = copyMsg.closest(".ai-body")?.querySelector(".ai-content")?.textContent ?? ""
+      navigator.clipboard?.writeText(c).catch(() => {})
+      copyMsg.classList.add("on")
+      setTimeout(() => copyMsg.classList.remove("on"), 1000)
+      return
+    }
+    const sugg = closest(e.target, "[data-ai-suggest]")
+    if (sugg) {
+      const wrap = sugg.closest(".ai-empty")?.parentElement
+      const inp = wrap?.querySelector("[data-ai-input]") as HTMLTextAreaElement | null
+      if (inp) {
+        inp.value = (sugg.textContent ?? "").replace(/^\S+\s/, "")
+        inp.focus()
+      }
+      return
+    }
+    const model = closest(e.target, "[data-ai-model-option]")
+    if (model) {
+      const label = model.closest(".ai-model")?.querySelector("[data-ai-model-value]")
+      if (label) label.textContent = model.textContent
+      closeMenus()
+    }
+  })
+
   // ---- scrollspy sidebar ----
   const links = $$<HTMLAnchorElement>("[data-nav-link]");
   const sections = links.map((l) => document.getElementById(l.getAttribute("href")!.slice(1))).filter(Boolean) as HTMLElement[];

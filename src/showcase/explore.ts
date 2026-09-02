@@ -19,6 +19,11 @@ import {
   regionalGrowth,
   macroLabels,
   macroColumns,
+  regionSeries,
+  groupedBars,
+  divergingCA,
+  donutParts,
+  bulletKpis,
 } from "./data.js";
 
 function esc(s: string): string {
@@ -113,6 +118,11 @@ export function renderExploreHtml(brand: Brand, tokens: ThemeTokens): string {
     regionalGrowth,
     macroLabels,
     macroColumns,
+    regionSeries,
+    groupedBars,
+    divergingCA,
+    donutParts,
+    bulletKpis,
   };
 
   const runtime = `

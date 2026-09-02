@@ -781,6 +781,22 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
           <div class="card plot-card" data-chart="heatmap" data-title="Macro indicator correlations"></div>
         </div>`,
     },
+    {
+      id: "chart-gallery",
+      group: "Scientific charts",
+      title: "Chart gallery",
+      desc: "More Observable-Plot chart types — time series, bars, area, donut, bullet, and lollipop — all theme-colored with legends and hover tips.",
+      html: `<div class="grid2">
+          <div class="card plot-card" data-chart="timeseries" data-title="Real GDP growth by region"></div>
+          <div class="card plot-card" data-chart="area-stacked" data-title="Contribution to growth (stacked)"></div>
+          <div class="card plot-card" data-chart="bar-grouped" data-title="Indicators by region (grouped)"></div>
+          <div class="card plot-card" data-chart="bar-stacked" data-title="Indicators by region (stacked)"></div>
+          <div class="card plot-card" data-chart="diverging" data-title="Current-account balance"></div>
+          <div class="card plot-card" data-chart="lollipop" data-title="Current account — ranked"></div>
+          <div class="card plot-card" data-chart="donut" data-title="Allocated reserves by currency"></div>
+          <div class="card plot-card" data-chart="bullet" data-title="Targets vs actuals"></div>
+        </div>`,
+    },
   ];
 }
 

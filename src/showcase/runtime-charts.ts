@@ -17,11 +17,19 @@ export interface ShowcaseData {
   regionalGrowth: Array<{ label: string; values: number[] }>;
   macroLabels: string[];
   macroColumns: number[][];
+  regionSeries: Array<{ region: string; points: Array<{ year: number; value: number }> }>;
+  groupedBars: Array<{ region: string; series: string; value: number }>;
+  divergingCA: Array<{ country: string; value: number }>;
+  donutParts: Array<{ label: string; value: number }>;
+  bulletKpis: Array<{ label: string; value: number; target: number; max: number; unit: string }>;
 }
 
 export function chartMain(data: ShowcaseData): void {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Plot: any = (window as any).Plot;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const d3: any = (window as any).d3;
+  const NS = "http://www.w3.org/2000/svg";
   if (!Plot) return;
 
   const C = {
@@ -186,6 +194,155 @@ export function chartMain(data: ShowcaseData): void {
           Plot.text(cells, { x: "b", y: "a", text: (d: { r: number }) => d.r.toFixed(2), fill: (d: { r: number }) => (Math.abs(d.r) > 0.55 ? C.bg : C.fg), fontSize: 10 }),
         ],
       });
+    },
+    timeseries: (w) => {
+      const rows = data.regionSeries.flatMap((s) => s.points.map((p) => ({ region: s.region, year: p.year, value: p.value })));
+      return Plot.plot({
+        ...base(),
+        width: w,
+        height: 320,
+        x: { label: null, tickFormat: "d" },
+        y: { label: "% growth", grid: true },
+        color: { domain: data.regionSeries.map((s) => s.region), range: seriesRange, legend: true },
+        marks: [
+          Plot.ruleY([0], { stroke: C.muted, strokeOpacity: 0.3 }),
+          Plot.lineY(rows, { x: "year", y: "value", stroke: "region", strokeWidth: 2, tip: true }),
+        ],
+      });
+    },
+    "bar-grouped": (w) =>
+      Plot.plot({
+        ...base(),
+        width: w,
+        height: 320,
+        x: { axis: null },
+        fx: { label: null },
+        y: { label: "%", grid: true },
+        color: { domain: ["GDP growth", "Inflation", "Unemployment"], range: seriesRange, legend: true },
+        marks: [Plot.barY(data.groupedBars, { x: "series", y: "value", fx: "region", fill: "series", tip: true }), Plot.ruleY([0])],
+      }),
+    "bar-stacked": (w) =>
+      Plot.plot({
+        ...base(),
+        width: w,
+        height: 320,
+        x: { label: null },
+        y: { label: "%", grid: true },
+        color: { domain: ["GDP growth", "Inflation", "Unemployment"], range: seriesRange, legend: true },
+        marks: [Plot.barY(data.groupedBars, { x: "region", y: "value", fill: "series", tip: true }), Plot.ruleY([0])],
+      }),
+    diverging: (w) =>
+      Plot.plot({
+        ...base(),
+        width: w,
+        height: 320,
+        marginLeft: 72,
+        x: { label: "Current account (% GDP)", grid: true },
+        y: { label: null, domain: data.divergingCA.map((d) => d.country) },
+        color: { type: "identity" },
+        marks: [
+          Plot.barX(data.divergingCA, { x: "value", y: "country", fill: (d: { value: number }) => (d.value >= 0 ? C.c1 : C.c4), tip: true }),
+          Plot.ruleX([0], { stroke: C.fg, strokeOpacity: 0.5 }),
+        ],
+      }),
+    "area-stacked": (w) => {
+      const rows = data.regionSeries.flatMap((s) => s.points.map((p) => ({ region: s.region, year: p.year, value: Math.max(0, p.value) })));
+      return Plot.plot({
+        ...base(),
+        width: w,
+        height: 320,
+        x: { label: null, tickFormat: "d" },
+        y: { label: "%", grid: true },
+        color: { domain: data.regionSeries.map((s) => s.region), range: seriesRange, legend: true },
+        marks: [Plot.areaY(rows, { x: "year", y: "value", fill: "region", fillOpacity: 0.85, tip: true }), Plot.ruleY([0])],
+      });
+    },
+    bullet: (w) => {
+      const rows = data.bulletKpis;
+      return Plot.plot({
+        ...base(),
+        width: w,
+        height: 46 * rows.length + 26,
+        marginLeft: 96,
+        x: { label: null, grid: true },
+        y: { label: null, domain: rows.map((r) => r.label) },
+        marks: [
+          Plot.barX(rows, { x: "max", y: "label", fill: "var(--muted)" }),
+          Plot.barX(rows, { x: "value", y: "label", fill: C.c1, inset: 8, tip: true, title: (d: { label: string; value: number; unit: string; target: number }) => `${d.label}: ${d.value}${d.unit} (target ${d.target})` }),
+          Plot.tickX(rows, { x: "target", y: "label", stroke: C.fg, strokeWidth: 2 }),
+        ],
+      });
+    },
+    lollipop: (w) => {
+      const rows = [...data.divergingCA].sort((a, b) => a.value - b.value);
+      return Plot.plot({
+        ...base(),
+        width: w,
+        height: 320,
+        marginLeft: 72,
+        x: { label: "Current account (% GDP)", grid: true },
+        y: { label: null, domain: rows.map((r) => r.country) },
+        marks: [
+          Plot.ruleY(rows, { y: "country", x1: 0, x2: "value", stroke: C.muted }),
+          Plot.dot(rows, { x: "value", y: "country", fill: C.c1, r: 4, tip: true }),
+        ],
+      });
+    },
+    donut: (w) => {
+      const size = Math.min(w, 300);
+      const r = size / 2;
+      const inner = r * 0.62;
+      const pie = d3.pie().value((d: { value: number }) => d.value).sort(null);
+      const arc = d3.arc().innerRadius(inner).outerRadius(r - 4).padAngle(0.012).cornerRadius(2);
+      const parts = data.donutParts;
+      const legendW = 120;
+      const svg = document.createElementNS(NS, "svg");
+      svg.setAttribute("viewBox", `0 0 ${size + legendW} ${size}`);
+      svg.setAttribute("class", "plot");
+      const g = document.createElementNS(NS, "g");
+      g.setAttribute("transform", `translate(${r},${r})`);
+      pie(parts).forEach((s: { startAngle: number; endAngle: number }, i: number) => {
+        const path = document.createElementNS(NS, "path");
+        path.setAttribute("d", arc(s) as string);
+        path.setAttribute("fill", seriesRange[i % seriesRange.length]!);
+        g.appendChild(path);
+      });
+      const total = parts.reduce((a, b) => a + b.value, 0);
+      const mk = (text: string, dy: string, fill: string, fs: number, weight = "400") => {
+        const t = document.createElementNS(NS, "text");
+        t.setAttribute("text-anchor", "middle");
+        t.setAttribute("dy", dy);
+        t.setAttribute("fill", fill);
+        t.setAttribute("font-size", String(fs));
+        t.setAttribute("font-weight", weight);
+        t.textContent = text;
+        return t;
+      };
+      g.appendChild(mk(`${total}%`, "-0.05em", "var(--foreground)", 20, "650"));
+      g.appendChild(mk("reserves", "1.3em", "var(--muted-foreground)", 11));
+      svg.appendChild(g);
+      const leg = document.createElementNS(NS, "g");
+      leg.setAttribute("transform", `translate(${size + 8},${size / 2 - parts.length * 9})`);
+      parts.forEach((p, i) => {
+        const y = i * 18;
+        const rect = document.createElementNS(NS, "rect");
+        rect.setAttribute("x", "0");
+        rect.setAttribute("y", String(y));
+        rect.setAttribute("width", "10");
+        rect.setAttribute("height", "10");
+        rect.setAttribute("rx", "2");
+        rect.setAttribute("fill", seriesRange[i % seriesRange.length]!);
+        const lbl = document.createElementNS(NS, "text");
+        lbl.setAttribute("x", "16");
+        lbl.setAttribute("y", String(y + 9));
+        lbl.setAttribute("fill", "var(--muted-foreground)");
+        lbl.setAttribute("font-size", "11");
+        lbl.textContent = `${p.label} ${p.value}%`;
+        leg.appendChild(rect);
+        leg.appendChild(lbl);
+      });
+      svg.appendChild(leg);
+      return svg;
     },
   };
 

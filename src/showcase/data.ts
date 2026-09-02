@@ -105,6 +105,59 @@ export interface Kpi {
   data: number[];
 }
 
+/** Multi-line time series: real GDP growth (%) by region, 2015–2029. */
+export const regionSeries: Array<{ region: string; points: Array<{ year: number; value: number }> }> = (() => {
+  const regions = [
+    { region: "Advanced", base: 1.8, sd: 0.6 },
+    { region: "Emerging", base: 4.4, sd: 0.9 },
+    { region: "Low-income", base: 5.0, sd: 1.1 },
+  ];
+  return regions.map((r) => ({
+    region: r.region,
+    points: Array.from({ length: 15 }, (_, i) => {
+      const year = 2015 + i;
+      const shock = year === 2020 ? -6 : 0;
+      return { year, value: Number((r.base + shock + normal(rand, 0, r.sd)).toFixed(2)) };
+    }),
+  }));
+})();
+
+/** Grouped/stacked bars: indicator values (%) by region. */
+export const groupedBars: Array<{ region: string; series: string; value: number }> = (() => {
+  const regions = ["Advanced", "Euro area", "Emerging", "ASEAN-5", "Low-income"];
+  const series: Array<[string, number, number]> = [
+    ["GDP growth", 3, 1.5],
+    ["Inflation", 4.5, 1.2],
+    ["Unemployment", 6, 1.4],
+  ];
+  return regions.flatMap((region) =>
+    series.map(([s, mean, sd]) => ({ region, series: s, value: Number(Math.max(0, normal(rand, mean, sd)).toFixed(1)) })),
+  );
+})();
+
+/** Diverging bars: current-account balance (% of GDP) by country. */
+export const divergingCA: Array<{ country: string; value: number }> = [
+  "Germany", "Japan", "China", "Korea", "Brazil", "India", "USA", "UK", "Turkey",
+].map((country) => ({ country, value: Number(normal(rand, 0, 3.2).toFixed(1)) }))
+  .sort((a, b) => b.value - a.value);
+
+/** Donut composition: allocated reserves by currency (%). */
+export const donutParts: Array<{ label: string; value: number }> = [
+  { label: "USD", value: 58 },
+  { label: "EUR", value: 20 },
+  { label: "JPY", value: 6 },
+  { label: "GBP", value: 5 },
+  { label: "CNY", value: 3 },
+  { label: "Other", value: 8 },
+];
+
+/** Bullet KPIs: actual vs target. */
+export const bulletKpis: Array<{ label: string; value: number; target: number; max: number; unit: string }> = [
+  { label: "Growth", value: 3.2, target: 3.0, max: 6, unit: "%" },
+  { label: "Inflation", value: 5.8, target: 4.0, max: 10, unit: "%" },
+  { label: "Reserves cover", value: 7.4, target: 6.0, max: 12, unit: "mo" },
+];
+
 /** Headline KPI tiles. */
 export const kpis: Kpi[] = [
   { label: "World GDP growth", value: "3.2%", delta: 0.1, deltaLabel: "vs WEO Apr", data: [3.6, 3.3, 2.8, -2.7, 6.5, 3.6, 3.3, 3.2] },

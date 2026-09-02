@@ -17,6 +17,11 @@ import {
   regionalGrowth,
   macroLabels,
   macroColumns,
+  regionSeries,
+  groupedBars,
+  divergingCA,
+  donutParts,
+  bulletKpis,
   kpis,
   type Kpi,
 } from "./data.js";
@@ -183,6 +188,11 @@ export function renderShowcaseHtml(brand: Brand, tokens: ThemeTokens): string {
     regionalGrowth,
     macroLabels,
     macroColumns,
+    regionSeries,
+    groupedBars,
+    divergingCA,
+    donutParts,
+    bulletKpis,
   };
   const runtime = `(${chartMain.toString()})(${JSON.stringify(data)});`;
 

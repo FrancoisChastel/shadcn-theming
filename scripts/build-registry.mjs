@@ -53,6 +53,15 @@ const ITEMS = [
     target: "lib/use-plot.ts",
   },
   {
+    name: "icon",
+    type: "registry:component",
+    title: "Icon",
+    description:
+      "A zero-dependency <Icon> component with 79 Lucide-style stroke icons that inherit currentColor — the exact set used across the design system. Decorative by default; pass aria-label to expose it.",
+    source: "components/ui/icon.tsx",
+    target: "components/ui/icon.tsx",
+  },
+  {
     name: "sparkline",
     type: "registry:component",
     title: "Sparkline",

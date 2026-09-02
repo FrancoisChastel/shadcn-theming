@@ -4,6 +4,7 @@
  * components and charts, so they inherit the brand theme.
  */
 import type { Section } from "./sections.js";
+import { icon } from "./icons.js";
 
 const demo = (inner: string) => `<div class="demo col">${inner}</div>`;
 const frame = (url: string, inner: string) =>
@@ -53,7 +54,7 @@ function countryProfile(): string {
     "imf.org/countries/USA",
     `<div class="country">
       <div class="country-head">
-        <span class="flag">🇺🇸</span>
+        <span class="flag">${icon("globe", { size: 22 })}</span>
         <div style="flex:1"><h3>United States</h3><div class="muted" style="font-size:.82rem">Article IV · Advanced economy</div></div>
         <span class="badge badge-secondary">G7</span><span class="badge badge-outline">SDR 82.99bn quota</span>
         <button class="btn btn-outline btn-sm">Download data</button>
@@ -117,7 +118,7 @@ function dashboard(): string {
   return frame(
     "app.imf.org/dashboard",
     `<div class="country">
-      ${sysHead("Overview", `<button class="btn btn-outline btn-sm">Last 12 months ▾</button><button class="btn btn-primary btn-sm">Export</button>`)}
+      ${sysHead("Overview", `<button class="btn btn-outline btn-sm" style="display:inline-flex;align-items:center;gap:.35rem">Last 12 months ${icon("chevron-down", { size: 14 })}</button><button class="btn btn-primary btn-sm">Export</button>`)}
       <div class="sys-body">
         <div class="kpi-row">${miniKpi("World GDP growth", "3.2%", "0.1", true)}${miniKpi("Inflation", "5.8%", "1.2", false)}${miniKpi("Debt / GDP", "93.2%", "1.6", false)}${miniKpi("Trade", "+3.4%", "2.1", true)}</div>
         <div class="grid2"><div class="card plot-card" data-chart="timeseries" data-title="Growth by region"></div><div class="card plot-card" data-chart="donut" data-title="Reserves by currency"></div></div>
@@ -138,7 +139,7 @@ function searchResults(): string {
   return frame(
     "app.imf.org/search?q=inflation",
     `<div class="country">
-      ${sysHead("", `<div class="input-icon" data-search style="max-width:360px;flex:1"><span class="lead" aria-hidden="true">🔍</span><input class="input" value="inflation outlook" aria-label="Search" /><button class="clear" data-search-clear aria-label="clear">×</button></div>`)}
+      ${sysHead("", `<div class="input-icon" data-search style="max-width:360px;flex:1"><span class="lead" aria-hidden="true">${icon("search", { size: 15 })}</span><input class="input" value="inflation outlook" aria-label="Search" /><button class="clear" data-search-clear aria-label="clear">×</button></div>`)}
       <div class="sys-body">
         <div class="filter-chips"><span class="fc on">All</span><span class="fc">Publications</span><span class="fc">Data</span><span class="fc">Blogs</span><span class="fc">Countries</span></div>
         <span class="muted" style="font-size:.8rem">About 1,240 results</span>
@@ -150,10 +151,10 @@ function searchResults(): string {
 
 function notifications(): string {
   const items: Array<[string, string, string, boolean]> = [
-    ["📈", "WEO October data is now available", "2h ago", true],
-    ["💬", "New comment on your growth projection", "5h ago", true],
-    ["✅", "Your CSV export completed", "Yesterday", false],
-    ["🔔", "Fiscal Monitor was published", "2 days ago", false],
+    [icon("bar-chart", { size: 16 }), "WEO October data is now available", "2h ago", true],
+    [icon("message", { size: 16 }), "New comment on your growth projection", "5h ago", true],
+    [icon("check-circle", { size: 16 }), "Your CSV export completed", "Yesterday", false],
+    [icon("bell", { size: 16 }), "Fiscal Monitor was published", "2 days ago", false],
   ];
   return frame(
     "app.imf.org/notifications",

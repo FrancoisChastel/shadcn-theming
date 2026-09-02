@@ -13,6 +13,7 @@ import { buildSections, type Section } from "./sections.js";
 import { chartMain, type ShowcaseData } from "./runtime-charts.js";
 import { uiMain } from "./runtime-ui.js";
 import { renderPlotScripts } from "./plot-asset.js";
+import { icon } from "./icons.js";
 import {
   gdpProjection,
   growthDistribution,
@@ -98,7 +99,7 @@ function overlays(): string {
     </div></div>
 
   <div class="overlay" id="sheet-1"><div class="backdrop" data-close></div>
-    <div class="sheet"><div style="display:flex;justify-content:space-between;align-items:start"><div><h3 style="margin:0">Filters</h3><p class="muted" style="font-size:.83rem;margin:.3rem 0 0">Refine the dataset</p></div><button class="btn btn-ghost btn-icon" data-close>✕</button></div>
+    <div class="sheet"><div style="display:flex;justify-content:space-between;align-items:start"><div><h3 style="margin:0">Filters</h3><p class="muted" style="font-size:.83rem;margin:.3rem 0 0">Refine the dataset</p></div><button class="btn btn-ghost btn-icon" data-close aria-label="Close">${icon("x", { size: 16 })}</button></div>
       <div style="margin-top:1.25rem;display:flex;flex-direction:column;gap:1rem">
         <div class="field"><label class="label">Indicator</label><input class="input" value="Real GDP growth" /></div>
         <label class="check"><input type="checkbox" checked /> Include projections</label>
@@ -164,7 +165,7 @@ ${EXPLORE_CSS}
     <div class="topbar">
       ${o.showTopNav ? renderTopNav(o.activeFile) : ""}
       <button type="button" class="search" aria-label="Search — open command palette" aria-keyshortcuts="Meta+K Control+K" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
-        <span aria-hidden="true">🔍</span> Search… <kbd>⌘K</kbd>
+        ${icon("search", { size: 15 })} Search… <kbd>⌘K</kbd>
       </button>
       <button class="btn btn-outline btn-sm" data-toggle-theme>Toggle theme</button>
     </div>

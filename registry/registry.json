@@ -33,6 +33,20 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "icon",
+      "type": "registry:component",
+      "title": "Icon",
+      "description": "A zero-dependency <Icon> component with 79 Lucide-style stroke icons that inherit currentColor — the exact set used across the design system. Decorative by default; pass aria-label to expose it.",
+      "files": [
+        {
+          "path": "components/ui/icon.tsx",
+          "type": "registry:component",
+          "target": "components/ui/icon.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "sparkline",
       "type": "registry:component",
       "title": "Sparkline",

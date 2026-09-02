@@ -389,7 +389,15 @@ export function uiMain(): void {
     const t = closest(e.target, "[data-toggle-pw]")
     if (!t) return
     const inp = t.parentElement?.querySelector("input") as HTMLInputElement | null
-    if (inp) inp.type = inp.type === "password" ? "text" : "password"
+    if (!inp) return
+    const shown = inp.type === "password"
+    inp.type = shown ? "text" : "password"
+    const EYE =
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>'
+    const EYE_OFF =
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><path d="m2 2 20 20"/></svg>'
+    t.innerHTML = shown ? EYE_OFF : EYE
+    t.setAttribute("aria-label", shown ? "Hide password" : "Show password")
   })
   const PW_COLORS = ["transparent", "var(--destructive)", "var(--chart-3)", "var(--chart-1)", "var(--chart-5)"]
   const PW_HINTS = ["", "Weak — add length and variety.", "Fair — add numbers or symbols.", "Good.", "Strong password."]
@@ -541,6 +549,13 @@ export function uiMain(): void {
     const input = shell.querySelector("[data-ai-input]") as HTMLTextAreaElement | null
     const send = shell.querySelector("[data-ai-send]") as HTMLElement | null
     if (!convo || !input || !send) return
+    // Inline icon markup (this runtime is stringified, so it can't import icon()).
+    const SEND_SVG =
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>'
+    const STOP_SVG =
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><rect width="12" height="12" x="6" y="6" rx="2"/></svg>'
+    const SPARK_SVG =
+      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>'
     let timer = 0
     const scroll = () => {
       convo.scrollTop = convo.scrollHeight
@@ -552,7 +567,7 @@ export function uiMain(): void {
         clearInterval(timer)
         timer = 0
         send.classList.remove("stop")
-        send.textContent = "↑"
+        send.innerHTML = SEND_SVG
         convo.querySelector(".ai-cursor")?.remove()
         return
       }
@@ -568,12 +583,12 @@ export function uiMain(): void {
       scroll()
       convo.insertAdjacentHTML(
         "beforeend",
-        `<div class="ai-msg assistant"><div class="ai-avatar">◆</div><div class="ai-body"><div class="ai-role">Analyst</div><div class="ai-content"><span class="ai-stream"></span><span class="ai-cursor"></span></div></div></div>`,
+        `<div class="ai-msg assistant"><div class="ai-avatar">${SPARK_SVG}</div><div class="ai-body"><div class="ai-role">Analyst</div><div class="ai-content"><span class="ai-stream"></span><span class="ai-cursor"></span></div></div></div>`,
       )
       const contentEl = convo.lastElementChild!.querySelector(".ai-content") as HTMLElement
       const streamEl = contentEl.querySelector(".ai-stream") as HTMLElement
       send.classList.add("stop")
-      send.textContent = "■"
+      send.innerHTML = STOP_SVG
       let i = 0
       timer = window.setInterval(() => {
         i += 2
@@ -584,7 +599,7 @@ export function uiMain(): void {
           timer = 0
           contentEl.querySelector(".ai-cursor")?.remove()
           send.classList.remove("stop")
-          send.textContent = "↑"
+          send.innerHTML = SEND_SVG
         }
       }, 20)
     }
@@ -618,8 +633,12 @@ export function uiMain(): void {
     if (copyCode) {
       const code = copyCode.closest(".ai-code")?.querySelector("code")?.textContent ?? ""
       navigator.clipboard?.writeText(code).catch(() => {})
-      copyCode.textContent = "✓ Copied"
-      setTimeout(() => (copyCode.textContent = "⧉ Copy"), 1200)
+      const CHK =
+        '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>'
+      const CPY =
+        '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>'
+      copyCode.innerHTML = CHK + " Copied"
+      setTimeout(() => (copyCode.innerHTML = CPY + " Copy"), 1200)
       return
     }
     const copyMsg = closest(e.target, "[data-ai-copy]")
@@ -635,7 +654,9 @@ export function uiMain(): void {
       const wrap = sugg.closest(".ai-empty")?.parentElement
       const inp = wrap?.querySelector("[data-ai-input]") as HTMLTextAreaElement | null
       if (inp) {
-        inp.value = (sugg.textContent ?? "").replace(/^\S+\s/, "")
+        // The prompt text lives in a <span>; the leading icon is an aria-hidden SVG.
+        const sp = sugg.querySelector("span")
+        inp.value = (sp?.textContent ?? sugg.textContent ?? "").trim()
         inp.focus()
       }
       return

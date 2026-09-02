@@ -216,7 +216,9 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 
 /* alert */
 .alert { display: flex; gap: 0.7rem; border-radius: var(--radius); border: 1px solid var(--border); padding: 0.9rem 1rem; font-size: 0.86rem; background: var(--card); }
-.alert .ico { color: var(--muted-foreground); }
+.alert .ico { color: var(--muted-foreground); display: inline-flex; align-items: center; flex: none; }
+.alert .ico svg { flex: none; }
+.ai-act svg { display: block; }
 .alert-destructive { border-color: var(--destructive); color: var(--destructive); }
 .alert-destructive .ico { color: var(--destructive); }
 
@@ -435,12 +437,13 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 .input.invalid, .invalid > .select-trigger, .invalid.combobox-trigger { border-color: var(--destructive); }
 .input.invalid:focus { outline-color: var(--destructive); }
 .input-icon { position: relative; display: flex; align-items: center; }
-.input-icon .lead { position: absolute; left: 0.7rem; color: var(--muted-foreground); pointer-events: none; font-size: 0.9rem; }
+.input-icon .lead { position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%); color: var(--muted-foreground); pointer-events: none; font-size: 0.9rem; display: inline-flex; align-items: center; }
 .input-icon .input { padding-left: 2rem; }
 .input-icon .clear { position: absolute; right: 0.5rem; border: none; background: var(--muted); color: var(--muted-foreground); width: 1.15rem; height: 1.15rem; border-radius: 999px; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 0.7rem; }
 .input-icon.has-value .clear { display: inline-flex; }
 .pw-wrap { position: relative; }
-.pw-wrap .toggle-pw { position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); border: none; background: none; color: var(--muted-foreground); cursor: pointer; font-size: 0.9rem; }
+.pw-wrap .toggle-pw { position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); border: none; background: none; color: var(--muted-foreground); cursor: pointer; font-size: 0.9rem; display: inline-flex; align-items: center; padding: 0.15rem; }
+.pw-wrap .toggle-pw:hover { color: var(--foreground); }
 .pw-meter { height: 4px; border-radius: 999px; background: var(--secondary); overflow: hidden; margin-top: 0.4rem; }
 .pw-meter > span { display: block; height: 100%; width: 0; transition: width .2s, background .2s; }
 .pw-hint { font-size: 0.72rem; color: var(--muted-foreground); margin-top: 0.25rem; }
@@ -494,7 +497,7 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 .errstate h3 { margin: 0.75rem 0 0.4rem; font-size: 1.35rem; }
 .errstate p { color: var(--muted-foreground); margin: 0 0 1.25rem; }
 .emptystate { text-align: center; padding: 2.5rem 1rem; color: var(--muted-foreground); border: 1.5px dashed var(--border); border-radius: var(--radius); }
-.emptystate .ico { font-size: 2rem; opacity: 0.5; }
+.emptystate .ico { font-size: 2rem; opacity: 0.5; color: var(--muted-foreground); display: inline-flex; }
 .emptystate h4 { margin: 0.6rem 0 0.3rem; color: var(--foreground); font-size: 1rem; }
 .emptystate p { margin: 0 0 1rem; font-size: 0.85rem; }
 
@@ -581,7 +584,8 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 .ai-cite .num { width: 1rem; height: 1rem; border-radius: 999px; background: var(--primary); color: var(--primary-foreground); display: grid; place-items: center; font-size: 0.62rem; }
 /* suggested prompts */
 .ai-suggest { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.ai-suggest button { border: 1px solid var(--border); background: var(--card); color: var(--foreground); border-radius: var(--radius); padding: 0.55rem 0.8rem; font-size: 0.82rem; cursor: pointer; text-align: left; }
+.ai-suggest button { display: inline-flex; align-items: center; gap: 0.55rem; border: 1px solid var(--border); background: var(--card); color: var(--foreground); border-radius: var(--radius); padding: 0.55rem 0.8rem; font-size: 0.82rem; cursor: pointer; text-align: left; }
+.ai-suggest button svg { flex: none; color: var(--primary); }
 .ai-suggest button:hover { border-color: var(--primary); background: var(--accent); }
 /* composer */
 .ai-composer { border-top: 1px solid var(--border); padding: 0.75rem; }
@@ -634,6 +638,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
 .ex-head h3 { margin: 0; font-size: 1.15rem; }
 .country-head { display: flex; align-items: center; gap: 1rem; padding: 1.25rem; border-bottom: 1px solid var(--border); }
 .country-head .flag { width: 3rem; height: 3rem; border-radius: var(--radius); background: var(--secondary); display: grid; place-items: center; font-size: 1.5rem; flex: none; }
+.country-head .flag svg { color: var(--primary); }
 .country-head h3 { margin: 0; font-size: 1.35rem; }
 .country-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 1.25rem; }
 .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; }
@@ -742,7 +747,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
     <div class="topbar">
       <nav class="pagenav"><a href="index.html">Design system</a><a href="components.html" class="active">Components</a><a href="layouts.html">Layouts &amp; pages</a><a href="templates.html">Templates</a><a href="charts.html">Charts</a><a href="ai.html">AI harness</a></nav>
       <button type="button" class="search" aria-label="Search — open command palette" aria-keyshortcuts="Meta+K Control+K" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
-        <span aria-hidden="true">🔍</span> Search… <kbd>⌘K</kbd>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Search… <kbd>⌘K</kbd>
       </button>
       <button class="btn btn-outline btn-sm" data-toggle-theme>Toggle theme</button>
     </div>
@@ -762,7 +767,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
            <button class="btn btn-link">Link</button></div><div class="demo "><button class="btn btn-primary btn-sm">Small</button>
            <button class="btn btn-primary">Default</button>
            <button class="btn btn-primary btn-lg">Large</button>
-           <button class="btn btn-outline btn-icon" aria-label="settings">⚙</button>
+           <button class="btn btn-outline btn-icon" aria-label="settings"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></button>
            <button class="btn btn-primary" disabled>Disabled</button>
            <button class="btn btn-secondary">◐ Loading…</button></div>
   </section>
@@ -796,7 +801,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
     <h2>Select</h2>
     <p class="desc">A custom, keyboard-friendly select.</p>
     <div class="demo col"><div class="field" data-select><label class="label">Region</label>
-          <button class="select-trigger" data-menu-trigger><span data-select-value>Advanced economies</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <button class="select-trigger" data-menu-trigger><span data-select-value>Advanced economies</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button>
           <div data-menu>
             <div class="menu-item" data-select-option>Advanced economies</div>
             <div class="menu-item" data-select-option>Emerging markets</div>
@@ -816,11 +821,11 @@ table.dt .dt-check input { accent-color: var(--primary); }
     <h2>Combobox &amp; multi-select</h2>
     <p class="desc">Searchable single-select and a checkbox multi-select with chips.</p>
     <div class="demo "><div class="field" data-combobox><label class="label">Country</label>
-          <button class="combobox-trigger" data-menu-trigger><span data-combobox-value class="ph">Select a country…</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <button class="combobox-trigger" data-menu-trigger><span data-combobox-value class="ph">Select a country…</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button>
           <div data-menu><input class="cb-search" data-cb-search placeholder="Search…" /><div class="cb-list"><div class="menu-item" data-cb-option>United States</div><div class="menu-item" data-cb-option>France</div><div class="menu-item" data-cb-option>Japan</div><div class="menu-item" data-cb-option>Germany</div><div class="menu-item" data-cb-option>Brazil</div><div class="menu-item" data-cb-option>India</div><div class="menu-item" data-cb-option>Nigeria</div><div class="menu-item" data-cb-option>Mexico</div><div class="menu-item" data-cb-option>Indonesia</div><div class="menu-item" data-cb-option>South Africa</div></div></div>
         </div>
         <div class="field" data-multiselect><label class="label">Regions</label>
-          <button class="multiselect-trigger" data-menu-trigger><span class="ms-chips" data-ms-chips><span class="ph">Select regions…</span></span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <button class="multiselect-trigger" data-menu-trigger><span class="ms-chips" data-ms-chips><span class="ph">Select regions…</span></span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button>
           <div data-menu><label class="check-line"><input type="checkbox" data-ms-option value="Advanced economies" /> Advanced economies</label><label class="check-line"><input type="checkbox" data-ms-option value="Emerging markets" /> Emerging markets</label><label class="check-line"><input type="checkbox" data-ms-option value="Low-income" /> Low-income</label><label class="check-line"><input type="checkbox" data-ms-option value="Euro area" /> Euro area</label><label class="check-line"><input type="checkbox" data-ms-option value="ASEAN-5" /> ASEAN-5</label></div>
         </div></div>
   </section>
@@ -829,21 +834,21 @@ table.dt .dt-check input { accent-color: var(--primary); }
     <p class="desc">An input with a calendar popover.</p>
     <div class="demo "><div class="field" data-datepicker style="position:relative">
           <label class="label">Reference date</label>
-          <button class="combobox-trigger" data-menu-trigger><span data-dp-value class="ph">Pick a date</span><span>📅</span></button>
-          <div data-menu><div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm" aria-label="Previous month">‹</button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm" aria-label="Next month">›</button></div><div class="cal-grid"><span class="dow">Su</span><span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span><span class="day out">28</span><span class="day out">29</span><span class="day out">30</span><span class="day out">31</span><span class="day out">32</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day sel">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span></div></div></div>
+          <button class="combobox-trigger" data-menu-trigger><span data-dp-value class="ph">Pick a date</span><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span></button>
+          <div data-menu><div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm" aria-label="Previous month"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm" aria-label="Next month"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button></div><div class="cal-grid"><span class="dow">Su</span><span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span><span class="day out">28</span><span class="day out">29</span><span class="day out">30</span><span class="day out">31</span><span class="day out">32</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day sel">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span></div></div></div>
         </div></div>
   </section>
 <section class="block" id="otp-password">
     <h2>Input OTP &amp; password</h2>
     <p class="desc">A one-time-code input (auto-advances, handles paste) and a password field with a strength meter.</p>
     <div class="demo "><div class="field"><label class="label">Verification code</label><div class="otp" data-otp><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /><input maxlength="1" inputmode="numeric" aria-label="digit" /></div></div>
-         <div class="field"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" data-password placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button" aria-label="show">👁</button></div><div class="pw-meter"><span data-pw-bar></span></div><span class="pw-hint" data-pw-hint>Use 8+ characters with letters, numbers &amp; symbols.</span></div></div>
+         <div class="field"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" data-password placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button" aria-label="Show password"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></button></div><div class="pw-meter"><span data-pw-bar></span></div><span class="pw-hint" data-pw-hint>Use 8+ characters with letters, numbers &amp; symbols.</span></div></div>
   </section>
 <section class="block" id="file-upload">
     <h2>File upload</h2>
     <p class="desc">A dropzone that accepts clicks and drag-and-drop.</p>
     <div class="demo col"><label class="dropzone" data-dropzone><input type="file" hidden data-dz-input />
-          <div>⬆ <strong>Click to upload</strong> or drag and drop</div>
+          <div style="display:flex;align-items:center;gap:.4rem;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg> <strong>Click to upload</strong> or drag and drop</div>
           <div class="muted" style="font-size:.72rem">CSV, XLSX up to 10MB</div>
           <div class="dz-file" data-dz-file hidden></div>
         </label></div>
@@ -851,7 +856,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
 <section class="block" id="search-tags">
     <h2>Search, tags &amp; segmented</h2>
     <p class="desc">A search input with clear, a tag input, a segmented control, and a currency input.</p>
-    <div class="demo "><div class="input-icon" data-search style="max-width:280px"><span class="lead">🔍</span><input class="input" data-search-input placeholder="Search indicators…" /><button class="clear" data-search-clear aria-label="clear">×</button></div>
+    <div class="demo "><div class="input-icon" data-search style="max-width:280px"><span class="lead"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><input class="input" data-search-input placeholder="Search indicators…" /><button class="clear" data-search-clear aria-label="clear">×</button></div>
          <div class="tags" data-tags style="max-width:280px"><span class="tag">macro<button data-tag-remove aria-label="remove">×</button></span><span class="tag">weo<button data-tag-remove aria-label="remove">×</button></span><input data-tags-input placeholder="Add tag…" /></div>
          <div class="segmented" data-segmented><button class="on">Chart</button><button>Table</button><button>Map</button></div>
          <div class="input-icon" style="max-width:160px"><span class="lead" aria-hidden="true">$</span><input class="input" value="48,200" inputmode="numeric" aria-label="Amount in USD" /></div></div>
@@ -924,9 +929,9 @@ table.dt .dt-check input { accent-color: var(--primary); }
     <h2>Tree view</h2>
     <p class="desc">A collapsible hierarchy — click a folder to expand or collapse.</p>
     <div class="demo col"><div class="tree">
-    <div class="tree-item open"><div class="tree-row" data-tree-toggle><svg class="tw-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>📁 app</div><div class="tree-children"><div class="tree-item open"><div class="tree-row" data-tree-toggle><svg class="tw-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>📁 dashboard</div><div class="tree-children"><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span>📄 page.tsx</div></div><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span>📄 growth-chart.tsx</div></div></div></div><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span>📄 layout.tsx</div></div></div></div>
-    <div class="tree-item"><div class="tree-row" data-tree-toggle><svg class="tw-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>📁 components</div><div class="tree-children"><div class="tree-item"><div class="tree-row" data-tree-toggle><svg class="tw-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>📁 ui</div><div class="tree-children"><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span>📄 data-table.tsx</div></div><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span>📄 stat-card.tsx</div></div></div></div></div></div>
-    <div class="tree-item"><div class="tree-row" data-tree-toggle><svg class="tw-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>📁 lib</div><div class="tree-children"><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span>📄 utils.ts</div></div><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span>📄 stats.ts</div></div></div></div>
+    <div class="tree-item open"><div class="tree-row" data-tree-toggle><svg class="tw-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg> app</div><div class="tree-children"><div class="tree-item open"><div class="tree-row" data-tree-toggle><svg class="tw-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg> dashboard</div><div class="tree-children"><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/></svg> page.tsx</div></div><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/></svg> growth-chart.tsx</div></div></div></div><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/></svg> layout.tsx</div></div></div></div>
+    <div class="tree-item"><div class="tree-row" data-tree-toggle><svg class="tw-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg> components</div><div class="tree-children"><div class="tree-item"><div class="tree-row" data-tree-toggle><svg class="tw-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg> ui</div><div class="tree-children"><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/></svg> data-table.tsx</div></div><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/></svg> stat-card.tsx</div></div></div></div></div></div>
+    <div class="tree-item"><div class="tree-row" data-tree-toggle><svg class="tw-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg> lib</div><div class="tree-children"><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/></svg> utils.ts</div></div><div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/></svg> stats.ts</div></div></div></div>
   </div></div>
   </section>
 <section class="block" id="timeline">
@@ -942,8 +947,8 @@ table.dt .dt-check input { accent-color: var(--primary); }
     <h2>Stepper</h2>
     <p class="desc">A multi-step progress indicator.</p>
     <div class="demo col"><div class="stepper" style="width:100%">
-          <div class="step done"><span class="num">✓</span><span class="st-label">Account</span><span class="line"></span></div>
-          <div class="step done"><span class="num">✓</span><span class="st-label">Profile</span><span class="line"></span></div>
+          <div class="step done"><span class="num"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg></span><span class="st-label">Account</span><span class="line"></span></div>
+          <div class="step done"><span class="num"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg></span><span class="st-label">Profile</span><span class="line"></span></div>
           <div class="step active"><span class="num">3</span><span class="st-label">Review</span><span class="line"></span></div>
           <div class="step pending"><span class="num">4</span><span class="st-label">Done</span></div>
         </div></div>
@@ -978,7 +983,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
 <section class="block" id="code-block">
     <h2>Code block</h2>
     <p class="desc">A syntax-highlighted block with a copy button.</p>
-    <div class="demo col"><div class="ai-code" style="max-width:520px"><div class="ai-code-head"><span>bash</span><button class="ai-code-copy" data-ai-copy-code>⧉ Copy</button></div><pre><code><span class="tok-com"># apply a brand theme</span>
+    <div class="demo col"><div class="ai-code" style="max-width:520px"><div class="ai-code-head"><span>bash</span><button class="ai-code-copy" data-ai-copy-code><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy</button></div><pre><code><span class="tok-com"># apply a brand theme</span>
 <span class="tok-fn">npx</span> shadcn-theming apply brand.json <span class="tok-key">--yes</span></code></pre></div></div>
   </section>
 <section class="block" id="progress-skeleton">
@@ -1006,9 +1011,9 @@ table.dt .dt-check input { accent-color: var(--primary); }
     <h2>Accordion</h2>
     <p class="desc">Vertically stacked, collapsible sections.</p>
     <div class="demo col"><div data-accordion="single" style="width:100%">
-          <div data-acc-item class="open"><button data-acc-trigger aria-expanded="true">What is the WEO?<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div class="acc-content"><div class="acc-content-inner">The World Economic Outlook presents the IMF's analysis and projections of economic developments.</div></div></div>
-          <div data-acc-item><button data-acc-trigger aria-expanded="false">How often is it published?<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div class="acc-content"><div class="acc-content-inner">Twice a year, in April and October, with interim updates in January and July.</div></div></div>
-          <div data-acc-item><button data-acc-trigger aria-expanded="false">Where does the data come from?<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div class="acc-content"><div class="acc-content-inner">National authorities and IMF staff estimates, compiled into a consistent framework.</div></div></div>
+          <div data-acc-item class="open"><button data-acc-trigger aria-expanded="true">What is the WEO?<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button><div class="acc-content"><div class="acc-content-inner">The World Economic Outlook presents the IMF's analysis and projections of economic developments.</div></div></div>
+          <div data-acc-item><button data-acc-trigger aria-expanded="false">How often is it published?<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button><div class="acc-content"><div class="acc-content-inner">Twice a year, in April and October, with interim updates in January and July.</div></div></div>
+          <div data-acc-item><button data-acc-trigger aria-expanded="false">Where does the data come from?<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button><div class="acc-content"><div class="acc-content-inner">National authorities and IMF staff estimates, compiled into a consistent framework.</div></div></div>
         </div></div>
   </section>
 <section class="block" id="carousel">
@@ -1024,7 +1029,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
 <section class="block" id="calendar">
     <h2>Calendar</h2>
     <p class="desc">A month view for date selection.</p>
-    <div class="demo "><div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm" aria-label="Previous month">‹</button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm" aria-label="Next month">›</button></div><div class="cal-grid"><span class="dow">Su</span><span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span><span class="day out">28</span><span class="day out">29</span><span class="day out">30</span><span class="day out">31</span><span class="day out">32</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day sel">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span></div></div></div>
+    <div class="demo "><div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm" aria-label="Previous month"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm" aria-label="Next month"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button></div><div class="cal-grid"><span class="dow">Su</span><span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span><span class="day out">28</span><span class="day out">29</span><span class="day out">30</span><span class="day out">31</span><span class="day out">32</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day sel">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span></div></div></div>
   </section>
 <section class="block" id="tooltip-hover">
     <h2>Tooltip &amp; Hover Card</h2>
@@ -1064,13 +1069,13 @@ table.dt .dt-check input { accent-color: var(--primary); }
     <h2>Dropdown &amp; Context Menu</h2>
     <p class="desc">Menus triggered by click or right-click.</p>
     <div class="demo "><div data-menu-trigger style="position:relative;display:inline-block">
-           <button class="btn btn-outline">Options <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+           <button class="btn btn-outline">Options <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button>
            <div data-menu>
              <div class="menu-label">Series</div>
-             <div class="menu-item">✎ Rename</div>
-             <div class="menu-item">⧉ Duplicate</div>
+             <div class="menu-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> Rename</div>
+             <div class="menu-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Duplicate</div>
              <div class="menu-sep"></div>
-             <div class="menu-item danger">🗑 Delete</div>
+             <div class="menu-item danger"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete</div>
            </div>
          </div>
          <div data-context style="position:relative"><div class="card" style="padding:1rem 1.5rem">Right-click me
@@ -1106,7 +1111,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
 <section class="block" id="alert">
     <h2>Alert</h2>
     <p class="desc">Inline callouts.</p>
-    <div class="demo col"><div class="alert" style="width:100%"><span class="ico">ℹ</span><div><strong>Heads up</strong><div class="muted" style="font-size:.82rem">The October WEO update is now available.</div></div></div></div><div class="demo col"><div class="alert alert-destructive" style="width:100%"><span class="ico">⚠</span><div><strong>Downside risk</strong><div style="font-size:.82rem">Financial conditions have tightened materially.</div></div></div></div>
+    <div class="demo col"><div class="alert" style="width:100%"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div><strong>Heads up</strong><div class="muted" style="font-size:.82rem">The October WEO update is now available.</div></div></div></div><div class="demo col"><div class="alert alert-destructive" style="width:100%"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div><strong>Downside risk</strong><div style="font-size:.82rem">Financial conditions have tightened materially.</div></div></div></div>
   </section>
 <section class="block" id="toast">
     <h2>Toast</h2>
@@ -1123,8 +1128,8 @@ table.dt .dt-check input { accent-color: var(--primary); }
     <h2>Navigation Menu</h2>
     <p class="desc">A top-level navigation with dropdown panels.</p>
     <div class="demo "><div class="menubar" style="border-radius:999px;padding:.25rem">
-          <div style="position:relative"><button data-menu-trigger>Publications <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div data-menu style="min-width:280px"><div class="menu-item">World Economic Outlook</div><div class="menu-item">Global Financial Stability Report</div><div class="menu-item">Fiscal Monitor</div></div></div>
-          <div style="position:relative"><button data-menu-trigger>Data <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div data-menu><div class="menu-item">DataMapper</div><div class="menu-item">WEO database</div></div></div>
+          <div style="position:relative"><button data-menu-trigger>Publications <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button><div data-menu style="min-width:280px"><div class="menu-item">World Economic Outlook</div><div class="menu-item">Global Financial Stability Report</div><div class="menu-item">Fiscal Monitor</div></div></div>
+          <div style="position:relative"><button data-menu-trigger>Data <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button><div data-menu><div class="menu-item">DataMapper</div><div class="menu-item">WEO database</div></div></div>
           <button data-menu-trigger style="border:none;background:transparent;padding:.35rem .7rem;cursor:pointer">About</button>
         </div></div>
   </section>
@@ -1147,7 +1152,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
     </div></div>
 
   <div class="overlay" id="sheet-1"><div class="backdrop" data-close></div>
-    <div class="sheet"><div style="display:flex;justify-content:space-between;align-items:start"><div><h3 style="margin:0">Filters</h3><p class="muted" style="font-size:.83rem;margin:.3rem 0 0">Refine the dataset</p></div><button class="btn btn-ghost btn-icon" data-close>✕</button></div>
+    <div class="sheet"><div style="display:flex;justify-content:space-between;align-items:start"><div><h3 style="margin:0">Filters</h3><p class="muted" style="font-size:.83rem;margin:.3rem 0 0">Refine the dataset</p></div><button class="btn btn-ghost btn-icon" data-close aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
       <div style="margin-top:1.25rem;display:flex;flex-direction:column;gap:1rem">
         <div class="field"><label class="label">Indicator</label><input class="input" value="Real GDP growth" /></div>
         <label class="check"><input type="checkbox" checked /> Include projections</label>
@@ -1512,7 +1517,13 @@ table.dt .dt-check input { accent-color: var(--primary); }
     const t = closest(e.target, "[data-toggle-pw]");
     if (!t) return;
     const inp = t.parentElement?.querySelector("input");
-    if (inp) inp.type = inp.type === "password" ? "text" : "password";
+    if (!inp) return;
+    const shown = inp.type === "password";
+    inp.type = shown ? "text" : "password";
+    const EYE = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>';
+    const EYE_OFF = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><path d="m2 2 20 20"/></svg>';
+    t.innerHTML = shown ? EYE_OFF : EYE;
+    t.setAttribute("aria-label", shown ? "Hide password" : "Show password");
   });
   const PW_COLORS = ["transparent", "var(--destructive)", "var(--chart-3)", "var(--chart-1)", "var(--chart-5)"];
   const PW_HINTS = ["", "Weak \u2014 add length and variety.", "Fair \u2014 add numbers or symbols.", "Good.", "Strong password."];
@@ -1649,6 +1660,9 @@ table.dt .dt-check input { accent-color: var(--primary); }
     const input = shell.querySelector("[data-ai-input]");
     const send = shell.querySelector("[data-ai-send]");
     if (!convo || !input || !send) return;
+    const SEND_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>';
+    const STOP_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><rect width="12" height="12" x="6" y="6" rx="2"/></svg>';
+    const SPARK_SVG = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>';
     let timer = 0;
     const scroll = () => {
       convo.scrollTop = convo.scrollHeight;
@@ -1659,7 +1673,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
         clearInterval(timer);
         timer = 0;
         send.classList.remove("stop");
-        send.textContent = "\u2191";
+        send.innerHTML = SEND_SVG;
         convo.querySelector(".ai-cursor")?.remove();
         return;
       }
@@ -1675,12 +1689,12 @@ table.dt .dt-check input { accent-color: var(--primary); }
       scroll();
       convo.insertAdjacentHTML(
         "beforeend",
-        `<div class="ai-msg assistant"><div class="ai-avatar">\u25C6</div><div class="ai-body"><div class="ai-role">Analyst</div><div class="ai-content"><span class="ai-stream"></span><span class="ai-cursor"></span></div></div></div>`
+        `<div class="ai-msg assistant"><div class="ai-avatar">${SPARK_SVG}</div><div class="ai-body"><div class="ai-role">Analyst</div><div class="ai-content"><span class="ai-stream"></span><span class="ai-cursor"></span></div></div></div>`
       );
       const contentEl = convo.lastElementChild.querySelector(".ai-content");
       const streamEl = contentEl.querySelector(".ai-stream");
       send.classList.add("stop");
-      send.textContent = "\u25A0";
+      send.innerHTML = STOP_SVG;
       let i = 0;
       timer = window.setInterval(() => {
         i += 2;
@@ -1691,7 +1705,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
           timer = 0;
           contentEl.querySelector(".ai-cursor")?.remove();
           send.classList.remove("stop");
-          send.textContent = "\u2191";
+          send.innerHTML = SEND_SVG;
         }
       }, 20);
     };
@@ -1724,8 +1738,10 @@ table.dt .dt-check input { accent-color: var(--primary); }
       const code = copyCode.closest(".ai-code")?.querySelector("code")?.textContent ?? "";
       navigator.clipboard?.writeText(code).catch(() => {
       });
-      copyCode.textContent = "\u2713 Copied";
-      setTimeout(() => copyCode.textContent = "\u29C9 Copy", 1200);
+      const CHK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>';
+      const CPY = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
+      copyCode.innerHTML = CHK + " Copied";
+      setTimeout(() => copyCode.innerHTML = CPY + " Copy", 1200);
       return;
     }
     const copyMsg = closest(e.target, "[data-ai-copy]");
@@ -1742,7 +1758,8 @@ table.dt .dt-check input { accent-color: var(--primary); }
       const wrap = sugg.closest(".ai-empty")?.parentElement;
       const inp = wrap?.querySelector("[data-ai-input]");
       if (inp) {
-        inp.value = (sugg.textContent ?? "").replace(/^\S+\s/, "");
+        const sp = sugg.querySelector("span");
+        inp.value = (sp?.textContent ?? sugg.textContent ?? "").trim();
         inp.focus();
       }
       return;

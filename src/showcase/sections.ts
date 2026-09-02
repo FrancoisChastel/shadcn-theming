@@ -8,6 +8,7 @@ import { parseColor, toHex } from "../core/color.js";
 import { kpis, type Kpi } from "./data.js";
 import { aiSections } from "./ai-sections.js";
 import { templateSections } from "./template-sections.js";
+import { icon, ICON_NAMES } from "./icons.js";
 
 export interface Section {
   id: string;
@@ -18,7 +19,7 @@ export interface Section {
 }
 
 const demo = (inner: string, cls = "") => `<div class="demo ${cls}">${inner}</div>`;
-const chev = '<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>';
+const chev = icon("chevron-down", { cls: "chev", size: 14 });
 
 /** A faux-browser frame around a full-page template preview. */
 const blockFrame = (url: string, inner: string) =>
@@ -190,7 +191,7 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       desc: "A language switcher — selecting العربية (Arabic) flips the sample to right-to-left and translates it.",
       html: demo(
         `<div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem">
-          <div data-menu-trigger style="position:relative"><button class="combobox-trigger" style="max-width:200px">🌐 <span data-lang-value>English</span> ${chev}</button>
+          <div data-menu-trigger style="position:relative"><button class="combobox-trigger" style="max-width:200px">${icon("globe")} <span data-lang-value>English</span> ${chev}</button>
             <div data-menu>
               <div class="menu-item" data-lang="en" data-dir="ltr">English</div>
               <div class="menu-item" data-lang="fr" data-dir="ltr">Français</div>
@@ -228,7 +229,7 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
           `<button class="btn btn-primary btn-sm">Small</button>
            <button class="btn btn-primary">Default</button>
            <button class="btn btn-primary btn-lg">Large</button>
-           <button class="btn btn-outline btn-icon" aria-label="settings">⚙</button>
+           <button class="btn btn-outline btn-icon" aria-label="settings">${icon("settings", { size: 16 })}</button>
            <button class="btn btn-primary" disabled>Disabled</button>
            <button class="btn btn-secondary">◐ Loading…</button>`,
         ),
@@ -327,7 +328,7 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       html: demo(
         `<div class="field" data-datepicker style="position:relative">
           <label class="label">Reference date</label>
-          <button class="combobox-trigger" data-menu-trigger><span data-dp-value class="ph">Pick a date</span><span>📅</span></button>
+          <button class="combobox-trigger" data-menu-trigger><span data-dp-value class="ph">Pick a date</span><span>${icon("calendar")}</span></button>
           <div data-menu>${calendarHtml()}</div>
         </div>`,
       ),
@@ -339,7 +340,7 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       desc: "A one-time-code input (auto-advances, handles paste) and a password field with a strength meter.",
       html: demo(
         `<div class="field"><label class="label">Verification code</label><div class="otp" data-otp>${Array.from({ length: 6 }, () => `<input maxlength="1" inputmode="numeric" aria-label="digit" />`).join("")}</div></div>
-         <div class="field"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" data-password placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button" aria-label="show">👁</button></div><div class="pw-meter"><span data-pw-bar></span></div><span class="pw-hint" data-pw-hint>Use 8+ characters with letters, numbers &amp; symbols.</span></div>`,
+         <div class="field"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" data-password placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button" aria-label="Show password">${icon("eye", { size: 16 })}</button></div><div class="pw-meter"><span data-pw-bar></span></div><span class="pw-hint" data-pw-hint>Use 8+ characters with letters, numbers &amp; symbols.</span></div>`,
       ),
     },
     {
@@ -349,7 +350,7 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       desc: "A dropzone that accepts clicks and drag-and-drop.",
       html: demo(
         `<label class="dropzone" data-dropzone><input type="file" hidden data-dz-input />
-          <div>⬆ <strong>Click to upload</strong> or drag and drop</div>
+          <div style="display:flex;align-items:center;gap:.4rem;justify-content:center">${icon("upload", { size: 18 })} <strong>Click to upload</strong> or drag and drop</div>
           <div class="muted" style="font-size:.72rem">CSV, XLSX up to 10MB</div>
           <div class="dz-file" data-dz-file hidden></div>
         </label>`,
@@ -362,7 +363,7 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       title: "Search, tags & segmented",
       desc: "A search input with clear, a tag input, a segmented control, and a currency input.",
       html: demo(
-        `<div class="input-icon" data-search style="max-width:280px"><span class="lead">🔍</span><input class="input" data-search-input placeholder="Search indicators…" /><button class="clear" data-search-clear aria-label="clear">×</button></div>
+        `<div class="input-icon" data-search style="max-width:280px"><span class="lead">${icon("search")}</span><input class="input" data-search-input placeholder="Search indicators…" /><button class="clear" data-search-clear aria-label="clear">×</button></div>
          <div class="tags" data-tags style="max-width:280px"><span class="tag">macro<button data-tag-remove aria-label="remove">×</button></span><span class="tag">weo<button data-tag-remove aria-label="remove">×</button></span><input data-tags-input placeholder="Add tag…" /></div>
          <div class="segmented" data-segmented><button class="on">Chart</button><button>Table</button><button>Map</button></div>
          <div class="input-icon" style="max-width:160px"><span class="lead" aria-hidden="true">$</span><input class="input" value="48,200" inputmode="numeric" aria-label="Amount in USD" /></div>`,
@@ -535,8 +536,8 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       desc: "A multi-step progress indicator.",
       html: demo(
         `<div class="stepper" style="width:100%">
-          <div class="step done"><span class="num">✓</span><span class="st-label">Account</span><span class="line"></span></div>
-          <div class="step done"><span class="num">✓</span><span class="st-label">Profile</span><span class="line"></span></div>
+          <div class="step done"><span class="num">${icon("check", { size: 14 })}</span><span class="st-label">Account</span><span class="line"></span></div>
+          <div class="step done"><span class="num">${icon("check", { size: 14 })}</span><span class="st-label">Profile</span><span class="line"></span></div>
           <div class="step active"><span class="num">3</span><span class="st-label">Review</span><span class="line"></span></div>
           <div class="step pending"><span class="num">4</span><span class="st-label">Done</span></div>
         </div>`,
@@ -573,7 +574,7 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       title: "Code block",
       desc: "A syntax-highlighted block with a copy button.",
       html: demo(
-        `<div class="ai-code" style="max-width:520px"><div class="ai-code-head"><span>bash</span><button class="ai-code-copy" data-ai-copy-code>⧉ Copy</button></div><pre><code><span class="tok-com"># apply a brand theme</span>\n<span class="tok-fn">npx</span> shadcn-theming apply brand.json <span class="tok-key">--yes</span></code></pre></div>`,
+        `<div class="ai-code" style="max-width:520px"><div class="ai-code-head"><span>bash</span><button class="ai-code-copy" data-ai-copy-code>${icon("copy", { size: 13 })} Copy</button></div><pre><code><span class="tok-com"># apply a brand theme</span>\n<span class="tok-fn">npx</span> shadcn-theming apply brand.json <span class="tok-key">--yes</span></code></pre></div>`,
         "col",
       ),
     },
@@ -708,10 +709,10 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
            <button class="btn btn-outline">Options ${chev}</button>
            <div data-menu>
              <div class="menu-label">Series</div>
-             <div class="menu-item">✎ Rename</div>
-             <div class="menu-item">⧉ Duplicate</div>
+             <div class="menu-item">${icon("edit", { size: 14 })} Rename</div>
+             <div class="menu-item">${icon("copy", { size: 14 })} Duplicate</div>
              <div class="menu-sep"></div>
-             <div class="menu-item danger">🗑 Delete</div>
+             <div class="menu-item danger">${icon("trash", { size: 14 })} Delete</div>
            </div>
          </div>
          <div data-context style="position:relative"><div class="card" style="padding:1rem 1.5rem">Right-click me
@@ -764,11 +765,11 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       desc: "Inline callouts.",
       html:
         demo(
-          `<div class="alert" style="width:100%"><span class="ico">ℹ</span><div><strong>Heads up</strong><div class="muted" style="font-size:.82rem">The October WEO update is now available.</div></div></div>`,
+          `<div class="alert" style="width:100%"><span class="ico">${icon("info", { size: 18 })}</span><div><strong>Heads up</strong><div class="muted" style="font-size:.82rem">The October WEO update is now available.</div></div></div>`,
           "col",
         ) +
         demo(
-          `<div class="alert alert-destructive" style="width:100%"><span class="ico">⚠</span><div><strong>Downside risk</strong><div style="font-size:.82rem">Financial conditions have tightened materially.</div></div></div>`,
+          `<div class="alert alert-destructive" style="width:100%"><span class="ico">${icon("alert-triangle", { size: 18 })}</span><div><strong>Downside risk</strong><div style="font-size:.82rem">Financial conditions have tightened materially.</div></div></div>`,
           "col",
         ),
     },
@@ -825,7 +826,7 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
             <div class="auth-logo">${init}</div>
             <h3>Sign in</h3><p class="sub">Access the ${brandName} data workspace</p>
             <div class="field auth-fld"><label class="label">Email</label><input class="input" placeholder="you@imf.org" /></div>
-            <div class="field auth-fld"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button">👁</button></div></div>
+            <div class="field auth-fld"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button" aria-label="Show password">${icon("eye", { size: 16 })}</button></div></div>
             <div class="row-between"><label class="check"><input type="checkbox" /> Remember me</label><a href="#" style="color:var(--primary)">Forgot password?</a></div>
             <button class="btn btn-primary">Sign in</button>
             <div class="auth-divider">or</div>
@@ -849,7 +850,7 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
             <h3>Create your account</h3><p class="sub">Start exploring ${brandName} data</p>
             <div class="field auth-fld"><label class="label">Full name</label><input class="input" placeholder="Jane Analyst" /></div>
             <div class="field auth-fld"><label class="label">Email</label><input class="input" placeholder="you@imf.org" /></div>
-            <div class="field auth-fld"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" data-password placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button">👁</button></div><div class="pw-meter"><span data-pw-bar></span></div></div>
+            <div class="field auth-fld"><label class="label">Password</label><div class="pw-wrap"><input class="input" type="password" data-password placeholder="••••••••" /><button class="toggle-pw" data-toggle-pw type="button" aria-label="Show password">${icon("eye", { size: 16 })}</button></div><div class="pw-meter"><span data-pw-bar></span></div></div>
             <label class="check" style="margin-bottom:.85rem;font-size:.8rem"><input type="checkbox" /> I agree to the terms &amp; privacy policy</label>
             <button class="btn btn-primary">Create account</button>
             <div class="auth-foot">Already have an account? <a href="#">Sign in</a></div>
@@ -915,7 +916,7 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       title: "Empty state",
       desc: "A first-run placeholder that prompts the next action.",
       html: demo(
-        `<div class="emptystate" style="max-width:380px;margin:0 auto"><div class="ico">📊</div><h4>No datasets yet</h4><p>Create your first projection to see it here.</p><button class="btn btn-primary btn-sm">New projection</button></div>`,
+        `<div class="emptystate" style="max-width:380px;margin:0 auto"><div class="ico">${icon("bar-chart", { size: 26 })}</div><h4>No datasets yet</h4><p>Create your first projection to see it here.</p><button class="btn btn-primary btn-sm">New projection</button></div>`,
         "col",
       ),
     },
@@ -975,7 +976,7 @@ function calendarHtml(): string {
   const cells: string[] = dows.map((d) => `<span class="dow">${d}</span>`);
   for (let i = 0; i < offset; i++) cells.push(`<span class="day out">${28 + i}</span>`);
   for (let d = 1; d <= 30; d++) cells.push(`<span class="day${d === 12 ? " sel" : ""}">${d}</span>`);
-  return `<div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm" aria-label="Previous month">‹</button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm" aria-label="Next month">›</button></div><div class="cal-grid">${cells.join("")}</div></div>`;
+  return `<div class="cal"><div class="cal-h"><button class="btn btn-ghost btn-icon btn-sm" aria-label="Previous month">${icon("chevron-left", { size: 15 })}</button><span>September 2026</span><button class="btn btn-ghost btn-icon btn-sm" aria-label="Next month">${icon("chevron-right", { size: 15 })}</button></div><div class="cal-grid">${cells.join("")}</div></div>`;
 }
 
 /** An interactive data-table demo (sort / filter / select / paginate / export). */
@@ -1027,25 +1028,9 @@ function dataTableHtml(): string {
   </div>`;
 }
 
-const ICONS: Array<[string, string]> = [
-  ["search", '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>'],
-  ["check", '<path d="M20 6 9 17l-5-5"/>'],
-  ["close", '<path d="M18 6 6 18M6 6l12 12"/>'],
-  ["plus", '<path d="M12 5v14M5 12h14"/>'],
-  ["chevron", '<path d="m9 18 6-6-6-6"/>'],
-  ["download", '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>'],
-  ["bell", '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>'],
-  ["user", '<circle cx="12" cy="8" r="4"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/>'],
-  ["globe", '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/>'],
-  ["chart", '<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/>'],
-  ["file", '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>'],
-  ["settings", '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>'],
-];
-
 function iconGrid(): string {
-  return `<div class="icon-grid">${ICONS.map(
-    ([name, paths]) =>
-      `<div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>${name}</div>`,
+  return `<div class="icon-grid">${ICON_NAMES.map(
+    (name) => `<div class="icon-cell">${icon(name, { size: 20 })}<span>${name}</span></div>`,
   ).join("")}</div>`;
 }
 
@@ -1065,8 +1050,8 @@ function gaugeSvg(value: number, max: number, label: string, unit = ""): string 
 function treeHtml(): string {
   const node = (label: string, children?: string, open = false) =>
     children
-      ? `<div class="tree-item${open ? " open" : ""}"><div class="tree-row" data-tree-toggle><svg class="tw-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>📁 ${label}</div><div class="tree-children">${children}</div></div>`
-      : `<div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span>📄 ${label}</div></div>`;
+      ? `<div class="tree-item${open ? " open" : ""}"><div class="tree-row" data-tree-toggle>${icon("chevron-right", { cls: "tw-chev", size: 14 })}${icon("folder", { size: 15 })} ${label}</div><div class="tree-children">${children}</div></div>`
+      : `<div class="tree-item tree-leaf"><div class="tree-row"><span class="tw-chev"></span>${icon("file", { size: 15 })} ${label}</div></div>`;
   return `<div class="tree">
     ${node(
       "app",

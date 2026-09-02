@@ -291,7 +291,7 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
         `<div class="input-icon" data-search style="max-width:280px"><span class="lead">🔍</span><input class="input" data-search-input placeholder="Search indicators…" /><button class="clear" data-search-clear aria-label="clear">×</button></div>
          <div class="tags" data-tags style="max-width:280px"><span class="tag">macro<button data-tag-remove aria-label="remove">×</button></span><span class="tag">weo<button data-tag-remove aria-label="remove">×</button></span><input data-tags-input placeholder="Add tag…" /></div>
          <div class="segmented" data-segmented><button class="on">Chart</button><button>Table</button><button>Map</button></div>
-         <div class="input-icon" style="max-width:160px"><span class="lead">$</span><input class="input" value="48,200" inputmode="numeric" /></div>`,
+         <div class="input-icon" style="max-width:160px"><span class="lead" aria-hidden="true">$</span><input class="input" value="48,200" inputmode="numeric" aria-label="Amount in USD" /></div>`,
       ),
     },
 

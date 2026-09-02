@@ -9,7 +9,22 @@ html { scroll-behavior: smooth; }
 body { margin: 0; font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif); background: var(--background); color: var(--foreground); font-size: 14px; }
 .muted { color: var(--muted-foreground); }
 a { color: inherit; text-decoration: none; }
-:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: 3px; }
+/* WCAG 2.2: honor reduced-motion — neutralize non-essential animation/transition. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+/* WCAG 2.4.1: skip link */
+.skip-link { position: absolute; left: 0.5rem; top: -3rem; z-index: 100; background: var(--primary); color: var(--primary-foreground); padding: 0.5rem 0.9rem; border-radius: var(--radius); transition: top .15s; }
+.skip-link:focus { top: 0.5rem; }
+/* Print: drop chrome, expand content, flatten shadows. */
+@media print {
+  .side, .topbar, .skip-link, .overlay, #cmdk, .toaster { display: none !important; }
+  .app { display: block; }
+  .content { max-width: none; padding: 0; }
+  * { box-shadow: none !important; }
+  .card, .demo, section.block { break-inside: avoid; }
+}
 
 /* layout */
 .app { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
@@ -24,7 +39,7 @@ a { color: inherit; text-decoration: none; }
 .nav a.active { background: var(--sidebar-accent); color: var(--foreground); font-weight: 500; }
 .main { min-width: 0; }
 .topbar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.75rem 2rem; border-bottom: 1px solid var(--border); background: color-mix(in oklab, var(--background) 82%, transparent); backdrop-filter: blur(8px); }
-.topbar .search { flex: 1; max-width: 360px; display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--input); border-radius: var(--radius); padding: 0.4rem 0.7rem; color: var(--muted-foreground); font-size: 0.8rem; cursor: pointer; background: var(--background); }
+.topbar .search { flex: 1; max-width: 360px; display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--input); border-radius: var(--radius); padding: 0.4rem 0.7rem; color: var(--muted-foreground); font-size: 0.8rem; font-family: inherit; text-align: left; cursor: pointer; background: var(--background); }
 .topbar .search kbd { margin-left: auto; font-size: 0.7rem; border: 1px solid var(--border); border-radius: 4px; padding: 0 0.35rem; background: var(--muted); }
 .pagenav { display: flex; gap: 0.2rem; flex-wrap: wrap; }
 .pagenav a { padding: 0.35rem 0.75rem; border-radius: var(--radius); font-size: 0.83rem; color: var(--muted-foreground); font-weight: 500; }

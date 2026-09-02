@@ -81,7 +81,22 @@ html { scroll-behavior: smooth; }
 body { margin: 0; font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif); background: var(--background); color: var(--foreground); font-size: 14px; }
 .muted { color: var(--muted-foreground); }
 a { color: inherit; text-decoration: none; }
-:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: 3px; }
+/* WCAG 2.2: honor reduced-motion — neutralize non-essential animation/transition. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+/* WCAG 2.4.1: skip link */
+.skip-link { position: absolute; left: 0.5rem; top: -3rem; z-index: 100; background: var(--primary); color: var(--primary-foreground); padding: 0.5rem 0.9rem; border-radius: var(--radius); transition: top .15s; }
+.skip-link:focus { top: 0.5rem; }
+/* Print: drop chrome, expand content, flatten shadows. */
+@media print {
+  .side, .topbar, .skip-link, .overlay, #cmdk, .toaster { display: none !important; }
+  .app { display: block; }
+  .content { max-width: none; padding: 0; }
+  * { box-shadow: none !important; }
+  .card, .demo, section.block { break-inside: avoid; }
+}
 
 /* layout */
 .app { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
@@ -96,7 +111,7 @@ a { color: inherit; text-decoration: none; }
 .nav a.active { background: var(--sidebar-accent); color: var(--foreground); font-weight: 500; }
 .main { min-width: 0; }
 .topbar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.75rem 2rem; border-bottom: 1px solid var(--border); background: color-mix(in oklab, var(--background) 82%, transparent); backdrop-filter: blur(8px); }
-.topbar .search { flex: 1; max-width: 360px; display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--input); border-radius: var(--radius); padding: 0.4rem 0.7rem; color: var(--muted-foreground); font-size: 0.8rem; cursor: pointer; background: var(--background); }
+.topbar .search { flex: 1; max-width: 360px; display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--input); border-radius: var(--radius); padding: 0.4rem 0.7rem; color: var(--muted-foreground); font-size: 0.8rem; font-family: inherit; text-align: left; cursor: pointer; background: var(--background); }
 .topbar .search kbd { margin-left: auto; font-size: 0.7rem; border: 1px solid var(--border); border-radius: 4px; padding: 0 0.35rem; background: var(--muted); }
 .pagenav { display: flex; gap: 0.2rem; flex-wrap: wrap; }
 .pagenav a { padding: 0.35rem 0.75rem; border-radius: var(--radius); font-size: 0.83rem; color: var(--muted-foreground); font-weight: 500; }
@@ -593,17 +608,18 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 </style>
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 <div class="app">
-  <aside class="side">
-    <div class="brand"><span class="mark">I</span><div><b>IMF</b><span>design system</span></div></div>
+  <aside class="side" aria-label="Sections">
+    <div class="brand"><span class="mark" aria-hidden="true">I</span><div><b>IMF</b><span>design system</span></div></div>
     <div class="nav-group">AI harness</div><div class="nav"><a href="#ai-chat" data-nav-link>Conversation</a><a href="#ai-anatomy" data-nav-link>Message anatomy</a><a href="#ai-composer" data-nav-link>Composer &amp; prompt starters</a></div>
   </aside>
-  <main class="main">
+  <main class="main" id="main">
     <div class="topbar">
       <nav class="pagenav"><a href="index.html">Design system</a><a href="components.html">Components</a><a href="layouts.html">Layouts &amp; pages</a><a href="charts.html">Charts</a><a href="ai.html" class="active">AI harness</a></nav>
-      <div class="search" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
-        <span>🔍</span> Search… <kbd>⌘K</kbd>
-      </div>
+      <button type="button" class="search" aria-label="Search — open command palette" aria-keyshortcuts="Meta+K Control+K" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
+        <span aria-hidden="true">🔍</span> Search… <kbd>⌘K</kbd>
+      </button>
       <button class="btn btn-outline btn-sm" data-toggle-theme>Toggle theme</button>
     </div>
     <div class="content">
@@ -746,6 +762,60 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const closest = (t, sel) => t?.closest(sel);
+  $$("[data-tabs]").forEach((t) => {
+    t.querySelector(".tabs-list")?.setAttribute("role", "tablist");
+    $$("[data-tab]", t).forEach((tab) => {
+      tab.setAttribute("role", "tab");
+      const value = tab.getAttribute("data-tab");
+      const panel = t.querySelector(`[data-tab-panel="${value}"]`);
+      if (panel) {
+        const pid = panel.id || `panel-${value}-${Math.round(t.getBoundingClientRect().top)}`;
+        panel.id = pid;
+        panel.setAttribute("role", "tabpanel");
+        panel.setAttribute("tabindex", "0");
+        tab.setAttribute("aria-controls", pid);
+      }
+    });
+  });
+  $$("[data-menu]").forEach((m) => m.setAttribute("role", "menu"));
+  $$("[data-menu] .menu-item, [data-menu] [data-select-option], [data-menu] [data-cb-option]").forEach((mi) => mi.setAttribute("role", "menuitem"));
+  $$("[data-menu-trigger]").forEach((t) => {
+    t.setAttribute("aria-haspopup", "true");
+    t.setAttribute("aria-expanded", "false");
+  });
+  $$(".overlay .dialog, .overlay .sheet, .overlay .drawer").forEach((d) => {
+    d.setAttribute("role", "dialog");
+    d.setAttribute("aria-modal", "true");
+    const h = d.querySelector("h3");
+    if (h) {
+      const hid = h.id || `dlg-h-${Math.random().toString(36).slice(2, 7)}`;
+      h.id = hid;
+      d.setAttribute("aria-labelledby", hid);
+    }
+  });
+  $$("#cmdk .cmd").forEach((c) => {
+    c.setAttribute("role", "dialog");
+    c.setAttribute("aria-label", "Command palette");
+  });
+  $$("input:not([type=hidden]):not([type=checkbox]):not([type=radio]), textarea, select").forEach((el) => {
+    if (el.getAttribute("aria-label") || el.id || el.closest("label")) return;
+    const field = el.closest(".field, .form-field, .auth-fld, .ai-composer, .input-icon");
+    const prev = el.previousElementSibling?.classList.contains("label") ? el.previousElementSibling.textContent : "";
+    const text2 = (field?.querySelector(".label")?.textContent || prev || "").trim();
+    const name = text2 ? text2.replace(/\s*\*$/, "") : el.getAttribute("placeholder");
+    if (name) el.setAttribute("aria-label", name);
+  });
+  document.addEventListener("keydown", (e) => {
+    const tab = closest(e.target, "[data-tab]");
+    if (!tab) return;
+    const ke = e;
+    if (ke.key !== "ArrowRight" && ke.key !== "ArrowLeft") return;
+    const tabs = $$("[data-tab]", tab.closest("[data-tabs]"));
+    const i = tabs.indexOf(tab);
+    const next = tabs[(i + (ke.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+    next.focus();
+    next.click();
+  });
   document.addEventListener("click", (e) => {
     if (closest(e.target, "[data-toggle-theme]")) document.documentElement.classList.toggle("dark");
   });
@@ -772,17 +842,23 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
     item.classList.toggle("open", !open);
     trigger.setAttribute("aria-expanded", String(!open));
   });
+  let lastOpener = null;
   const openOverlay = (id) => {
     const ov = document.getElementById(id);
-    if (ov) {
-      ov.classList.add("open");
-      document.body.style.overflow = "hidden";
-    }
+    if (!ov) return;
+    lastOpener = document.activeElement;
+    ov.classList.add("open");
+    document.body.style.overflow = "hidden";
+    const focusable = ov.querySelector(
+      "input:not([type=hidden]), textarea, button, [href], select, [tabindex]:not([tabindex='-1'])"
+    );
+    setTimeout(() => focusable?.focus(), 30);
   };
   const closeOverlay = (ov) => {
     if (!ov) return;
     ov.classList.remove("open");
     if (!$(".overlay.open")) document.body.style.overflow = "";
+    lastOpener?.focus?.();
   };
   document.addEventListener("click", (e) => {
     const opener = closest(e.target, "[data-open]");
@@ -799,7 +875,10 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
   });
   const closeMenus = (except) => {
     $$("[data-menu].open").forEach((m) => {
-      if (m !== except) m.classList.remove("open");
+      if (m !== except) {
+        m.classList.remove("open");
+        m.parentElement?.querySelector("[data-menu-trigger]")?.setAttribute("aria-expanded", "false");
+      }
     });
   };
   document.addEventListener("click", (e) => {
@@ -809,6 +888,7 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
       const isOpen = menu?.classList.contains("open");
       closeMenus(menu);
       menu?.classList.toggle("open", !isOpen);
+      trigger.setAttribute("aria-expanded", String(!isOpen));
       return;
     }
     if (!closest(e.target, "[data-menu]")) closeMenus();

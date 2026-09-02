@@ -153,17 +153,18 @@ ${EXPLORE_CSS}
 </style>
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 <div class="app">
-  <aside class="side">
-    <div class="brand"><span class="mark">${esc(o.initial)}</span><div><b>${esc(o.brand.name)}</b><span>design system</span></div></div>
+  <aside class="side" aria-label="Sections">
+    <div class="brand"><span class="mark" aria-hidden="true">${esc(o.initial)}</span><div><b>${esc(o.brand.name)}</b><span>design system</span></div></div>
     ${renderSidebarNav(o.sections)}
   </aside>
-  <main class="main">
+  <main class="main" id="main">
     <div class="topbar">
       ${o.showTopNav ? renderTopNav(o.activeFile) : ""}
-      <div class="search" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
-        <span>🔍</span> Search… <kbd>⌘K</kbd>
-      </div>
+      <button type="button" class="search" aria-label="Search — open command palette" aria-keyshortcuts="Meta+K Control+K" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
+        <span aria-hidden="true">🔍</span> Search… <kbd>⌘K</kbd>
+      </button>
       <button class="btn btn-outline btn-sm" data-toggle-theme>Toggle theme</button>
     </div>
     <div class="content">

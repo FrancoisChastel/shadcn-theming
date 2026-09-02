@@ -14,6 +14,65 @@ export function uiMain(): void {
     Array.from(root.querySelectorAll<T>(sel));
   const closest = (t: EventTarget | null, sel: string) => (t as Element | null)?.closest(sel) as HTMLElement | null;
 
+  // ---- WCAG: apply ARIA roles + keyboard affordances on load ----
+  $$("[data-tabs]").forEach((t) => {
+    t.querySelector(".tabs-list")?.setAttribute("role", "tablist");
+    $$("[data-tab]", t).forEach((tab) => {
+      tab.setAttribute("role", "tab");
+      const value = tab.getAttribute("data-tab")!;
+      const panel = t.querySelector(`[data-tab-panel="${value}"]`);
+      if (panel) {
+        const pid = panel.id || `panel-${value}-${Math.round(t.getBoundingClientRect().top)}`;
+        panel.id = pid;
+        panel.setAttribute("role", "tabpanel");
+        panel.setAttribute("tabindex", "0");
+        tab.setAttribute("aria-controls", pid);
+      }
+    });
+  });
+  $$("[data-menu]").forEach((m) => m.setAttribute("role", "menu"));
+  $$("[data-menu] .menu-item, [data-menu] [data-select-option], [data-menu] [data-cb-option]").forEach((mi) => mi.setAttribute("role", "menuitem"));
+  $$("[data-menu-trigger]").forEach((t) => {
+    t.setAttribute("aria-haspopup", "true");
+    t.setAttribute("aria-expanded", "false");
+  });
+  $$(".overlay .dialog, .overlay .sheet, .overlay .drawer").forEach((d) => {
+    d.setAttribute("role", "dialog");
+    d.setAttribute("aria-modal", "true");
+    const h = d.querySelector("h3");
+    if (h) {
+      const hid = h.id || `dlg-h-${Math.random().toString(36).slice(2, 7)}`;
+      h.id = hid;
+      d.setAttribute("aria-labelledby", hid);
+    }
+  });
+  $$("#cmdk .cmd").forEach((c) => {
+    c.setAttribute("role", "dialog");
+    c.setAttribute("aria-label", "Command palette");
+  });
+  // WCAG 1.3.1/4.1.2: give every text control an accessible name.
+  $$<HTMLInputElement>("input:not([type=hidden]):not([type=checkbox]):not([type=radio]), textarea, select").forEach((el) => {
+    if (el.getAttribute("aria-label") || el.id || el.closest("label")) return;
+    const field = el.closest(".field, .form-field, .auth-fld, .ai-composer, .input-icon");
+    const prev = el.previousElementSibling?.classList.contains("label") ? el.previousElementSibling.textContent : "";
+    const text = (field?.querySelector(".label")?.textContent || prev || "").trim();
+    const name = text ? text.replace(/\s*\*$/, "") : el.getAttribute("placeholder");
+    if (name) el.setAttribute("aria-label", name);
+  });
+
+  // Tabs: arrow-key navigation.
+  document.addEventListener("keydown", (e) => {
+    const tab = closest(e.target, "[data-tab]");
+    if (!tab) return;
+    const ke = e as KeyboardEvent;
+    if (ke.key !== "ArrowRight" && ke.key !== "ArrowLeft") return;
+    const tabs = $$("[data-tab]", tab.closest("[data-tabs]")!);
+    const i = tabs.indexOf(tab);
+    const next = tabs[(i + (ke.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length]!;
+    next.focus();
+    next.click();
+  });
+
   // ---- theme toggle ----
   document.addEventListener("click", (e) => {
     if (closest(e.target, "[data-toggle-theme]")) document.documentElement.classList.toggle("dark");
@@ -47,17 +106,24 @@ export function uiMain(): void {
   });
 
   // ---- overlays: dialog / alert-dialog / sheet / drawer ----
+  let lastOpener: HTMLElement | null = null;
   const openOverlay = (id: string) => {
     const ov = document.getElementById(id);
-    if (ov) {
-      ov.classList.add("open");
-      document.body.style.overflow = "hidden";
-    }
+    if (!ov) return;
+    lastOpener = document.activeElement as HTMLElement | null;
+    ov.classList.add("open");
+    document.body.style.overflow = "hidden";
+    // WCAG 2.4.3: move focus into the dialog.
+    const focusable = ov.querySelector<HTMLElement>(
+      "input:not([type=hidden]), textarea, button, [href], select, [tabindex]:not([tabindex='-1'])",
+    );
+    setTimeout(() => focusable?.focus(), 30);
   };
   const closeOverlay = (ov: Element | null) => {
     if (!ov) return;
     ov.classList.remove("open");
     if (!$(".overlay.open")) document.body.style.overflow = "";
+    lastOpener?.focus?.();
   };
   document.addEventListener("click", (e) => {
     const opener = closest(e.target, "[data-open]");
@@ -76,7 +142,10 @@ export function uiMain(): void {
   // ---- menus / popovers / dropdowns / hover cards ----
   const closeMenus = (except?: Element | null) => {
     $$("[data-menu].open").forEach((m) => {
-      if (m !== except) m.classList.remove("open");
+      if (m !== except) {
+        m.classList.remove("open");
+        (m.parentElement?.querySelector("[data-menu-trigger]"))?.setAttribute("aria-expanded", "false");
+      }
     });
   };
   document.addEventListener("click", (e) => {
@@ -86,6 +155,7 @@ export function uiMain(): void {
       const isOpen = menu?.classList.contains("open");
       closeMenus(menu);
       menu?.classList.toggle("open", !isOpen);
+      trigger.setAttribute("aria-expanded", String(!isOpen));
       return;
     }
     if (!closest(e.target, "[data-menu]")) closeMenus();

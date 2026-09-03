@@ -10,6 +10,7 @@ import { aiSections } from "./ai-sections.js";
 import { templateSections } from "./template-sections.js";
 import { classificationSections, clsBadge } from "./classification.js";
 import { shellSections } from "./shell-sections.js";
+import { guideSections } from "./guide-sections.js";
 import { icon, ICON_NAMES } from "./icons.js";
 
 export interface Section {
@@ -952,6 +953,7 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
     ...classificationSections(),
     ...shellSections(),
     ...templateSections(),
+    ...guideSections(),
 
     // ---------------- AI harness ----------------
     ...aiSections(brandName),

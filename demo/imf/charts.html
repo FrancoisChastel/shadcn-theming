@@ -253,6 +253,54 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 .cls-doc-meta { display: flex; gap: 1.1rem; flex-wrap: wrap; font-size: 0.74rem; color: var(--muted-foreground); margin-top: 0.6rem; }
 .cls-doc-meta span { display: inline-flex; align-items: center; gap: 0.35rem; }
 
+/* --- Develop / guide page --- */
+.guide { width: 100%; }
+.guide code { font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.85em; background: var(--muted); padding: 0.08rem 0.32rem; border-radius: 4px; }
+.guide h4 { font-size: 0.92rem; }
+.guide-lead { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; }
+.guide-step { display: flex; gap: 0.7rem; align-items: flex-start; border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem 0.95rem; background: var(--card); }
+.guide-step .gs-num { display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 999px; background: var(--primary); color: var(--primary-foreground); font-weight: 700; font-size: 0.82rem; flex: none; }
+.guide-step b { font-size: 0.9rem; }
+.guide-step p { margin: 0.15rem 0 0; font-size: 0.8rem; }
+@media (max-width: 720px) { .guide-lead, .guide .grid2, .tool-grid { grid-template-columns: 1fr; } }
+/* Let long command URLs scroll inside their column instead of stretching the grid. */
+.guide .grid2 > *, .tool-grid > * { min-width: 0; }
+
+.cmd-block { position: relative; margin: 0.35rem 0; min-width: 0; }
+.cmd-block .doc-pre { padding-right: 2.4rem; }
+.cmd-block .cmd-copy { position: absolute; top: 0.45rem; right: 0.45rem; display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; border: 1px solid var(--border); border-radius: calc(var(--radius) - 2px); background: var(--card); color: var(--muted-foreground); cursor: pointer; }
+.cmd-block .cmd-copy:hover { color: var(--foreground); }
+.cmd-copy.ok, [data-doc-copy].ok { color: var(--chart-5); border-color: var(--chart-5); }
+.doc-pre { margin: 0; padding: 0.75rem 0.85rem; background: color-mix(in oklab, var(--muted) 55%, var(--background)); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.78rem; line-height: 1.6; color: var(--foreground); overflow-x: auto; white-space: pre; }
+.doc-scroll { max-height: 320px; overflow: auto; white-space: pre-wrap; word-break: break-word; }
+
+.doc-dl { border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); padding: 0.9rem 1rem 1rem; }
+.doc-dl-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.doc-dl .doc-name { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 650; font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.86rem; }
+.doc-dl .doc-name svg { flex: none; color: var(--primary); }
+.doc-dl-actions { display: flex; gap: 0.45rem; }
+.doc-dl-actions .btn { display: inline-flex; align-items: center; gap: 0.35rem; }
+.doc-dl .doc-note { font-size: 0.78rem; margin: 0.5rem 0 0.6rem; }
+
+.tool-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; }
+.tool-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; background: var(--card); }
+.tool-card .tool-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+.tool-card .tool-head svg { flex: none; color: var(--primary); }
+.tool-card .tool-head h4 { margin: 0; }
+.tool-card p { font-size: 0.82rem; }
+
+.callout { display: flex; align-items: flex-start; gap: 0.6rem; border: 1px solid color-mix(in oklab, var(--primary) 35%, var(--border)); background: color-mix(in oklab, var(--primary) 7%, var(--card)); border-radius: var(--radius); padding: 0.75rem 0.9rem; font-size: 0.84rem; }
+.callout svg { flex: none; color: var(--primary); margin-top: 0.1rem; }
+
+.contrib-steps { margin: 0 0 1.1rem; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.55rem; }
+.contrib-steps li { font-size: 0.86rem; line-height: 1.5; }
+.review-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.1rem; background: color-mix(in oklab, var(--chart-5) 5%, var(--card)); margin-bottom: 1rem; }
+.review-card h4 { margin: 0 0 0.6rem; display: inline-flex; align-items: center; gap: 0.45rem; }
+.review-card h4 svg { color: var(--chart-5); }
+.review-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.review-list li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.84rem; }
+.review-list li svg { flex: none; color: var(--chart-5); }
+
 /* separator */
 .sep { height: 1px; background: var(--border); border: none; width: 100%; margin: 0.25rem 0; }
 .sep-v { width: 1px; align-self: stretch; background: var(--border); }
@@ -930,7 +978,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
   </aside>
   <main class="main" id="main">
     <div class="topbar">
-      <nav class="pagenav"><a href="index.html">Design system</a><a href="components.html">Components</a><a href="layouts.html">Layouts &amp; pages</a><a href="templates.html">Templates</a><a href="charts.html" class="active">Charts</a><a href="ai.html">AI harness</a></nav>
+      <nav class="pagenav"><a href="index.html">Design system</a><a href="components.html">Components</a><a href="layouts.html">Layouts &amp; pages</a><a href="templates.html">Templates</a><a href="charts.html" class="active">Charts</a><a href="ai.html">AI harness</a><a href="develop.html">Develop</a></nav>
       <button type="button" class="search" aria-label="Search — open command palette" aria-keyshortcuts="Meta+K Control+K" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Search… <kbd>⌘K</kbd>
       </button>
@@ -1053,7 +1101,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
     <input data-cmd-input placeholder="Type a command or search…" />
     <div class="list">
       <div class="menu-label">Pages</div>
-      <div data-cmd-item onclick="location.href='index.html'">Design system</div><div data-cmd-item onclick="location.href='components.html'">Components</div><div data-cmd-item onclick="location.href='layouts.html'">Layouts &amp; pages</div><div data-cmd-item onclick="location.href='templates.html'">Templates</div><div data-cmd-item onclick="location.href='charts.html'">Charts</div><div data-cmd-item onclick="location.href='ai.html'">AI harness</div>
+      <div data-cmd-item onclick="location.href='index.html'">Design system</div><div data-cmd-item onclick="location.href='components.html'">Components</div><div data-cmd-item onclick="location.href='layouts.html'">Layouts &amp; pages</div><div data-cmd-item onclick="location.href='templates.html'">Templates</div><div data-cmd-item onclick="location.href='charts.html'">Charts</div><div data-cmd-item onclick="location.href='ai.html'">AI harness</div><div data-cmd-item onclick="location.href='develop.html'">Develop</div>
     </div>
   </div></div>
 <script>// https://d3js.org v7.9.0 Copyright 2010-2023 Mike Bostock
@@ -1252,31 +1300,31 @@ table.dt .dt-check input { accent-color: var(--primary); }
     menu.style.top = e.clientY + "px";
     menu.classList.add("open");
   });
-  const cmd = document.getElementById("cmdk");
+  const cmd2 = document.getElementById("cmdk");
   document.addEventListener("keydown", (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
       e.preventDefault();
-      if (cmd) {
-        cmd.classList.toggle("open");
-        if (cmd.classList.contains("open")) setTimeout(() => $("[data-cmd-input]", cmd)?.focus(), 20);
+      if (cmd2) {
+        cmd2.classList.toggle("open");
+        if (cmd2.classList.contains("open")) setTimeout(() => $("[data-cmd-input]", cmd2)?.focus(), 20);
       }
     }
     if (e.key === "Escape") {
       $$(".overlay.open").forEach((o) => o.classList.remove("open"));
-      cmd?.classList.remove("open");
+      cmd2?.classList.remove("open");
       closeMenus();
       document.body.style.overflow = "";
     }
   });
-  if (cmd) {
-    cmd.addEventListener("input", (e) => {
+  if (cmd2) {
+    cmd2.addEventListener("input", (e) => {
       const q = e.target.value?.toLowerCase() ?? "";
-      $$("[data-cmd-item]", cmd).forEach((it) => {
+      $$("[data-cmd-item]", cmd2).forEach((it) => {
         it.hidden = !it.textContent?.toLowerCase().includes(q);
       });
     });
-    cmd.addEventListener("click", (e) => {
-      if (e.target.id === "cmdk") cmd.classList.remove("open");
+    cmd2.addEventListener("click", (e) => {
+      if (e.target.id === "cmdk") cmd2.classList.remove("open");
     });
   }
   let toaster = document.getElementById("toaster");
@@ -1665,6 +1713,30 @@ table.dt .dt-check input { accent-color: var(--primary); }
       const label = model.closest(".ai-model")?.querySelector("[data-ai-model-value]");
       if (label) label.textContent = model.textContent;
       closeMenus();
+    }
+  });
+  document.addEventListener("click", (e) => {
+    const src = (btn) => btn.closest(".cmd-block, .doc-dl")?.querySelector("[data-doc-src]")?.textContent ?? "";
+    const copyBtn = closest(e.target, "[data-doc-copy]");
+    if (copyBtn) {
+      navigator.clipboard?.writeText(src(copyBtn)).catch(() => {
+      });
+      copyBtn.classList.add("ok");
+      setTimeout(() => copyBtn.classList.remove("ok"), 1100);
+      return;
+    }
+    const dlBtn = closest(e.target, "[data-doc-download]");
+    if (dlBtn) {
+      const name = dlBtn.getAttribute("data-file") ?? "download.md";
+      const blob = new Blob([src(dlBtn)], { type: "text/markdown;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1e3);
     }
   });
   $$("[data-datatable]").forEach((dt) => {

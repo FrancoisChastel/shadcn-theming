@@ -55,6 +55,7 @@ const PAGES: PageDef[] = [
   { file: "templates.html", label: "Templates", title: "page templates", subtitle: "Composite IMF page templates — data explorer, country profile, publication reader.", groups: ["Templates"] },
   { file: "charts.html", label: "Charts", title: "charts", subtitle: "Scientific and business charts built on Observable Plot, plus KPI extensions.", groups: ["Extensions", "Scientific charts"] },
   { file: "ai.html", label: "AI harness", title: "AI harness", subtitle: "A Claude Code / Pi-style AI experience: streaming, tools, code, diffs, and a plan.", groups: ["AI harness"] },
+  { file: "develop.html", label: "Develop", title: "develop & contribute", subtitle: "Install and use the design system across VS Code, Claude Code, and Pi — with a downloadable Agent Skill, AGENTS.md, and the contribution workflow.", groups: ["Develop"] },
 ];
 
 /** Top-of-page navigation between site pages. */

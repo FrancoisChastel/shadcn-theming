@@ -3,77 +3,77 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Acme — AI harness</title>
+<title>IMF — develop &amp; contribute</title>
 <style>
 :root {
-  --radius: 0.5rem;
-  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
-  --background: oklch(1 0.004 276.966);
-  --foreground: oklch(0.145 0.004 276.966);
-  --card: oklch(1 0.004 276.966);
-  --card-foreground: oklch(0.145 0.004 276.966);
-  --popover: oklch(1 0.004 276.966);
-  --popover-foreground: oklch(0.145 0.004 276.966);
-  --primary: oklch(0.5106 0.2301 276.966);
-  --primary-foreground: oklch(0.985 0.02 276.966);
-  --secondary: oklch(0.97 0.004 276.966);
-  --secondary-foreground: oklch(0.205 0.004 276.966);
-  --muted: oklch(0.97 0.004 276.966);
-  --muted-foreground: oklch(0.5444 0.004 276.966);
-  --accent: oklch(0.95 0.0747 47.604);
-  --accent-foreground: oklch(0.205 0.004 276.966);
-  --destructive: oklch(0.5858 0.222 17.585);
-  --destructive-foreground: oklch(0.9853 0 0);
-  --border: oklch(0.922 0.004 276.966);
-  --input: oklch(0.922 0.004 276.966);
-  --ring: oklch(0.65 0.16 276.966);
-  --chart-1: oklch(0.62 0.2072 276.966);
-  --chart-2: oklch(0.68 0.2301 324.966);
-  --chart-3: oklch(0.57 0.1434 244.966);
-  --chart-4: oklch(0.7 0.195 12.966);
-  --chart-5: oklch(0.59 0.1235 76.966);
-  --sidebar: oklch(0.985 0.004 276.966);
-  --sidebar-foreground: oklch(0.145 0.004 276.966);
-  --sidebar-primary: oklch(0.5106 0.2301 276.966);
-  --sidebar-primary-foreground: oklch(0.985 0.02 276.966);
-  --sidebar-accent: oklch(0.97 0.004 276.966);
-  --sidebar-accent-foreground: oklch(0.205 0.004 276.966);
-  --sidebar-border: oklch(0.922 0.004 276.966);
-  --sidebar-ring: oklch(0.65 0.16 276.966);
+  --radius: 0.1875rem;
+  --font-sans: Arial, Helvetica, "Helvetica Neue", sans-serif;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2178 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2178 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2178 0 0);
+  --primary: oklch(0.4228 0.1389 254.944);
+  --primary-foreground: oklch(0.985 0.02 254.944);
+  --secondary: oklch(0.97 0.0425 245.779);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.5444 0 0);
+  --accent: oklch(0.95 0.0461 194.061);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.5134 0.1617 24.89);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.65 0.1389 254.944);
+  --chart-1: oklch(0.4228 0.1389 254.944);
+  --chart-2: oklch(0.6929 0.1008 210.356);
+  --chart-3: oklch(0.6889 0.1194 68.414);
+  --chart-4: oklch(0.5134 0.1617 24.89);
+  --chart-5: oklch(0.5853 0.1407 153.248);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.2178 0 0);
+  --sidebar-primary: oklch(0.4228 0.1389 254.944);
+  --sidebar-primary-foreground: oklch(0.985 0.02 254.944);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.65 0.1389 254.944);
 }
 .dark {
-  --background: oklch(0.145 0.004 276.966);
-  --foreground: oklch(0.985 0.004 276.966);
-  --card: oklch(0.205 0.004 276.966);
-  --card-foreground: oklch(0.985 0.004 276.966);
-  --popover: oklch(0.205 0.004 276.966);
-  --popover-foreground: oklch(0.985 0.004 276.966);
-  --primary: oklch(0.74 0.1352 276.966);
-  --primary-foreground: oklch(0.145 0.02 276.966);
-  --secondary: oklch(0.269 0.004 276.966);
-  --secondary-foreground: oklch(0.985 0.004 276.966);
-  --muted: oklch(0.269 0.004 276.966);
-  --muted-foreground: oklch(0.708 0.004 276.966);
-  --accent: oklch(0.3 0.1307 47.604);
-  --accent-foreground: oklch(0.985 0.004 276.966);
-  --destructive: oklch(0.5858 0.222 17.585);
-  --destructive-foreground: oklch(0.9853 0 0);
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.7028 0.1389 254.944);
+  --primary-foreground: oklch(0.145 0.02 254.944);
+  --secondary: oklch(0.3412 0.0764 245.779);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.3 0.0807 194.061);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.5134 0.1617 24.89);
+  --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0.16 276.966);
-  --chart-1: oklch(0.7 0.1585 276.966);
-  --chart-2: oklch(0.76 0.2282 324.966);
-  --chart-3: oklch(0.65 0.1635 244.966);
-  --chart-4: oklch(0.78 0.1307 12.966);
-  --chart-5: oklch(0.67 0.1402 76.966);
-  --sidebar: oklch(0.205 0.004 276.966);
-  --sidebar-foreground: oklch(0.985 0.004 276.966);
-  --sidebar-primary: oklch(0.74 0.1352 276.966);
-  --sidebar-primary-foreground: oklch(0.145 0.02 276.966);
-  --sidebar-accent: oklch(0.269 0.004 276.966);
-  --sidebar-accent-foreground: oklch(0.985 0.004 276.966);
+  --ring: oklch(0.556 0.1389 254.944);
+  --chart-1: oklch(0.4228 0.1389 254.944);
+  --chart-2: oklch(0.6929 0.1008 210.356);
+  --chart-3: oklch(0.6889 0.1194 68.414);
+  --chart-4: oklch(0.5134 0.1617 24.89);
+  --chart-5: oklch(0.5853 0.1407 153.248);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.7028 0.1389 254.944);
+  --sidebar-primary-foreground: oklch(0.145 0.02 254.944);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0.16 276.966);
+  --sidebar-ring: oklch(0.556 0.1389 254.944);
 }
 
 * { box-sizing: border-box; }
@@ -973,12 +973,12 @@ table.dt .dt-check input { accent-color: var(--primary); }
 <a href="#main" class="skip-link">Skip to content</a>
 <div class="app">
   <aside class="side" aria-label="Sections">
-    <div class="brand"><span class="mark" aria-hidden="true">A</span><div><b>Acme</b><span>design system</span></div></div>
-    <div class="nav-group">AI harness</div><div class="nav"><a href="#ai-chat" data-nav-link>Conversation</a><a href="#ai-anatomy" data-nav-link>Message anatomy</a><a href="#ai-composer" data-nav-link>Composer &amp; prompt starters</a></div>
+    <div class="brand"><span class="mark" aria-hidden="true">I</span><div><b>IMF</b><span>design system</span></div></div>
+    <div class="nav-group">Develop</div><div class="nav"><a href="#dev-start" data-nav-link>Get started</a><a href="#dev-tooling" data-nav-link>Use it in your editor &amp; agents</a><a href="#dev-skill" data-nav-link>Agent Skill</a><a href="#dev-agents" data-nav-link>AGENTS.md</a><a href="#dev-contribute" data-nav-link>Contribute a component</a></div>
   </aside>
   <main class="main" id="main">
     <div class="topbar">
-      <nav class="pagenav"><a href="index.html">Design system</a><a href="components.html">Components</a><a href="layouts.html">Layouts &amp; pages</a><a href="templates.html">Templates</a><a href="charts.html">Charts</a><a href="ai.html" class="active">AI harness</a><a href="develop.html">Develop</a></nav>
+      <nav class="pagenav"><a href="index.html">Design system</a><a href="components.html">Components</a><a href="layouts.html">Layouts &amp; pages</a><a href="templates.html">Templates</a><a href="charts.html">Charts</a><a href="ai.html">AI harness</a><a href="develop.html" class="active">Develop</a></nav>
       <button type="button" class="search" aria-label="Search — open command palette" aria-keyshortcuts="Meta+K Control+K" onclick="document.getElementById('cmdk').classList.add('open');setTimeout(()=>document.querySelector('[data-cmd-input]').focus(),20)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Search… <kbd>⌘K</kbd>
       </button>
@@ -986,97 +986,409 @@ table.dt .dt-check input { accent-color: var(--primary); }
     </div>
     <div class="content">
       <div class="hero">
-        <h1>Acme AI harness</h1>
-        <p>A Claude Code / Pi-style AI experience: streaming, tools, code, diffs, and a plan.</p>
+        <h1>IMF develop &amp; contribute</h1>
+        <p>Install and use the design system across VS Code, Claude Code, and Pi — with a downloadable Agent Skill, AGENTS.md, and the contribution workflow.</p>
       </div>
-      <section class="block" id="ai-chat">
-    <h2>Conversation</h2>
-    <p class="desc">A full AI chat surface (Claude Code / Pi-style): streaming replies, reasoning, tool calls, code + diff, an agent plan, citations, and a live composer with a model selector. Type a message and send.</p>
-    <div class="demo col"><div class="ai-shell" data-ai-shell>
-    <div class="ai-rail">
-    <div class="ai-rail-head"><button class="btn btn-outline btn-sm" style="width:100%;display:inline-flex;align-items:center;gap:.4rem;justify-content:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M12 5v14"/></svg> New chat</button></div>
-    <div class="ai-rail-list">
-      <div class="ai-rail-group">Today</div>
-      <div class="ai-rail-item on">Add WEO growth chart</div>
-      <div class="ai-rail-item">Explain the fan chart band</div>
-      <div class="ai-rail-item">Refactor the data loader</div>
-      <div class="ai-rail-group">Yesterday</div>
-      <div class="ai-rail-item">Debug inflation query</div>
-      <div class="ai-rail-item">Draft the WEO summary</div>
-    </div>
-  </div>
-    <div class="ai-main">
-      <div class="ai-convo" data-ai-convo><div class="ai-msg user"><div class="ai-avatar">FC</div><div class="ai-body"><div class="ai-role">You</div><div class="ai-content"><p>Add a WEO growth projection chart to the dashboard, using our theme.</p></div></div></div><div class="ai-msg assistant"><div class="ai-avatar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg></div><div class="ai-body"><div class="ai-role">Analyst</div><div class="ai-content"><div class="ai-reasoning"><div class="ai-reasoning-head" data-ai-reasoning-toggle><svg class="t-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg> Thought for 3s</div><div class="ai-reasoning-body">The dashboard already imports card primitives. I should reuse the area-band chart (it renders the projection fan) and feed it the WEO series so it stays token-driven and matches the theme.</div></div><div class="ai-plan"><div class="ai-plan-title">Plan</div><div class="ai-plan-item done"><span class="mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg></span>Locate the dashboard layout</div><div class="ai-plan-item done"><span class="mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg></span>Add the GrowthChart component</div><div class="ai-plan-item run"><span class="mark"></span>Wire the WEO data source</div><div class="ai-plan-item pending"><span class="mark"></span>Add a unit test</div></div><p>I'll add a <code>GrowthChart</code> that wraps <code>AreaBand</code> and drop it into the dashboard grid.</p><div class="ai-tool open"><div class="ai-tool-head" data-ai-tool-toggle><svg class="t-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg><span class="t-name">Read</span><span class="t-arg">app/dashboard/page.tsx</span><span class="ai-tool-status done"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg> done</span></div><div class="ai-tool-body">1  export default function Dashboard() {
-2    return <div className="grid">…</div>
-3  }</div></div><div class="ai-tool open"><div class="ai-tool-head" data-ai-tool-toggle><svg class="t-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg><span class="t-name">Edit</span><span class="t-arg">components/growth-chart.tsx</span><span class="ai-tool-status done"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg> done</span></div><div class="ai-tool-body">+ created components/growth-chart.tsx (7 lines)</div></div><div class="ai-code"><div class="ai-code-head"><span>components/growth-chart.tsx</span><button class="ai-code-copy" data-ai-copy-code><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy</button></div><pre><code><span class="tok-key">import</span> { AreaBand } <span class="tok-key">from</span> <span class="tok-str">"@/components/ui/area-band"</span>
+      <section class="block" id="dev-start">
+    <h2>Get started</h2>
+    <p class="desc">A shared, token-driven design system on top of shadcn/ui. Apply a brand theme, then install only the components you need — everything re-themes automatically because it reads the theme's CSS variables.</p>
+    <div class="guide">
+        <div class="guide-lead">
+          <div class="guide-step"><span class="gs-num">1</span><div><b>Theme</b><p class="muted">Derive contrast-safe OKLCH tokens and patch <code>globals.css</code>.</p></div></div>
+          <div class="guide-step"><span class="gs-num">2</span><div><b>Install</b><p class="muted">Add components from the registry with the shadcn CLI.</p></div></div>
+          <div class="guide-step"><span class="gs-num">3</span><div><b>Build</b><p class="muted">Compose UI using semantic tokens — never hardcode color.</p></div></div>
+        </div>
+        <div class="grid2" style="margin-top:1rem">
+          <div><h4 style="margin:.2rem 0 .5rem">Apply a brand theme</h4><div class="cmd-block"><button class="cmd-copy" data-doc-copy aria-label="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button><pre class="doc-pre" data-doc-src># interactive: brand source → tokens → globals.css
+npx shadcn-theming init
 
-<span class="tok-com">// WEO real GDP growth, history + projection band</span>
-<span class="tok-key">export function</span> <span class="tok-fn">GrowthChart</span>() {
-  <span class="tok-key">return</span> &lt;<span class="tok-fn">AreaBand</span> data={weo} title=<span class="tok-str">"World GDP growth"</span> /&gt;
-}</code></pre></div><p>Then wired it into the dashboard grid:</p><div class="ai-diff"><div class="ai-diff-line ctx"><span class="gutter"></span><span class="code">  <CardContent></span></div><div class="ai-diff-line del"><span class="gutter">−</span><span class="code">    <Placeholder label="chart" /></span></div><div class="ai-diff-line add"><span class="gutter">+</span><span class="code">    <GrowthChart /></span></div><div class="ai-diff-line ctx"><span class="gutter"></span><span class="code">  </CardContent></span></div></div><p>Done — the chart inherits <code>--chart-1</code> and the projection band renders with a dashed forecast. Restart the dev server to see it.</p><div class="ai-cite"><a href="#"><span class="num">1</span> WEO Oct 2026</a><a href="#"><span class="num">2</span> area-band.tsx</a><a href="#"><span class="num">3</span> theming.md</a></div></div><div class="ai-actions">
-    <button class="ai-act" data-ai-copy title="Copy" aria-label="Copy"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
-    <button class="ai-act" title="Retry" aria-label="Retry"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button>
-    <button class="ai-act" title="Edit" aria-label="Edit"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
-    <button class="ai-act" data-ai-vote title="Good response" aria-label="Good response"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg></button>
-    <button class="ai-act" data-ai-vote title="Bad response" aria-label="Bad response"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></svg></button>
-  </div></div></div></div>
-      <div class="ai-composer">
-    <div class="ai-composer-box">
-      <textarea data-ai-input rows="1" placeholder="Ask Acme anything…  (⌘↵ to send)"></textarea>
-      <div class="ai-composer-tools">
-        <button class="ai-tool-btn" title="Attach file" aria-label="Attach file"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
-        <div class="ai-model"><button class="ai-model-trigger" data-menu-trigger><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg> <span data-ai-model-value>Analyst v2</span> <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button><div data-menu><div class="menu-item" data-ai-model-option>Analyst v2</div><div class="menu-item" data-ai-model-option>Analyst Pro</div><div class="menu-item" data-ai-model-option>Fast draft</div></div></div>
-        <span class="ai-usage"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 3.2k / 200k <span class="bar"><span style="width:2%"></span></span></span>
-        <button class="ai-send" data-ai-send title="Send" aria-label="Send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></button>
+# or add a prebuilt registry theme
+npx shadcn@latest add https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/themes/imf-theme.json</pre></div></div>
+          <div><h4 style="margin:.2rem 0 .5rem">Install components</h4><div class="cmd-block"><button class="cmd-copy" data-doc-copy aria-label="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button><pre class="doc-pre" data-doc-src>npx shadcn@latest add https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/fan-chart.json
+npx shadcn@latest add https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/classification-badge.json
+npx shadcn@latest add https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/icon.json</pre></div></div>
+        </div>
+        <div class="callout" style="margin-top:1rem"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><div>Verify accessibility before shipping theme changes: <code>npx shadcn-theming audit brand.json --strict</code> gates on WCAG 2.2 AA and exits non-zero on failure.</div></div>
+      </div>
+  </section>
+<section class="block" id="dev-tooling">
+    <h2>Use it in your editor &amp; agents</h2>
+    <p class="desc">The system is built to standardize development across tools. Drop AGENTS.md at your repo root and load the Agent Skill; then ask your assistant to build with the design system in plain language.</p>
+    <div class="guide"><div class="tool-grid">
+        <div class="tool-card"><div class="tool-head"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg> <h4>VS Code (Copilot, Cursor, Codex)</h4></div><p class="muted">Place <code>AGENTS.md</code> at the repo root — it's read automatically by 30+ agents. Add components with the shadcn CLI or the shadcn VS Code action.</p><div class="cmd-block"><button class="cmd-copy" data-doc-copy aria-label="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button><pre class="doc-pre" data-doc-src>npx shadcn@latest add https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/data-table.json</pre></div></div>
+        <div class="tool-card"><div class="tool-head"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></svg> <h4>Claude Code</h4></div><p class="muted">Load the skills, then ask in natural language.</p><div class="cmd-block"><button class="cmd-copy" data-doc-copy aria-label="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button><pre class="doc-pre" data-doc-src>npx skills add FrancoisChastel/shadcn-theming</pre></div><p class="muted" style="margin:.5rem 0 0">Then: <em>“Add a WEO fan chart to the dashboard using our design system.”</em></p></div>
+        <div class="tool-card"><div class="tool-head"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg> <h4>Pi & other agents</h4></div><p class="muted">Point the agent at <code>AGENTS.md</code> and <code>SKILL.md</code> (both downloadable below), then use the same <code>npx shadcn add</code> commands. No lock-in — it's plain Markdown + a public registry.</p></div>
+      </div></div>
+  </section>
+<section class="block" id="dev-skill">
+    <h2>Agent Skill</h2>
+    <p class="desc">A portable Agent Skill that teaches an assistant to use this design system — how to theme, which components exist, the token contract, and the conventions to follow. Installable with npx skills, or download it below.</p>
+    <div class="guide">
+        <div class="cmd-block"><button class="cmd-copy" data-doc-copy aria-label="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button><pre class="doc-pre" data-doc-src>npx skills add FrancoisChastel/shadcn-theming</pre></div>
+        <div class="doc-dl">
+    <div class="doc-dl-head">
+      <span class="doc-name"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> SKILL.md</span>
+      <div class="doc-dl-actions">
+        <button class="btn btn-outline btn-sm" data-doc-copy><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy</button>
+        <button class="btn btn-primary btn-sm" data-doc-download data-file="SKILL.md"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg> Download</button>
       </div>
     </div>
+    <p class="doc-note muted">Drop into ~/.claude/skills/imf-design-system/ (or a project's .claude/skills/), or hand it to any agent.</p>
+    <pre class="doc-pre doc-scroll" data-doc-src>---
+name: imf-design-system
+description: &gt;-
+  Build product UI with the shadcn-theming design system — a brand-themed
+  shadcn/ui setup plus installable extension components: scientific/analytical
+  charts (fan chart, violin, ridgeline, waterfall, slopegraph, Lorenz, ECDF,
+  radar, candlestick, box/scatter/heatmap, KPI sparkline &amp; stat card), document
+  confidentiality UI (classification badges/banner), and an enterprise app shell
+  (two-level header, sidebar, footers). Use this whenever the user wants to build
+  a dashboard, analytics/data-viz UI, an internal/enterprise tool, a document or
+  reporting surface, or to standardize UI on a shared, token-driven design system
+  — and wants it to match a company brand. Works alongside the sibling
+  `shadcn-theming` (generate/apply a brand theme) and `shadcn-theming-components`
+  skills.
+license: MIT
+metadata:
+  version: 0.1.0
+  homepage: https://github.com/FrancoisChastel/shadcn-theming
+allowed-tools: Bash, Read, Edit, Write, Grep, Glob
+---
+
+# imf-design-system
+
+A **token-driven** design system layered on shadcn/ui. Everything colors itself
+through the theme's CSS variables, so the same components adapt to any brand
+(the worked example is the IMF). This skill is about **using** the system to
+build product UI and **standardizing** how a team builds it.
+
+Golden rules:
+
+1. **Theme first, then components.** Apply a brand theme so tokens exist, then
+   install only the components you need.
+2. **Never hardcode color.** Use semantic tokens (below). This is what makes
+   charts, badges, and the shell re-theme for free.
+3. **Reuse before you build.** Most data-viz, KPI, classification, and app-shell
+   needs already ship — check the catalog first.
+
+## 1. Apply a brand theme
+
+```bash
+npx shadcn-theming init                       # interactive: brand → OKLCH tokens → globals.css
+# or one-shot from a color / logo / site:
+npx shadcn-theming extract --primary "#004C97" --name "Acme" -o brand.json
+npx shadcn-theming apply brand.json --yes
+# or add a prebuilt registry theme:
+npx shadcn@latest add https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/themes/imf-theme.json
+```
+
+Verify contrast: `npx shadcn-theming audit brand.json --strict` (WCAG AA, exits
+non-zero on failure — wire it into CI to keep the system honest).
+
+## 2. Install components
+
+Each item installs into a shadcn/ui (Tailwind v4) project. Shared deps
+(`@observablehq/plot`, `d3-shape`) and libs (`lib/use-plot`, `lib/stats`) come in
+automatically via `registryDependencies`.
+
+```bash
+RAW=https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry
+npx shadcn@latest add $RAW/fan-chart.json
+npx shadcn@latest add $RAW/classification-badge.json
+npx shadcn@latest add $RAW/icon.json
+```
+
+## 3. The token contract (use these, not hex)
+
+| Token | Use |
+| --- | --- |
+| `--primary` / `--primary-foreground` | brand actions, active nav |
+| `--secondary`, `--accent`, `--muted` (+ `-foreground`) | surfaces, subtle fills |
+| `--destructive` | errors, "strictly confidential" |
+| `--chart-1..5` | series colors (5-way categorical) |
+| `--border`, `--input`, `--ring` | outlines, fields, focus |
+| `--radius` | corner rounding |
+
+Charts read `--chart-*`; classification maps green=`--chart-5` (public),
+`--primary` (official), `--chart-3` (confidential), `--destructive` (strict).
+
+## 4. Component catalog
+
+- **Charts (Observable Plot):** `line-chart`, `bar-chart`, `area-band` / `fan-chart`
+  (WEO projection fans), `histogram` (+KDE), `box-plot`, `scatter-plot` (regression
+  band), `correlation-heatmap`, `waterfall-chart`, `slope-chart`,
+  `connected-scatter`, `ecdf-plot`, `lorenz-curve` (+Gini), `candlestick-chart`,
+  `bullet-chart`, `donut-chart`. **`radar-chart`** is dependency-free SVG.
+- **KPI:** `stat-card`, `sparkline`, `data-table` (sort/filter/select/paginate/export).
+- **Security:** `classification-badge` — the four levels (Public → For Official
+  Use Only → Confidential → Strictly Confidential) as shield badges + a banner.
+- **Icons:** `&lt;Icon name="…" /&gt;` — 100+ Lucide-style icons, `currentColor`.
+- **App shell &amp; pages:** headers (two-level enterprise + variants), sidebars,
+  footers, profile/settings, error/403 states — see the live explorer.
+
+Example:
+
+```tsx
+import { FanChart } from "@/components/ui/fan-chart"
+import { ClassificationBadge } from "@/components/ui/classification-badge"
+
+&lt;ClassificationBadge level="official" /&gt;
+&lt;FanChart data={weo} title="World GDP growth" yLabel="% change" /&gt;
+```
+
+## 5. Building common surfaces
+
+- **Dashboard:** `stat-card` row + 2-col chart grid (`fan-chart`, `bar-chart`,
+  `donut-chart`) + `data-table`. Keep KPIs to one row; lead with the headline chart.
+- **Classified document / report:** wrap content with a `ClassificationBanner`
+  top and bottom; mark list rows with `ClassificationBadge`.
+- **App shell:** enterprise header + sidebar rail/panel + content + status footer.
+- **Distribution analysis:** `histogram`, `box-plot`/violin, `ecdf-plot`, `hexbin`.
+
+## 6. Conventions (standardize on these)
+
+- Semantic HTML + WCAG 2.2 AA; labeled controls; visible focus; reduced-motion.
+- Compositor-friendly motion only (`transform`, `opacity`).
+- Server state vs client state vs URL state kept separate; persist shareable state
+  (filters, tab, sort) in the URL.
+- Small, focused components; props typed; no `any`.
+
+## 7. Use across tools
+
+- **Claude Code / Cursor / Codex / Aider / Copilot (VS Code):** `AGENTS.md` at the
+  repo root is read automatically; run `npx skills add FrancoisChastel/shadcn-theming`
+  to load this skill.
+- **Pi / others:** point the agent at this `SKILL.md` and `AGENTS.md`.
+
+## 8. Extend in your own app
+
+When you need something the catalog doesn't cover, compose it on top of the
+installed primitives — keep it token-driven and typed so it stays consistent:
+
+- Color only through the tokens above; reuse `&lt;Icon&gt;`, `data-table`, `stat-card`,
+  and the chart primitives rather than re-implementing them.
+- Match the system's accessibility and motion rules (section 6).
+- Put it in your project's `components/ui/` like any other shadcn component.
+
+Want to contribute the component back to the shared library so others get it?
+That's a separate flow — see the **Develop → Contribute** page of the explorer
+(or `CONTRIBUTING.md` in the repo) for the create-a-component + PR process.
+</pre>
   </div>
-    </div>
-  </div></div>
+      </div>
   </section>
-<section class="block" id="ai-anatomy">
-    <h2>Message anatomy</h2>
-    <p class="desc">The building blocks: reasoning, tool-call cards, code block, diff, plan, and citations.</p>
-    <div class="demo col"><div style="width:100%;max-width:640px">
-          <div class="ai-reasoning"><div class="ai-reasoning-head" data-ai-reasoning-toggle><svg class="t-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg> Thought for 3s</div><div class="ai-reasoning-body">Let me check the current bandwidth before choosing the KDE smoothing.</div></div>
-          <div class="ai-tool "><div class="ai-tool-head" data-ai-tool-toggle><svg class="t-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg><span class="t-name">Bash</span><span class="t-arg">npm test</span><span class="ai-tool-status run"><span class="spinner"></span> running</span></div><div class="ai-tool-body">running vitest…</div></div>
-          <div class="ai-tool open"><div class="ai-tool-head" data-ai-tool-toggle><svg class="t-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg><span class="t-name">Read</span><span class="t-arg">lib/stats.ts</span><span class="ai-tool-status done"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg> done</span></div><div class="ai-tool-body">export function gaussianKDE(xs) { … }</div></div>
-          <div class="ai-code"><div class="ai-code-head"><span>bash</span><button class="ai-code-copy" data-ai-copy-code><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy</button></div><pre><code><span class="tok-com"># apply the brand theme</span>
-<span class="tok-fn">npx</span> shadcn-theming apply brand.json <span class="tok-key">--yes</span></code></pre></div>
-          <div class="ai-diff"><div class="ai-diff-line ctx"><span class="gutter"></span><span class="code">  --primary: oklch(0.205 0 0);</span></div><div class="ai-diff-line del"><span class="gutter">−</span><span class="code">  --primary: oklch(0.205 0 0);</span></div><div class="ai-diff-line add"><span class="gutter">+</span><span class="code">  --primary: oklch(0.42 0.14 255);</span></div></div>
-          <div class="ai-plan"><div class="ai-plan-title">Plan</div><div class="ai-plan-item done"><span class="mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg></span>Derive OKLCH tokens</div><div class="ai-plan-item run"><span class="mark"></span>Patch globals.css</div><div class="ai-plan-item pending"><span class="mark"></span>Verify contrast</div></div>
-          <div class="ai-cite"><a href="#"><span class="num">1</span> shadcn-tokens.md</a><a href="#"><span class="num">2</span> color-science.md</a></div>
-        </div></div>
-  </section>
-<section class="block" id="ai-composer">
-    <h2>Composer &amp; prompt starters</h2>
-    <p class="desc">The empty-state greeting with suggested prompts, plus the standalone composer.</p>
-    <div class="demo col"><div style="width:100%;max-width:640px">
-          <div class="ai-empty">
-            <div class="mark">A</div>
-            <h3>How can I help with the data?</h3>
-            <p>Ask about projections, build a chart, or draft a summary.</p>
-            <div class="ai-suggest">
-              <button data-ai-suggest><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg> <span>Chart world GDP growth with the projection band</span></button>
-              <button data-ai-suggest><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg> <span>Explain the Phillips-curve regression</span></button>
-              <button data-ai-suggest><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> <span>Draft a one-paragraph WEO summary</span></button>
-              <button data-ai-suggest><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M9 4v13"/><path d="M15 7v13"/></svg> <span>Compare inflation across regions</span></button>
-            </div>
-          </div>
-          <div class="ai-shell" data-ai-shell style="grid-template-columns:1fr;height:auto;margin-top:1.25rem">
-            <div class="ai-main"><div class="ai-convo" data-ai-convo style="min-height:60px;padding:0.75rem"></div><div class="ai-composer">
-    <div class="ai-composer-box">
-      <textarea data-ai-input rows="1" placeholder="Ask Acme anything…  (⌘↵ to send)"></textarea>
-      <div class="ai-composer-tools">
-        <button class="ai-tool-btn" title="Attach file" aria-label="Attach file"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
-        <div class="ai-model"><button class="ai-model-trigger" data-menu-trigger><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg> <span data-ai-model-value>Analyst v2</span> <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button><div data-menu><div class="menu-item" data-ai-model-option>Analyst v2</div><div class="menu-item" data-ai-model-option>Analyst Pro</div><div class="menu-item" data-ai-model-option>Fast draft</div></div></div>
-        <span class="ai-usage"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 3.2k / 200k <span class="bar"><span style="width:2%"></span></span></span>
-        <button class="ai-send" data-ai-send title="Send" aria-label="Send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></button>
+<section class="block" id="dev-agents">
+    <h2>AGENTS.md</h2>
+    <p class="desc">Drop this in your own product repo. It's the open, cross-agent standard (read natively by Claude Code, Cursor, Copilot, Codex, Aider, Gemini CLI, and more) — it tells your agent how to build UI with the design system: install commands, the token contract, the component catalog, and the conventions to follow.</p>
+    <div class="guide">
+        <div class="doc-dl">
+    <div class="doc-dl-head">
+      <span class="doc-name"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> AGENTS.md</span>
+      <div class="doc-dl-actions">
+        <button class="btn btn-outline btn-sm" data-doc-copy><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy</button>
+        <button class="btn btn-primary btn-sm" data-doc-download data-file="AGENTS.md"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg> Download</button>
       </div>
     </div>
-  </div></div>
-          </div>
-        </div></div>
+    <p class="doc-note muted">Save at your repository root. Agents read it on task start — no configuration needed.</p>
+    <pre class="doc-pre doc-scroll" data-doc-src># AGENTS.md
+
+Drop this file at the root of **your product repo**. It tells any coding agent
+(Claude Code, Cursor, GitHub Copilot / VS Code, Pi, Codex, Aider, Gemini CLI, …)
+how to build UI with the **shadcn-theming design system** — a brand-themed
+shadcn/ui setup plus installable extension components. Merge it into your
+project's existing `AGENTS.md` if you already have one.
+
+&gt; This is the *design-system* section of your agent guide. Keep your own
+&gt; project's build/test/deploy commands and conventions alongside it.
+
+## The design system
+
+- It's **shadcn/ui on Tailwind v4**, re-skinned to a brand via **OKLCH tokens**,
+  plus extra components (scientific/analytical charts, KPI tiles, document
+  classification, an app shell).
+- **Everything is token-driven.** Components color themselves from CSS variables,
+  so they match the brand automatically. This only works if you use the tokens.
+
+## Install into this project
+
+Components come from a public shadcn registry — add only what a task needs.
+
+```bash
+RAW=https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry
+npx shadcn@latest add $RAW/fan-chart.json
+npx shadcn@latest add $RAW/classification-badge.json
+npx shadcn@latest add $RAW/icon.json
+npx shadcn@latest add $RAW/data-table.json
+```
+
+To (re)apply or change the brand theme in this project:
+
+```bash
+npx shadcn-theming init                       # brand source → OKLCH tokens → globals.css
+npx shadcn-theming audit brand.json --strict  # WCAG 2.2 AA gate (run in CI)
+```
+
+## Token contract — use these, never hardcode color
+
+| Token | Use |
+| --- | --- |
+| `--primary` / `--primary-foreground` | brand actions, active nav |
+| `--secondary`, `--accent`, `--muted` (+ `-foreground`) | surfaces, subtle fills |
+| `--destructive` | errors; "strictly confidential" |
+| `--chart-1..5` | categorical series colors |
+| `--border`, `--input`, `--ring` | outlines, fields, focus ring |
+| `--radius` | corner rounding |
+
+Charts read `--chart-*`; classification maps `--chart-5` (public) · `--primary`
+(official) · `--chart-3` (confidential) · `--destructive` (strict).
+
+## What's available (reuse before authoring)
+
+- **Charts** (`@/components/ui/*`): `line-chart`, `bar-chart`, `area-band`,
+  `fan-chart`, `histogram`, `box-plot`, `scatter-plot`, `correlation-heatmap`,
+  `waterfall-chart`, `slope-chart`, `connected-scatter`, `ecdf-plot`,
+  `lorenz-curve`, `candlestick-chart`, `bullet-chart`, `donut-chart`,
+  `radar-chart` (dependency-free SVG).
+- **KPI / data:** `stat-card`, `sparkline`, `data-table`.
+- **Security:** `classification-badge` (four levels: Public → For Official Use
+  Only → Confidential → Strictly Confidential) + a banner.
+- **Icons:** `&lt;Icon name="…" /&gt;` — 100+ Lucide-style, `currentColor`. Don't paste raw SVG.
+- **App shell &amp; pages:** two-level header + variants, sidebar, footers, profile,
+  settings, error/403 — browse the live explorer for markup to copy.
+
+```tsx
+import { FanChart } from "@/components/ui/fan-chart"
+import { ClassificationBadge } from "@/components/ui/classification-badge"
+
+&lt;ClassificationBadge level="official" /&gt;
+&lt;FanChart data={weo} title="World GDP growth" yLabel="% change" /&gt;
+```
+
+## Rules when building UI
+
+- **Reuse first.** Check the catalog above and the live explorer before writing a
+  new component — most data-viz, KPI, classification, and shell needs exist.
+- **No hardcoded color.** Only semantic tokens. This is non-negotiable — it's what
+  keeps the brand consistent and the theme swappable.
+- **Accessibility (WCAG 2.2 AA):** semantic HTML, labeled controls, visible focus,
+  honor `prefers-reduced-motion`, meet contrast. Animate `transform`/`opacity` only.
+- **State:** keep server / client / URL state separate; persist shareable state
+  (filters, active tab, sort) in the URL.
+- **Composing new UI:** build on installed primitives + tokens; type props; small,
+  focused components; no `any`.
+
+## Verify before you finish
+
+- Your project's own checks (e.g. `typecheck`, `lint`, `build`, tests) pass.
+- The screen renders with no console errors, in both light and dark themes.
+- Contrast holds — run `npx shadcn-theming audit brand.json --strict` after theme edits.
+
+## Tool notes
+
+- **Claude Code / Cursor / Copilot (VS Code) / Codex / Aider:** this file is read
+  automatically. Load the usage skill too: `npx skills add FrancoisChastel/shadcn-theming`.
+- **Pi / other agents:** point the agent at this file and the design-system `SKILL.md`.
+- Prefer the registry + CLI over hand-writing tokens or re-implementing components.
+</pre>
+  </div>
+      </div>
+  </section>
+<section class="block" id="dev-contribute">
+    <h2>Contribute a component</h2>
+    <p class="desc">New components are token-driven, typed, accessibility-checked, and reviewed on a pull request. Follow this workflow; it keeps the system consistent and the output reproducible.</p>
+    <div class="guide">
+        <ol class="contrib-steps">
+          <li><b>Add the source.</b> <code>registry/components/ui/&lt;name&gt;.tsx</code> — color it only through theme tokens, type its props, keep it dependency-light.</li>
+          <li><b>Register it.</b> Add an entry in <code>scripts/build-registry.mjs</code> (name, title, description, deps) and run <code>npm run registry:build</code>.</li>
+          <li><b>Demo it.</b> Add a <code>Section</code> in the matching <code>src/showcase/*sections.ts</code> (and a data generator in <code>data.ts</code> if needed).</li>
+          <li><b>Verify.</b> <code>npm run typecheck &amp;&amp; npm test</code>, regenerate the demo, and open it — no console errors, both themes intentional.</li>
+          <li><b>Open a PR.</b> Conventional Commits; include a before/after for visual changes.</li>
+        </ol>
+        <div class="review-card">
+          <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg> PR review checklist</h4>
+          <ul class="review-list">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg> Colors come only from theme tokens (no hardcoded hex)</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg> Props are typed; no <code>any</code>; external input validated</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg> WCAG 2.2 AA: semantic HTML, labels, focus, reduced-motion</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg> Doesn't duplicate an existing component</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg> <code>typecheck</code>, <code>test</code>, and <code>build</code> pass</li>
+          </ul>
+        </div>
+        <div class="doc-dl">
+    <div class="doc-dl-head">
+      <span class="doc-name"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> CONTRIBUTING.md</span>
+      <div class="doc-dl-actions">
+        <button class="btn btn-outline btn-sm" data-doc-copy><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy</button>
+        <button class="btn btn-primary btn-sm" data-doc-download data-file="CONTRIBUTING.md"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg> Download</button>
+      </div>
+    </div>
+    <p class="doc-note muted">The full contribution guide — setup, project layout, guidelines, and the PR process.</p>
+    <pre class="doc-pre doc-scroll" data-doc-src># Contributing to shadcn-theming
+
+Thanks for your interest! This project turns a brand definition into a
+contrast-safe shadcn/ui theme. Contributions of all sizes are welcome.
+
+## Development setup
+
+```bash
+git clone https://github.com/FrancoisChastel/shadcn-theming.git
+cd shadcn-theming
+npm install
+```
+
+Common tasks:
+
+| Command | Purpose |
+| --- | --- |
+| `npm run cli -- &lt;args&gt;` | Run the CLI from TypeScript source (via tsx). |
+| `npm test` | Run the vitest suite. |
+| `npm run test:cov` | Run tests with coverage (thresholds enforced). |
+| `npm run typecheck` | `tsc --noEmit`. |
+| `npm run build` | Bundle to `dist/` with tsup. |
+
+## Project layout
+
+```
+src/
+  core/       color math, token derivation, css patch, registry, audit, preview
+  adapters/   logo · website · design-tokens → brand.json
+  commands/   one file per CLI command
+  cli.ts      commander wiring
+  index.ts    public programmatic API
+skills/       the Agent Skill (SKILL.md + references)
+registry/     extension components as shadcn registry items
+test/         vitest specs (mirror src/core)
+```
+
+## Guidelines
+
+- **Keep the core deterministic and pure.** `src/core/*` should be free of I/O
+  and side effects (except the CSS patcher's string work). This is what makes
+  the output testable and reproducible.
+- **OKLCH everywhere.** Use the helpers in `src/core/color.ts`; don't hand-roll
+  color math.
+- **Preserve shadcn conventions.** Token names, ordering, and the dark
+  alpha-white `border`/`input` values must match upstream.
+- **Add tests** for any new derivation rule, adapter, or command behavior.
+  Coverage thresholds are enforced in CI.
+- **Type strictly.** No `any` in application code; validate external input with
+  the zod schema.
+- **Small files, clear names.** Match the surrounding style.
+
+## Pull requests
+
+1. Branch from `main`.
+2. Make sure `npm run typecheck`, `npm test`, and `npm run build` pass.
+3. Use [Conventional Commits](https://www.conventionalcommits.org/)
+   (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`).
+4. Describe the change and, for visual/theme changes, include a before/after
+   preview (`npx shadcn-theming preview brand.json`).
+
+By contributing you agree your work is licensed under the project's
+[MIT License](LICENSE).
+</pre>
+  </div>
+      </div>
   </section>
       <footer class="muted" style="font-size:.75rem;border-top:1px solid var(--border);padding-top:1.25rem;margin-top:3rem">Generated by shadcn-theming · synthetic, illustrative data</footer>
     </div>

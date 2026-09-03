@@ -37,7 +37,7 @@ npx shadcn-theming apply brand.json --dry-run     # preview the patch
 npx shadcn-theming apply brand.json --yes         # write it
 ```
 
-👉 **Live demo:** **[francoischastel.github.io/shadcn-theming](https://francoischastel.github.io/shadcn-theming/)** — the full multi-page explorer (Design system · Components · Layouts · Templates · Charts · AI harness) branded as the IMF, plus a re-branded Acme build.
+👉 **Live demo:** **[francoischastel.github.io/shadcn-theming](https://francoischastel.github.io/shadcn-theming/)** — the full multi-page explorer (Design system · Components · Layouts · Templates · Charts · AI harness · **Develop**) branded as the IMF, plus a re-branded Acme build. The **Develop** page has install/usage instructions for VS Code · Claude Code · Pi, a downloadable Agent Skill + [`AGENTS.md`](AGENTS.md), and the contribution workflow.
 
 ## Brand inputs
 

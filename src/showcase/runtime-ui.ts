@@ -679,6 +679,31 @@ export function uiMain(): void {
     }
   })
 
+  // ---- Develop page: copy / download the embedded docs ----
+  document.addEventListener("click", (e) => {
+    const src = (btn: Element) => btn.closest(".cmd-block, .doc-dl")?.querySelector("[data-doc-src]")?.textContent ?? ""
+    const copyBtn = closest(e.target, "[data-doc-copy]")
+    if (copyBtn) {
+      navigator.clipboard?.writeText(src(copyBtn)).catch(() => {})
+      copyBtn.classList.add("ok")
+      setTimeout(() => copyBtn.classList.remove("ok"), 1100)
+      return
+    }
+    const dlBtn = closest(e.target, "[data-doc-download]")
+    if (dlBtn) {
+      const name = dlBtn.getAttribute("data-file") ?? "download.md"
+      const blob = new Blob([src(dlBtn)], { type: "text/markdown;charset=utf-8" })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = name
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      setTimeout(() => URL.revokeObjectURL(url), 1000)
+    }
+  })
+
   // ---- data table: sort / filter / select / paginate / export ----
   $$("[data-datatable]").forEach((dt) => {
     const body = dt.querySelector("[data-dt-body]") as HTMLElement | null

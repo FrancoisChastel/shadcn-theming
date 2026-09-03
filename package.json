@@ -43,6 +43,8 @@
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",
     "icons:build": "node scripts/build-icons.mjs",
+    "guide:build": "node scripts/build-guide-content.mjs",
+    "prebuild": "node scripts/build-guide-content.mjs",
     "registry:build": "node scripts/build-icons.mjs && node scripts/build-registry.mjs",
     "lint": "tsc --noEmit",
     "prepublishOnly": "npm run typecheck && npm run test && npm run build"

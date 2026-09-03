@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ecdf-plot",
+  "type": "registry:component",
+  "title": "ECDF Plot",
+  "description": "An empirical cumulative distribution function — a step curve of the share of observations at or below each value. seaborn ecdfplot.",
+  "dependencies": [
+    "@observablehq/plot"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/ecdf-plot.tsx",
+      "type": "registry:component",
+      "target": "components/ui/ecdf-plot.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as Plot from \"@observablehq/plot\"\n\nimport { cn } from \"@/lib/utils\"\nimport { usePlot } from \"@/lib/use-plot\"\n\nconst PLOT_STYLE = {\n  background: \"transparent\",\n  color: \"var(--muted-foreground)\",\n  fontFamily: \"inherit\",\n  fontSize: \"11px\",\n}\n\nexport interface EcdfPlotProps {\n  data: number[]\n  title?: string\n  xLabel?: string\n  height?: number\n  color?: string\n  /** Draw a dashed reference line at the median probability. Default true. */\n  medianLine?: boolean\n  className?: string\n}\n\n/**\n * An empirical cumulative distribution function (ECDF) — a step curve of the\n * share of observations at or below each value. seaborn `ecdfplot`.\n */\nexport function EcdfPlot({ data, title, xLabel, height = 300, color = \"var(--chart-1)\", medianLine = true, className }: EcdfPlotProps) {\n  const ref = usePlot(\n    (width) => {\n      if (!data?.length) return null\n      const xs = [...data].sort((a, b) => a - b)\n      const n = xs.length\n      const rows = xs.map((x, i) => ({ x, p: (i + 1) / n }))\n      const marks: Plot.Markish[] = []\n      if (medianLine) marks.push(Plot.ruleY([0.5], { stroke: \"var(--muted-foreground)\", strokeOpacity: 0.4, strokeDasharray: \"3,3\" }))\n      marks.push(Plot.lineY(rows, { x: \"x\", y: \"p\", stroke: color, strokeWidth: 2, curve: \"step-after\" }))\n      return Plot.plot({\n        width,\n        height,\n        style: PLOT_STYLE,\n        x: { label: xLabel ?? null, grid: true },\n        y: { label: \"Cumulative probability\", grid: true, domain: [0, 1] },\n        marks,\n      })\n    },\n    [data, xLabel, height, color, medianLine],\n  )\n\n  return (\n    <figure className={cn(\"m-0\", className)}>\n      {title ? <figcaption style={{ fontSize: 13, fontWeight: 500, marginBottom: 8, color: \"var(--foreground)\" }}>{title}</figcaption> : null}\n      <div ref={ref} />\n    </figure>\n  )\n}\n"
+    }
+  ]
+}

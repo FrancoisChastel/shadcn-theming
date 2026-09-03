@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "connected-scatter",
+  "type": "registry:component",
+  "title": "Connected Scatter",
+  "description": "A connected scatter: points joined in sequence with an arrowed path — a trajectory through a 2-D space over time (Observable Plot).",
+  "dependencies": [
+    "@observablehq/plot"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/connected-scatter.tsx",
+      "type": "registry:component",
+      "target": "components/ui/connected-scatter.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as Plot from \"@observablehq/plot\"\n\nimport { cn } from \"@/lib/utils\"\nimport { usePlot } from \"@/lib/use-plot\"\n\nconst PLOT_STYLE = {\n  background: \"transparent\",\n  color: \"var(--muted-foreground)\",\n  fontFamily: \"inherit\",\n  fontSize: \"11px\",\n}\n\nexport interface PathPoint {\n  x: number\n  y: number\n  /** Optional label drawn at the point (e.g. a year). */\n  label?: string | number\n}\n\nexport interface ConnectedScatterProps {\n  data: PathPoint[]\n  title?: string\n  xLabel?: string\n  yLabel?: string\n  height?: number\n  color?: string\n  className?: string\n}\n\n/**\n * A connected scatter: points joined in sequence with an arrowed path — traces a\n * trajectory through a 2-D space over time (e.g. an unemployment↔inflation path).\n */\nexport function ConnectedScatter({ data, title, xLabel, yLabel, height = 320, color = \"var(--chart-1)\", className }: ConnectedScatterProps) {\n  const ref = usePlot(\n    (width) => {\n      if (!data?.length) return null\n      return Plot.plot({\n        width,\n        height,\n        style: PLOT_STYLE,\n        x: { label: xLabel ?? null, grid: true },\n        y: { label: yLabel ?? null, grid: true },\n        marks: [\n          Plot.line(data, { x: \"x\", y: \"y\", stroke: color, strokeWidth: 1.6, curve: \"catmull-rom\", marker: \"arrow\" }),\n          Plot.dot(data, { x: \"x\", y: \"y\", fill: color, r: 3.5, tip: true }),\n          Plot.text(data, { x: \"x\", y: \"y\", text: (p: PathPoint) => (p.label != null ? String(p.label) : \"\"), dy: -9, fontSize: 9, fill: \"var(--muted-foreground)\" }),\n        ],\n      })\n    },\n    [data, xLabel, yLabel, height, color],\n  )\n\n  return (\n    <figure className={cn(\"m-0\", className)}>\n      {title ? <figcaption style={{ fontSize: 13, fontWeight: 500, marginBottom: 8, color: \"var(--foreground)\" }}>{title}</figcaption> : null}\n      <div ref={ref} />\n    </figure>\n  )\n}\n"
+    }
+  ]
+}

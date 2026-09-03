@@ -22,6 +22,13 @@ export interface ShowcaseData {
   divergingCA: Array<{ country: string; value: number }>;
   donutParts: Array<{ label: string; value: number }>;
   bulletKpis: Array<{ label: string; value: number; target: number; max: number; unit: string }>;
+  weoFan: Array<{ x: number; median: number; forecast: boolean; b50: [number, number]; b80: [number, number]; b90: [number, number] }>;
+  growthContributions: Array<{ label: string; value: number }>;
+  slopeRanks: Array<{ item: string; left: number; right: number }>;
+  phillipsPath: Array<{ year: number; x: number; y: number }>;
+  radarProfiles: { axes: string[]; series: Array<{ name: string; values: number[] }> };
+  incomeDistribution: number[];
+  ohlc: Array<{ t: number; o: number; h: number; l: number; c: number }>;
 }
 
 export function chartMain(data: ShowcaseData): void {
@@ -45,6 +52,19 @@ export function chartMain(data: ShowcaseData): void {
     style: { background: "transparent", color: C.muted, fontFamily: "inherit", fontSize: "11px" },
     marginTop: 16,
   });
+
+  // --- tiny SVG builders for the hand-drawn charts (violin, radar) ---
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const el = (tag: string, attrs: Record<string, any> = {}, text?: string) => {
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, String(attrs[k]));
+    if (text != null) n.textContent = text;
+    return n;
+  };
+  const svgRoot = (vbW: number, vbH: number) => {
+    const s = el("svg", { viewBox: `0 0 ${vbW} ${vbH}`, class: "plot", "aria-hidden": "true" });
+    return s as SVGSVGElement;
+  };
 
   // --- small stats needed for KDE + correlation (Plot covers the rest) ---
   const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length;
@@ -287,6 +307,295 @@ export function chartMain(data: ShowcaseData): void {
           Plot.dot(rows, { x: "value", y: "country", fill: C.c1, r: 4, tip: true }),
         ],
       });
+    },
+    fanchart: (w) => {
+      const d = data.weoFan;
+      const hist = d.filter((p) => !p.forecast);
+      const fc = d.filter((p) => p.forecast);
+      const bridge = hist.length ? [hist[hist.length - 1]!, ...fc] : fc;
+      const band = (key: "b50" | "b80" | "b90") => bridge.map((p) => ({ x: p.x, lo: p[key][0], hi: p[key][1] }));
+      return Plot.plot({
+        ...base(),
+        width: w,
+        height: 320,
+        x: { label: null, tickFormat: "d" },
+        y: { label: "% change", grid: true },
+        marks: [
+          Plot.ruleY([0], { stroke: C.muted, strokeOpacity: 0.4, strokeDasharray: "3,3" }),
+          Plot.areaY(band("b90"), { x: "x", y1: "lo", y2: "hi", fill: C.c1, fillOpacity: 0.1 }),
+          Plot.areaY(band("b80"), { x: "x", y1: "lo", y2: "hi", fill: C.c1, fillOpacity: 0.14 }),
+          Plot.areaY(band("b50"), { x: "x", y1: "lo", y2: "hi", fill: C.c1, fillOpacity: 0.22 }),
+          Plot.line(hist, { x: "x", y: "median", stroke: C.c1, strokeWidth: 2 }),
+          Plot.line(bridge, { x: "x", y: "median", stroke: C.c1, strokeWidth: 2, strokeDasharray: "5,4" }),
+          Plot.dot(d, { x: "x", y: "median", r: 2, fill: C.c1, tip: true, title: (p: { x: number; median: number; forecast: boolean }) => `${p.x}: ${p.median}%${p.forecast ? " (proj.)" : ""}` }),
+        ],
+      });
+    },
+    waterfall: (w) => {
+      let cum = 0;
+      const rows = data.growthContributions.map((it) => {
+        const start = cum;
+        cum += it.value;
+        return { label: it.label, lo: Math.min(start, cum), hi: Math.max(start, cum), dir: it.value >= 0 ? "up" : "down", value: it.value };
+      });
+      rows.push({ label: "Headline", lo: Math.min(0, cum), hi: Math.max(0, cum), dir: "total", value: Number(cum.toFixed(2)) });
+      const fill = (d: { dir: string }) => (d.dir === "total" ? C.fg : d.dir === "up" ? "var(--chart-5)" : C.c4);
+      return Plot.plot({
+        ...base(),
+        width: w,
+        height: 320,
+        marginBottom: 66,
+        x: { label: null, domain: rows.map((r) => r.label), tickRotate: -30 },
+        y: { label: "pp contribution", grid: true },
+        color: { type: "identity" },
+        marks: [
+          Plot.ruleY([0], { stroke: C.fg, strokeOpacity: 0.4 }),
+          Plot.rectY(rows, { x: "label", y1: "lo", y2: "hi", fill, inset: 6, rx: 1, tip: true, title: (d: { label: string; value: number }) => `${d.label}: ${d.value > 0 ? "+" : ""}${d.value}pp` }),
+        ],
+      });
+    },
+    slope: (w) => {
+      const rows = data.slopeRanks;
+      const long = rows.flatMap((r) => [{ item: r.item, t: "2010", v: r.left }, { item: r.item, t: "2025", v: r.right }]);
+      return Plot.plot({
+        ...base(),
+        width: w,
+        height: 340,
+        marginLeft: 40,
+        marginRight: 96,
+        x: { label: null, domain: ["2010", "2025"], padding: 0.25 },
+        y: { label: "% of world GDP (PPP)", grid: true },
+        color: { domain: rows.map((r) => r.item), range: seriesRange },
+        marks: [
+          Plot.line(long, { x: "t", y: "v", z: "item", stroke: "item", strokeWidth: 2, tip: true }),
+          Plot.dot(long, { x: "t", y: "v", z: "item", fill: "item", r: 3.5 }),
+          Plot.text(long.filter((d) => d.t === "2025"), { x: "t", y: "v", text: (d: { item: string }) => d.item, textAnchor: "start", dx: 8, fontSize: 10, fill: C.fg }),
+        ],
+      });
+    },
+    "connected-scatter": (w) => {
+      const d = data.phillipsPath;
+      return Plot.plot({
+        ...base(),
+        width: w,
+        height: 320,
+        x: { label: "Unemployment (%)", grid: true },
+        y: { label: "Inflation (%)", grid: true },
+        marks: [
+          Plot.line(d, { x: "x", y: "y", stroke: C.c1, strokeWidth: 1.6, curve: "catmull-rom", marker: "arrow" }),
+          Plot.dot(d, { x: "x", y: "y", fill: C.c1, r: 3.5, tip: true, title: (p: { year: number; x: number; y: number }) => `${p.year}: u=${p.x}%, π=${p.y}%` }),
+          Plot.text(d, { x: "x", y: "y", text: (p: { year: number }) => String(p.year), dy: -9, fontSize: 9, fill: C.muted }),
+        ],
+      });
+    },
+    ecdf: (w) => {
+      const xs = [...data.growthDistribution].sort((a, b) => a - b);
+      const n = xs.length;
+      const rows = xs.map((x, i) => ({ x, p: (i + 1) / n }));
+      return Plot.plot({
+        ...base(),
+        width: w,
+        height: 300,
+        x: { label: "% growth", grid: true },
+        y: { label: "Cumulative probability", grid: true, domain: [0, 1] },
+        marks: [
+          Plot.ruleY([0.5], { stroke: C.muted, strokeOpacity: 0.4, strokeDasharray: "3,3" }),
+          Plot.lineY(rows, { x: "x", y: "p", stroke: C.c1, strokeWidth: 2, curve: "step-after" }),
+        ],
+      });
+    },
+    lorenz: (w) => {
+      const xs = [...data.incomeDistribution].sort((a, b) => a - b);
+      const n = xs.length;
+      const total = xs.reduce((a, b) => a + b, 0) || 1;
+      let cum = 0;
+      const rows: Array<{ p: number; l: number }> = [{ p: 0, l: 0 }];
+      xs.forEach((v, i) => {
+        cum += v;
+        rows.push({ p: (i + 1) / n, l: cum / total });
+      });
+      let area = 0;
+      for (let i = 1; i < rows.length; i++) area += (rows[i]!.p - rows[i - 1]!.p) * (rows[i]!.l + rows[i - 1]!.l) / 2;
+      const gini = 1 - 2 * area;
+      return Plot.plot({
+        ...base(),
+        width: Math.min(w, 440),
+        height: Math.min(w, 440),
+        x: { label: "Cumulative share of population", grid: true, domain: [0, 1] },
+        y: { label: "Cumulative share of income", grid: true, domain: [0, 1] },
+        marks: [
+          Plot.areaY(rows, { x: "p", y: "l", fill: C.c1, fillOpacity: 0.12 }),
+          Plot.line([{ p: 0, l: 0 }, { p: 1, l: 1 }], { x: "p", y: "l", stroke: C.muted, strokeDasharray: "4,4" }),
+          Plot.line(rows, { x: "p", y: "l", stroke: C.c1, strokeWidth: 2 }),
+          Plot.text([{ p: 0.62, l: 0.26 }], { x: "p", y: "l", text: [`Gini ≈ ${gini.toFixed(2)}`], fill: C.fg, fontSize: 12, fontWeight: 600 }),
+        ],
+      });
+    },
+    hexbin: (w) => {
+      const d = data.phillips;
+      return Plot.plot({
+        ...base(),
+        width: w,
+        height: 320,
+        x: { label: "Unemployment (%)", grid: true },
+        y: { label: "Inflation (%)", grid: true },
+        color: { type: "linear", range: ["color-mix(in oklab, var(--chart-1) 14%, var(--card))", "var(--chart-1)"], label: "density" },
+        marks: [
+          Plot.hexgrid({ binWidth: 20, stroke: C.muted, strokeOpacity: 0.15 }),
+          Plot.dot(d, Plot.hexbin({ fill: "count" }, { x: "x", y: "y", binWidth: 20, symbol: "hexagon", r: 11, stroke: C.bg, strokeWidth: 0.5, tip: true })),
+        ],
+      });
+    },
+    beeswarm: (w) => {
+      const groups = data.regionalGrowth;
+      const rows = groups.flatMap((g) => g.values.map((v) => ({ group: g.label, v })));
+      return Plot.plot({
+        ...base(),
+        width: w,
+        height: 320,
+        marginBottom: 40,
+        x: { axis: null },
+        fx: { label: null, domain: groups.map((g) => g.label) },
+        y: { label: "% growth", grid: true },
+        color: { domain: groups.map((g) => g.label), range: seriesRange },
+        marks: [Plot.dot(rows, Plot.dodgeX("middle", { fx: "group", y: "v", fill: "group", r: 2.7, fillOpacity: 0.8 }))],
+      });
+    },
+    candlestick: (w) => {
+      const d = data.ohlc;
+      const up = "var(--chart-5)";
+      const down = C.c4;
+      const color = (k: { o: number; c: number }) => (k.c >= k.o ? up : down);
+      return Plot.plot({
+        ...base(),
+        width: w,
+        height: 300,
+        x: { label: "session", tickFormat: "d" },
+        y: { label: "level", grid: true },
+        color: { type: "identity" },
+        marks: [
+          Plot.ruleX(d, { x: "t", y1: "l", y2: "h", stroke: color }),
+          Plot.rect(d, { x1: (k: { t: number }) => k.t - 0.32, x2: (k: { t: number }) => k.t + 0.32, y1: "o", y2: "c", fill: color, tip: true, title: (k: { o: number; h: number; l: number; c: number }) => `O ${k.o}  H ${k.h}  L ${k.l}  C ${k.c}` }),
+        ],
+      });
+    },
+    ridgeline: (w) => {
+      const groups = data.regionalGrowth;
+      const step = 1;
+      const overlap = 1.9;
+      const lines = groups.map((g) => kdeLine(g.values, 1));
+      let gmax = 0;
+      lines.forEach((l) => l.forEach((p) => (gmax = Math.max(gmax, p.y))));
+      gmax = gmax || 1;
+      const rows: Array<{ group: string; x: number; base: number; y: number }> = [];
+      const labels: Array<{ label: string; x: number; y: number }> = [];
+      const xmin = Math.min(...groups.flatMap((g) => g.values));
+      groups.forEach((g, gi) => {
+        const baseY = (groups.length - 1 - gi) * step;
+        labels.push({ label: g.label, x: xmin, y: baseY });
+        lines[gi]!.forEach((p) => rows.push({ group: g.label, x: p.x, base: baseY, y: baseY + (p.y / gmax) * step * overlap }));
+      });
+      return Plot.plot({
+        ...base(),
+        width: w,
+        height: 58 * groups.length + 50,
+        marginLeft: 88,
+        x: { label: "% growth", grid: true },
+        y: { axis: null, domain: [-0.3, (groups.length - 1) * step + step * overlap + 0.4] },
+        color: { domain: groups.map((g) => g.label), range: seriesRange },
+        marks: [
+          Plot.areaY(rows, { x: "x", y1: "base", y2: "y", fill: "group", fillOpacity: 0.72, curve: "basis", stroke: C.bg, strokeWidth: 0.5 }),
+          Plot.text(labels, { x: "x", y: "y", text: "label", textAnchor: "end", dx: -8, dy: -3, fill: C.muted, fontSize: 10 }),
+        ],
+      });
+    },
+    violin: (w) => {
+      const groups = data.regionalGrowth;
+      const width = w;
+      const height = 320;
+      const padL = 44;
+      const padR = 14;
+      const padT = 16;
+      const padB = 38;
+      const all = groups.flatMap((g) => g.values);
+      const ymin = Math.min(...all);
+      const ymax = Math.max(...all);
+      const span = ymax - ymin || 1;
+      const plotH = height - padT - padB;
+      const yPix = (v: number) => padT + plotH * (1 - (v - ymin) / span);
+      const bandW = (width - padL - padR) / groups.length;
+      const half = bandW * 0.4;
+      const svg = svgRoot(width, height);
+      // y grid + axis labels
+      for (let t = 0; t <= 4; t++) {
+        const v = ymin + (span * t) / 4;
+        const y = yPix(v);
+        svg.appendChild(el("line", { x1: padL, x2: width - padR, y1: y, y2: y, stroke: "var(--border)", "stroke-opacity": 0.7 }));
+        svg.appendChild(el("text", { x: padL - 6, y: y + 3, "text-anchor": "end", "font-size": 10, fill: C.muted }, v.toFixed(1)));
+      }
+      groups.forEach((g, gi) => {
+        const cx = padL + bandW * (gi + 0.5);
+        const f = kdeFn(g.values);
+        const sorted = [...g.values].sort((a, b) => a - b);
+        const samples = 48;
+        let dmax = 0;
+        const dens: Array<{ v: number; d: number }> = [];
+        for (let i = 0; i <= samples; i++) {
+          const v = sorted[0]! + ((sorted[sorted.length - 1]! - sorted[0]!) * i) / samples;
+          const den = f(v);
+          dmax = Math.max(dmax, den);
+          dens.push({ v, d: den });
+        }
+        dmax = dmax || 1;
+        const left = dens.map((p) => `${cx - (p.d / dmax) * half},${yPix(p.v)}`);
+        const right = dens.slice().reverse().map((p) => `${cx + (p.d / dmax) * half},${yPix(p.v)}`);
+        svg.appendChild(el("path", { d: `M${left.join("L")}L${right.join("L")}Z`, fill: seriesRange[gi % seriesRange.length]!, "fill-opacity": 0.55, stroke: seriesRange[gi % seriesRange.length]!, "stroke-width": 1 }));
+        // median + quartile box
+        const q = (p: number) => quant(sorted, p);
+        svg.appendChild(el("line", { x1: cx, x2: cx, y1: yPix(q(0.05)), y2: yPix(q(0.95)), stroke: C.fg, "stroke-opacity": 0.6 }));
+        svg.appendChild(el("rect", { x: cx - 3, y: yPix(q(0.75)), width: 6, height: Math.max(1, yPix(q(0.25)) - yPix(q(0.75))), fill: C.fg, "fill-opacity": 0.75, rx: 1 }));
+        svg.appendChild(el("circle", { cx, cy: yPix(q(0.5)), r: 2.4, fill: C.bg }));
+        svg.appendChild(el("text", { x: cx, y: height - 14, "text-anchor": "middle", "font-size": 10, fill: C.muted }, g.label));
+      });
+      return svg;
+    },
+    radar: (w) => {
+      const { axes, series } = data.radarProfiles;
+      const size = Math.min(w, 400);
+      const legendW = 132;
+      const cx = size / 2;
+      const cy = size / 2 + 6;
+      const R = size / 2 - 46;
+      const n = axes.length;
+      const ang = (i: number) => -Math.PI / 2 + (i * 2 * Math.PI) / n;
+      const at = (i: number, r: number) => [cx + Math.cos(ang(i)) * r, cy + Math.sin(ang(i)) * r] as const;
+      const svg = svgRoot(size + legendW, size + 12);
+      // concentric rings
+      [0.25, 0.5, 0.75, 1].forEach((f) => {
+        const pts = axes.map((_, i) => at(i, R * f).join(",")).join(" ");
+        svg.appendChild(el("polygon", { points: pts, fill: "none", stroke: "var(--border)", "stroke-opacity": 0.8 }));
+      });
+      axes.forEach((label, i) => {
+        const [x, y] = at(i, R);
+        svg.appendChild(el("line", { x1: cx, y1: cy, x2: x, y2: y, stroke: "var(--border)" }));
+        const [lx, ly] = at(i, R + 16);
+        const anchor = Math.abs(lx - cx) < 4 ? "middle" : lx > cx ? "start" : "end";
+        svg.appendChild(el("text", { x: lx, y: ly + 3, "text-anchor": anchor, "font-size": 10, fill: C.muted }, label));
+      });
+      series.forEach((s, si) => {
+        const color = seriesRange[si % seriesRange.length]!;
+        const pts = s.values.map((v, i) => at(i, (R * Math.max(0, Math.min(100, v))) / 100).join(",")).join(" ");
+        svg.appendChild(el("polygon", { points: pts, fill: color, "fill-opacity": 0.18, stroke: color, "stroke-width": 2 }));
+        s.values.forEach((v, i) => {
+          const [x, y] = at(i, (R * v) / 100);
+          svg.appendChild(el("circle", { cx: x, cy: y, r: 2.6, fill: color }));
+        });
+        // legend
+        const ly = 18 + si * 18;
+        svg.appendChild(el("rect", { x: size + 10, y: ly, width: 10, height: 10, rx: 2, fill: color }));
+        svg.appendChild(el("text", { x: size + 26, y: ly + 9, "font-size": 11, fill: C.muted }, s.name));
+      });
+      return svg;
     },
     donut: (w) => {
       const size = Math.min(w, 300);

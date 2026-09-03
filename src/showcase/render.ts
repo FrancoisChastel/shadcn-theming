@@ -22,6 +22,13 @@ import {
   divergingCA,
   donutParts,
   bulletKpis,
+  weoFan,
+  growthContributions,
+  slopeRanks,
+  phillipsPath,
+  radarProfiles,
+  incomeDistribution,
+  ohlc,
   kpis,
   type Kpi,
 } from "./data.js";
@@ -193,6 +200,13 @@ export function renderShowcaseHtml(brand: Brand, tokens: ThemeTokens): string {
     divergingCA,
     donutParts,
     bulletKpis,
+    weoFan,
+    growthContributions,
+    slopeRanks,
+    phillipsPath,
+    radarProfiles,
+    incomeDistribution,
+    ohlc,
   };
   const runtime = `(${chartMain.toString()})(${JSON.stringify(data)});`;
 

@@ -258,6 +258,174 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "fan-chart",
+      "type": "registry:component",
+      "title": "Fan Chart",
+      "description": "A probabilistic fan chart: a median path with nested 50/80/90% projection bands that widen into the forecast horizon (Observable Plot). The IMF WEO forecast idiom.",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/fan-chart.tsx",
+          "type": "registry:component",
+          "target": "components/ui/fan-chart.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "waterfall-chart",
+      "type": "registry:component",
+      "title": "Waterfall Chart",
+      "description": "A waterfall chart: signed contributions stacked cumulatively to a total — growth decompositions, budget bridges, variance analysis (Observable Plot).",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/waterfall-chart.tsx",
+          "type": "registry:component",
+          "target": "components/ui/waterfall-chart.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "slope-chart",
+      "type": "registry:component",
+      "title": "Slope Chart",
+      "description": "A slopegraph: two aligned axes connected per item — how a ranking or level shifts between two periods (Observable Plot).",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/slope-chart.tsx",
+          "type": "registry:component",
+          "target": "components/ui/slope-chart.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "connected-scatter",
+      "type": "registry:component",
+      "title": "Connected Scatter",
+      "description": "A connected scatter: points joined in sequence with an arrowed path — a trajectory through a 2-D space over time (Observable Plot).",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/connected-scatter.tsx",
+          "type": "registry:component",
+          "target": "components/ui/connected-scatter.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "ecdf-plot",
+      "type": "registry:component",
+      "title": "ECDF Plot",
+      "description": "An empirical cumulative distribution function — a step curve of the share of observations at or below each value. seaborn ecdfplot.",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ecdf-plot.tsx",
+          "type": "registry:component",
+          "target": "components/ui/ecdf-plot.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "lorenz-curve",
+      "type": "registry:component",
+      "title": "Lorenz Curve",
+      "description": "A Lorenz curve with the line of equality and the computed Gini coefficient — the standard picture of income or wealth inequality (Observable Plot).",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/lorenz-curve.tsx",
+          "type": "registry:component",
+          "target": "components/ui/lorenz-curve.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "candlestick-chart",
+      "type": "registry:component",
+      "title": "Candlestick Chart",
+      "description": "A candlestick (OHLC) chart: a wick from low to high with an open→close body, colored by direction — prices, rates, and yields (Observable Plot).",
+      "dependencies": [
+        "@observablehq/plot"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/candlestick-chart.tsx",
+          "type": "registry:component",
+          "target": "components/ui/candlestick-chart.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "radar-chart",
+      "type": "registry:component",
+      "title": "Radar Chart",
+      "description": "A dependency-free SVG radar (spider) chart for comparing a handful of normalized metrics across one or more series. Colored from theme tokens.",
+      "files": [
+        {
+          "path": "components/ui/radar-chart.tsx",
+          "type": "registry:component",
+          "target": "components/ui/radar-chart.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "classification-badge",
+      "type": "registry:component",
+      "title": "Classification Badge",
+      "description": "Document-confidentiality UI — the four levels (Public → For Official Use Only → Confidential → Strictly Confidential) as color-coded shield badges plus a full-width banner. Dependency-free, theme-token colored.",
+      "files": [
+        {
+          "path": "components/ui/classification-badge.tsx",
+          "type": "registry:component",
+          "target": "components/ui/classification-badge.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "data-table",
       "type": "registry:component",
       "title": "Data Table",

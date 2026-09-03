@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "fan-chart",
+  "type": "registry:component",
+  "title": "Fan Chart",
+  "description": "A probabilistic fan chart: a median path with nested 50/80/90% projection bands that widen into the forecast horizon (Observable Plot). The IMF WEO forecast idiom.",
+  "dependencies": [
+    "@observablehq/plot"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/fan-chart.tsx",
+      "type": "registry:component",
+      "target": "components/ui/fan-chart.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as Plot from \"@observablehq/plot\"\n\nimport { cn } from \"@/lib/utils\"\nimport { usePlot } from \"@/lib/use-plot\"\n\nconst PLOT_STYLE = {\n  background: \"transparent\",\n  color: \"var(--muted-foreground)\",\n  fontFamily: \"inherit\",\n  fontSize: \"11px\",\n}\n\nexport interface FanPoint {\n  x: number\n  median: number\n  forecast: boolean\n  /** [low, high] bounds for the 50% / 80% / 90% intervals. */\n  b50: [number, number]\n  b80: [number, number]\n  b90: [number, number]\n}\n\nexport interface FanChartProps {\n  data: FanPoint[]\n  title?: string\n  yLabel?: string\n  height?: number\n  color?: string\n  className?: string\n}\n\n/**\n * A probabilistic fan chart: a median path with nested 50/80/90% projection\n * bands that widen into the forecast horizon — the IMF WEO forecast idiom.\n */\nexport function FanChart({ data, title, yLabel, height = 320, color = \"var(--chart-1)\", className }: FanChartProps) {\n  const ref = usePlot(\n    (width) => {\n      if (!data?.length) return null\n      const hist = data.filter((d) => !d.forecast)\n      const fc = data.filter((d) => d.forecast)\n      const bridge = hist.length ? [hist[hist.length - 1], ...fc] : fc\n      const band = (key: \"b50\" | \"b80\" | \"b90\") => bridge.map((p) => ({ x: p.x, lo: p[key][0], hi: p[key][1] }))\n      return Plot.plot({\n        width,\n        height,\n        style: PLOT_STYLE,\n        x: { label: null, tickFormat: \"d\" },\n        y: { label: yLabel ?? null, grid: true },\n        marks: [\n          Plot.ruleY([0], { stroke: \"var(--muted-foreground)\", strokeOpacity: 0.4, strokeDasharray: \"3,3\" }),\n          Plot.areaY(band(\"b90\"), { x: \"x\", y1: \"lo\", y2: \"hi\", fill: color, fillOpacity: 0.1 }),\n          Plot.areaY(band(\"b80\"), { x: \"x\", y1: \"lo\", y2: \"hi\", fill: color, fillOpacity: 0.14 }),\n          Plot.areaY(band(\"b50\"), { x: \"x\", y1: \"lo\", y2: \"hi\", fill: color, fillOpacity: 0.22 }),\n          Plot.line(hist, { x: \"x\", y: \"median\", stroke: color, strokeWidth: 2 }),\n          Plot.line(bridge, { x: \"x\", y: \"median\", stroke: color, strokeWidth: 2, strokeDasharray: \"5,4\" }),\n          Plot.dot(data, { x: \"x\", y: \"median\", r: 2, fill: color, tip: true }),\n        ],\n      })\n    },\n    [data, yLabel, height, color],\n  )\n\n  return (\n    <figure className={cn(\"m-0\", className)}>\n      {title ? <figcaption style={{ fontSize: 13, fontWeight: 500, marginBottom: 8, color: \"var(--foreground)\" }}>{title}</figcaption> : null}\n      <div ref={ref} />\n    </figure>\n  )\n}\n"
+    }
+  ]
+}

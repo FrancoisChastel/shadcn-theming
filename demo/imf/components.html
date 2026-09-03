@@ -7,7 +7,7 @@
 <style>
 :root {
   --radius: 0.1875rem;
-  --font-sans: "Avenir Next World", "Avenir Next", Mulish, Helvetica, Arial, sans-serif;
+  --font-sans: Arial, Helvetica, "Helvetica Neue", sans-serif;
   --background: oklch(1 0 0);
   --foreground: oklch(0.2178 0 0);
   --card: oklch(1 0 0);
@@ -222,6 +222,37 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 .alert-destructive { border-color: var(--destructive); color: var(--destructive); }
 .alert-destructive .ico { color: var(--destructive); }
 
+/* --- document classification --- */
+.cls-badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.22rem 0.55rem 0.22rem 0.45rem; border-radius: 999px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; border: 1px solid; white-space: nowrap; line-height: 1; }
+.cls-badge svg { flex: none; }
+.cls-badge.cls-public { color: var(--chart-5); border-color: color-mix(in oklab, var(--chart-5) 45%, transparent); background: color-mix(in oklab, var(--chart-5) 12%, var(--card)); }
+.cls-badge.cls-official { color: var(--primary); border-color: color-mix(in oklab, var(--primary) 45%, transparent); background: color-mix(in oklab, var(--primary) 12%, var(--card)); }
+.cls-badge.cls-confidential { color: var(--chart-3); border-color: color-mix(in oklab, var(--chart-3) 50%, transparent); background: color-mix(in oklab, var(--chart-3) 14%, var(--card)); }
+.cls-badge.cls-strict { color: var(--destructive); border-color: color-mix(in oklab, var(--destructive) 50%, transparent); background: color-mix(in oklab, var(--destructive) 12%, var(--card)); }
+
+.cls-banner { display: flex; align-items: center; gap: 0.5rem; padding: 0.42rem 0.9rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; border-radius: calc(var(--radius) - 1px); }
+.cls-banner svg { flex: none; }
+.cls-banner .cls-dist { margin-left: auto; font-weight: 600; letter-spacing: 0.01em; text-transform: none; opacity: 0.9; font-size: 0.68rem; }
+.cls-banner.cls-public { color: var(--chart-5); background: color-mix(in oklab, var(--chart-5) 13%, var(--card)); border: 1px solid color-mix(in oklab, var(--chart-5) 40%, transparent); }
+.cls-banner.cls-official { color: #fff; background: var(--primary); }
+.cls-banner.cls-confidential { color: #1a1a1a; background: var(--chart-3); }
+.cls-banner.cls-strict { color: #fff; background: var(--destructive); }
+
+.cls-table { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.cls-row { display: grid; grid-template-columns: 210px 170px 1fr; gap: 1rem; padding: 0.7rem 1rem; align-items: center; font-size: 0.82rem; border-top: 1px solid var(--border); }
+.cls-row:first-child { border-top: none; }
+.cls-row.cls-head { background: var(--muted); color: var(--muted-foreground); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+.cls-who { color: var(--foreground); font-weight: 550; }
+.cls-rule { color: var(--muted-foreground); }
+@media (max-width: 720px) { .cls-row { grid-template-columns: 1fr; gap: 0.35rem; } .cls-row.cls-head { display: none; } }
+
+.cls-select { position: relative; }
+.cls-select .select-trigger { display: flex; align-items: center; gap: 0.5rem; }
+.cls-doc { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+.cls-doc-body { padding: 1.1rem 1.25rem; }
+.cls-doc-meta { display: flex; gap: 1.1rem; flex-wrap: wrap; font-size: 0.74rem; color: var(--muted-foreground); margin-top: 0.6rem; }
+.cls-doc-meta span { display: inline-flex; align-items: center; gap: 0.35rem; }
+
 /* separator */
 .sep { height: 1px; background: var(--border); border: none; width: 100%; margin: 0.25rem 0; }
 .sep-v { width: 1px; align-self: stretch; background: var(--border); }
@@ -409,6 +440,124 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 .vstack { flex-direction: column; }
 .stack-box { background: var(--secondary); color: var(--secondary-foreground); border-radius: calc(var(--radius) - 1px); padding: 0.4rem 0.8rem; font-size: 0.78rem; text-align: center; }
 
+/* ---- App shell: headers, sidebars, footers ---- */
+.avatar-sm { width: 1.75rem; height: 1.75rem; font-size: 0.68rem; }
+.icon-btn { display: inline-grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: calc(var(--radius) - 1px); border: none; background: none; color: var(--muted-foreground); cursor: pointer; }
+.icon-btn:hover { background: var(--accent); color: var(--accent-foreground); }
+.kpi-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.7rem; }
+
+/* Two-level enterprise header */
+.ent-header { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); overflow: visible; background: var(--card); }
+.ent-utility { display: flex; align-items: center; justify-content: space-between; padding: 0.35rem 1rem; background: var(--secondary); color: var(--secondary-foreground); border-bottom: 1px solid var(--border); font-size: 0.75rem; border-radius: var(--radius) var(--radius) 0 0; }
+.ent-org { display: inline-flex; align-items: center; gap: 0.4rem; background: none; border: none; color: inherit; font: inherit; font-weight: 600; cursor: pointer; }
+.ent-org svg { flex: none; }
+.ent-util-links { display: flex; align-items: center; gap: 1.1rem; }
+.ent-util-links a { display: inline-flex; align-items: center; gap: 0.35rem; color: inherit; text-decoration: none; opacity: 0.9; position: relative; }
+.ent-util-links a:hover { opacity: 1; }
+.ent-util-bell .ent-count { position: absolute; top: -0.4rem; right: -0.55rem; background: var(--destructive); color: #fff; font-size: 0.58rem; font-weight: 700; border-radius: 999px; padding: 0.02rem 0.28rem; }
+.ent-util-user { font-weight: 600; }
+.ent-main { display: flex; align-items: center; gap: 1.25rem; padding: 0.7rem 1rem; }
+.ent-brand { display: inline-flex; align-items: baseline; gap: 0.45rem; text-decoration: none; }
+.ent-logo { font-weight: 800; letter-spacing: 0.02em; color: var(--primary); font-size: 1.15rem; }
+.ent-word { font-weight: 600; color: var(--foreground); font-size: 0.95rem; }
+.ent-nav { display: flex; align-items: center; gap: 0.35rem; }
+.ent-nav > a, .ent-item > a { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.4rem 0.65rem; border-radius: calc(var(--radius) - 1px); color: var(--muted-foreground); text-decoration: none; font-size: 0.86rem; font-weight: 550; }
+.ent-nav > a:hover, .ent-item > a:hover { background: var(--accent); color: var(--accent-foreground); }
+.ent-nav > a.on { color: var(--primary); background: color-mix(in oklab, var(--primary) 10%, transparent); }
+.ent-item { position: relative; }
+.ent-mega { position: absolute; top: calc(100% + 0.5rem); left: 0; display: grid; grid-template-columns: repeat(3, minmax(150px, 1fr)); gap: 1.25rem; padding: 1.1rem 1.25rem; width: 540px; background: var(--popover); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 12px 34px -12px rgba(0,0,0,0.28); opacity: 0; visibility: hidden; transform: translateY(-4px); transition: opacity var(--duration-fast, 150ms), transform var(--duration-fast, 150ms); z-index: 40; }
+.ent-item:hover .ent-mega, .ent-item:focus-within .ent-mega { opacity: 1; visibility: visible; transform: translateY(0); }
+.ent-mega-col h5 { margin: 0 0 0.5rem; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); }
+.ent-mega-col a { display: block; padding: 0.2rem 0; color: var(--foreground); text-decoration: none; font-size: 0.83rem; }
+.ent-mega-col a:hover { color: var(--primary); }
+.ent-mega-feature { border-left: 1px solid var(--border); padding-left: 1.1rem; }
+.ent-mega-feature p { font-size: 0.8rem; margin: 0 0 0.7rem; }
+.ent-actions { display: flex; align-items: center; gap: 0.6rem; margin-left: auto; }
+.ent-search { max-width: 220px; }
+@media (max-width: 860px) { .ent-nav, .ent-util-links a span { display: none; } .ent-mega { width: 90vw; grid-template-columns: 1fr; } }
+
+/* Application header */
+.app-header { display: flex; align-items: center; gap: 0.6rem; width: 100%; padding: 0.55rem 0.9rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); }
+.app-header .crumb { font-size: 0.82rem; }
+.app-header-spacer { flex: 1; }
+.app-header-search { flex: 0 0 auto; max-width: 210px; }
+
+/* Site (marketing) header */
+.site-header { display: flex; align-items: center; gap: 1.5rem; width: 100%; padding: 0.75rem 1.1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); }
+.site-nav { display: flex; gap: 1.2rem; }
+.site-nav a { color: var(--muted-foreground); text-decoration: none; font-size: 0.88rem; font-weight: 550; }
+.site-nav a:hover { color: var(--foreground); }
+.site-cta { display: flex; align-items: center; gap: 0.9rem; margin-left: auto; }
+.site-signin { color: var(--foreground); text-decoration: none; font-size: 0.86rem; font-weight: 600; }
+@media (max-width: 720px) { .site-nav { display: none; } }
+
+/* Compact toolbar header */
+.compact-header { display: flex; align-items: center; gap: 1rem; width: 100%; padding: 0.5rem 0.85rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); }
+.compact-header .ch-left { display: flex; align-items: center; gap: 0.6rem; }
+.compact-header .ch-title { font-weight: 650; font-size: 0.92rem; }
+.compact-header .ch-tabs { margin: 0 auto; }
+.compact-header .ch-actions { display: flex; gap: 0.4rem; }
+
+/* Sidebar: icon rail + panel */
+.shell-side { display: flex; height: 100%; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--sidebar); }
+.side-rail { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 0.6rem 0.5rem; border-right: 1px solid var(--border); background: color-mix(in oklab, var(--sidebar) 92%, var(--foreground) 8%); }
+.rail-logo { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 8px; background: var(--sidebar-primary); color: var(--sidebar-primary-foreground); font-weight: 800; margin-bottom: 0.4rem; }
+.rail-i { display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 8px; border: none; background: none; color: var(--sidebar-foreground); opacity: 0.7; cursor: pointer; }
+.rail-i:hover { background: var(--sidebar-accent); opacity: 1; }
+.rail-i.on { background: var(--sidebar-accent); color: var(--sidebar-primary); opacity: 1; }
+.side-full { width: 230px; display: flex; flex-direction: column; padding: 0.7rem 0.6rem; gap: 0.1rem; }
+.side-search { margin-bottom: 0.6rem; }
+.side-search .input { font-size: 0.8rem; padding: 0.4rem 0.6rem 0.4rem 1.9rem; }
+.side-group { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); padding: 0.6rem 0.5rem 0.3rem; }
+.side-link { display: flex; align-items: center; gap: 0.55rem; padding: 0.42rem 0.55rem; border-radius: calc(var(--radius) - 1px); color: var(--sidebar-foreground); text-decoration: none; font-size: 0.85rem; }
+.side-link svg { flex: none; opacity: 0.8; }
+.side-link:hover { background: var(--sidebar-accent); }
+.side-link.on { background: var(--sidebar-accent); color: var(--sidebar-primary); font-weight: 600; }
+.side-link .side-tag { margin-left: auto; font-size: 0.66rem; background: var(--muted); color: var(--muted-foreground); border-radius: 999px; padding: 0.02rem 0.4rem; }
+.side-user { display: flex; align-items: center; gap: 0.55rem; margin-top: auto; padding: 0.5rem; border-top: 1px solid var(--border); cursor: pointer; }
+.side-user .side-user-meta { display: flex; flex-direction: column; line-height: 1.2; }
+.side-user .side-user-meta b { font-size: 0.82rem; }
+.side-user .side-user-meta span { font-size: 0.7rem; color: var(--muted-foreground); }
+.side-user svg { flex: none; margin-left: auto; color: var(--muted-foreground); }
+
+/* Footers */
+.app-footer { display: flex; align-items: center; gap: 0.6rem; width: 100%; padding: 0.5rem 0.9rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); font-size: 0.76rem; color: var(--muted-foreground); }
+.app-footer .af-sep { width: 1px; height: 0.9rem; background: var(--border); }
+.app-footer .af-right { margin-left: auto; display: flex; gap: 1rem; }
+.app-footer .af-right a { color: var(--muted-foreground); text-decoration: none; }
+.app-footer .af-right a:hover { color: var(--foreground); }
+.status-dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--muted-foreground); display: inline-block; }
+.status-dot.ok { background: var(--chart-5); box-shadow: 0 0 0 3px color-mix(in oklab, var(--chart-5) 22%, transparent); }
+.site-footer { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); overflow: hidden; }
+.sf-cols { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 1.5rem; padding: 1.5rem 1.5rem 1.25rem; }
+.sf-brand .ent-logo { font-size: 1.3rem; }
+.sf-brand p { font-size: 0.8rem; margin: 0.5rem 0 0.8rem; max-width: 30ch; }
+.sf-social { display: flex; gap: 0.5rem; }
+.sf-social a { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground); }
+.sf-social a:hover { color: var(--primary); border-color: var(--primary); }
+.sf-col h5 { margin: 0 0 0.6rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted-foreground); }
+.sf-col a { display: block; padding: 0.22rem 0; color: var(--foreground); text-decoration: none; font-size: 0.83rem; }
+.sf-col a:hover { color: var(--primary); }
+.sf-legal { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.8rem 1.5rem; border-top: 1px solid var(--border); font-size: 0.76rem; color: var(--muted-foreground); background: color-mix(in oklab, var(--muted) 40%, var(--card)); }
+.sf-legal nav { display: flex; gap: 1.1rem; }
+.sf-legal a { color: var(--muted-foreground); text-decoration: none; }
+.sf-legal a:hover { color: var(--foreground); }
+@media (max-width: 720px) { .sf-cols { grid-template-columns: 1fr 1fr; } .sf-legal { flex-direction: column; align-items: flex-start; } }
+.legal-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; padding: 0.6rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); font-size: 0.78rem; color: var(--muted-foreground); }
+.legal-footer .lf-note { display: inline-flex; align-items: center; gap: 0.5rem; }
+.legal-footer .lf-links { display: flex; gap: 1rem; }
+.legal-footer a { color: var(--muted-foreground); text-decoration: none; }
+.legal-footer a:hover { color: var(--foreground); }
+
+/* Composed shell */
+.shell { display: flex; flex-direction: column; height: 560px; background: var(--background); }
+.shell > .app-header, .shell > .app-footer { border-radius: 0; border-left: none; border-right: none; border-top: none; }
+.shell > .app-footer { border-bottom: none; border-top: 1px solid var(--border); }
+.shell-body { display: flex; flex: 1; min-height: 0; }
+.shell-body .shell-side { border: none; border-right: 1px solid var(--border); border-radius: 0; }
+.shell-content { flex: 1; padding: 1.1rem 1.25rem; overflow: auto; }
+@media (max-width: 720px) { .shell-body .side-full { display: none; } }
+
 /* ---- Chat ---- */
 .chat { width: min(440px, 100%); display: flex; flex-direction: column; height: 460px; overflow: hidden; }
 .chat-head { display: flex; align-items: center; gap: 0.6rem; padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); }
@@ -493,6 +642,8 @@ section.block > .desc { color: var(--muted-foreground); margin: 0 0 1rem; font-s
 
 /* ---- Error / empty ---- */
 .errstate { text-align: center; max-width: 420px; }
+.errstate .err-ico { display: inline-grid; place-items: center; width: 3.4rem; height: 3.4rem; border-radius: 999px; margin-bottom: 0.6rem; color: var(--primary); background: color-mix(in oklab, var(--primary) 12%, var(--card)); }
+.errstate .err-ico.err-warn { color: var(--destructive); background: color-mix(in oklab, var(--destructive) 12%, var(--card)); }
 .errstate .code { font-size: 4rem; font-weight: 700; letter-spacing: -0.03em; color: var(--primary); line-height: 1; }
 .errstate h3 { margin: 0.75rem 0 0.4rem; font-size: 1.35rem; }
 .errstate p { color: var(--muted-foreground); margin: 0 0 1.25rem; }
@@ -731,8 +882,42 @@ table.dt .dt-check input { accent-color: var(--primary); }
 .notif .ni .dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--primary); flex: none; }
 .settings-layout { display: grid; grid-template-columns: 170px 1fr; gap: 1.5rem; padding: 1.25rem; }
 .settings-nav a { display: block; padding: 0.4rem 0.6rem; border-radius: calc(var(--radius) - 1px); font-size: 0.84rem; color: var(--muted-foreground); }
+.settings-nav a { display: flex; align-items: center; gap: 0.5rem; }
+.settings-nav a svg { flex: none; opacity: 0.8; }
 .settings-nav a.active { background: var(--accent); color: var(--foreground); font-weight: 500; }
 @media (max-width: 820px) { .settings-layout { grid-template-columns: 1fr; } }
+.set-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 0.5rem 1rem; margin-bottom: 1rem; }
+.set-card-head { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 0; }
+.set-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.7rem 0; border-top: 1px solid var(--border); }
+.set-card > .set-row:first-child { border-top: none; }
+.set-row b { font-size: 0.88rem; }
+.set-row p { margin: 0.1rem 0 0; font-size: 0.78rem; }
+.session-row, .doc-row { display: flex; align-items: center; gap: 0.7rem; padding: 0.55rem 0; border-top: 1px solid var(--border); }
+.set-card > .session-row:first-of-type { border-top: 1px solid var(--border); }
+.s-ico { display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 999px; background: var(--secondary); color: var(--muted-foreground); flex: none; }
+
+/* Profile page */
+.profile { background: var(--card); }
+.profile-cover { height: 120px; background: linear-gradient(120deg, var(--primary), color-mix(in oklab, var(--primary) 55%, var(--accent))); }
+.profile-head { display: flex; align-items: flex-end; gap: 1rem; padding: 0 1.5rem; margin-top: -34px; }
+.profile-avatar { display: grid; place-items: center; width: 76px; height: 76px; border-radius: 18px; background: var(--secondary); color: var(--secondary-foreground); font-weight: 700; font-size: 1.5rem; border: 3px solid var(--card); flex: none; }
+.profile-id { flex: 1; padding-bottom: 0.2rem; }
+.profile-id h2 { margin: 0; font-size: 1.35rem; }
+.profile-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.profile-badges .badge { display: inline-flex; align-items: center; gap: 0.3rem; }
+.profile-actions { display: flex; gap: 0.5rem; padding-bottom: 0.3rem; }
+.profile-actions .btn { display: inline-flex; align-items: center; gap: 0.35rem; }
+.profile-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; padding: 1.1rem 1.5rem 0; }
+.profile-tabs { padding: 1rem 1.5rem 0; }
+.profile-body { display: grid; grid-template-columns: 1fr 300px; gap: 1.25rem; padding: 1.25rem 1.5rem 1.5rem; }
+.profile-main h4, .profile-aside h4 { font-size: 0.95rem; }
+.doc-row .cls-badge { flex: none; }
+.contact-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.83rem; padding: 0.25rem 0; color: var(--foreground); }
+.contact-row svg { flex: none; color: var(--muted-foreground); }
+.feed { display: flex; flex-direction: column; gap: 0.7rem; }
+.feed-row { display: flex; gap: 0.6rem; align-items: flex-start; }
+.feed-ico { display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 999px; background: var(--secondary); color: var(--muted-foreground); flex: none; }
+@media (max-width: 820px) { .profile-body { grid-template-columns: 1fr; } .profile-stats { grid-template-columns: repeat(2, 1fr); } }
 
 </style>
 </head>
@@ -741,7 +926,7 @@ table.dt .dt-check input { accent-color: var(--primary); }
 <div class="app">
   <aside class="side" aria-label="Sections">
     <div class="brand"><span class="mark" aria-hidden="true">I</span><div><b>IMF</b><span>design system</span></div></div>
-    <div class="nav-group">Forms</div><div class="nav"><a href="#button" data-nav-link>Button</a><a href="#input" data-nav-link>Input &amp; Textarea</a><a href="#checkbox-radio" data-nav-link>Checkbox &amp; Radio</a><a href="#switch-slider" data-nav-link>Switch, Slider &amp; Toggle</a><a href="#select" data-nav-link>Select</a><a href="#form-field" data-nav-link>Form field &amp; validation</a><a href="#combobox" data-nav-link>Combobox &amp; multi-select</a><a href="#datepicker" data-nav-link>Date picker</a><a href="#otp-password" data-nav-link>Input OTP &amp; password</a><a href="#file-upload" data-nav-link>File upload</a><a href="#search-tags" data-nav-link>Search, tags &amp; segmented</a></div><div class="nav-group">Data display</div><div class="nav"><a href="#badge" data-nav-link>Badge</a><a href="#avatar" data-nav-link>Avatar</a><a href="#card" data-nav-link>Card</a><a href="#table" data-nav-link>Table</a><a href="#data-table" data-nav-link>Data table</a><a href="#tree" data-nav-link>Tree view</a><a href="#timeline" data-nav-link>Timeline</a><a href="#stepper" data-nav-link>Stepper</a><a href="#gauge" data-nav-link>Gauge</a><a href="#description-list" data-nav-link>Description list</a><a href="#code-block" data-nav-link>Code block</a><a href="#progress-skeleton" data-nav-link>Progress &amp; Skeleton</a><a href="#tabs" data-nav-link>Tabs</a><a href="#accordion" data-nav-link>Accordion</a><a href="#carousel" data-nav-link>Carousel</a><a href="#calendar" data-nav-link>Calendar</a><a href="#tooltip-hover" data-nav-link>Tooltip &amp; Hover Card</a></div><div class="nav-group">Communication</div><div class="nav"><a href="#chat" data-nav-link>Chat</a></div><div class="nav-group">Overlays &amp; menus</div><div class="nav"><a href="#dialog" data-nav-link>Dialog &amp; Alert Dialog</a><a href="#sheet-drawer" data-nav-link>Sheet &amp; Drawer</a><a href="#dropdown" data-nav-link>Dropdown &amp; Context Menu</a><a href="#popover" data-nav-link>Popover</a><a href="#menubar" data-nav-link>Menubar</a><a href="#command" data-nav-link>Command</a><a href="#alert" data-nav-link>Alert</a><a href="#toast" data-nav-link>Toast</a></div><div class="nav-group">Navigation</div><div class="nav"><a href="#breadcrumb-pagination" data-nav-link>Breadcrumb &amp; Pagination</a><a href="#navmenu" data-nav-link>Navigation Menu</a></div>
+    <div class="nav-group">Forms</div><div class="nav"><a href="#button" data-nav-link>Button</a><a href="#input" data-nav-link>Input &amp; Textarea</a><a href="#checkbox-radio" data-nav-link>Checkbox &amp; Radio</a><a href="#switch-slider" data-nav-link>Switch, Slider &amp; Toggle</a><a href="#select" data-nav-link>Select</a><a href="#form-field" data-nav-link>Form field &amp; validation</a><a href="#combobox" data-nav-link>Combobox &amp; multi-select</a><a href="#datepicker" data-nav-link>Date picker</a><a href="#otp-password" data-nav-link>Input OTP &amp; password</a><a href="#file-upload" data-nav-link>File upload</a><a href="#search-tags" data-nav-link>Search, tags &amp; segmented</a></div><div class="nav-group">Data display</div><div class="nav"><a href="#badge" data-nav-link>Badge</a><a href="#avatar" data-nav-link>Avatar</a><a href="#card" data-nav-link>Card</a><a href="#table" data-nav-link>Table</a><a href="#data-table" data-nav-link>Data table</a><a href="#tree" data-nav-link>Tree view</a><a href="#timeline" data-nav-link>Timeline</a><a href="#stepper" data-nav-link>Stepper</a><a href="#gauge" data-nav-link>Gauge</a><a href="#description-list" data-nav-link>Description list</a><a href="#code-block" data-nav-link>Code block</a><a href="#progress-skeleton" data-nav-link>Progress &amp; Skeleton</a><a href="#tabs" data-nav-link>Tabs</a><a href="#accordion" data-nav-link>Accordion</a><a href="#carousel" data-nav-link>Carousel</a><a href="#calendar" data-nav-link>Calendar</a><a href="#tooltip-hover" data-nav-link>Tooltip &amp; Hover Card</a></div><div class="nav-group">Communication</div><div class="nav"><a href="#chat" data-nav-link>Chat</a></div><div class="nav-group">Overlays &amp; menus</div><div class="nav"><a href="#dialog" data-nav-link>Dialog &amp; Alert Dialog</a><a href="#sheet-drawer" data-nav-link>Sheet &amp; Drawer</a><a href="#dropdown" data-nav-link>Dropdown &amp; Context Menu</a><a href="#popover" data-nav-link>Popover</a><a href="#menubar" data-nav-link>Menubar</a><a href="#command" data-nav-link>Command</a><a href="#alert" data-nav-link>Alert</a><a href="#toast" data-nav-link>Toast</a></div><div class="nav-group">Navigation</div><div class="nav"><a href="#breadcrumb-pagination" data-nav-link>Breadcrumb &amp; Pagination</a><a href="#navmenu" data-nav-link>Navigation Menu</a></div><div class="nav-group">Security &amp; classification</div><div class="nav"><a href="#classification-levels" data-nav-link>Document classification</a><a href="#classification-badges" data-nav-link>Classification badges &amp; picker</a><a href="#classification-banner" data-nav-link>Classification banners</a><a href="#classification-doc" data-nav-link>Classified document</a></div>
   </aside>
   <main class="main" id="main">
     <div class="topbar">
@@ -1133,6 +1318,49 @@ table.dt .dt-check input { accent-color: var(--primary); }
           <button data-menu-trigger style="border:none;background:transparent;padding:.35rem .7rem;cursor:pointer">About</button>
         </div></div>
   </section>
+<section class="block" id="classification-levels">
+    <h2>Document classification</h2>
+    <p class="desc">The four confidentiality levels, least to most restrictive, as color-coded shield badges with their access and handling rules. Green = public, brand blue = official use, amber = confidential, red = strictly confidential.</p>
+    <div class="demo col"><div style="width:100%"><div class="cls-table">
+    <div class="cls-row cls-head"><span>Level</span><span>Who can access</span><span>Handling rule</span></div>
+    <div class="cls-row"><span><span class="cls-badge cls-public"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg><span>Public</span></span></span><span class="cls-who">Anyone</span><span class="cls-rule">Cleared for public release — no distribution restriction.</span></div><div class="cls-row"><span><span class="cls-badge cls-official"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 22V2"/></svg><span>For Official Use Only</span></span></span><span class="cls-who">Fund + designated staff</span><span class="cls-rule">Available to staff of the relevant unit on a prudent-use basis; not to be further disclosed without consent.</span></div><div class="cls-row"><span><span class="cls-badge cls-confidential"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg><span>Confidential</span></span></span><span class="cls-who">Need-to-know</span><span class="cls-rule">Limited to staff with a determined need to know.</span></div><div class="cls-row"><span><span class="cls-badge cls-strict"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="16" r="1"/><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Strictly Confidential</span></span></span><span class="cls-who">Strict need-to-know</span><span class="cls-rule">Limited to specifically designated staff with a strict need to know.</span></div>
+  </div></div></div>
+  </section>
+<section class="block" id="classification-badges">
+    <h2>Classification badges &amp; picker</h2>
+    <p class="desc">Inline badges to mark a record, plus a picker to set a document's level. Use badges in tables, cards, and list rows.</p>
+    <div class="demo col"><div style="width:100%;display:flex;flex-direction:column;gap:1.25rem">
+          <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center"><span class="cls-badge cls-public"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg><span>Public</span></span><span class="cls-badge cls-official"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 22V2"/></svg><span>For Official Use Only</span></span><span class="cls-badge cls-confidential"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg><span>Confidential</span></span><span class="cls-badge cls-strict"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="16" r="1"/><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Strictly Confidential</span></span></div>
+          <div class="field" style="max-width:320px">
+    <label class="label">Set document classification</label>
+    <div class="cls-select" data-cls-picker>
+      <button class="select-trigger" data-menu-trigger aria-haspopup="listbox"><span class="cls-badge cls-official"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 22V2"/></svg><span>For Official Use Only</span></span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button>
+      <div data-menu role="listbox">
+        <div class="menu-item" role="option" data-cls-option data-cls="public"><span class="cls-badge cls-public"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg><span>Public</span></span></div><div class="menu-item" role="option" data-cls-option data-cls="official"><span class="cls-badge cls-official"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 22V2"/></svg><span>For Official Use Only</span></span></div><div class="menu-item" role="option" data-cls-option data-cls="confidential"><span class="cls-badge cls-confidential"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg><span>Confidential</span></span></div><div class="menu-item" role="option" data-cls-option data-cls="strict"><span class="cls-badge cls-strict"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="16" r="1"/><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Strictly Confidential</span></span></div>
+      </div>
+    </div>
+  </div>
+        </div></div>
+  </section>
+<section class="block" id="classification-banner">
+    <h2>Classification banners</h2>
+    <p class="desc">The full-width stamp a classified document carries top and bottom. Sober for public, saturated as restriction increases.</p>
+    <div class="demo col"><div style="width:100%;display:flex;flex-direction:column;gap:.6rem"><div class="cls-banner cls-public" role="note" aria-label="Classification: Available to the Public"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg><span class="cls-stamp">Available to the Public</span><span class="cls-dist">Handling: Anyone</span></div><div class="cls-banner cls-official" role="note" aria-label="Classification: For Official Use Only"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 22V2"/></svg><span class="cls-stamp">For Official Use Only</span><span class="cls-dist">Handling: Fund + designated staff</span></div><div class="cls-banner cls-confidential" role="note" aria-label="Classification: Confidential"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg><span class="cls-stamp">Confidential</span><span class="cls-dist">Handling: Need-to-know</span></div><div class="cls-banner cls-strict" role="note" aria-label="Classification: Strictly Confidential"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="16" r="1"/><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span class="cls-stamp">Strictly Confidential</span><span class="cls-dist">Handling: Strict need-to-know</span></div></div></div>
+  </section>
+<section class="block" id="classification-doc">
+    <h2>Classified document</h2>
+    <p class="desc">A document framed by its classification banner, with an access summary — the pattern the publication reader and profile documents reuse.</p>
+    <div class="demo col"><div style="width:100%;max-width:640px;margin:0 auto"><div class="cls-doc">
+    <div class="cls-banner cls-strict" role="note" aria-label="Classification: Strictly Confidential"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="16" r="1"/><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span class="cls-stamp">Strictly Confidential</span><span class="cls-dist">Handling: Strict need-to-know</span></div>
+    <div class="cls-doc-body">
+      <div class="muted" style="font-size:.72rem;letter-spacing:.04em;text-transform:uppercase">Working paper · WP/26/184 · draft</div>
+      <h3 style="margin:.35rem 0 .5rem">Cross-country disinflation dynamics</h3>
+      <p class="muted" style="font-size:.86rem;margin:0 0 .6rem">Services prices remain sticky while goods disinflation broadens. This draft is pre-decisional and must not be redistributed.</p>
+      <div class="cls-doc-meta"><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> A. Economist</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> 12 Sep 2026</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><rect width="8" height="6" x="8" y="12" rx="1"/><path d="M10 12v-1a2 2 0 1 1 4 0v1"/></svg> 2 authorized readers</span></div>
+    </div>
+    <div class="cls-banner cls-strict" role="note" aria-label="Classification: Strictly Confidential"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="16" r="1"/><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span class="cls-stamp">Strictly Confidential</span><span class="cls-dist">Handling: Strict need-to-know</span></div>
+  </div></div></div>
+  </section>
       <footer class="muted" style="font-size:.75rem;border-top:1px solid var(--border);padding-top:1.25rem;margin-top:3rem">Generated by shadcn-theming · synthetic, illustrative data</footer>
     </div>
   </main>
@@ -1341,6 +1569,15 @@ table.dt .dt-check input { accent-color: var(--primary); }
       const label = $("[data-select-value]", wrap);
       label.textContent = opt2.textContent;
       $$("[data-select-option]", wrap).forEach((o) => o.classList.toggle("selected", o === opt2));
+      closeMenus();
+    }
+    const clsOpt = closest(e.target, "[data-cls-option]");
+    if (clsOpt) {
+      const picker = clsOpt.closest("[data-cls-picker]");
+      const trigger2 = picker?.querySelector("[data-menu-trigger]");
+      const srcBadge = clsOpt.querySelector(".cls-badge");
+      const dstBadge = trigger2?.querySelector(".cls-badge");
+      if (srcBadge && dstBadge) dstBadge.replaceWith(srcBadge.cloneNode(true));
       closeMenus();
     }
   });

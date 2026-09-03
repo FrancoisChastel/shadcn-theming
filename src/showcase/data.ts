@@ -158,6 +158,89 @@ export const bulletKpis: Array<{ label: string; value: number; target: number; m
   { label: "Reserves cover", value: 7.4, target: 6.0, max: 12, unit: "mo" },
 ];
 
+/** Probabilistic fan chart: median path plus widening 50/80/90% bands. */
+export interface FanPoint {
+  x: number;
+  median: number;
+  forecast: boolean;
+  b50: [number, number];
+  b80: [number, number];
+  b90: [number, number];
+}
+export const weoFan: FanPoint[] = (() => {
+  const history: Array<[number, number]> = [
+    [2018, 3.6], [2019, 2.8], [2020, -2.7], [2021, 6.5], [2022, 3.6], [2023, 3.3], [2024, 3.2],
+  ];
+  const pts: FanPoint[] = history.map(([x, median]) => ({
+    x, median, forecast: false, b50: [median, median], b80: [median, median], b90: [median, median],
+  }));
+  let last = 3.2;
+  for (let i = 1; i <= 6; i++) {
+    last += normal(rand, 0.03, 0.22);
+    const s = 0.28 * i; // widening spread
+    const band = (k: number): [number, number] => [Number((last - k * s).toFixed(2)), Number((last + k * s).toFixed(2))];
+    pts.push({ x: 2024 + i, median: Number(last.toFixed(2)), forecast: true, b50: band(0.67), b80: band(1.28), b90: band(1.64) });
+  }
+  return pts;
+})();
+
+/** Waterfall: contributions (pp) to headline GDP growth. */
+export const growthContributions: Array<{ label: string; value: number }> = [
+  { label: "Consumption", value: 1.9 },
+  { label: "Investment", value: 0.7 },
+  { label: "Government", value: 0.3 },
+  { label: "Net exports", value: -0.6 },
+  { label: "Inventories", value: 0.1 },
+];
+
+/** Slope chart: share of world GDP (PPP, %) in two years. */
+export const slopeRanks: Array<{ item: string; left: number; right: number }> = [
+  { item: "China", left: 13.9, right: 19.0 },
+  { item: "United States", left: 16.5, right: 14.8 },
+  { item: "India", left: 5.9, right: 8.2 },
+  { item: "Euro area", left: 14.2, right: 11.4 },
+  { item: "Japan", left: 4.8, right: 3.5 },
+  { item: "Russia", left: 3.4, right: 2.9 },
+];
+
+/** Connected scatter: unemployment↔inflation trajectory over time. */
+export const phillipsPath: Array<{ year: number; x: number; y: number }> = (() => {
+  const anchors: Array<[number, number, number]> = [
+    [2018, 3.9, 2.1], [2019, 3.7, 1.8], [2020, 8.1, 1.2], [2021, 5.3, 4.7],
+    [2022, 3.6, 8.0], [2023, 3.5, 4.1], [2024, 4.0, 2.9], [2025, 4.2, 2.4],
+  ];
+  return anchors.map(([year, x, y]) => ({ year, x, y }));
+})();
+
+/** Radar: normalized (0–100) macro profile for two economies. */
+export const radarProfiles: { axes: string[]; series: Array<{ name: string; values: number[] }> } = {
+  axes: ["Growth", "Price stability", "Reserves", "Fiscal space", "External", "Employment"],
+  series: [
+    { name: "Economy A", values: [72, 58, 81, 44, 63, 77] },
+    { name: "Economy B", values: [55, 79, 49, 68, 71, 52] },
+  ],
+};
+
+/** Income draws (lognormal) for a Lorenz curve + Gini. */
+export const incomeDistribution: number[] = Array.from({ length: 240 }, () =>
+  Number(Math.exp(normal(rand, 3.0, 0.85)).toFixed(2)),
+);
+
+/** OHLC series (e.g., an exchange rate or benchmark yield) for a candlestick. */
+export const ohlc: Array<{ t: number; o: number; h: number; l: number; c: number }> = (() => {
+  const out: Array<{ t: number; o: number; h: number; l: number; c: number }> = [];
+  let price = 100;
+  for (let t = 0; t < 32; t++) {
+    const o = price;
+    const c = Number((o + normal(rand, 0.05, 1.3)).toFixed(2));
+    const h = Number((Math.max(o, c) + Math.abs(normal(rand, 0, 0.8))).toFixed(2));
+    const l = Number((Math.min(o, c) - Math.abs(normal(rand, 0, 0.8))).toFixed(2));
+    out.push({ t, o: Number(o.toFixed(2)), h, l, c });
+    price = c;
+  }
+  return out;
+})();
+
 /** Headline KPI tiles. */
 export const kpis: Kpi[] = [
   { label: "World GDP growth", value: "3.2%", delta: 0.1, deltaLabel: "vs WEO Apr", data: [3.6, 3.3, 2.8, -2.7, 6.5, 3.6, 3.3, 3.2] },

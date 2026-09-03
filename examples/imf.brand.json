@@ -14,7 +14,7 @@
     "tint": false
   },
   "fonts": {
-    "sans": "\"Avenir Next World\", \"Avenir Next\", Mulish, Helvetica, Arial, sans-serif"
+    "sans": "Arial, Helvetica, \"Helvetica Neue\", sans-serif"
   },
   "radius": "0.1875rem",
   "appearance": "both"

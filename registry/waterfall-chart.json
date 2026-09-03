@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "waterfall-chart",
+  "type": "registry:component",
+  "title": "Waterfall Chart",
+  "description": "A waterfall chart: signed contributions stacked cumulatively to a total — growth decompositions, budget bridges, variance analysis (Observable Plot).",
+  "dependencies": [
+    "@observablehq/plot"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/FrancoisChastel/shadcn-theming/main/registry/use-plot.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/waterfall-chart.tsx",
+      "type": "registry:component",
+      "target": "components/ui/waterfall-chart.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as Plot from \"@observablehq/plot\"\n\nimport { cn } from \"@/lib/utils\"\nimport { usePlot } from \"@/lib/use-plot\"\n\nconst PLOT_STYLE = {\n  background: \"transparent\",\n  color: \"var(--muted-foreground)\",\n  fontFamily: \"inherit\",\n  fontSize: \"11px\",\n}\n\nexport interface WaterfallItem {\n  label: string\n  /** Signed contribution; positive rises, negative falls. */\n  value: number\n}\n\nexport interface WaterfallChartProps {\n  data: WaterfallItem[]\n  title?: string\n  yLabel?: string\n  /** Label for the summed total bar. Default \"Total\". */\n  totalLabel?: string\n  height?: number\n  upColor?: string\n  downColor?: string\n  totalColor?: string\n  className?: string\n}\n\n/**\n * A waterfall chart: signed contributions stacked cumulatively to a total —\n * ideal for growth decompositions, budget bridges, and variance analysis.\n */\nexport function WaterfallChart({\n  data,\n  title,\n  yLabel,\n  totalLabel = \"Total\",\n  height = 320,\n  upColor = \"var(--chart-5)\",\n  downColor = \"var(--chart-4)\",\n  totalColor = \"var(--foreground)\",\n  className,\n}: WaterfallChartProps) {\n  const ref = usePlot(\n    (width) => {\n      if (!data?.length) return null\n      let cum = 0\n      const rows = data.map((it) => {\n        const start = cum\n        cum += it.value\n        return { label: it.label, lo: Math.min(start, cum), hi: Math.max(start, cum), dir: it.value >= 0 ? \"up\" : \"down\", value: it.value }\n      })\n      rows.push({ label: totalLabel, lo: Math.min(0, cum), hi: Math.max(0, cum), dir: \"total\", value: Number(cum.toFixed(2)) })\n      const fill = (d: { dir: string }) => (d.dir === \"total\" ? totalColor : d.dir === \"up\" ? upColor : downColor)\n      return Plot.plot({\n        width,\n        height,\n        style: PLOT_STYLE,\n        marginBottom: 66,\n        x: { label: null, domain: rows.map((r) => r.label), tickRotate: -30 },\n        y: { label: yLabel ?? null, grid: true },\n        color: { type: \"identity\" },\n        marks: [\n          Plot.ruleY([0], { stroke: \"var(--foreground)\", strokeOpacity: 0.4 }),\n          Plot.rectY(rows, { x: \"label\", y1: \"lo\", y2: \"hi\", fill, inset: 6, rx: 1, tip: true }),\n        ],\n      })\n    },\n    [data, yLabel, totalLabel, height, upColor, downColor, totalColor],\n  )\n\n  return (\n    <figure className={cn(\"m-0\", className)}>\n      {title ? <figcaption style={{ fontSize: 13, fontWeight: 500, marginBottom: 8, color: \"var(--foreground)\" }}>{title}</figcaption> : null}\n      <div ref={ref} />\n    </figure>\n  )\n}\n"
+    }
+  ]
+}

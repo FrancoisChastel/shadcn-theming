@@ -8,6 +8,8 @@ import { parseColor, toHex } from "../core/color.js";
 import { kpis, type Kpi } from "./data.js";
 import { aiSections } from "./ai-sections.js";
 import { templateSections } from "./template-sections.js";
+import { classificationSections, clsBadge } from "./classification.js";
+import { shellSections } from "./shell-sections.js";
 import { icon, ICON_NAMES } from "./icons.js";
 
 export interface Section {
@@ -911,6 +913,22 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
       ),
     },
     {
+      id: "error-403",
+      group: "Blocks",
+      title: "Access denied & server error",
+      desc: "A 403 clearance wall (tied to document classification) and a 500 server error — the states enterprise apps must design, not leave to the browser.",
+      html: `<div class="grid2">
+        ${blockFrame(
+          "app.imf.org/403",
+          `<div class="errstate"><div class="err-ico err-warn">${icon("shield-x", { size: 30 })}</div><div class="code">403</div><h3>You don't have clearance</h3><p>This document is ${clsBadge("confidential")} and limited to staff with a need to know.</p><div style="display:flex;gap:.5rem;justify-content:center"><button class="btn btn-outline">Go back</button><button class="btn btn-primary">Request access</button></div></div>`,
+        )}
+        ${blockFrame(
+          "app.imf.org/500",
+          `<div class="errstate"><div class="err-ico">${icon("alert-triangle", { size: 30 })}</div><div class="code">500</div><h3>Something went wrong</h3><p>An unexpected error occurred. The team has been notified — please try again.</p><div style="display:flex;gap:.5rem;justify-content:center"><button class="btn btn-outline">Reload</button><button class="btn btn-primary">Contact support</button></div></div>`,
+        )}
+      </div>`,
+    },
+    {
       id: "empty-state",
       group: "Blocks",
       title: "Empty state",
@@ -931,6 +949,8 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
     },
 
     // ---------------- Templates ----------------
+    ...classificationSections(),
+    ...shellSections(),
     ...templateSections(),
 
     // ---------------- AI harness ----------------
@@ -964,6 +984,34 @@ export function buildSections(light: TokenMap, brandName = "Brand"): Section[] {
           <div class="card plot-card" data-chart="lollipop" data-title="Current account — ranked"></div>
           <div class="card plot-card" data-chart="donut" data-title="Allocated reserves by currency"></div>
           <div class="card plot-card" data-chart="bullet" data-title="Targets vs actuals"></div>
+        </div>`,
+    },
+    {
+      id: "chart-distributions",
+      group: "Scientific charts",
+      title: "Distributions & density",
+      desc: "Seaborn-style distribution views: KDE violins, a ridgeline (joyplot), a beeswarm, an empirical CDF, and a hexbin 2-D density — all computed in-browser from the sample data.",
+      html: `<div class="grid2">
+          <div class="card plot-card" data-chart="violin" data-title="Growth by group — violin (KDE)"></div>
+          <div class="card plot-card" data-chart="ridgeline" data-title="Growth by group — ridgeline"></div>
+          <div class="card plot-card" data-chart="beeswarm" data-title="Growth by group — beeswarm"></div>
+          <div class="card plot-card" data-chart="ecdf" data-title="Country growth — empirical CDF"></div>
+          <div class="card plot-card" data-chart="hexbin" data-title="Phillips relationship — hexbin density"></div>
+        </div>`,
+    },
+    {
+      id: "chart-analytical",
+      group: "Scientific charts",
+      title: "Projections, rankings & flows",
+      desc: "Analytical idioms for economic reporting: a probabilistic fan chart, a growth-contribution waterfall, a ranking slopegraph, a connected-scatter trajectory over time, a Lorenz curve with Gini, a candlestick series, and a radar profile.",
+      html: `<div class="card plot-card" data-chart="fanchart" data-title="World GDP growth — probabilistic fan (50/80/90%)" style="margin-bottom:1rem"></div>
+        <div class="grid2">
+          <div class="card plot-card" data-chart="waterfall" data-title="Contributions to headline growth"></div>
+          <div class="card plot-card" data-chart="slope" data-title="Share of world GDP — 2010 vs 2025"></div>
+          <div class="card plot-card" data-chart="connected-scatter" data-title="Unemployment ↔ inflation trajectory"></div>
+          <div class="card plot-card" data-chart="candlestick" data-title="Benchmark level — OHLC"></div>
+          <div class="card plot-card" data-chart="lorenz" data-title="Income inequality — Lorenz curve"></div>
+          <div class="card plot-card" data-chart="radar" data-title="Macro profile — radar"></div>
         </div>`,
     },
   ];

@@ -5,6 +5,7 @@
  */
 import type { Section } from "./sections.js";
 import { icon } from "./icons.js";
+import { clsBadge, clsBanner } from "./classification.js";
 
 const demo = (inner: string) => `<div class="demo col">${inner}</div>`;
 const frame = (url: string, inner: string) =>
@@ -92,6 +93,7 @@ function publicationReader(): string {
         <a href="#" class="active">Overview</a><a href="#">Global outlook</a><a href="#">Risks</a><a href="#">Policy</a>
       </aside>
       <article class="reader-body">
+        <div style="margin-bottom:1rem">${clsBanner("official")}</div>
         <div class="eyebrow">World Economic Outlook</div>
         <h1>Global growth holds steady amid uneven disinflation</h1>
         <div class="meta">October 2026 · IMF Research Department · 12 min read</div>
@@ -171,17 +173,104 @@ function notifications(): string {
 }
 
 function settings(): string {
+  const sessions: Array<[string, string, string, boolean]> = [
+    ["MacBook Pro · Chrome", "Washington, DC", "Active now", true],
+    ["iPhone 15 · Safari", "Washington, DC", "2 hours ago", false],
+    ["Windows · Edge", "London, UK", "3 days ago", false],
+  ];
   return frame(
-    "app.imf.org/settings",
+    "app.imf.org/settings/security",
     `<div class="settings-layout">
-      <nav class="settings-nav"><a class="active">Profile</a><a>Account</a><a>Notifications</a><a>API tokens</a></nav>
+      <nav class="settings-nav">
+        <a>${icon("user", { size: 15 })} Profile</a>
+        <a>${icon("building", { size: 15 })} Account</a>
+        <a class="active">${icon("shield", { size: 15 })} Security</a>
+        <a>${icon("bell", { size: 15 })} Notifications</a>
+        <a>${icon("sun", { size: 15 })} Appearance</a>
+        <a>${icon("key", { size: 15 })} API tokens</a>
+      </nav>
       <div>
-        <h3 style="margin:0 0 .25rem">Profile</h3><p class="muted" style="font-size:.83rem;margin:0 0 1.1rem">How you appear across the workspace.</p>
-        <div class="field" style="margin-bottom:.85rem;max-width:360px"><label class="label">Display name</label><input class="input" value="Francois Chastel" /></div>
-        <div class="field" style="margin-bottom:.85rem;max-width:360px"><label class="label">Email</label><input class="input" value="francois@imf.org" /></div>
-        <div class="field" style="margin-bottom:.85rem;max-width:360px"><label class="label">Role</label><button class="combobox-trigger" data-menu-trigger style="max-width:260px">Economist ${chev}</button></div>
-        <label class="switch" style="margin-bottom:1.1rem"><input type="checkbox" checked /><span class="track"><span class="thumb"></span></span> Email me weekly digests</label>
+        <h3 style="margin:0 0 .25rem">Security &amp; access</h3><p class="muted" style="font-size:.83rem;margin:0 0 1.25rem">Protect your account and set how the documents you create are handled.</p>
+
+        <div class="set-card">
+          <div class="set-row"><div><b>Two-factor authentication</b><p class="muted">Require a one-time code at sign-in.</p></div><label class="switch"><input type="checkbox" checked /><span class="track"><span class="thumb"></span></span></label></div>
+          <div class="set-row"><div><b>Passkeys</b><p class="muted">Sign in with Face ID, Touch ID, or a security key.</p></div><button class="btn btn-outline btn-sm">Add passkey</button></div>
+        </div>
+
+        <div class="set-card">
+          <div class="set-row"><div><b>Default document classification</b><p class="muted">Applied to new documents you create.</p></div>
+            <div class="cls-select" data-cls-picker><button class="select-trigger" data-menu-trigger aria-haspopup="listbox" style="width:auto">${clsBadge("official")} ${icon("chevron-down", { size: 15 })}</button>
+              <div data-menu role="listbox"><div class="menu-item" role="option" data-cls-option data-cls="public">${clsBadge("public")}</div><div class="menu-item" role="option" data-cls-option data-cls="official">${clsBadge("official")}</div><div class="menu-item" role="option" data-cls-option data-cls="confidential">${clsBadge("confidential")}</div><div class="menu-item" role="option" data-cls-option data-cls="strict">${clsBadge("strict")}</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="set-card">
+          <div class="set-card-head"><b>Active sessions</b><button class="btn btn-ghost btn-sm">Sign out all</button></div>
+          ${sessions
+            .map(
+              ([dev, loc, when, cur]) =>
+                `<div class="session-row"><span class="s-ico">${icon("lock-keyhole", { size: 15 })}</span><div style="flex:1"><div style="font-size:.86rem">${dev}${cur ? ' <span class="badge badge-secondary">This device</span>' : ""}</div><div class="muted" style="font-size:.74rem">${loc} · ${when}</div></div>${cur ? "" : '<button class="btn btn-ghost btn-sm">Revoke</button>'}</div>`,
+            )
+            .join("")}
+        </div>
+
         <div style="display:flex;gap:.5rem"><button class="btn btn-ghost btn-sm">Cancel</button><button class="btn btn-primary btn-sm">Save changes</button></div>
+      </div>
+    </div>`,
+  );
+}
+
+function profilePage(): string {
+  const docs: Array<[string, string, string]> = [
+    ["World Economic Outlook — draft", "official", "Updated 2h ago"],
+    ["Disinflation dynamics (WP/26/184)", "strict", "Updated yesterday"],
+    ["Reserves adequacy note", "confidential", "Updated 3 days ago"],
+    ["Growth data explainer (blog)", "public", "Published 12 Sep"],
+  ];
+  const activity: Array<[string, string, string]> = [
+    ["edit", "Revised the 2025 growth projection", "2h ago"],
+    ["file-text", "Published the WEO summary", "5h ago"],
+    ["message", "Commented on the fan-chart band", "Yesterday"],
+    ["upload", "Uploaded reserves_2026.csv", "2 days ago"],
+  ];
+  return frame(
+    "app.imf.org/u/fchastel",
+    `<div class="profile">
+      <div class="profile-cover"></div>
+      <div class="profile-head">
+        <span class="profile-avatar">FC</span>
+        <div class="profile-id">
+          <h2>Francois Chastel</h2>
+          <div class="muted" style="font-size:.85rem">Economist · Research Department</div>
+          <div class="profile-badges"><span class="badge badge-secondary">${icon("building", { size: 12 })} IMF</span><span class="badge badge-outline">Washington, DC</span><span class="badge badge-outline">${icon("badge-check", { size: 12 })} Verified</span></div>
+        </div>
+        <div class="profile-actions"><button class="btn btn-outline btn-sm">${icon("mail", { size: 14 })} Message</button><button class="btn btn-primary btn-sm">Edit profile</button></div>
+      </div>
+      <div class="profile-stats">
+        ${miniKpi("Publications", "48", "6", true)}
+        ${miniKpi("Datasets", "23", "2", true)}
+        ${miniKpi("Citations", "1,204", "18", true)}
+        ${miniKpi("Followers", "312", "9", true)}
+      </div>
+      <div data-tabs class="profile-tabs"><div class="tabs-list"><button data-tab="o" aria-selected="true">Overview</button><button data-tab="d" aria-selected="false">Documents</button><button data-tab="a" aria-selected="false">Activity</button></div></div>
+      <div class="profile-body">
+        <div class="profile-main">
+          <div class="card" style="padding:1.1rem"><h4 style="margin:0 0 .5rem">About</h4><p class="muted" style="font-size:.86rem;margin:0">Macro-fiscal economist focused on projections, disinflation dynamics, and reserve adequacy. Maintains the WEO growth series and the fan-chart methodology.</p></div>
+          <div class="card" style="padding:1.1rem;margin-top:1rem"><div class="set-card-head" style="margin-bottom:.5rem"><h4 style="margin:0">Recent documents</h4><a href="#" class="muted" style="font-size:.78rem">View all</a></div>
+            ${docs.map(([t, cls, when]) => `<div class="doc-row"><span class="s-ico">${icon("file-text", { size: 15 })}</span><div style="flex:1"><div style="font-size:.85rem">${t}</div><div class="muted" style="font-size:.73rem">${when}</div></div>${clsBadge(cls)}</div>`).join("")}
+          </div>
+        </div>
+        <aside class="profile-aside">
+          <div class="card" style="padding:1.1rem"><h4 style="margin:0 0 .6rem">Contact</h4>
+            <div class="contact-row">${icon("mail", { size: 14 })} francois@imf.org</div>
+            <div class="contact-row">${icon("briefcase", { size: 14 })} Research Department</div>
+            <div class="contact-row">${icon("globe", { size: 14 })} imf.org/fchastel</div>
+          </div>
+          <div class="card" style="padding:1.1rem;margin-top:1rem"><h4 style="margin:0 0 .6rem">Activity</h4>
+            <div class="feed">${activity.map(([ic, t, when]) => `<div class="feed-row"><span class="feed-ico">${icon(ic, { size: 13 })}</span><div><div style="font-size:.82rem">${t}</div><div class="muted" style="font-size:.72rem">${when}</div></div></div>`).join("")}</div>
+          </div>
+        </aside>
       </div>
     </div>`,
   );
@@ -232,10 +321,17 @@ export function templateSections(): Section[] {
       html: demo(notifications()),
     },
     {
+      id: "tpl-profile",
+      group: "Templates",
+      title: "Profile",
+      desc: "A user profile page: cover, avatar, stat row, tabs, an about + recent-documents column (with classification badges), and a contact + activity aside.",
+      html: demo(profilePage()),
+    },
+    {
       id: "tpl-settings",
       group: "Templates",
       title: "Settings",
-      desc: "An account settings page with section nav and a profile form.",
+      desc: "A multi-section settings page — Security shown: two-factor, passkeys, default document classification, and active sessions.",
       html: demo(settings()),
     },
   ];

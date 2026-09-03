@@ -198,6 +198,16 @@ export function uiMain(): void {
       $$("[data-select-option]", wrap).forEach((o) => o.classList.toggle("selected", o === opt));
       closeMenus();
     }
+    // classification level chosen — mirror the option's badge into the trigger
+    const clsOpt = closest(e.target, "[data-cls-option]");
+    if (clsOpt) {
+      const picker = clsOpt.closest("[data-cls-picker]");
+      const trigger = picker?.querySelector("[data-menu-trigger]");
+      const srcBadge = clsOpt.querySelector(".cls-badge");
+      const dstBadge = trigger?.querySelector(".cls-badge");
+      if (srcBadge && dstBadge) dstBadge.replaceWith(srcBadge.cloneNode(true));
+      closeMenus();
+    }
   });
   // context menu
   document.addEventListener("contextmenu", (e) => {
